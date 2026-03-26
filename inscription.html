@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Référencer son studio de tatouage gratuitement — Inkmap</title>
+  <meta name="description" content="Inscrivez votre studio sur Inkmap, l'annuaire des tatoueurs français. Gratuit, en ligne en 24h, visible par style et par ville." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/inscription" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inkmap" />
+  <meta property="og:title" content="Inscrire mon studio — Inkmap" />
+  <meta property="og:description" content="Crée ton profil tatoueur gratuitement sur Inkmap. Style, ville, tarif, portfolio — visible par des milliers de clients." />
+  <meta property="og:url" content="https://inkmap.fr/inscription" />
+  <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #f9f9f9;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --accent: #c0392b;
+      --text: #0d0d0d;
+      --muted: #aaa;
+      --muted2: #666;
+      --error: #e74c3c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .logo em { font-style: normal; color: var(--accent); }
+
+    .back-link {
+      color: var(--muted2);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color .15s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 72px 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><defs><filter id='f' x='-50%' y='-50%' width='200%' height='200%'><feTurbulence type='fractalNoise' baseFrequency='0.022' numOctaves='1' seed='3' stitchTiles='stitch' result='drift'/><feDisplacementMap in='SourceGraphic' in2='drift' scale='2.8' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='turbulence' baseFrequency='0.19 0.06' numOctaves='2' seed='11' stitchTiles='stitch' result='jitter'/><feDisplacementMap in='d' in2='jitter' scale='1.3' xChannelSelector='R' yChannelSelector='G'/></filter></defs><line x1='0' y1='16' x2='16' y2='0' stroke='%23c0392b' stroke-opacity='0.18' stroke-width='0.9' filter='url(%23f)'/></svg>");
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.62rem;
+      color: var(--muted2);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .hero-tag span {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .launch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(192,57,43,0.08);
+      border: 1px solid rgba(192,57,43,0.25);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+    .launch-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse-dot 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    /* ── AVANTAGES ── */
+    .avantages {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 0;
+      max-width: 900px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avantage {
+      text-align: center;
+      flex: 1;
+      min-width: 160px;
+      padding: 32px 20px;
+      border-right: 1px solid var(--border);
+    }
+
+    .avantage:last-child { border-right: none; }
+
+    .avantage-icon {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .avantage strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .avantage span {
+      color: var(--muted2);
+      font-size: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── BANNIÈRE RÉCLAMATION ── */
+    #claimBanner {
+      background: rgba(192,57,43,0.04);
+      border-bottom: 1px solid rgba(192,57,43,0.15);
+      padding: 16px 56px;
+    }
+
+    /* ── CONFIANCE ── */
+    .trust-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .trust-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .trust-stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+    .trust-stat {
+      flex: 1;
+      text-align: center;
+      padding: 32px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .trust-stat:last-child { border-right: none; }
+    .trust-stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .trust-stat-num em { font-style: normal; color: var(--accent); }
+    .trust-stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 56px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 28px;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:first-of-type { border-top: 1px solid var(--border); }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 18px 0;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      letter-spacing: 0.2px;
+    }
+    .faq-question::after {
+      content: '+';
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .faq-item.open .faq-question::after { transform: rotate(45deg); }
+    .faq-answer {
+      display: none;
+      padding-bottom: 20px;
+      color: var(--muted2);
+      font-size: 0.9rem;
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* ── FORMULAIRE ── */
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 56px 24px 100px;
+    }
+
+    .form-card {
+      background: var(--bg);
+    }
+
+    .form-section {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .form-section-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted2);
+      margin-bottom: 7px;
+      font-weight: 500;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    label .required {
+      color: var(--accent);
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 13px 16px;
+      font-size: 0.92rem;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: border-color .15s;
+      outline: none;
+      border-radius: 2px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      background: var(--bg);
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.07), inset 0 -1px 0 var(--accent);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--muted);
+    }
+
+    select option { background: #fff; }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ── STYLES CHECKBOXES ── */
+    .styles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      gap: 8px;
+    }
+
+    .style-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+      border-radius: 2px;
+    }
+
+    .style-check:hover {
+      border-color: rgba(0,0,0,0.2);
+    }
+
+    .style-check input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .style-check.checked {
+      border-color: var(--accent);
+      background: rgba(192,57,43,0.06);
+      box-shadow: inset 0 0 0 1px rgba(192,57,43,0.12);
+    }
+
+    .style-check span {
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    /* ── TARIF SLIDER ── */
+    .tarif-display {
+      text-align: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 16px 0 12px;
+      letter-spacing: -1px;
+    }
+
+    .tarif-display small {
+      font-size: 1rem;
+      color: var(--muted2);
+      font-weight: 400;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      background: transparent;
+      height: 4px;
+      cursor: pointer;
+      padding: 0;
+      border: none;
+    }
+
+    .tarif-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.65rem;
+      margin-top: 8px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+    }
+
+    /* ── PHOTO UPLOAD ── */
+    .upload-zone {
+      border: 2px dashed rgba(0,0,0,0.15);
+      padding: 36px 24px 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      position: relative;
+      border-radius: 4px;
+      background: var(--surface);
+    }
+
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--accent);
+      background: rgba(192,57,43,0.03);
+    }
+
+    .upload-zone.drag-over { border-style: solid; }
+
+    .upload-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon { font-size: 2.2rem; margin-bottom: 10px; }
+
+    .upload-text { font-size: 0.85rem; color: var(--muted2); line-height: 1.5; }
+    .upload-text strong { display: block; color: var(--text); font-weight: 600; font-size: 0.92rem; margin-bottom: 4px; }
+
+    .upload-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .upload-counter .dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .upload-counter .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1.5px solid var(--muted);
+      transition: all .2s;
+    }
+
+    .upload-counter .dot.filled {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .upload-tips {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .upload-tip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .upload-tip span { font-size: 0.85rem; }
+
+    .upload-preview {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .preview-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .preview-delete {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 50%;
+      border: none;
+      color: #fff;
+      font-size: 0.65rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .15s;
+      z-index: 2;
+    }
+
+    .preview-item:hover .preview-delete { opacity: 1; }
+
+    @media (max-width: 480px) {
+      .upload-preview { grid-template-columns: repeat(4, 1fr); }
+      .preview-delete { opacity: 1; }
+    }
+
+    /* ── CONDITIONS ── */
+    .conditions {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 16px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    .conditions input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .conditions p {
+      font-size: 0.83rem;
+      color: var(--muted2);
+      line-height: 1.6;
+    }
+
+    .conditions p a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── BOUTON SUBMIT ── */
+    .btn-submit {
+      width: 100%;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      padding: 18px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      margin-top: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      transition: left .55s ease;
+    }
+
+    .btn-submit:hover { background: var(--accent); }
+    .btn-submit:hover::after { left: 150%; }
+    .btn-submit:active { transform: scale(0.99); opacity: 0.9; }
+
+    .btn-submit:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* ── MESSAGES ERREUR/SUCCÈS ── */
+    .field-error {
+      color: var(--error);
+      font-size: 0.75rem;
+      margin-top: 5px;
+      display: none;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: var(--error);
+    }
+
+    /* ── SUCCÈS ── */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .success-screen.show { display: block; }
+    .form-card.hide { display: none; }
+
+    .success-icon { font-size: 3.5rem; margin-bottom: 24px; }
+
+    .success-screen h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+
+    .success-screen p {
+      color: var(--muted2);
+      max-width: 420px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    .btn-retour {
+      background: var(--text);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background .15s;
+      border-radius: 2px;
+    }
+
+    .btn-retour:hover { background: var(--accent); }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .hero { padding: 40px 24px 28px; overflow: hidden; }
+      .hero h1 { font-size: clamp(1.4rem, 6.5vw, 2rem); letter-spacing: -0.5px; line-height: 1.1; text-align: center; }
+      .avantages { flex-wrap: wrap; }
+      .avantage { flex-basis: 48%; border-right: none; border-bottom: 1px solid var(--border); }
+      .trust-section { padding: 40px 20px; }
+      .trust-stats { flex-wrap: wrap; }
+      .trust-stat { flex-basis: 50%; border-right: none; border-bottom: 1px solid var(--border); }
+      .trust-stat:nth-child(odd) { border-right: 1px solid var(--border); }
+      .trust-stat:nth-last-child(-n+2) { border-bottom: none; }
+      .faq-section { padding: 40px 20px; }
+      .form-container { padding: 28px 20px calc(80px + env(safe-area-inset-bottom)); }
+      .form-row { grid-template-columns: 1fr; }
+      /* Zones tactiles inputs */
+      input[type="text"],
+      input[type="email"],
+      input[type="url"],
+      input[type="number"],
+      select,
+      textarea { padding: 15px 16px; font-size: 1rem; }
+      /* Bouton submit full width avec safe area */
+      .btn-submit { padding: 20px; font-size: 0.88rem; }
+      /* Tarif slider plus facile à toucher */
+      input[type="range"] { height: 28px; }
+      /* Avantages : 2 colonnes sur petit écran */
+      .avantage { padding: 20px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">ink<em>map</em></a>
+  <a href="index.html" class="back-link">← Retour à l'annuaire</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="launch-badge">Lancement — Gratuit</div>
+  <div class="hero-tag"><span></span>Annuaire tatoueurs gratuit</div>
+  <h1>Référence ton <em>studio</em><br/>gratuitement</h1>
+  <p>Inscris ton studio sur Inkmap et gagne en visibilité auprès des clients qui cherchent précisément ton style.</p>
+</section>
+
+<!-- AVANTAGES -->
+<div class="avantages">
+  <div class="avantage">
+    <div class="avantage-icon">🆓</div>
+    <strong>100% gratuit</strong>
+    <span>Aucune carte bancaire requise</span>
+  </div>
+  <div class="avantage">
+    <div class="avantage-icon">⚡</div>
+    <strong>En ligne en 24h</strong>
+    <span>Validation rapide de ton profil</span>
+  </div>
+  <div class="avantage">
+    <div class="avantage-icon">📍</div>
+    <strong>Visible partout</strong>
+    <span>Référencé par style et par ville</span>
+  </div>
+  <div class="avantage">
+    <div class="avantage-icon">✏️</div>
+    <strong>Modifiable</strong>
+    <span>Mets à jour ton profil quand tu veux</span>
+  </div>
+</div>
+
+<!-- BANNIÈRE RÉCLAMATION (cachée par défaut) -->
+<div id="claimBanner" style="display:none;background:rgba(192,57,43,0.08);border-top:1px solid rgba(192,57,43,0.2);border-bottom:1px solid rgba(192,57,43,0.2);padding:16px 40px;display:none;align-items:center;gap:16px;flex-wrap:wrap">
+  <div style="font-size:1.4rem">👋</div>
+  <div>
+    <div style="font-weight:700;font-size:0.95rem">Tu réclames le profil de <span id="claimNom" style="color:#c0392b"></span></div>
+    <div style="color:#888;font-size:0.82rem;margin-top:2px">Les infos sont pré-remplies — vérifie, complète et valide pour prendre le contrôle de ton profil.</div>
+  </div>
+</div>
+
+<!-- ILS NOUS FONT CONFIANCE -->
+<div class="trust-section">
+  <div class="trust-label">// Ils nous font déjà confiance</div>
+  <div class="trust-stats">
+    <div class="trust-stat">
+      <div class="trust-stat-num" id="trust-nb-tatoueurs"><em>—</em></div>
+      <div class="trust-stat-label">Studios référencés</div>
+    </div>
+    <div class="trust-stat">
+      <div class="trust-stat-num" id="trust-nb-villes"><em>—</em></div>
+      <div class="trust-stat-label">Villes couvertes</div>
+    </div>
+    <div class="trust-stat">
+      <div class="trust-stat-num">24<em>h</em></div>
+      <div class="trust-stat-label">Délai de mise en ligne</div>
+    </div>
+    <div class="trust-stat">
+      <div class="trust-stat-num">0<em>€</em></div>
+      <div class="trust-stat-label">Pour toujours gratuit</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-label">// Questions fréquentes</div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">C'est vraiment gratuit ?</button>
+    <div class="faq-answer">Oui, totalement gratuit pendant la phase de lancement. Inkmap est en cours de développement et nous référençons les premiers artistes gratuitement pour construire l'annuaire. À terme, une offre premium optionnelle sera disponible pour les tatoueurs qui souhaitent plus de visibilité — mais l'inscription de base restera toujours gratuite. Aucune carte bancaire demandée aujourd'hui.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">Combien de temps ça prend ?</button>
+    <div class="faq-answer">Remplir le formulaire prend moins de 5 minutes. Ton profil est ensuite validé par notre équipe sous 24h, puis mis en ligne automatiquement. Tu reçois un email de confirmation dès que c'est en ligne.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">Qui voit mon profil ?</button>
+    <div class="faq-answer">Ton profil est visible publiquement sur inkmap.fr par tous les visiteurs — clients potentiels, curieux, professionnels. Il est aussi indexé par Google, ce qui t'apporte de la visibilité supplémentaire via les recherches "tatoueur [style] [ville]".</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">Puis-je modifier mes infos ?</button>
+    <div class="faq-answer">Oui. Tu peux demander une mise à jour de ton profil à tout moment en nous contactant. Nous travaillons également sur un espace tatoueur pour gérer tes infos en autonomie — ça arrive bientôt.</div>
+  </div>
+</div>
+
+<!-- FORMULAIRE -->
+<div class="form-container">
+
+  <!-- SUCCÈS -->
+  <div class="success-screen" id="success">
+    <div class="success-icon">🎉</div>
+    <h2>Demande envoyée !</h2>
+    <p>On va vérifier ton profil et te contacter dans les 24h pour confirmer la mise en ligne.</p>
+    <div id="successPhotosNote" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:16px 20px;max-width:440px;margin:0 auto 24px;text-align:left">
+      <p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:8px">📎 Envoie tes photos par email</p>
+      <p style="font-size:0.78rem;color:var(--muted2);margin-bottom:12px;line-height:1.5">Pour finaliser ton profil, envoie tes photos à :</p>
+      <a href="mailto:inkmap.contact@gmail.com?subject=Photos inscription Inkmap" style="display:inline-block;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:0.72rem;padding:10px 16px;border-radius:2px;text-decoration:none;letter-spacing:0.5px">inkmap.contact@gmail.com</a>
+    </div>
+    <button class="btn-retour" onclick="window.location.href='index.html'">Voir l'annuaire</button>
+  </div>
+
+  <div class="form-card" id="formCard">
+    <form id="inscriptionForm" novalidate>
+
+      <!-- SECTION 1 : IDENTITÉ -->
+      <div class="form-section">
+        <div class="form-section-title">① Ton identité</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom & Nom <span class="required">*</span></label>
+            <input type="text" id="nom" placeholder="Ex : Lucas Moreau" />
+            <div class="field-error" id="err-nom">Champ obligatoire</div>
+          </div>
+          <div class="form-group">
+            <label>Nom du studio <span class="required">*</span></label>
+            <input type="text" id="studio" placeholder="Ex : Ink & Soul Studio" />
+            <div class="field-error" id="err-studio">Champ obligatoire</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input type="email" id="email" placeholder="ton@email.com" />
+            <div class="field-error" id="err-email">Email invalide</div>
+          </div>
+          <div class="form-group">
+            <label>Instagram</label>
+            <input type="text" id="instagram" placeholder="@tonpseudo" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Site web / lien de réservation</label>
+          <input type="url" id="website" placeholder="https://..." />
+        </div>
+      </div>
+
+      <!-- SECTION 2 : LOCALISATION -->
+      <div class="form-section">
+        <div class="form-section-title">② Ta localisation</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ville <span class="required">*</span></label>
+            <input type="text" id="ville" placeholder="Ex : Paris, Lyon, Bordeaux..." />
+            <div class="field-error" id="err-ville">Champ obligatoire</div>
+          </div>
+          <div class="form-group">
+            <label>Région <span class="required">*</span></label>
+            <select id="region">
+              <option value="">Sélectionner...</option>
+              <option>Île-de-France</option>
+              <option>Auvergne-Rhône-Alpes</option>
+              <option>Nouvelle-Aquitaine</option>
+              <option>Occitanie</option>
+              <option>Hauts-de-France</option>
+              <option>Grand Est</option>
+              <option>Pays de la Loire</option>
+              <option>Bretagne</option>
+              <option>Normandie</option>
+              <option>Bourgogne-Franche-Comté</option>
+              <option>Centre-Val de Loire</option>
+              <option>PACA</option>
+              <option>Corse</option>
+              <option>DOM-TOM</option>
+            </select>
+            <div class="field-error" id="err-region">Champ obligatoire</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Adresse du studio (optionnel)</label>
+          <input type="text" id="adresse" placeholder="Ex : 12 rue de la Paix, 75001 Paris" />
+        </div>
+      </div>
+
+      <!-- SECTION 3 : STYLE -->
+      <div class="form-section">
+        <div class="form-section-title">③ Tes styles <span class="required">*</span></div>
+
+        <div class="styles-grid" id="stylesGrid">
+          <!-- Généré en JS -->
+        </div>
+        <div class="field-error" id="err-styles">Sélectionne au moins un style</div>
+      </div>
+
+      <!-- SECTION 4 : TARIFS -->
+      <div class="form-section">
+        <div class="form-section-title">④ Ton tarif horaire</div>
+
+        <div class="tarif-display">
+          <span id="tarifVal">150</span>€ <small>/ heure</small>
+        </div>
+        <input type="range" id="tarif" min="50" max="400" value="150" step="10"
+          oninput="document.getElementById('tarifVal').textContent = this.value" />
+        <div class="tarif-labels">
+          <span>50€</span>
+          <span>200€</span>
+          <span>400€+</span>
+        </div>
+
+        <div class="form-group" style="margin-top:20px">
+          <label>Infos supplémentaires sur les prix (optionnel)</label>
+          <input type="text" id="tarifInfo" placeholder="Ex : Petites pièces à partir de 80€, devis gratuit..." />
+        </div>
+      </div>
+
+      <!-- SECTION 5 : PRÉSENTATION -->
+      <div class="form-section">
+        <div class="form-section-title">⑤ Ta présentation</div>
+
+        <div class="form-group">
+          <label>Bio / Description <span class="required">*</span></label>
+          <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire... (min. 50 caractères)"></textarea>
+          <div class="field-error" id="err-bio">Minimum 50 caractères</div>
+        </div>
+
+        <div class="form-group">
+          <label>Photos de tes tatouages <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="photos" accept="image/*" multiple />
+            <div id="uploadPlaceholder">
+              <div class="upload-icon">🖼️</div>
+              <div class="upload-text">
+                <strong>Glisse tes photos ici ou clique pour parcourir</strong>
+                JPG, PNG, WEBP — max 5 photos, 10 MB chacune
+              </div>
+              <div class="upload-counter">
+                <div class="dots" id="uploadDots">
+                  <div class="dot" data-i="0"></div>
+                  <div class="dot" data-i="1"></div>
+                  <div class="dot" data-i="2"></div>
+                  <div class="dot" data-i="3"></div>
+                  <div class="dot" data-i="4"></div>
+                </div>
+                <span id="uploadCount">0 / 5</span>
+              </div>
+              <div class="upload-tips">
+                <div class="upload-tip"><span>✦</span> Photos haute qualité</div>
+                <div class="upload-tip"><span>✦</span> Fond neutre ou en contexte</div>
+                <div class="upload-tip"><span>✦</span> Tes meilleurs travaux</div>
+              </div>
+            </div>
+            <div class="upload-preview" id="photoPreview"></div>
+          </div>
+          <p style="margin-top:8px;font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.5px">Sélectionne tes meilleures réalisations — tu recevras l'adresse email pour les envoyer après validation.</p>
+        </div>
+      </div>
+
+      <!-- SECTION 6 : CONDITIONS -->
+      <div class="form-section">
+        <div class="form-section-title">⑥ Confirmation</div>
+
+        <label class="conditions">
+          <input type="checkbox" id="cgu" />
+          <p>J'accepte les <a href="#">conditions d'utilisation</a> et je confirme que les informations renseignées sont exactes. Mon profil sera visible gratuitement sur inkmap.fr.</p>
+        </label>
+        <div class="field-error" id="err-cgu">Tu dois accepter les conditions</div>
+      </div>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="btn-submit" id="submitBtn">
+        ✦ &nbsp; Envoyer ma demande d'inscription
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+// ── STATS DYNAMIQUES ──────────────────────────────────────────────────────────
+(async function() {
+  try {
+    const res = await fetch('/api/tatoueurs');
+    if (!res.ok) return;
+    const { records } = await res.json();
+    const villes = new Set(records.map(r => {
+      const v = (r.fields.Ville || '').trim().replace(/\s+\d+(e|er|ème|eme)?\s*$/i, '').trim();
+      return v || r.fields.Ville;
+    }).filter(Boolean));
+    document.getElementById('trust-nb-tatoueurs').innerHTML = `${records.length}<em>+</em>`;
+    document.getElementById('trust-nb-villes').innerHTML = `${villes.size}<em>+</em>`;
+  } catch(e) {
+    document.getElementById('trust-nb-tatoueurs').innerHTML = `10<em>+</em>`;
+    document.getElementById('trust-nb-villes').innerHTML = `5<em>+</em>`;
+  }
+})();
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── STYLES ────────────────────────────────────────────────────────────────────
+const styles = [
+  { emoji: "✦", nom: "Fineline" },
+  { emoji: "◆", nom: "Blackwork" },
+  { emoji: "⛩", nom: "Japonais" },
+  { emoji: "⚓", nom: "Old School" },
+  { emoji: "👁", nom: "Réalisme" },
+  { emoji: "△", nom: "Géométrique" },
+  { emoji: "🎨", nom: "Aquarelle" },
+  { emoji: "🌑", nom: "Tribal" },
+  { emoji: "🌸", nom: "Floral" },
+  { emoji: "🎬", nom: "Neo-Traditional" },
+  { emoji: "⚡", nom: "Lettering" },
+  { emoji: "🖤", nom: "Micro-réalisme" },
+];
+
+const grid = document.getElementById('stylesGrid');
+styles.forEach(s => {
+  const label = document.createElement('label');
+  label.className = 'style-check';
+  label.innerHTML = `
+    <input type="checkbox" value="${s.nom}" onchange="toggleStyle(this)" />
+    <span>${s.emoji} ${s.nom}</span>
+  `;
+  grid.appendChild(label);
+});
+
+function toggleStyle(cb) {
+  cb.closest('.style-check').classList.toggle('checked', cb.checked);
+}
+
+// ── PHOTO UPLOAD ──────────────────────────────────────────────────────────────
+let uploadedFiles = [];
+
+function updateUploadUI() {
+  const count = uploadedFiles.length;
+  document.getElementById('uploadCount').textContent = `${count} / 5`;
+  document.querySelectorAll('#uploadDots .dot').forEach((dot, i) => {
+    dot.classList.toggle('filled', i < count);
+  });
+  const placeholder = document.getElementById('uploadPlaceholder');
+  const preview = document.getElementById('photoPreview');
+  if (count > 0) {
+    placeholder.style.display = 'none';
+    preview.style.display = 'grid';
+  } else {
+    placeholder.style.display = '';
+    preview.style.display = 'none';
+  }
+}
+
+function renderPreviews() {
+  const preview = document.getElementById('photoPreview');
+  preview.innerHTML = '';
+  uploadedFiles.forEach((file, i) => {
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.alt = file.name;
+    const btn = document.createElement('button');
+    btn.className = 'preview-delete';
+    btn.type = 'button';
+    btn.innerHTML = '✕';
+    btn.onclick = (e) => { e.stopPropagation(); removePhoto(i); };
+    item.appendChild(img);
+    item.appendChild(btn);
+    preview.appendChild(item);
+  });
+  updateUploadUI();
+}
+
+function addPhotos(files) {
+  const newFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+  const remaining = 5 - uploadedFiles.length;
+  uploadedFiles = uploadedFiles.concat(newFiles.slice(0, remaining));
+  renderPreviews();
+}
+
+function removePhoto(index) {
+  uploadedFiles.splice(index, 1);
+  renderPreviews();
+}
+
+(function initUpload() {
+  const zone = document.getElementById('uploadZone');
+  const input = document.getElementById('photos');
+
+  zone.addEventListener('click', (e) => {
+    if (e.target !== input) input.click();
+  });
+
+  input.addEventListener('change', () => { addPhotos(input.files); input.value = ''; });
+
+  zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    addPhotos(e.dataTransfer.files);
+  });
+
+  updateUploadUI();
+})();
+
+// ── VALIDATION ────────────────────────────────────────────────────────────────
+function validate() {
+  let ok = true;
+
+  const champs = [
+    { id: 'nom', err: 'err-nom', test: v => v.length >= 2 },
+    { id: 'studio', err: 'err-studio', test: v => v.length >= 2 },
+    { id: 'email', err: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'ville', err: 'err-ville', test: v => v.length >= 2 },
+    { id: 'region', err: 'err-region', test: v => v !== '' },
+    { id: 'bio', err: 'err-bio', test: v => v.length >= 50 },
+  ];
+
+  champs.forEach(({ id, err, test }) => {
+    const el = document.getElementById(id);
+    const val = el.value.trim();
+    const valid = test(val);
+    el.classList.toggle('invalid', !valid);
+    document.getElementById(err).style.display = valid ? 'none' : 'block';
+    if (!valid) ok = false;
+  });
+
+  // Styles
+  const stylesChecked = [...document.querySelectorAll('#stylesGrid input:checked')];
+  const stylesOk = stylesChecked.length > 0;
+  document.getElementById('err-styles').style.display = stylesOk ? 'none' : 'block';
+  if (!stylesOk) ok = false;
+
+  // CGU
+  const cgu = document.getElementById('cgu').checked;
+  document.getElementById('err-cgu').style.display = cgu ? 'none' : 'block';
+  if (!cgu) ok = false;
+
+  return ok;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if (!validate()) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳  Envoi en cours...';
+
+  // Récupère les styles cochés
+  const stylesCoches = [...document.querySelectorAll('#stylesGrid input:checked')]
+    .map(cb => cb.value).join(', ');
+
+  const data = {
+    fields: {
+      Nom:       document.getElementById('nom').value.trim(),
+      Studio:    document.getElementById('studio').value.trim(),
+      email:     document.getElementById('email').value.trim(),
+      instagram: document.getElementById('instagram').value.trim(),
+      website:   document.getElementById('website').value.trim(),
+      ville:     document.getElementById('ville').value.trim(),
+      region:    document.getElementById('region').value,
+      adresse:   document.getElementById('adresse').value.trim(),
+      styles:    stylesCoches,
+      tarif:     parseInt(document.getElementById('tarif').value),
+      tarifInfo: document.getElementById('tarifInfo').value.trim(),
+      bio:       document.getElementById('bio').value.trim(),
+      Statut:    'En attente',
+    }
+  };
+
+  fetch('/api/inscription', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(res => {
+    if (!res.ok) return res.json().then(e => { throw new Error(JSON.stringify(e)); });
+    return res.json();
+  })
+  .then(() => {
+    if (uploadedFiles.length > 0) {
+      document.getElementById('successPhotosNote').style.display = '';
+    }
+    document.getElementById('formCard').classList.add('hide');
+    document.getElementById('success').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  })
+  .catch((err) => {
+    btn.disabled = false;
+    btn.textContent = '✦  Envoyer ma demande d\'inscription';
+    alert('Erreur : ' + err.message);
+  });
+});
+
+// ── PRÉ-REMPLISSAGE DEPUIS URL (mode "Réclamer ce profil") ──────────────────
+(function() {
+  const p = new URLSearchParams(window.location.search);
+  if (!p.get('nom')) return; // mode normal, rien à faire
+
+  // Afficher la bannière
+  const banner = document.getElementById('claimBanner');
+  banner.style.display = 'flex';
+  document.getElementById('claimNom').textContent = p.get('nom');
+
+  // Pré-remplir les champs
+  const set = (id, val) => { if (val && document.getElementById(id)) document.getElementById(id).value = val; };
+  set('nom',       p.get('nom'));
+  set('instagram', p.get('instagram'));
+  set('ville',     p.get('ville'));
+  set('region',    p.get('region'));
+
+  // Tarif : déplacer le slider
+  if (p.get('tarif')) {
+    const slider = document.getElementById('tarif');
+    const label  = document.getElementById('tarifVal');
+    if (slider) { slider.value = p.get('tarif'); if (label) label.textContent = p.get('tarif'); }
+  }
+
+  // Changer le titre de la page
+  document.querySelector('.hero h1').innerHTML =
+    `Réclame ton <em>profil</em>`;
+  document.querySelector('.hero p').textContent =
+    'Vérifie et complète tes infos pour prendre le contrôle de ton profil Inkmap.';
+})();
+
+// ── ENCRE ORGANIQUE ───────────────────────────────────────────────────────────
+(function() {
+  const turb = document.getElementById('ink-turb');
+  if (!turb) return;
+
+  const CFG = [
+    { id:'ink-b1', x:78,  y:-8,  w:700, h:620, color:'#c0392b', op:0.32, bph:0.0,  bspd:0.38 },
+    { id:'ink-b2', x:-6,  y:55,  w:580, h:520, color:'#d4511a', op:0.26, bph:1.8,  bspd:0.31 },
+    { id:'ink-b3', x:52,  y:84,  w:480, h:420, color:'#b02818', op:0.24, bph:3.5,  bspd:0.44 },
+    { id:'ink-b4', x:30,  y:25,  w:380, h:340, color:'#e06828', op:0.22, bph:5.1,  bspd:0.27 },
+  ];
+
+  CFG.forEach(c => {
+    const el = document.getElementById(c.id);
+    if (!el) return;
+    el.style.cssText = `
+      width:${c.w}px; height:${c.h}px;
+      left:${c.x}%; top:${c.y}%;
+      background: radial-gradient(ellipse at 44% 46%,
+        ${c.color} 0%,
+        ${c.color}dd 18%,
+        ${c.color}88 38%,
+        ${c.color}33 58%,
+        transparent 72%);
+      opacity: ${c.op};
+      filter: url(#ink-f);
+    `;
+  });
+
+  const AMP   = [160, 190, 140, 120];
+  const DELAY = [2800, 3600, 3200, 2400];
+  const PAR   = [{ x:.04,y:.06 },{ x:-.05,y:-.04 },{ x:.03,y:-.05 },{ x:-.03,y:.04 }];
+  const state = CFG.map(() => ({ cx:0, cy:0, tx:0, ty:0 }));
+
+  function pickTarget(i) {
+    state[i].tx = (Math.random()*2-1) * AMP[i];
+    state[i].ty = (Math.random()*2-1) * AMP[i];
+  }
+  function schedule(i) {
+    setTimeout(() => { pickTarget(i); schedule(i); }, DELAY[i] + Math.random()*2500);
+  }
+  state.forEach((_, i) => { pickTarget(i); schedule(i); });
+
+  let scrollY = 0;
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+  let t = 0, frame = 0;
+  const LERP = 0.014;
+  const els = CFG.map(c => document.getElementById(c.id));
+
+  (function loop() {
+    requestAnimationFrame(loop);
+    t += 0.0006;
+
+    if (++frame % 2 === 0) {
+      const f1 = (0.013 + Math.sin(t * 1.1) * 0.007).toFixed(5);
+      const f2 = (0.009 + Math.cos(t * 0.8) * 0.005).toFixed(5);
+      turb.setAttribute('baseFrequency', `${f1} ${f2}`);
+    }
+
+    state.forEach((s, i) => {
+      s.cx += (s.tx - s.cx) * LERP;
+      s.cy += (s.ty - s.cy) * LERP;
+      const sc = 1.05 + Math.sin(t * CFG[i].bspd + CFG[i].bph) * 0.17;
+      const tx = (s.cx + scrollY * PAR[i].x).toFixed(1);
+      const ty = (s.cy + scrollY * PAR[i].y).toFixed(1);
+      if (els[i]) els[i].style.transform =
+        `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${sc.toFixed(3)})`;
+    });
+  })();
+})();
+</script>
+</body>
+</html>
