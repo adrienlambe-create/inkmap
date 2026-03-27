@@ -59,35 +59,53 @@ Règles :
 - Le style principal = scores[0][0]
 - Si l'image n'est pas un tatouage, analyse quand même le style graphique`;
 
-  try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+  const groqBody = JSON.stringify({
+    model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+    max_tokens: 400,
+    temperature: 0.2,
+    messages: [{
+      role: 'user',
+      content: [
+        { type: 'image_url', image_url: { url: `data:${safeMediaType};base64,${image}` } },
+        { type: 'text', text: prompt },
+      ],
+    }],
+  });
+
+  async function callGroq() {
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${GROQ_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
-        max_tokens: 400,
-        temperature: 0.2,
-        messages: [{
-          role: 'user',
-          content: [
-            { type: 'image_url', image_url: { url: `data:${safeMediaType};base64,${image}` } },
-            { type: 'text', text: prompt },
-          ],
-        }],
-      }),
+      body: groqBody,
     });
+    return r;
+  }
+
+  try {
+    let response = await callGroq();
+
+    // 1 retry on server-side errors
+    if (response.status >= 500) {
+      await new Promise(r => setTimeout(r, 800));
+      response = await callGroq();
+    }
 
     if (!response.ok) {
       const errBody = await response.text();
       console.error('[ia-match] Groq error', response.status, errBody.slice(0, 200));
-      return res.status(502).json({ error: 'AI service error', status: response.status });
+      const msg = response.status === 429
+        ? 'Trop de requêtes vers le service d\'IA, réessaie dans quelques secondes.'
+        : 'Le service d\'analyse est temporairement indisponible.';
+      return res.status(502).json({ error: msg });
     }
 
     const data = await response.json();
-    const text = data.choices?.[0]?.message?.content?.trim();
-    if (!text) throw new Error('Empty response from Groq');
+    const raw = data.choices?.[0]?.message?.content?.trim();
+    if (!raw) throw new Error('Empty response from Groq');
 
-    const match = text.match(/\{[\s\S]*\}/);
+    // Strip markdown code fences if present
+    const cleaned = raw.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '');
+    const match = cleaned.match(/\{[\s\S]*\}/);
     if (!match) throw new Error('No JSON in response');
 
     const result = JSON.parse(match[0]);
@@ -96,6 +114,6 @@ Règles :
     res.status(200).json(result);
   } catch (e) {
     console.error('[ia-match] catch:', e.message);
-    res.status(500).json({ error: 'Analysis failed' });
+    res.status(500).json({ error: 'Analyse impossible pour le moment. L\'analyse locale sera utilisée à la place.' });
   }
 };

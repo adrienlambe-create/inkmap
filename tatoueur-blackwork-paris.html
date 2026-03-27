@@ -19,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
     :root { --bg: #ffffff; --surface: #f9f9f9; --card: #ffffff; --border: rgba(0,0,0,0.08); --accent: #c0392b; --text: #0d0d0d; --muted: #aaa; --muted2: #666; }
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; overflow-x: hidden; }
@@ -97,7 +98,7 @@
     .footer-logo em { font-style: normal; color: var(--accent); }
     footer p { color: var(--muted2); font-size: 0.7rem; font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; }
     footer small { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
-    .bg-blobs { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; mix-blend-mode: multiply; }
+    .bg-blobs { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; mix-blend-mode: multiply; }
     .bg-blob { position: absolute; border-radius: 50%; will-change: transform; }
     .bg-blob-1 { width: 650px; height: 580px; background: radial-gradient(ellipse, rgba(255,155,90,0.55) 0%, rgba(255,120,80,0.2) 50%, transparent 75%); filter: blur(72px); top: -120px; right: -60px; }
     .bg-blob-2 { width: 520px; height: 480px; background: radial-gradient(ellipse, rgba(255,100,140,0.45) 0%, rgba(240,90,130,0.2) 50%, transparent 72%); filter: blur(80px); bottom: 25%; left: -100px; }

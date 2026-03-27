@@ -36,6 +36,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
 
     :root {
       --bg: #ffffff;
@@ -609,32 +610,66 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 1;
       overflow: hidden;
       mix-blend-mode: multiply;
     }
 
-    .bg-blob { position: absolute; border-radius: 50%; will-change: transform; }
+    .bg-blob { position: absolute; will-change: transform, border-radius; }
 
     .bg-blob-1 {
-      width: 650px; height: 580px;
-      background: radial-gradient(ellipse, rgba(255,155,90,0.55) 0%, rgba(255,120,80,0.2) 50%, transparent 75%);
-      filter: blur(72px);
-      top: -120px; right: -60px;
+      width: 720px; height: 660px;
+      background: radial-gradient(ellipse, rgba(255,130,65,0.72) 0%, rgba(255,95,55,0.35) 42%, transparent 70%);
+      filter: blur(56px);
+      top: -140px; right: -80px;
+      animation: ink-morph-a 17s ease-in-out infinite;
     }
 
     .bg-blob-2 {
-      width: 520px; height: 480px;
-      background: radial-gradient(ellipse, rgba(255,100,140,0.45) 0%, rgba(240,90,130,0.2) 50%, transparent 72%);
-      filter: blur(80px);
-      bottom: 25%; left: -100px;
+      width: 580px; height: 540px;
+      background: radial-gradient(ellipse, rgba(255,75,115,0.6) 0%, rgba(235,65,105,0.28) 42%, transparent 68%);
+      filter: blur(68px);
+      bottom: 22%; left: -120px;
+      animation: ink-morph-b 21s ease-in-out infinite;
     }
 
     .bg-blob-3 {
-      width: 400px; height: 380px;
-      background: radial-gradient(ellipse, rgba(255,210,100,0.4) 0%, rgba(255,180,80,0.15) 55%, transparent 75%);
-      filter: blur(65px);
-      top: 55%; left: 45%;
+      width: 480px; height: 440px;
+      background: radial-gradient(ellipse, rgba(255,195,70,0.55) 0%, rgba(255,155,50,0.22) 48%, transparent 70%);
+      filter: blur(52px);
+      top: 52%; left: 42%;
+      animation: ink-morph-c 26s ease-in-out infinite;
+    }
+
+    @keyframes ink-morph-a {
+      0%   { border-radius: 44% 56% 62% 38% / 52% 44% 56% 48%; }
+      12%  { border-radius: 78% 22% 46% 54% / 36% 72% 30% 68%; }
+      25%  { border-radius: 34% 66% 72% 28% / 68% 32% 74% 26%; }
+      38%  { border-radius: 62% 38% 36% 64% / 44% 60% 40% 60%; }
+      50%  { border-radius: 82% 18% 58% 42% / 28% 76% 24% 76%; }
+      63%  { border-radius: 26% 74% 44% 56% / 72% 28% 70% 30%; }
+      75%  { border-radius: 56% 44% 80% 20% / 54% 46% 34% 66%; }
+      88%  { border-radius: 38% 62% 52% 48% / 62% 38% 58% 42%; }
+      100% { border-radius: 44% 56% 62% 38% / 52% 44% 56% 48%; }
+    }
+
+    @keyframes ink-morph-b {
+      0%   { border-radius: 66% 34% 52% 48% / 46% 64% 36% 54%; }
+      16%  { border-radius: 32% 68% 76% 24% / 70% 32% 62% 38%; }
+      33%  { border-radius: 54% 46% 34% 66% / 26% 78% 40% 60%; }
+      50%  { border-radius: 80% 20% 60% 40% / 56% 44% 26% 74%; }
+      66%  { border-radius: 24% 76% 42% 58% / 76% 24% 68% 32%; }
+      83%  { border-radius: 58% 42% 72% 28% / 38% 62% 32% 68%; }
+      100% { border-radius: 66% 34% 52% 48% / 46% 64% 36% 54%; }
+    }
+
+    @keyframes ink-morph-c {
+      0%   { border-radius: 58% 42% 36% 64% / 68% 32% 66% 34%; }
+      20%  { border-radius: 28% 72% 68% 32% / 34% 68% 32% 68%; }
+      40%  { border-radius: 72% 28% 52% 48% / 60% 40% 76% 24%; }
+      60%  { border-radius: 38% 62% 78% 22% / 42% 58% 24% 76%; }
+      80%  { border-radius: 76% 24% 44% 56% / 74% 26% 58% 42%; }
+      100% { border-radius: 58% 42% 36% 64% / 68% 32% 66% 34%; }
     }
 
     /* ── HAMBURGER ── */
@@ -987,8 +1022,8 @@ chargerDepuisAirtable().then(() => {
     document.querySelector('.bg-blob-2'),
     document.querySelector('.bg-blob-3'),
   ];
-  const parallax = [{ x: 0.04, y: 0.07 }, { x: -0.05, y: -0.04 }, { x: 0.03, y: -0.06 }];
-  const amp = [110, 130, 90];
+  const parallax = [{ x: 0.07, y: 0.14 }, { x: -0.09, y: -0.06 }, { x: 0.05, y: -0.12 }];
+  const amp = [140, 160, 110];
   const state = blobs.map(() => ({ cx: 0, cy: 0, tx: 0, ty: 0 }));
   function pickTarget(i) { state[i].tx = (Math.random()*2-1)*amp[i]; state[i].ty = (Math.random()*2-1)*amp[i]; }
   function scheduleNext(i) { setTimeout(() => { pickTarget(i); scheduleNext(i); }, 3000 + Math.random()*4000); }
@@ -1001,7 +1036,9 @@ chargerDepuisAirtable().then(() => {
     state.forEach((s, i) => {
       s.cx += (s.tx - s.cx) * LERP;
       s.cy += (s.ty - s.cy) * LERP;
-      blobs[i].style.transform = `translate(${s.cx + scrollY * parallax[i].x}px, ${s.cy + scrollY * parallax[i].y}px)`;
+      const _sp = window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const _sc = 1 + _sp * [0.65, 0.45, 0.9][i];
+      blobs[i].style.transform = `translate(${s.cx + scrollY * parallax[i].x}px, ${s.cy + scrollY * parallax[i].y}px) scale(${_sc})`;
     });
   })();
 })();
