@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Référencer son studio de tatouage gratuitement — Inkmap</title>
   <meta name="description" content="Inscrivez votre studio sur Inkmap, l'annuaire des tatoueurs français. Gratuit, en ligne en 24h, visible par style et par ville." />
@@ -702,6 +705,73 @@
       letter-spacing: 0.5px;
     }
 
+    .field-hint {
+      color: var(--muted2);
+      font-size: 0.72rem;
+      margin-top: 4px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .villes-tags-wrap {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      background: var(--card);
+      cursor: text;
+      transition: border-color .2s;
+    }
+
+    .villes-tags-wrap:focus-within {
+      border-color: var(--accent);
+    }
+
+    .villes-tags-wrap.invalid {
+      border-color: var(--error);
+    }
+
+    .villes-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ville-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-family: 'Space Mono', monospace;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .ville-tag-x {
+      cursor: pointer;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      transition: opacity .15s;
+    }
+
+    .ville-tag-x:hover { opacity: 1; }
+
+    .villes-tags-wrap input {
+      border: none;
+      outline: none;
+      font-size: 0.88rem;
+      font-family: 'Space Grotesk', sans-serif;
+      flex: 1;
+      min-width: 120px;
+      background: transparent;
+      padding: 4px 0;
+    }
+
     input.invalid, select.invalid, textarea.invalid {
       border-color: var(--error);
     }
@@ -938,9 +1008,14 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>Ville <span class="required">*</span></label>
-            <input type="text" id="ville" placeholder="Ex : Paris, Lyon, Bordeaux..." />
-            <div class="field-error" id="err-ville">Champ obligatoire</div>
+            <label>Ville(s) <span class="required">*</span></label>
+            <div class="villes-tags-wrap" id="villesWrap">
+              <div class="villes-tags" id="villesTags"></div>
+              <input type="text" id="villeInput" placeholder="Tape une ville + Entrée" />
+            </div>
+            <input type="hidden" id="ville" />
+            <div class="field-hint">Tu peux ajouter plusieurs villes si tu tatoues dans différents endroits</div>
+            <div class="field-error" id="err-ville">Ajoute au moins une ville</div>
           </div>
           <div class="form-group">
             <label>Région <span class="required">*</span></label>
@@ -1195,6 +1270,46 @@ function removePhoto(index) {
   updateUploadUI();
 })();
 
+// ── MULTI-VILLES TAGS ────────────────────────────────────────────────────────
+const villesArr = [];
+const villeInput = document.getElementById('villeInput');
+const villesTags = document.getElementById('villesTags');
+const villesWrap = document.getElementById('villesWrap');
+const villeHidden = document.getElementById('ville');
+
+function renderVilles() {
+  villesTags.innerHTML = villesArr.map((v, i) =>
+    `<span class="ville-tag">${v}<span class="ville-tag-x" data-i="${i}">&times;</span></span>`
+  ).join('');
+  villeHidden.value = villesArr.join(', ');
+  villesWrap.classList.toggle('invalid', villesArr.length === 0 && villesWrap.classList.contains('invalid'));
+}
+
+villesTags.addEventListener('click', e => {
+  if (e.target.classList.contains('ville-tag-x')) {
+    villesArr.splice(+e.target.dataset.i, 1);
+    renderVilles();
+  }
+});
+
+villeInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault();
+    const v = villeInput.value.trim().replace(/,/g, '');
+    if (v && !villesArr.includes(v)) {
+      villesArr.push(v);
+      renderVilles();
+    }
+    villeInput.value = '';
+  }
+  if (e.key === 'Backspace' && !villeInput.value && villesArr.length) {
+    villesArr.pop();
+    renderVilles();
+  }
+});
+
+villesWrap.addEventListener('click', () => villeInput.focus());
+
 // ── VALIDATION ────────────────────────────────────────────────────────────────
 function validate() {
   let ok = true;
@@ -1203,7 +1318,7 @@ function validate() {
     { id: 'nom', err: 'err-nom', test: v => v.length >= 2 },
     { id: 'studio', err: 'err-studio', test: v => v.length >= 2 },
     { id: 'email', err: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-    { id: 'ville', err: 'err-ville', test: v => v.length >= 2 },
+    { id: 'ville', err: 'err-ville', test: v => villesArr.length > 0 },
     { id: 'region', err: 'err-region', test: v => v !== '' },
     { id: 'bio', err: 'err-bio', test: v => v.length >= 50 },
   ];
@@ -1212,7 +1327,9 @@ function validate() {
     const el = document.getElementById(id);
     const val = el.value.trim();
     const valid = test(val);
-    el.classList.toggle('invalid', !valid);
+    // Pour le champ ville multi-tags, on toggle la classe sur le wrapper
+    const toggleEl = id === 'ville' ? villesWrap : el;
+    toggleEl.classList.toggle('invalid', !valid);
     document.getElementById(err).style.display = valid ? 'none' : 'block';
     if (!valid) ok = false;
   });
@@ -1300,7 +1417,13 @@ document.getElementById('inscriptionForm').addEventListener('submit', function(e
   const set = (id, val) => { if (val && document.getElementById(id)) document.getElementById(id).value = val; };
   set('nom',       p.get('nom'));
   set('instagram', p.get('instagram'));
-  set('ville',     p.get('ville'));
+  // Multi-villes depuis URL
+  if (p.get('ville')) {
+    p.get('ville').split(',').map(v => v.trim()).filter(Boolean).forEach(v => {
+      if (!villesArr.includes(v)) villesArr.push(v);
+    });
+    renderVilles();
+  }
   set('region',    p.get('region'));
 
   // Tarif : déplacer le slider
