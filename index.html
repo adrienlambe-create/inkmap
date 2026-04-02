@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inkmap — Annuaire tatoueurs France, par style et ville</title>
   <meta name="description" content="Inkmap, premier annuaire des tatoueurs français. Cherche par style (fineline, blackwork, réalisme…), ville et budget. Profils vérifiés, totalement gratuit." />
@@ -266,7 +269,7 @@
     /* ── HERO ── */
     .hero {
       padding-top: 64px;
-      min-height: 92vh;
+      min-height: 80vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       overflow: hidden;
@@ -873,6 +876,43 @@
     .btn-insta:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ── NO RESULTS ── */
+    /* ── SKELETON LOADER ── */
+    .skeleton-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .skeleton-img {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+    .skeleton-body { padding: 18px 20px 16px; }
+    .skeleton-line {
+      height: 14px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+      margin-bottom: 10px;
+    }
+    .skeleton-line.short { width: 60%; }
+    .skeleton-line.xshort { width: 40%; height: 10px; }
+    .skeleton-tags { display: flex; gap: 4px; margin-bottom: 12px; }
+    .skeleton-tag {
+      width: 60px;
+      height: 20px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes skeleton-pulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
     .no-results {
       text-align: center;
       padding: 80px 20px;
@@ -1135,6 +1175,81 @@
       background: var(--text);
       color: #fff;
       border-color: var(--text);
+    }
+
+    .pagination-info {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-right: 8px;
+    }
+
+    /* ── HIGHLIGHT CARDS ── */
+    .highlight-section {
+      padding: 72px 56px;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .highlight-inner { max-width: 1200px; margin: 0 auto; }
+    .highlight-tag {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .highlight-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .highlight-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800; text-transform: uppercase; letter-spacing: -1px; line-height: 1;
+      margin-bottom: 32px;
+    }
+    .highlight-title em { font-style: normal; color: var(--accent); }
+    .highlight-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .highlight-card {
+      border: 1px solid var(--border); border-radius: 6px; padding: 28px 24px;
+      background: var(--card); text-decoration: none; color: var(--text);
+      transition: all .2s; display: flex; flex-direction: column; gap: 12px;
+    }
+    .highlight-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .highlight-card-icon {
+      width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; background: rgba(192,57,43,0.08);
+    }
+    .highlight-card h3 {
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: -0.3px;
+    }
+    .highlight-card p { color: var(--muted2); font-size: 0.82rem; line-height: 1.6; }
+    .highlight-card-arrow {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1.5px; margin-top: auto;
+    }
+
+    .highlight-banner {
+      margin-top: 24px; padding: 24px 28px; background: var(--text); border-radius: 6px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .highlight-banner-text h3 {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800;
+      text-transform: uppercase; color: #fff; margin-bottom: 4px;
+    }
+    .highlight-banner-text h3 em { font-style: normal; color: var(--accent); }
+    .highlight-banner-text p { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+    .highlight-banner a {
+      display: inline-block; background: var(--accent); color: #fff; padding: 12px 22px;
+      font-size: 0.65rem; font-family: 'Space Mono', monospace; text-transform: uppercase;
+      letter-spacing: 1.5px; text-decoration: none; border-radius: 2px; white-space: nowrap;
+      transition: background .15s;
+    }
+    .highlight-banner a:hover { background: #e74c3c; }
+
+    @media (max-width: 768px) {
+      .highlight-section { padding: 48px 20px; }
+      .highlight-grid { grid-template-columns: 1fr; }
+      .highlight-banner { flex-direction: column; text-align: center; }
     }
 
     /* ── RESSOURCES ── */
@@ -1721,14 +1836,17 @@
       nav { display: none; }
       .hamburger { display: flex; }
 
-      /* Hero — padding réduit, moins de vide en haut */
+      /* Hero — compact sur mobile, recherche accessible vite */
       .hero { grid-template-columns: 1fr; min-height: auto; overflow: visible; }
-      .hero-content { padding: 48px 20px 40px; }
-      .hero-title { font-size: clamp(2.8rem, 14vw, 5rem); letter-spacing: -2px; }
+      .hero-content { padding: 32px 20px 28px; }
+      .hero-title { font-size: clamp(2.8rem, 14vw, 5rem); letter-spacing: -2px; margin-bottom: 24px; }
+      .hero-tag { margin-bottom: 16px; }
+      .hero-sub p { margin-bottom: 20px; font-size: 0.88rem; }
       .hero-visual { display: none; }
 
-      /* Chiffres */
-      .chiffres-section { padding: 36px 20px 28px; }
+      /* Chiffres — compact sur mobile */
+      .chiffres-section { padding: 24px 20px 20px; }
+      .chiffres-header { margin-bottom: 20px; }
       .chiffres-grid { grid-template-columns: repeat(2, 1fr); }
       .chiffre-item { padding: 24px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
       .chiffre-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
@@ -1817,11 +1935,18 @@
       }
 
       /* IA */
-      .ia-section { padding: 40px 20px; }
+      .ia-section { padding: 40px 20px; overflow-x: hidden; }
+      .ia-result-layout { max-width: 100%; overflow: hidden; }
       .ia-result-layout.visible { grid-template-columns: 1fr; }
-      .ia-results-col { padding: 28px 24px; }
-      .ia-bar-name { width: 90px; }
+      .ia-results-col { padding: 28px 16px; overflow: hidden; }
+      .ia-bar-row { gap: 8px; }
+      .ia-bar-name { width: 70px; font-size: 0.58rem; }
+      .ia-bar-pct { width: 30px; font-size: 0.58rem; }
+      .ia-detected-style { font-size: 1.6rem; word-break: break-word; }
       .ia-upload-zone { padding: 48px 24px; min-height: 44px; }
+      .ia-matches-grid { grid-template-columns: 1fr !important; }
+      .ia-matches-header { flex-wrap: wrap; }
+      .ia-explication { font-size: 0.65rem; word-break: break-word; }
 
     }
 
@@ -1865,6 +1990,7 @@
         <a href="#recherche" onclick="navFiltreStyle('Micro-réalisme')">Micro-réalisme</a>
       </div>
     </div>
+    <a href="rejoindre.html">Tatoueurs</a>
     <a href="inscription.html" class="btn-nav">Inscrire mon studio →</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
@@ -1898,6 +2024,7 @@
       <a href="#recherche" onclick="navFiltreStyle('Micro-réalisme');fermerMenu()">Micro-réalisme</a>
     </div>
   </div>
+  <a href="rejoindre.html" onclick="fermerMenu()">Tatoueurs</a>
   <a href="inscription.html" class="btn-nav-mobile" onclick="fermerMenu()">Inscrire mon studio →</a>
 </div>
 
@@ -2097,9 +2224,12 @@
 <!-- GRID -->
 <div id="tatoueurs-grid" aria-hidden="true" style="height:0;overflow:hidden"></div>
 <div class="grid" id="grid">
-  <div class="no-results" id="loading-state" style="background:var(--bg)">
-    <strong style="font-size:1.2rem;letter-spacing:2px">Exploration des artistes...</strong>
-  </div>
+  <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-line xshort"></div></div></div>
+  <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-line xshort"></div></div></div>
+  <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-line xshort"></div></div></div>
+  <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-line xshort"></div></div></div>
+  <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-line xshort"></div></div></div>
+  <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div><div class="skeleton-tags"><div class="skeleton-tag"></div><div class="skeleton-tag"></div></div><div class="skeleton-line xshort"></div></div></div>
 </div>
 <div class="pagination" id="pagination"></div>
 
@@ -2110,6 +2240,41 @@
     <div id="modal-content"></div>
   </div>
 </div>
+
+<!-- RESSOURCES HIGHLIGHT -->
+<section class="highlight-section">
+  <div class="highlight-inner">
+    <div class="highlight-tag"><span></span> Ressources gratuites</div>
+    <h2 class="highlight-title">Guides & <em>outils</em></h2>
+    <div class="highlight-grid">
+      <a href="outils/calculateur-tarif-tatouage.html" class="highlight-card">
+        <div class="highlight-card-icon">&#9998;</div>
+        <h3>Calculateur de tarif</h3>
+        <p>Estime le prix de ton tatouage selon la taille, le style, la zone du corps et la ville.</p>
+        <div class="highlight-card-arrow">Utiliser l'outil &rarr;</div>
+      </a>
+      <a href="guide/trouver-clients-tatoueur.html" class="highlight-card">
+        <div class="highlight-card-icon">&#128218;</div>
+        <h3>Trouver des clients</h3>
+        <p>Les meilleures strategies pour developper sa clientele en tant que tatoueur en 2026.</p>
+        <div class="highlight-card-arrow">Lire le guide &rarr;</div>
+      </a>
+      <a href="guide/referencer-studio-tatouage-gratuit.html" class="highlight-card">
+        <div class="highlight-card-icon">&#128269;</div>
+        <h3>Referencer son studio</h3>
+        <p>Toutes les plateformes gratuites pour etre visible sur Google et attirer des clients.</p>
+        <div class="highlight-card-arrow">Lire le guide &rarr;</div>
+      </a>
+    </div>
+    <div class="highlight-banner">
+      <div class="highlight-banner-text">
+        <h3>Tu es tatoueur ? Rejoins <em>Inkmap</em></h3>
+        <p>Profil gratuit, visibilite Google, zero commission.</p>
+      </div>
+      <a href="rejoindre.html">Decouvrir &rarr;</a>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <!-- LIENS INTERNES SEO -->
@@ -2125,6 +2290,10 @@
             <li><a href="index.html">Annuaire tatoueurs</a></li>
             <li><a href="faq.html">FAQ</a></li>
             <li><a href="inscription.html">Inscrire mon studio</a></li>
+            <li><a href="rejoindre.html">Rejoindre Inkmap</a></li>
+            <li><a href="guide/trouver-clients-tatoueur.html">Guide : trouver des clients</a></li>
+            <li><a href="guide/referencer-studio-tatouage-gratuit.html">Guide : referencer son studio</a></li>
+            <li><a href="outils/calculateur-tarif-tatouage.html">Calculateur de tarif tattoo</a></li>
             <li><a href="mentions-legales.html">Mentions légales</a></li>
           </ul>
         </div>
@@ -2325,7 +2494,14 @@
       <a href="#recherche">Annuaire</a>
       <a href="faq.html">FAQ</a>
       <a href="inscription.html">Inscrire mon studio</a>
+      <a href="rejoindre.html">Rejoindre Inkmap</a>
       <a href="mentions-legales.html">Mentions légales</a>
+    </nav>
+    <nav class="footer-nav-group" aria-label="Ressources">
+      <span class="footer-nav-label">Ressources</span>
+      <a href="guide/trouver-clients-tatoueur.html">Trouver des clients</a>
+      <a href="guide/referencer-studio-tatouage-gratuit.html">Referencer son studio</a>
+      <a href="outils/calculateur-tarif-tatouage.html">Calculateur tarif</a>
     </nav>
     <nav class="footer-nav-group" aria-label="Styles populaires">
       <span class="footer-nav-label">Styles</span>
@@ -2467,7 +2643,15 @@ function noResultsHTML(style, ville) {
       </div>
     </div>`;
   }
-  return `<div class="no-results"><strong>Aucun résultat</strong>Essaie d'autres filtres</div>`;
+  return `<div class="no-results-rich" id="zero-results-message">
+    <div class="nr-tag">// 0 résultat</div>
+    <div class="nr-title">Aucun artiste trouvé<br>avec ces critères</div>
+    <p class="nr-sub">Essaie d'élargir ta recherche : retire un filtre ou change de ville.</p>
+    <div class="nr-actions">
+      <button class="btn-primary" style="font-size:0.72rem;padding:12px 22px" onclick="document.getElementById('searchNom').value='';styleActif='';villeActive='';document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));document.querySelector('.filter-btn').classList.add('active');mettreAJourTags();filtrer()">Réinitialiser les filtres →</button>
+      <a href="inscription.html" class="btn-secondary" style="font-size:0.72rem;padding:12px 22px">Inscrire mon studio</a>
+    </div>
+  </div>`;
 }
 
 function scrollVersResultats(avecResultats) {
@@ -2494,10 +2678,12 @@ function renderPagination(total) {
   const el = document.getElementById('pagination');
   if (!el) return;
   if (nbPages <= 1) { el.innerHTML = ''; return; }
-  let html = '';
+  let html = `<span class="pagination-info">Page ${pageCourante} / ${nbPages}</span>`;
+  if (pageCourante > 1) html += `<button class="page-btn" onclick="allerPage(${pageCourante - 1})">←</button>`;
   for (let i = 1; i <= nbPages; i++) {
     html += `<button class="page-btn${i === pageCourante ? ' active' : ''}" onclick="allerPage(${i})">${i}</button>`;
   }
+  if (pageCourante < nbPages) html += `<button class="page-btn" onclick="allerPage(${pageCourante + 1})">→</button>`;
   el.innerHTML = html;
 }
 
@@ -2547,10 +2733,31 @@ function filtreRapide(style, btn) {
 }
 
 // ── PLACEHOLDER BRANDED ───────────────────────────────────────────────────────
-const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet" style="display:block">
-  <rect width="320" height="180" fill="#0a0a0a"/>
-  <text x="160" y="82" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" letter-spacing="4" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text>
-  <text x="160" y="108" font-family="Arial, sans-serif" font-size="9.5" letter-spacing="2" fill="#666666" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text>
+const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/>
+    </pattern>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141414"/>
+      <stop offset="50%" stop-color="#0d0d0d"/>
+      <stop offset="100%" stop-color="#111"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#glow)"/>
+  <rect width="320" height="180" fill="url(#grid)"/>
+  <line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/>
+  <g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round">
+    <path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18" />
+    <line x1="-8" y1="-8" x2="8" y2="-8" />
+    <line x1="-6" y1="-13" x2="6" y2="-13" />
+    <line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/>
+    <circle cx="-12" cy="-14" r="2.5" stroke="#333"/>
+    <line x1="-12" y1="-11.5" x2="-12" y2="-4" />
+    <path d="M-12,-4 L-8,-2" />
+  </g>
+  <text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text>
+  <text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text>
 </svg>`;
 
 function cardMedia(t) {
@@ -3063,6 +3270,9 @@ function analyseImageCanvas(imgEl) {
 
 function afficherResultats(best, scores, explication, isFallback) {
   document.getElementById('iaScanOverlay').classList.add('hidden');
+  // Trier les scores par ordre décroissant pour que le style principal soit le plus haut score
+  scores.sort((a, b) => b[1] - a[1]);
+  best = scores[0][0];
   const col = document.getElementById('iaResultsCol');
   col.style.transition = 'opacity .5s';
   col.style.opacity = '1';
