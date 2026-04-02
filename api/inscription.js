@@ -33,7 +33,14 @@ function validEmail(email) {
 
 function validUrl(url) {
   if (!url) return true; // optionnel
-  try { const u = new URL(url); return ['http:', 'https:'].includes(u.protocol); } catch { return false; }
+  // Ajouter https:// si pas de protocole
+  const withProto = /^https?:\/\//i.test(url) ? url : 'https://' + url;
+  try { const u = new URL(withProto); return ['http:', 'https:'].includes(u.protocol); } catch { return false; }
+}
+
+function normalizeUrl(url) {
+  if (!url) return '';
+  return /^https?:\/\//i.test(url) ? url : 'https://' + url;
 }
 
 module.exports = async (req, res) => {
@@ -56,8 +63,9 @@ module.exports = async (req, res) => {
   if (!studio) return res.status(400).json({ error: 'Studio requis' });
   if (!validEmail(email)) return res.status(400).json({ error: 'Email invalide' });
 
-  const website = sanitize(fields.website || fields.SiteWeb || '', 300);
-  if (website && !validUrl(website)) return res.status(400).json({ error: 'URL de site invalide' });
+  const rawWebsite = sanitize(fields.website || fields.SiteWeb || '', 300);
+  if (rawWebsite && !validUrl(rawWebsite)) return res.status(400).json({ error: 'URL de site invalide' });
+  const website = normalizeUrl(rawWebsite);
 
   const tarif = parseInt(fields.tarif ?? fields.Tarif);
   if (isNaN(tarif) || tarif < 0 || tarif > 10_000) {
@@ -65,34 +73,125 @@ module.exports = async (req, res) => {
   }
 
   // Construction du payload sanitisé — seuls les champs connus sont transmis
+  // On envoie chaque champ un par un — si Airtable rejette un nom,
+  // on réessaie sans ce champ pour ne pas bloquer l'inscription
   const cleanFields = {
     Nom:       nom,
     Studio:    studio,
-    email:     email,
-    instagram: sanitize(fields.instagram || '', 100),
-    website:   website,
-    ville:     sanitize(fields.ville || '', 100),
-    region:    sanitize(fields.region || '', 100),
-    adresse:   sanitize(fields.adresse || '', 200),
-    styles:    sanitize(fields.styles || '', 300),
-    tarif:     tarif,
-    tarifInfo: sanitize(fields.tarifInfo || '', 500),
-    bio:       sanitize(fields.bio || '', 2000),
-    Statut:    'En attente', // forcé côté serveur, pas de confiance au client
+    Email:     email,
   };
+
+  // Tous les autres champs : on tente de les ajouter
+  const optionalMap = {
+    Ville:     sanitize(fields.ville || '', 100),
+    Styles:    sanitize(fields.styles || '', 300),
+    Tarif:     tarif,
+    Bio:       sanitize(fields.bio || '', 2000),
+    Instagram: sanitize(fields.instagram || '', 100),
+    Region:    sanitize(fields.region || '', 100),
+    Adresse:   sanitize(fields.adresse || '', 200),
+    TarifInfo: sanitize(fields.tarifInfo || '', 500),
+  };
+  if (website) optionalMap.Site = website;
+
+  for (const [k, v] of Object.entries(optionalMap)) {
+    if (v !== '' && v !== 0 && v !== undefined) cleanFields[k] = v;
+  }
+
+  // Photos (URLs from Vercel Blob)
+  const photoUrls = Array.isArray(fields.photos) ? fields.photos : [];
+  const validPhotos = photoUrls
+    .filter(u => typeof u === 'string' && u.startsWith('https://'))
+    .slice(0, 5)
+    .map(url => ({ url }));
+  if (validPhotos.length > 0) {
+    cleanFields.Photos = validPhotos;
+  }
 
   const TOKEN = process.env.AIRTABLE_TOKEN;
   const BASE  = 'appD1ZqrwZXTza0KR';
   const TABLE = 'tbl5xdM5VGqrieG4a';
 
   try {
-    const r = await fetch(`https://api.airtable.com/v0/${BASE}/${TABLE}`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fields: cleanFields }),
-    });
-    if (!r.ok) return res.status(r.status).json({ error: 'Erreur lors de l\'enregistrement' });
-    res.status(200).json(await r.json());
+    // Envoyer à Airtable avec retry si un champ est inconnu
+    let attempt = 0;
+    let fieldsToSend = { ...cleanFields };
+    let result;
+
+    while (attempt < 5) {
+      const r = await fetch(`https://api.airtable.com/v0/${BASE}/${TABLE}`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: fieldsToSend }),
+      });
+
+      if (r.ok) {
+        result = await r.json();
+        break;
+      }
+
+      const errBody = await r.json().catch(() => ({}));
+      console.error('Airtable error:', r.status, JSON.stringify(errBody));
+
+      // Si champ inconnu ou option select invalide, retirer le champ et réessayer
+      const errType = errBody?.error?.type;
+      if (errType === 'UNKNOWN_FIELD_NAME' || errType === 'INVALID_MULTIPLE_CHOICE_OPTIONS') {
+        const match = errBody.error.message?.match(/"([^"]+)"/);
+        if (match) {
+          // Pour UNKNOWN_FIELD_NAME le nom est dans le message, pour select on cherche le champ
+          const fieldName = errType === 'UNKNOWN_FIELD_NAME' ? match[1] :
+            Object.keys(fieldsToSend).find(k => String(fieldsToSend[k]).includes(match[1])) || match[1];
+          console.log('Removing problematic field:', fieldName);
+          delete fieldsToSend[fieldName];
+          attempt++;
+          continue;
+        }
+      }
+
+      return res.status(r.status).json({ error: 'Erreur lors de l\'enregistrement', detail: errBody });
+    }
+
+    if (!result) {
+      return res.status(500).json({ error: 'Impossible d\'enregistrer après plusieurs tentatives' });
+    }
+
+    // Notification email via Resend
+    const RESEND_KEY = process.env.RESEND_API_KEY;
+    if (RESEND_KEY) {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: 'Inkmap <onboarding@resend.dev>',
+            to: 'inkmap.contact@gmail.com',
+            subject: `Nouvelle inscription - ${cleanFields.Nom} (${cleanFields.Studio})`,
+            html: `
+              <h2 style="color:#c0392b;font-family:sans-serif">Nouvelle inscription sur Inkmap</h2>
+              <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse">
+                <tr><td style="padding:6px 12px;font-weight:bold">Nom</td><td style="padding:6px 12px">${cleanFields.Nom}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Studio</td><td style="padding:6px 12px">${cleanFields.Studio}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Email</td><td style="padding:6px 12px">${cleanFields.Email}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Instagram</td><td style="padding:6px 12px">${cleanFields.Instagram || '—'}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Ville(s)</td><td style="padding:6px 12px">${cleanFields.Ville || '—'}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Styles</td><td style="padding:6px 12px">${cleanFields.Styles || '—'}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Tarif</td><td style="padding:6px 12px">${cleanFields.Tarif} €/h</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Bio</td><td style="padding:6px 12px">${cleanFields.Bio || '—'}</td></tr>
+              </table>
+              ${validPhotos.length > 0 ? `
+              <h3 style="font-family:sans-serif;color:#333;margin-top:20px">Photos (${validPhotos.length})</h3>
+              <div>${validPhotos.map(p => `<img src="${p.url}" style="width:150px;height:150px;object-fit:cover;border-radius:8px;margin:4px" />`).join('')}</div>
+              ` : ''}
+              <p style="margin-top:16px;font-size:13px;color:#666">
+                <a href="https://airtable.com/appD1ZqrwZXTza0KR" style="color:#c0392b">Voir sur Airtable</a>
+              </p>
+            `
+          })
+        });
+      } catch (_) { /* email non bloquant */ }
+    }
+
+    res.status(200).json(result);
   } catch (e) {
     res.status(500).json({ error: 'Internal error' });
   }
