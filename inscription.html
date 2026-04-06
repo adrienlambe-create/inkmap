@@ -33,6 +33,7 @@
       --muted: #aaa;
       --muted2: #666;
       --error: #e74c3c;
+      --success: #27ae60;
     }
 
     html { scroll-behavior: smooth; }
@@ -317,20 +318,111 @@
     }
     .faq-item.open .faq-answer { display: block; }
 
+    /* ── PROGRESS BAR ── */
+    .progress-bar-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 32px 24px 0;
+    }
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 8px;
+    }
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--border);
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: translateY(-50%);
+      z-index: 1;
+      transition: width .4s ease;
+      width: 0%;
+    }
+    .progress-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      z-index: 2;
+      transition: all .3s ease;
+      cursor: pointer;
+    }
+    .progress-dot.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(192,57,43,0.06);
+    }
+    .progress-dot.done {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-align: center;
+      width: 80px;
+      transition: color .3s;
+    }
+    .progress-lbl.active { color: var(--accent); }
+    .progress-lbl.done { color: var(--text); }
+
     /* ── FORMULAIRE ── */
     .form-container {
       max-width: 700px;
       margin: 0 auto;
-      padding: 56px 24px 100px;
+      padding: 32px 24px 100px;
     }
 
     .form-card {
       background: var(--bg);
     }
 
+    /* ── STEPS ── */
+    .form-step {
+      display: none;
+      animation: stepIn .35s ease;
+    }
+    .form-step.active { display: block; }
+
+    @keyframes stepIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .form-section {
-      margin-bottom: 48px;
-      padding-bottom: 48px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
       border-bottom: 1px solid var(--border);
     }
 
@@ -381,7 +473,7 @@
       padding: 13px 16px;
       font-size: 0.92rem;
       font-family: 'Space Grotesk', sans-serif;
-      transition: border-color .15s;
+      transition: border-color .15s, box-shadow .15s;
       outline: none;
       border-radius: 2px;
     }
@@ -392,6 +484,10 @@
       border-color: var(--accent);
       background: var(--bg);
       box-shadow: 0 0 0 3px rgba(192,57,43,0.07), inset 0 -1px 0 var(--accent);
+    }
+
+    input.valid, select.valid, textarea.valid {
+      border-color: var(--success);
     }
 
     input::placeholder,
@@ -656,10 +752,63 @@
       text-decoration: none;
     }
 
+    /* ── STEP NAV BUTTONS ── */
+    .step-nav {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .btn-prev {
+      flex: 0 0 auto;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted2);
+      padding: 14px 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all .15s;
+    }
+    .btn-prev:hover { border-color: var(--text); color: var(--text); }
+
+    .btn-next {
+      flex: 1;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      padding: 14px 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background .2s, transform .15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-next::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      transition: left .55s ease;
+    }
+    .btn-next:hover { background: var(--accent); }
+    .btn-next:hover::after { left: 150%; }
+    .btn-next:active { transform: scale(0.99); }
+
     /* ── BOUTON SUBMIT ── */
     .btn-submit {
       width: 100%;
-      background: var(--text);
+      background: var(--accent);
       color: #fff;
       border: none;
       padding: 18px;
@@ -682,17 +831,36 @@
       top: 0; left: -100%;
       width: 60%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
       transition: left .55s ease;
     }
 
-    .btn-submit:hover { background: var(--accent); }
+    .btn-submit:hover { background: #a93226; }
     .btn-submit:hover::after { left: 150%; }
     .btn-submit:active { transform: scale(0.99); opacity: 0.9; }
 
     .btn-submit:disabled {
       opacity: 0.35;
       cursor: not-allowed;
+    }
+
+    /* ── TRUST NEAR SUBMIT ── */
+    .submit-trust {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .submit-trust-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     /* ── MESSAGES ERREUR/SUCCÈS ── */
@@ -711,6 +879,31 @@
       margin-top: 4px;
       font-family: 'Space Mono', monospace;
     }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--text);
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: 'Space Grotesk', sans-serif;
+      z-index: 999;
+      opacity: 0;
+      transition: all .3s ease;
+      max-width: 90vw;
+      text-align: center;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .toast.error { background: var(--error); }
+    .toast.success { background: var(--success); }
 
     .villes-tags-wrap {
       border: 1px solid var(--border);
@@ -822,6 +1015,49 @@
 
     .btn-retour:hover { background: var(--accent); }
 
+    /* ── RECAP (step 4) ── */
+    .recap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .recap-item {
+      background: var(--surface);
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+    .recap-item.full { grid-column: 1 / -1; }
+    .recap-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .recap-value {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      word-break: break-word;
+    }
+    .recap-edit {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+    .recap-edit:hover { text-decoration: underline; }
+
     @media (max-width: 600px) {
       header { padding: 0 20px; }
       .hero { padding: 40px 24px 28px; overflow: hidden; }
@@ -834,21 +1070,23 @@
       .trust-stat:nth-child(odd) { border-right: 1px solid var(--border); }
       .trust-stat:nth-last-child(-n+2) { border-bottom: none; }
       .faq-section { padding: 40px 20px; }
-      .form-container { padding: 28px 20px calc(80px + env(safe-area-inset-bottom)); }
+      .form-container { padding: 24px 20px calc(80px + env(safe-area-inset-bottom)); }
       .form-row { grid-template-columns: 1fr; }
-      /* Zones tactiles inputs */
+      .recap-grid { grid-template-columns: 1fr; }
+      .recap-item.full { grid-column: auto; }
       input[type="text"],
       input[type="email"],
       input[type="url"],
       input[type="number"],
       select,
       textarea { padding: 15px 16px; font-size: 1rem; }
-      /* Bouton submit full width avec safe area */
       .btn-submit { padding: 20px; font-size: 0.88rem; }
-      /* Tarif slider plus facile à toucher */
+      .btn-next { padding: 18px 24px; font-size: 0.85rem; }
+      .btn-prev { padding: 18px 20px; }
       input[type="range"] { height: 28px; }
-      /* Avantages : 2 colonnes sur petit écran */
       .avantage { padding: 20px 12px; }
+      .progress-labels { display: none; }
+      .progress-bar-wrap { padding: 24px 24px 0; }
     }
   </style>
 </head>
@@ -856,68 +1094,68 @@
 
 <header>
   <a href="index.html" class="logo">ink<em>map</em></a>
-  <a href="index.html" class="back-link">← Retour à l'annuaire</a>
+  <a href="index.html" class="back-link">&larr; Retour &agrave; l'annuaire</a>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="launch-badge">Lancement — Gratuit</div>
+  <div class="launch-badge">Lancement &mdash; Gratuit</div>
   <div class="hero-tag"><span></span>Annuaire tatoueurs gratuit</div>
-  <h1>Référence ton <em>studio</em><br/>gratuitement</h1>
-  <p>Inscris ton studio sur Inkmap et gagne en visibilité auprès des clients qui cherchent précisément ton style.</p>
+  <h1>R&eacute;f&eacute;rence ton <em>studio</em><br/>gratuitement</h1>
+  <p>Inscris ton studio sur Inkmap et gagne en visibilit&eacute; aupr&egrave;s des clients qui cherchent pr&eacute;cis&eacute;ment ton style.</p>
 </section>
 
 <!-- AVANTAGES -->
 <div class="avantages">
   <div class="avantage">
-    <div class="avantage-icon">🆓</div>
+    <div class="avantage-icon">&#x1F193;</div>
     <strong>100% gratuit</strong>
     <span>Aucune carte bancaire requise</span>
   </div>
   <div class="avantage">
-    <div class="avantage-icon">⚡</div>
+    <div class="avantage-icon">&#x26A1;</div>
     <strong>En ligne en 24h</strong>
     <span>Validation rapide de ton profil</span>
   </div>
   <div class="avantage">
-    <div class="avantage-icon">📍</div>
+    <div class="avantage-icon">&#x1F4CD;</div>
     <strong>Visible partout</strong>
-    <span>Référencé par style et par ville</span>
+    <span>R&eacute;f&eacute;renc&eacute; par style et par ville</span>
   </div>
   <div class="avantage">
-    <div class="avantage-icon">✏️</div>
+    <div class="avantage-icon">&#x270F;&#xFE0F;</div>
     <strong>Modifiable</strong>
-    <span>Mets à jour ton profil quand tu veux</span>
+    <span>Mets &agrave; jour ton profil quand tu veux</span>
   </div>
 </div>
 
 <!-- BANNIÈRE RÉCLAMATION (cachée par défaut) -->
 <div id="claimBanner" style="display:none;background:rgba(192,57,43,0.08);border-top:1px solid rgba(192,57,43,0.2);border-bottom:1px solid rgba(192,57,43,0.2);padding:16px 40px;display:none;align-items:center;gap:16px;flex-wrap:wrap">
-  <div style="font-size:1.4rem">👋</div>
+  <div style="font-size:1.4rem">&#x1F44B;</div>
   <div>
-    <div style="font-weight:700;font-size:0.95rem">Tu réclames le profil de <span id="claimNom" style="color:#c0392b"></span></div>
-    <div style="color:#888;font-size:0.82rem;margin-top:2px">Les infos sont pré-remplies — vérifie, complète et valide pour prendre le contrôle de ton profil.</div>
+    <div style="font-weight:700;font-size:0.95rem">Tu r&eacute;clames le profil de <span id="claimNom" style="color:#c0392b"></span></div>
+    <div style="color:#888;font-size:0.82rem;margin-top:2px">Les infos sont pr&eacute;-remplies &mdash; v&eacute;rifie, compl&egrave;te et valide pour prendre le contr&ocirc;le de ton profil.</div>
   </div>
 </div>
 
 <!-- ILS NOUS FONT CONFIANCE -->
 <div class="trust-section">
-  <div class="trust-label">// Ils nous font déjà confiance</div>
+  <div class="trust-label">// Ils nous font d&eacute;j&agrave; confiance</div>
   <div class="trust-stats">
     <div class="trust-stat">
-      <div class="trust-stat-num" id="trust-nb-tatoueurs"><em>—</em></div>
-      <div class="trust-stat-label">Studios référencés</div>
+      <div class="trust-stat-num" id="trust-nb-tatoueurs"><em>&mdash;</em></div>
+      <div class="trust-stat-label">Studios r&eacute;f&eacute;renc&eacute;s</div>
     </div>
     <div class="trust-stat">
-      <div class="trust-stat-num" id="trust-nb-villes"><em>—</em></div>
+      <div class="trust-stat-num" id="trust-nb-villes"><em>&mdash;</em></div>
       <div class="trust-stat-label">Villes couvertes</div>
     </div>
     <div class="trust-stat">
       <div class="trust-stat-num">24<em>h</em></div>
-      <div class="trust-stat-label">Délai de mise en ligne</div>
+      <div class="trust-stat-label">D&eacute;lai de mise en ligne</div>
     </div>
     <div class="trust-stat">
-      <div class="trust-stat-num">0<em>€</em></div>
+      <div class="trust-stat-num">0<em>&euro;</em></div>
       <div class="trust-stat-label">Pour toujours gratuit</div>
     </div>
   </div>
@@ -925,26 +1163,43 @@
 
 <!-- FAQ -->
 <div class="faq-section">
-  <div class="faq-label">// Questions fréquentes</div>
+  <div class="faq-label">// Questions fr&eacute;quentes</div>
 
   <div class="faq-item">
     <button class="faq-question" onclick="toggleFaq(this)">C'est vraiment gratuit ?</button>
-    <div class="faq-answer">Oui, totalement gratuit pendant la phase de lancement. Inkmap est en cours de développement et nous référençons les premiers artistes gratuitement pour construire l'annuaire. À terme, une offre premium optionnelle sera disponible pour les tatoueurs qui souhaitent plus de visibilité — mais l'inscription de base restera toujours gratuite. Aucune carte bancaire demandée aujourd'hui.</div>
+    <div class="faq-answer">Oui, totalement gratuit pendant la phase de lancement. Inkmap est en cours de d&eacute;veloppement et nous r&eacute;f&eacute;ren&ccedil;ons les premiers artistes gratuitement pour construire l'annuaire. &Agrave; terme, une offre premium optionnelle sera disponible pour les tatoueurs qui souhaitent plus de visibilit&eacute; &mdash; mais l'inscription de base restera toujours gratuite. Aucune carte bancaire demand&eacute;e aujourd'hui.</div>
   </div>
 
   <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">Combien de temps ça prend ?</button>
-    <div class="faq-answer">Remplir le formulaire prend moins de 5 minutes. Ton profil est ensuite validé par notre équipe sous 24h, puis mis en ligne automatiquement. Tu reçois un email de confirmation dès que c'est en ligne.</div>
+    <button class="faq-question" onclick="toggleFaq(this)">Combien de temps &ccedil;a prend ?</button>
+    <div class="faq-answer">Remplir le formulaire prend moins de 3 minutes. Ton profil est ensuite valid&eacute; par notre &eacute;quipe sous 24h, puis mis en ligne automatiquement. Tu re&ccedil;ois un email de confirmation d&egrave;s que c'est en ligne.</div>
   </div>
 
   <div class="faq-item">
     <button class="faq-question" onclick="toggleFaq(this)">Qui voit mon profil ?</button>
-    <div class="faq-answer">Ton profil est visible publiquement sur inkmap.fr par tous les visiteurs — clients potentiels, curieux, professionnels. Il est aussi indexé par Google, ce qui t'apporte de la visibilité supplémentaire via les recherches "tatoueur [style] [ville]".</div>
+    <div class="faq-answer">Ton profil est visible publiquement sur inkmap.fr par tous les visiteurs &mdash; clients potentiels, curieux, professionnels. Il est aussi index&eacute; par Google, ce qui t'apporte de la visibilit&eacute; suppl&eacute;mentaire via les recherches "tatoueur [style] [ville]".</div>
   </div>
 
   <div class="faq-item">
     <button class="faq-question" onclick="toggleFaq(this)">Puis-je modifier mes infos ?</button>
-    <div class="faq-answer">Oui. Tu peux demander une mise à jour de ton profil à tout moment en nous contactant. Nous travaillons également sur un espace tatoueur pour gérer tes infos en autonomie — ça arrive bientôt.</div>
+    <div class="faq-answer">Oui. Tu peux demander une mise &agrave; jour de ton profil &agrave; tout moment en nous contactant. Nous travaillons &eacute;galement sur un espace tatoueur pour g&eacute;rer tes infos en autonomie &mdash; &ccedil;a arrive bient&ocirc;t.</div>
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar-wrap" id="progressWrap">
+  <div class="progress-steps">
+    <div class="progress-fill" id="progressFill"></div>
+    <div class="progress-dot active" data-step="0">1</div>
+    <div class="progress-dot" data-step="1">2</div>
+    <div class="progress-dot" data-step="2">3</div>
+    <div class="progress-dot" data-step="3">4</div>
+  </div>
+  <div class="progress-labels">
+    <div class="progress-lbl active" data-step="0">Identit&eacute;</div>
+    <div class="progress-lbl" data-step="1">Lieu</div>
+    <div class="progress-lbl" data-step="2">Art</div>
+    <div class="progress-lbl" data-step="3">Envoi</div>
   </div>
 </div>
 
@@ -953,12 +1208,12 @@
 
   <!-- SUCCÈS -->
   <div class="success-screen" id="success">
-    <div class="success-icon">🎉</div>
-    <h2>Demande envoyée !</h2>
-    <p>On va vérifier ton profil et te contacter dans les 24h pour confirmer la mise en ligne.</p>
+    <div class="success-icon">&#x1F389;</div>
+    <h2>Demande envoy&eacute;e !</h2>
+    <p>On va v&eacute;rifier ton profil et te contacter dans les 24h pour confirmer la mise en ligne.</p>
     <div id="successPhotosNote" style="display:none;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:16px 20px;max-width:440px;margin:0 auto 24px;text-align:left">
-      <p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:8px">📎 Envoie tes photos par email</p>
-      <p style="font-size:0.78rem;color:var(--muted2);margin-bottom:12px;line-height:1.5">Pour finaliser ton profil, envoie tes photos à :</p>
+      <p style="font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:8px">&#x1F4CE; Envoie tes photos par email</p>
+      <p style="font-size:0.78rem;color:var(--muted2);margin-bottom:12px;line-height:1.5">Pour finaliser ton profil, envoie tes photos &agrave; :</p>
       <a href="mailto:inkmap.contact@gmail.com?subject=Photos inscription Inkmap" style="display:inline-block;background:var(--accent);color:#fff;font-family:'Space Mono',monospace;font-size:0.72rem;padding:10px 16px;border-radius:2px;text-decoration:none;letter-spacing:0.5px">inkmap.contact@gmail.com</a>
     </div>
     <button class="btn-retour" onclick="window.location.href='index.html'">Voir l'annuaire</button>
@@ -967,582 +1222,215 @@
   <div class="form-card" id="formCard">
     <form id="inscriptionForm" novalidate>
 
-      <!-- SECTION 1 : IDENTITÉ -->
-      <div class="form-section">
-        <div class="form-section-title">① Ton identité</div>
+      <!-- STEP 1 : IDENTITÉ -->
+      <div class="form-step active" data-step="0">
+        <div class="form-section">
+          <div class="form-section-title">&#x2460; Ton identit&eacute;</div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Prénom & Nom <span class="required">*</span></label>
-            <input type="text" id="nom" placeholder="Ex : Lucas Moreau" />
-            <div class="field-error" id="err-nom">Champ obligatoire</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Pr&eacute;nom &amp; Nom <span class="required">*</span></label>
+              <input type="text" id="nom" placeholder="Ex : Lucas Moreau" autocomplete="name" />
+              <div class="field-error" id="err-nom">Champ obligatoire</div>
+            </div>
+            <div class="form-group">
+              <label>Nom d'artiste / Pseudo <span class="required">*</span></label>
+              <input type="text" id="pseudo" placeholder="Ex : Lorie Ink, DarkNeedle..." />
+              <div class="field-hint">Le nom affich&eacute; sur ton profil public</div>
+              <div class="field-error" id="err-pseudo">Champ obligatoire</div>
+            </div>
           </div>
+
           <div class="form-group">
             <label>Nom du studio <span class="required">*</span></label>
-            <input type="text" id="studio" placeholder="Ex : Ink & Soul Studio" />
+            <input type="text" id="studio" placeholder="Ex : Ink &amp; Soul Studio" autocomplete="organization" />
             <div class="field-error" id="err-studio">Champ obligatoire</div>
           </div>
-        </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Email <span class="required">*</span></label>
-            <input type="email" id="email" placeholder="ton@email.com" />
-            <div class="field-error" id="err-email">Email invalide</div>
-          </div>
-          <div class="form-group">
-            <label>Instagram</label>
-            <input type="text" id="instagram" placeholder="@tonpseudo" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Site web / lien de réservation</label>
-          <input type="url" id="website" placeholder="https://..." />
-        </div>
-      </div>
-
-      <!-- SECTION 2 : LOCALISATION -->
-      <div class="form-section">
-        <div class="form-section-title">② Ta localisation</div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>Ville(s) <span class="required">*</span></label>
-            <div class="villes-tags-wrap" id="villesWrap">
-              <div class="villes-tags" id="villesTags"></div>
-              <input type="text" id="villeInput" placeholder="Tape une ville + Entrée" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>Email <span class="required">*</span></label>
+              <input type="email" id="email" placeholder="ton@email.com" autocomplete="email" inputmode="email" />
+              <div class="field-error" id="err-email">Email invalide</div>
             </div>
-            <input type="hidden" id="ville" />
-            <div class="field-hint">Tu peux ajouter plusieurs villes si tu tatoues dans différents endroits</div>
-            <div class="field-error" id="err-ville">Ajoute au moins une ville</div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="text" id="instagram" placeholder="@tonpseudo" />
+            </div>
           </div>
+
           <div class="form-group">
-            <label>Région <span class="required">*</span></label>
-            <select id="region">
-              <option value="">Sélectionner...</option>
-              <option>Île-de-France</option>
-              <option>Auvergne-Rhône-Alpes</option>
-              <option>Nouvelle-Aquitaine</option>
-              <option>Occitanie</option>
-              <option>Hauts-de-France</option>
-              <option>Grand Est</option>
-              <option>Pays de la Loire</option>
-              <option>Bretagne</option>
-              <option>Normandie</option>
-              <option>Bourgogne-Franche-Comté</option>
-              <option>Centre-Val de Loire</option>
-              <option>PACA</option>
-              <option>Corse</option>
-              <option>DOM-TOM</option>
-            </select>
-            <div class="field-error" id="err-region">Champ obligatoire</div>
+            <label>Site web / lien de r&eacute;servation</label>
+            <input type="url" id="website" placeholder="https://..." inputmode="url" />
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Adresse du studio (optionnel)</label>
-          <input type="text" id="adresse" placeholder="Ex : 12 rue de la Paix, 75001 Paris" />
+        <div class="step-nav">
+          <button type="button" class="btn-next" onclick="nextStep()">Continuer &rarr;</button>
         </div>
       </div>
 
-      <!-- SECTION 3 : STYLE -->
-      <div class="form-section">
-        <div class="form-section-title">③ Tes styles <span class="required">*</span></div>
+      <!-- STEP 2 : LOCALISATION -->
+      <div class="form-step" data-step="1">
+        <div class="form-section">
+          <div class="form-section-title">&#x2461; Ta localisation</div>
 
-        <div class="styles-grid" id="stylesGrid">
-          <!-- Généré en JS -->
-        </div>
-        <div class="field-error" id="err-styles">Sélectionne au moins un style</div>
-      </div>
-
-      <!-- SECTION 4 : TARIFS -->
-      <div class="form-section">
-        <div class="form-section-title">④ Ton tarif horaire</div>
-
-        <div class="tarif-display">
-          <span id="tarifVal">150</span>€ <small>/ heure</small>
-        </div>
-        <input type="range" id="tarif" min="50" max="400" value="150" step="10"
-          oninput="document.getElementById('tarifVal').textContent = this.value" />
-        <div class="tarif-labels">
-          <span>50€</span>
-          <span>200€</span>
-          <span>400€+</span>
-        </div>
-
-        <div class="form-group" style="margin-top:20px">
-          <label>Infos supplémentaires sur les prix (optionnel)</label>
-          <input type="text" id="tarifInfo" placeholder="Ex : Petites pièces à partir de 80€, devis gratuit..." />
-        </div>
-      </div>
-
-      <!-- SECTION 5 : PRÉSENTATION -->
-      <div class="form-section">
-        <div class="form-section-title">⑤ Ta présentation</div>
-
-        <div class="form-group">
-          <label>Bio / Description <span class="required">*</span></label>
-          <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire... (min. 50 caractères)"></textarea>
-          <div class="field-error" id="err-bio">Minimum 50 caractères</div>
-        </div>
-
-        <div class="form-group">
-          <label>Photos de tes tatouages <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
-          <div class="upload-zone" id="uploadZone">
-            <input type="file" id="photos" accept="image/*" multiple />
-            <div id="uploadPlaceholder">
-              <div class="upload-icon">🖼️</div>
-              <div class="upload-text">
-                <strong>Glisse tes photos ici ou clique pour parcourir</strong>
-                JPG, PNG, WEBP — max 5 photos, 10 MB chacune
+          <div class="form-row">
+            <div class="form-group">
+              <label>Ville(s) <span class="required">*</span></label>
+              <div class="villes-tags-wrap" id="villesWrap">
+                <div class="villes-tags" id="villesTags"></div>
+                <input type="text" id="villeInput" placeholder="Ex : Lyon, Paris..." />
               </div>
-              <div class="upload-counter">
-                <div class="dots" id="uploadDots">
-                  <div class="dot" data-i="0"></div>
-                  <div class="dot" data-i="1"></div>
-                  <div class="dot" data-i="2"></div>
-                  <div class="dot" data-i="3"></div>
-                  <div class="dot" data-i="4"></div>
+              <input type="hidden" id="ville" />
+              <div class="field-hint">Tu peux ajouter plusieurs villes si tu tatoues dans diff&eacute;rents endroits</div>
+              <div class="field-error" id="err-ville">Ajoute au moins une ville</div>
+            </div>
+            <div class="form-group">
+              <label>R&eacute;gion <span class="required">*</span></label>
+              <select id="region">
+                <option value="">S&eacute;lectionner...</option>
+                <option>&Icirc;le-de-France</option>
+                <option>Auvergne-Rh&ocirc;ne-Alpes</option>
+                <option>Nouvelle-Aquitaine</option>
+                <option>Occitanie</option>
+                <option>Hauts-de-France</option>
+                <option>Grand Est</option>
+                <option>Pays de la Loire</option>
+                <option>Bretagne</option>
+                <option>Normandie</option>
+                <option>Bourgogne-Franche-Comt&eacute;</option>
+                <option>Centre-Val de Loire</option>
+                <option>PACA</option>
+                <option>Corse</option>
+                <option>DOM-TOM</option>
+              </select>
+              <div class="field-error" id="err-region">Champ obligatoire</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Adresse du studio (optionnel)</label>
+            <input type="text" id="adresse" placeholder="Ex : 12 rue de la Paix, 75001 Paris" autocomplete="street-address" />
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button type="button" class="btn-prev" onclick="prevStep()">&larr; Retour</button>
+          <button type="button" class="btn-next" onclick="nextStep()">Continuer &rarr;</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 : STYLE, TARIF, BIO, PHOTOS -->
+      <div class="form-step" data-step="2">
+        <div class="form-section">
+          <div class="form-section-title">&#x2462; Tes styles <span class="required">*</span></div>
+          <div class="styles-grid" id="stylesGrid"></div>
+          <div class="field-error" id="err-styles">S&eacute;lectionne au moins un style</div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">&#x2463; Ton tarif horaire</div>
+          <div class="tarif-display">
+            <span id="tarifVal">150</span>&euro; <small>/ heure</small>
+          </div>
+          <input type="range" id="tarif" min="50" max="400" value="150" step="10"
+            oninput="document.getElementById('tarifVal').textContent = this.value" />
+          <div class="tarif-labels">
+            <span>50&euro;</span>
+            <span>200&euro;</span>
+            <span>400&euro;+</span>
+          </div>
+          <div class="form-group" style="margin-top:20px">
+            <label>Infos suppl&eacute;mentaires sur les prix (optionnel)</label>
+            <input type="text" id="tarifInfo" placeholder="Ex : Petites pi&egrave;ces &agrave; partir de 80&euro;, devis gratuit..." />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">&#x2464; Ta pr&eacute;sentation</div>
+          <div class="form-group">
+            <label>Bio / Description <span class="required">*</span></label>
+            <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire... (min. 50 caract&egrave;res)"></textarea>
+            <div class="field-error" id="err-bio">Minimum 50 caract&egrave;res</div>
+          </div>
+
+          <div class="form-group">
+            <label>Photos de tes tatouages <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" id="photos" accept="image/*" multiple />
+              <div id="uploadPlaceholder">
+                <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+                <div class="upload-text">
+                  <strong>Glisse tes photos ici ou clique pour parcourir</strong>
+                  JPG, PNG, WEBP &mdash; max 5 photos, 10 MB chacune
                 </div>
-                <span id="uploadCount">0 / 5</span>
+                <div class="upload-counter">
+                  <div class="dots" id="uploadDots">
+                    <div class="dot" data-i="0"></div>
+                    <div class="dot" data-i="1"></div>
+                    <div class="dot" data-i="2"></div>
+                    <div class="dot" data-i="3"></div>
+                    <div class="dot" data-i="4"></div>
+                  </div>
+                  <span id="uploadCount">0 / 5</span>
+                </div>
+                <div class="upload-tips">
+                  <div class="upload-tip"><span>&#x2726;</span> Photos haute qualit&eacute;</div>
+                  <div class="upload-tip"><span>&#x2726;</span> Fond neutre ou en contexte</div>
+                  <div class="upload-tip"><span>&#x2726;</span> Tes meilleurs travaux</div>
+                </div>
               </div>
-              <div class="upload-tips">
-                <div class="upload-tip"><span>✦</span> Photos haute qualité</div>
-                <div class="upload-tip"><span>✦</span> Fond neutre ou en contexte</div>
-                <div class="upload-tip"><span>✦</span> Tes meilleurs travaux</div>
-              </div>
+              <div class="upload-preview" id="photoPreview"></div>
             </div>
-            <div class="upload-preview" id="photoPreview"></div>
+            <p style="margin-top:8px;font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.5px">S&eacute;lectionne tes meilleures r&eacute;alisations &mdash; tu recevras l'adresse email pour les envoyer apr&egrave;s validation.</p>
           </div>
-          <p style="margin-top:8px;font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.5px">Sélectionne tes meilleures réalisations — tu recevras l'adresse email pour les envoyer après validation.</p>
+        </div>
+
+        <div class="step-nav">
+          <button type="button" class="btn-prev" onclick="prevStep()">&larr; Retour</button>
+          <button type="button" class="btn-next" onclick="nextStep()">Continuer &rarr;</button>
         </div>
       </div>
 
-      <!-- SECTION 6 : CONDITIONS -->
-      <div class="form-section">
-        <div class="form-section-title">⑥ Confirmation</div>
+      <!-- STEP 4 : RÉCAP & CONFIRMATION -->
+      <div class="form-step" data-step="3">
+        <div class="form-section">
+          <div class="form-section-title">&#x2465; V&eacute;rifie et confirme</div>
 
-        <label class="conditions">
-          <input type="checkbox" id="cgu" />
-          <p>J'accepte les <a href="#">conditions d'utilisation</a> et je confirme que les informations renseignées sont exactes. Mon profil sera visible gratuitement sur inkmap.fr.</p>
-        </label>
-        <div class="field-error" id="err-cgu">Tu dois accepter les conditions</div>
+          <div class="recap-grid" id="recapGrid">
+            <!-- filled by JS -->
+          </div>
+
+          <label class="conditions">
+            <input type="checkbox" id="cgu" />
+            <p>J'accepte les <a href="mentions-legales.html">conditions d'utilisation</a> et je confirme que les informations renseign&eacute;es sont exactes. Mon profil sera visible gratuitement sur inkmap.fr.</p>
+          </label>
+          <div class="field-error" id="err-cgu">Tu dois accepter les conditions</div>
+        </div>
+
+        <!-- SUBMIT -->
+        <div class="step-nav" style="flex-direction:column;gap:0">
+          <button type="button" class="btn-prev" onclick="prevStep()" style="align-self:flex-start;margin-bottom:16px">&larr; Modifier mes infos</button>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            &#x2726; &nbsp; Cr&eacute;er mon profil gratuitement
+          </button>
+          <div class="submit-trust">
+            <div class="submit-trust-item">&#x1F512; Donn&eacute;es prot&eacute;g&eacute;es</div>
+            <div class="submit-trust-item">&#x26A1; En ligne en 24h</div>
+            <div class="submit-trust-item">&#x1F6AB; Z&eacute;ro spam</div>
+          </div>
+        </div>
+
       </div>
-
-      <!-- SUBMIT -->
-      <button type="submit" class="btn-submit" id="submitBtn">
-        ✦ &nbsp; Envoyer ma demande d'inscription
-      </button>
 
     </form>
   </div>
 </div>
 
-<script>
-// ── STATS DYNAMIQUES ──────────────────────────────────────────────────────────
-(async function() {
-  try {
-    const res = await fetch('/api/tatoueurs');
-    if (!res.ok) return;
-    const { records } = await res.json();
-    const villes = new Set(records.map(r => {
-      const v = (r.fields.Ville || '').trim().replace(/\s+\d+(e|er|ème|eme)?\s*$/i, '').trim();
-      return v || r.fields.Ville;
-    }).filter(Boolean));
-    document.getElementById('trust-nb-tatoueurs').innerHTML = `${records.length}<em>+</em>`;
-    document.getElementById('trust-nb-villes').innerHTML = `${villes.size}<em>+</em>`;
-  } catch(e) {
-    document.getElementById('trust-nb-tatoueurs').innerHTML = `10<em>+</em>`;
-    document.getElementById('trust-nb-villes').innerHTML = `5<em>+</em>`;
-  }
-})();
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-function toggleFaq(btn) {
-  const item = btn.closest('.faq-item');
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
-  if (!wasOpen) item.classList.add('open');
-}
-
-// ── STYLES ────────────────────────────────────────────────────────────────────
-const styles = [
-  { emoji: "✦", nom: "Fineline" },
-  { emoji: "◆", nom: "Blackwork" },
-  { emoji: "⛩", nom: "Japonais" },
-  { emoji: "⚓", nom: "Old School" },
-  { emoji: "👁", nom: "Réalisme" },
-  { emoji: "△", nom: "Géométrique" },
-  { emoji: "🎨", nom: "Aquarelle" },
-  { emoji: "🌑", nom: "Tribal" },
-  { emoji: "🌸", nom: "Floral" },
-  { emoji: "🎬", nom: "Neo-Traditional" },
-  { emoji: "⚡", nom: "Lettering" },
-  { emoji: "🖤", nom: "Micro-réalisme" },
-];
-
-const grid = document.getElementById('stylesGrid');
-styles.forEach(s => {
-  const label = document.createElement('label');
-  label.className = 'style-check';
-  label.innerHTML = `
-    <input type="checkbox" value="${s.nom}" onchange="toggleStyle(this)" />
-    <span>${s.emoji} ${s.nom}</span>
-  `;
-  grid.appendChild(label);
-});
-
-function toggleStyle(cb) {
-  cb.closest('.style-check').classList.toggle('checked', cb.checked);
-}
-
-// ── PHOTO UPLOAD ──────────────────────────────────────────────────────────────
-let uploadedFiles = [];
-
-function updateUploadUI() {
-  const count = uploadedFiles.length;
-  document.getElementById('uploadCount').textContent = `${count} / 5`;
-  document.querySelectorAll('#uploadDots .dot').forEach((dot, i) => {
-    dot.classList.toggle('filled', i < count);
-  });
-  const placeholder = document.getElementById('uploadPlaceholder');
-  const preview = document.getElementById('photoPreview');
-  if (count > 0) {
-    placeholder.style.display = 'none';
-    preview.style.display = 'grid';
-  } else {
-    placeholder.style.display = '';
-    preview.style.display = 'none';
-  }
-}
-
-function renderPreviews() {
-  const preview = document.getElementById('photoPreview');
-  preview.innerHTML = '';
-  uploadedFiles.forEach((file, i) => {
-    const item = document.createElement('div');
-    item.className = 'preview-item';
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-    img.alt = file.name;
-    const btn = document.createElement('button');
-    btn.className = 'preview-delete';
-    btn.type = 'button';
-    btn.innerHTML = '✕';
-    btn.onclick = (e) => { e.stopPropagation(); removePhoto(i); };
-    item.appendChild(img);
-    item.appendChild(btn);
-    preview.appendChild(item);
-  });
-  updateUploadUI();
-}
-
-function addPhotos(files) {
-  const newFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
-  const remaining = 5 - uploadedFiles.length;
-  uploadedFiles = uploadedFiles.concat(newFiles.slice(0, remaining));
-  renderPreviews();
-}
-
-function removePhoto(index) {
-  uploadedFiles.splice(index, 1);
-  renderPreviews();
-}
-
-(function initUpload() {
-  const zone = document.getElementById('uploadZone');
-  const input = document.getElementById('photos');
-
-  zone.addEventListener('click', (e) => {
-    if (e.target !== input) input.click();
-  });
-
-  input.addEventListener('change', () => { addPhotos(input.files); input.value = ''; });
-
-  zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-  zone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    zone.classList.remove('drag-over');
-    addPhotos(e.dataTransfer.files);
-  });
-
-  updateUploadUI();
-})();
-
-// ── MULTI-VILLES TAGS ────────────────────────────────────────────────────────
-const villesArr = [];
-const villeInput = document.getElementById('villeInput');
-const villesTags = document.getElementById('villesTags');
-const villesWrap = document.getElementById('villesWrap');
-const villeHidden = document.getElementById('ville');
-
-function renderVilles() {
-  villesTags.innerHTML = villesArr.map((v, i) =>
-    `<span class="ville-tag">${v}<span class="ville-tag-x" data-i="${i}">&times;</span></span>`
-  ).join('');
-  villeHidden.value = villesArr.join(', ');
-  villesWrap.classList.toggle('invalid', villesArr.length === 0 && villesWrap.classList.contains('invalid'));
-}
-
-villesTags.addEventListener('click', e => {
-  if (e.target.classList.contains('ville-tag-x')) {
-    villesArr.splice(+e.target.dataset.i, 1);
-    renderVilles();
-  }
-});
-
-villeInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === ',') {
-    e.preventDefault();
-    const v = villeInput.value.trim().replace(/,/g, '');
-    if (v && !villesArr.includes(v)) {
-      villesArr.push(v);
-      renderVilles();
-    }
-    villeInput.value = '';
-  }
-  if (e.key === 'Backspace' && !villeInput.value && villesArr.length) {
-    villesArr.pop();
-    renderVilles();
-  }
-});
-
-villesWrap.addEventListener('click', () => villeInput.focus());
-
-// Fix mobile : empêcher le scroll vers le bas quand le clavier s'ouvre
-villeInput.addEventListener('focus', () => {
-  setTimeout(() => {
-    villesWrap.scrollIntoView({ block: 'center', behavior: 'smooth' });
-  }, 300);
-});
-
-// ── VALIDATION ────────────────────────────────────────────────────────────────
-function validate() {
-  let ok = true;
-
-  const champs = [
-    { id: 'nom', err: 'err-nom', test: v => v.length >= 2 },
-    { id: 'studio', err: 'err-studio', test: v => v.length >= 2 },
-    { id: 'email', err: 'err-email', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-    { id: 'ville', err: 'err-ville', test: v => villesArr.length > 0 },
-    { id: 'region', err: 'err-region', test: v => v !== '' },
-    { id: 'bio', err: 'err-bio', test: v => v.length >= 50 },
-  ];
-
-  champs.forEach(({ id, err, test }) => {
-    const el = document.getElementById(id);
-    const val = el.value.trim();
-    const valid = test(val);
-    // Pour le champ ville multi-tags, on toggle la classe sur le wrapper
-    const toggleEl = id === 'ville' ? villesWrap : el;
-    toggleEl.classList.toggle('invalid', !valid);
-    document.getElementById(err).style.display = valid ? 'none' : 'block';
-    if (!valid) ok = false;
-  });
-
-  // Styles
-  const stylesChecked = [...document.querySelectorAll('#stylesGrid input:checked')];
-  const stylesOk = stylesChecked.length > 0;
-  document.getElementById('err-styles').style.display = stylesOk ? 'none' : 'block';
-  if (!stylesOk) ok = false;
-
-  // CGU
-  const cgu = document.getElementById('cgu').checked;
-  document.getElementById('err-cgu').style.display = cgu ? 'none' : 'block';
-  if (!cgu) ok = false;
-
-  return ok;
-}
-
-// ── SUBMIT ────────────────────────────────────────────────────────────────────
-async function uploadPhotos() {
-  const urls = [];
-  for (const file of uploadedFiles) {
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      headers: {
-        'Content-Type': file.type,
-        'X-Filename': file.name,
-      },
-      body: file,
-    });
-    if (!res.ok) throw new Error('Erreur upload photo : ' + file.name);
-    const data = await res.json();
-    urls.push(data.url);
-  }
-  return urls;
-}
-
-document.getElementById('inscriptionForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  if (!validate()) return;
-
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-
-  try {
-    // Upload photos first
-    let photoUrls = [];
-    if (uploadedFiles.length > 0) {
-      btn.textContent = '⏳  Upload des photos...';
-      photoUrls = await uploadPhotos();
-    }
-
-    btn.textContent = '⏳  Envoi en cours...';
-
-    // Récupère les styles cochés
-    const stylesCoches = [...document.querySelectorAll('#stylesGrid input:checked')]
-      .map(cb => cb.value).join(', ');
-
-    const data = {
-      fields: {
-        Nom:       document.getElementById('nom').value.trim(),
-        Studio:    document.getElementById('studio').value.trim(),
-        email:     document.getElementById('email').value.trim(),
-        instagram: document.getElementById('instagram').value.trim(),
-        website:   document.getElementById('website').value.trim(),
-        ville:     document.getElementById('ville').value.trim(),
-        region:    document.getElementById('region').value,
-        adresse:   document.getElementById('adresse').value.trim(),
-        styles:    stylesCoches,
-        tarif:     parseInt(document.getElementById('tarif').value),
-        tarifInfo: document.getElementById('tarifInfo').value.trim(),
-        bio:       document.getElementById('bio').value.trim(),
-        photos:    photoUrls,
-        Statut:    'En attente',
-      }
-    };
-
-    const res = await fetch('/api/inscription', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(JSON.stringify(err));
-    }
-
-    document.getElementById('formCard').classList.add('hide');
-    document.getElementById('success').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } catch(err) {
-    btn.disabled = false;
-    btn.textContent = '✦  Envoyer ma demande d\'inscription';
-    alert('Erreur : ' + err.message);
-  }
-});
-
-// ── PRÉ-REMPLISSAGE DEPUIS URL (mode "Réclamer ce profil") ──────────────────
-(function() {
-  const p = new URLSearchParams(window.location.search);
-  if (!p.get('nom')) return; // mode normal, rien à faire
-
-  // Afficher la bannière
-  const banner = document.getElementById('claimBanner');
-  banner.style.display = 'flex';
-  document.getElementById('claimNom').textContent = p.get('nom');
-
-  // Pré-remplir les champs
-  const set = (id, val) => { if (val && document.getElementById(id)) document.getElementById(id).value = val; };
-  set('nom',       p.get('nom'));
-  set('instagram', p.get('instagram'));
-  // Multi-villes depuis URL
-  if (p.get('ville')) {
-    p.get('ville').split(',').map(v => v.trim()).filter(Boolean).forEach(v => {
-      if (!villesArr.includes(v)) villesArr.push(v);
-    });
-    renderVilles();
-  }
-  set('region',    p.get('region'));
-
-  // Tarif : déplacer le slider
-  if (p.get('tarif')) {
-    const slider = document.getElementById('tarif');
-    const label  = document.getElementById('tarifVal');
-    if (slider) { slider.value = p.get('tarif'); if (label) label.textContent = p.get('tarif'); }
-  }
-
-  // Changer le titre de la page
-  document.querySelector('.hero h1').innerHTML =
-    `Réclame ton <em>profil</em>`;
-  document.querySelector('.hero p').textContent =
-    'Vérifie et complète tes infos pour prendre le contrôle de ton profil Inkmap.';
-})();
-
-// ── ENCRE ORGANIQUE ───────────────────────────────────────────────────────────
-(function() {
-  const turb = document.getElementById('ink-turb');
-  if (!turb) return;
-
-  const CFG = [
-    { id:'ink-b1', x:78,  y:-8,  w:700, h:620, color:'#c0392b', op:0.32, bph:0.0,  bspd:0.38 },
-    { id:'ink-b2', x:-6,  y:55,  w:580, h:520, color:'#d4511a', op:0.26, bph:1.8,  bspd:0.31 },
-    { id:'ink-b3', x:52,  y:84,  w:480, h:420, color:'#b02818', op:0.24, bph:3.5,  bspd:0.44 },
-    { id:'ink-b4', x:30,  y:25,  w:380, h:340, color:'#e06828', op:0.22, bph:5.1,  bspd:0.27 },
-  ];
-
-  CFG.forEach(c => {
-    const el = document.getElementById(c.id);
-    if (!el) return;
-    el.style.cssText = `
-      width:${c.w}px; height:${c.h}px;
-      left:${c.x}%; top:${c.y}%;
-      background: radial-gradient(ellipse at 44% 46%,
-        ${c.color} 0%,
-        ${c.color}dd 18%,
-        ${c.color}88 38%,
-        ${c.color}33 58%,
-        transparent 72%);
-      opacity: ${c.op};
-      filter: url(#ink-f);
-    `;
-  });
-
-  const AMP   = [160, 190, 140, 120];
-  const DELAY = [2800, 3600, 3200, 2400];
-  const PAR   = [{ x:.04,y:.06 },{ x:-.05,y:-.04 },{ x:.03,y:-.05 },{ x:-.03,y:.04 }];
-  const state = CFG.map(() => ({ cx:0, cy:0, tx:0, ty:0 }));
-
-  function pickTarget(i) {
-    state[i].tx = (Math.random()*2-1) * AMP[i];
-    state[i].ty = (Math.random()*2-1) * AMP[i];
-  }
-  function schedule(i) {
-    setTimeout(() => { pickTarget(i); schedule(i); }, DELAY[i] + Math.random()*2500);
-  }
-  state.forEach((_, i) => { pickTarget(i); schedule(i); });
-
-  let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-
-  let t = 0, frame = 0;
-  const LERP = 0.014;
-  const els = CFG.map(c => document.getElementById(c.id));
-
-  (function loop() {
-    requestAnimationFrame(loop);
-    t += 0.0006;
-
-    if (++frame % 2 === 0) {
-      const f1 = (0.013 + Math.sin(t * 1.1) * 0.007).toFixed(5);
-      const f2 = (0.009 + Math.cos(t * 0.8) * 0.005).toFixed(5);
-      turb.setAttribute('baseFrequency', `${f1} ${f2}`);
-    }
-
-    state.forEach((s, i) => {
-      s.cx += (s.tx - s.cx) * LERP;
-      s.cy += (s.ty - s.cy) * LERP;
-      const sc = 1.05 + Math.sin(t * CFG[i].bspd + CFG[i].bph) * 0.17;
-      const tx = (s.cx + scrollY * PAR[i].x).toFixed(1);
-      const ty = (s.cy + scrollY * PAR[i].y).toFixed(1);
-      if (els[i]) els[i].style.transform =
-        `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${sc.toFixed(3)})`;
-    });
-  })();
-})();
-</script>
+<script src="/js/inscription.js"></script>
 </body>
 </html>

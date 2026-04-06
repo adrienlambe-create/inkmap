@@ -2,6 +2,10 @@
 const fs = require('fs');
 const path = require('path');
 
+// Partials partagés (header, footer)
+const HEADER_HTML = fs.readFileSync(path.join(__dirname, 'partials/header.html'), 'utf-8');
+const FOOTER_HTML = fs.readFileSync(path.join(__dirname, 'partials/footer.html'), 'utf-8');
+
 const STYLES = [
   { slug: 'realisme',    label: 'Réalisme',    airtable: 'Réalisme' },
   { slug: 'japonais',   label: 'Japonais',    airtable: 'Japonais' },
@@ -120,6 +124,62 @@ const CITY_CONTEXT = {
   },
 };
 
+// FAQ par style (questions fréquentes pour le SEO)
+const STYLE_FAQ = {
+  'realisme': [
+    { q: `Combien coûte un tatouage réaliste ?`, a: `Un tatouage réaliste demande un travail minutieux. Comptez entre 150 € et 400 € de l'heure selon l'artiste. Une pièce de taille moyenne (bras) prend généralement 2 à 5 séances.` },
+    { q: `Combien de temps dure une séance de tatouage réaliste ?`, a: `Une séance dure en moyenne 3 à 5 heures. Les pièces complexes comme les portraits ou les scènes complètes peuvent nécessiter plusieurs séances espacées de 3 à 4 semaines.` },
+    { q: `Le tatouage réaliste vieillit-il bien ?`, a: `Oui, à condition de choisir un artiste expérimenté qui utilise les bonnes techniques de dégradé et de contraste. Un bon réaliste anticipe le vieillissement de l'encre et adapte sa technique en conséquence.` },
+  ],
+  'japonais': [
+    { q: `Combien coûte un tatouage japonais ?`, a: `Le tatouage japonais est souvent un projet ambitieux. Comptez entre 150 € et 350 € de l'heure. Un sleeve complet peut représenter 15 à 30 heures de travail, soit plusieurs milliers d'euros.` },
+    { q: `Quelle est la signification des motifs japonais ?`, a: `Chaque élément a un symbolisme fort : le dragon représente la force et la sagesse, la carpe koï incarne la persévérance, les fleurs de cerisier évoquent l'éphémère de la vie, et le tigre symbolise le courage.` },
+    { q: `Faut-il faire un sleeve complet en japonais ?`, a: `Non, le style japonais s'adapte à toutes les tailles. Vous pouvez commencer par une pièce isolée (carpe, masque, fleur) et l'étendre progressivement si vous le souhaitez.` },
+  ],
+  'geometrique': [
+    { q: `Le tatouage géométrique fait-il plus mal ?`, a: `La douleur dépend de l'emplacement, pas du style. Cependant, les lignes droites et les formes géométriques demandent de rester immobile, ce qui peut rendre les longues séances plus éprouvantes.` },
+    { q: `Combien coûte un tatouage géométrique ?`, a: `Comptez entre 100 € et 300 € de l'heure selon la complexité. Les pièces simples (triangle, cercle) sont rapides, tandis que les mandalas ou compositions complexes demandent plusieurs heures.` },
+    { q: `Le tatouage géométrique vieillit-il bien ?`, a: `Les lignes fines et les formes précises peuvent s'estomper légèrement avec le temps. Choisissez un artiste expérimenté qui adapte l'épaisseur des traits pour garantir la longévité du tatouage.` },
+  ],
+  'tribal': [
+    { q: `Quelle est la signification du tatouage tribal ?`, a: `Le tribal trouve ses origines dans les traditions polynésiennes, maories et aztèques. Chaque motif porte un sens : la force, la protection, l'appartenance à un groupe, ou le passage à l'âge adulte.` },
+    { q: `Combien coûte un tatouage tribal ?`, a: `Le tribal est souvent en aplats noirs, ce qui accélère l'exécution. Comptez entre 100 € et 250 € de l'heure. Une pièce bras ou épaule prend généralement 2 à 4 heures.` },
+    { q: `Peut-on moderniser un tatouage tribal ?`, a: `Oui, beaucoup d'artistes proposent des versions contemporaines du tribal, mêlant motifs traditionnels et lignes graphiques modernes pour un rendu plus actuel.` },
+  ],
+  'old-school': [
+    { q: `Combien coûte un tatouage old school ?`, a: `L'old school utilise des couleurs vives et des contours épais. Comptez entre 100 € et 250 € de l'heure. Les pièces classiques (ancre, rose, aigle) prennent 1 à 3 heures.` },
+    { q: `Le tatouage old school vieillit-il bien ?`, a: `C'est l'un des styles qui vieillit le mieux grâce à ses contours épais et ses couleurs saturées. Les lignes restent nettes et les couleurs gardent leur éclat pendant des décennies.` },
+    { q: `Peut-on personnaliser un tatouage old school ?`, a: `Absolument. Les meilleurs artistes old school savent réinterpréter les motifs classiques avec votre touche personnelle, tout en respectant les codes du style (contours gras, palette vive).` },
+  ],
+  'aquarelle': [
+    { q: `Le tatouage aquarelle dure-t-il dans le temps ?`, a: `Le tatouage aquarelle peut s'estomper plus vite que les styles à contours épais. Choisissez un artiste expérimenté qui sait doser les pigments et ajoutez des retouches si nécessaire après quelques années.` },
+    { q: `Combien coûte un tatouage aquarelle ?`, a: `Comptez entre 150 € et 350 € de l'heure. La technique aquarelle demande une grande maîtrise de la couleur et des dégradés, ce qui justifie un tarif souvent plus élevé.` },
+    { q: `Peut-on combiner aquarelle et fineline ?`, a: `Oui, c'est même une combinaison très populaire. Les traits fins du fineline structurent le design tandis que les touches aquarelle apportent couleur et mouvement.` },
+  ],
+  'dotwork': [
+    { q: `Combien coûte un tatouage dotwork ?`, a: `Le dotwork est un travail de patience. Comptez entre 100 € et 300 € de l'heure. Les mandalas et compositions géométriques complexes peuvent prendre 4 à 8 heures.` },
+    { q: `Le tatouage dotwork fait-il plus mal ?`, a: `Le dotwork utilise des points répétés, ce qui peut créer une sensation différente du trait continu. La douleur reste comparable aux autres styles et dépend surtout de la zone tatouée.` },
+    { q: `Quelle est la différence entre dotwork et handpoke ?`, a: `Le dotwork désigne le style visuel (motifs en points), tandis que le handpoke est une technique (tatouage sans machine, point par point). On peut faire du dotwork à la machine comme en handpoke.` },
+  ],
+  'lettering': [
+    { q: `Comment choisir la typographie de son tatouage lettering ?`, a: `Votre tatoueur lettering vous proposera plusieurs typographies adaptées à votre texte et à l'emplacement choisi. Script, gothique, minimaliste — chaque police a son caractère et sa lisibilité.` },
+    { q: `Combien coûte un tatouage lettering ?`, a: `Le lettering est souvent plus rapide que les autres styles. Comptez entre 80 € et 200 € pour une phrase courte. Les compositions complexes (full arm, chest) coûtent davantage.` },
+    { q: `Le tatouage lettering vieillit-il bien ?`, a: `Les lettres fines peuvent s'épaissir légèrement avec le temps. Un bon artiste lettering anticipe ce phénomène en adaptant la taille et l'espacement des lettres.` },
+  ],
+};
+
+// Conseils pour choisir son tatoueur par style
+const STYLE_TIPS = {
+  'realisme': `Demandez à voir des photos cicatrisées, pas seulement fraîches. Le réalisme révèle la vraie qualité de l'artiste une fois la peau guérie. Vérifiez aussi qu'il maîtrise les contrastes et les dégradés sur différentes carnations.`,
+  'japonais': `Regardez si l'artiste respecte les règles de composition du japonais traditionnel (sens des vagues, placement des éléments). Un bon tatoueur japonais connaît la symbolique de chaque motif et saura vous conseiller.`,
+  'geometrique': `La précision est tout dans le géométrique. Zoomez sur les photos pour vérifier la régularité des lignes et la symétrie. Un bon artiste géométrique travaille avec des gabarits et une rigueur mathématique.`,
+  'tribal': `Assurez-vous que l'artiste connaît la tradition derrière les motifs et ne se contente pas de copier des designs. Un bon tatoueur tribal crée des pièces sur mesure qui respectent les codes culturels.`,
+  'old-school': `Vérifiez la saturation des couleurs et la netteté des contours sur les photos cicatrisées. Un bon old school, même simple, doit avoir des couleurs vibrantes et des lignes nettes et régulières.`,
+  'aquarelle': `Demandez des photos de tatouages cicatrisés depuis plus d'un an. L'aquarelle est un style qui peut évoluer avec le temps, et seul un artiste expérimenté sait doser les pigments pour la longévité.`,
+  'dotwork': `Regardez la régularité des points : ils doivent être uniformes en taille et en espacement. Les dégradés doivent être fluides sans zones de points agglutinés. C'est le signe d'un vrai maître du dotwork.`,
+  'lettering': `Demandez une maquette de votre texte avant la séance. La lisibilité est cruciale en lettering — testez différentes tailles et polices. Un bon artiste lettering adapte la typographie à la morphologie de la zone tatouée.`,
+};
+
 // Phrases de clôture Inkmap
 const INKMAP_CLOSE = [
   `Inkmap recense et vérifie les profils des meilleurs tatoueurs spécialisés dans ce style, partout en France.`,
@@ -150,6 +210,47 @@ function buildTitle(style, city) {
   return `Tatoueur ${style.label} ${city.label} — Meilleurs artistes | Inkmap`;
 }
 
+function buildFaqSchema(style) {
+  const faqs = STYLE_FAQ[style.slug] || [];
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a }
+    }))
+  }, null, 2);
+}
+
+function buildBreadcrumbSchema(style, city, url) {
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inkmap", "item": "https://inkmap.fr/" },
+      { "@type": "ListItem", "position": 2, "name": `Tatoueurs ${city.label}`, "item": `https://inkmap.fr/tatoueur-fineline-${city.slug}` },
+      { "@type": "ListItem", "position": 3, "name": `${style.label} ${city.label}`, "item": url }
+    ]
+  }, null, 2);
+}
+
+function buildInternalLinks(currentStyle, city) {
+  return STYLES
+    .filter(s => s.slug !== currentStyle.slug)
+    .map(s => `<a href="tatoueur-${s.slug}-${city.slug}.html" class="internal-link">${s.label}</a>`)
+    .join('');
+}
+
+function buildFaqHtml(style) {
+  const faqs = STYLE_FAQ[style.slug] || [];
+  return faqs.map(f => `
+      <details class="faq-item">
+        <summary class="faq-q">${f.q}</summary>
+        <div class="faq-a">${f.a}</div>
+      </details>`).join('');
+}
+
 function buildPage(style, city) {
   const slug = `tatoueur-${style.slug}-${city.slug}`;
   const url = `https://inkmap.fr/${slug}`;
@@ -157,11 +258,19 @@ function buildPage(style, city) {
   const desc = buildMetaDesc(style, city);
   const intro = buildIntro(style, city);
   const s = STYLE_INTRO[style.slug];
+  const faqSchema = buildFaqSchema(style);
+  const breadcrumbSchema = buildBreadcrumbSchema(style, city, url);
+  const internalLinks = buildInternalLinks(style, city);
+  const faqHtml = buildFaqHtml(style);
+  const tips = STYLE_TIPS[style.slug] || '';
 
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title}</title>
   <meta name="description" content="${desc}" />
@@ -173,6 +282,11 @@ function buildPage(style, city) {
   <meta property="og:site_name" content="Inkmap" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="${url}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tatoueur ${style.label} ${city.label} — Inkmap" />
+  <meta name="twitter:description" content="${desc}" />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
 
   <script type="application/ld+json">
   {
@@ -190,96 +304,16 @@ function buildPage(style, city) {
     "areaServed": "${city.label}"
   }
   </script>
+  <script type="application/ld+json">
+  ${breadcrumbSchema}
+  </script>
+  <script type="application/ld+json">
+  ${faqSchema}
+  </script>
 
+  <link rel="stylesheet" href="/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #ffffff;
-      --surface: #f9f9f9;
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.08);
-      --accent: #c0392b;
-      --text: #0d0d0d;
-      --muted: #aaa;
-      --muted2: #666;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── HEADER ── */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      padding: 0 56px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      position: relative;
-      text-decoration: none;
-      flex-shrink: 0;
-      padding: 4px 12px 4px 8px;
-    }
-
-    .logo em { font-style: normal; color: var(--accent); }
-
-    .ink { position: absolute; border-radius: 50%; pointer-events: none; }
-    .ink-1 { width: 5px; height: 4px; background: var(--accent); border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; top: -4px; left: -7px; transform: rotate(20deg); opacity: 0.85; }
-    .ink-2 { width: 3px; height: 3px; background: var(--accent); border-radius: 50%; top: -5px; left: 4px; opacity: 0.6; }
-    .ink-3 { width: 2px; height: 2px; background: var(--text); border-radius: 50%; top: -3px; left: 12px; opacity: 0.4; }
-    .ink-4 { width: 4px; height: 3px; background: var(--accent); border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; bottom: -3px; right: -6px; transform: rotate(-10deg); opacity: 0.7; }
-    .ink-5 { width: 2px; height: 4px; background: var(--text); border-radius: 50%; bottom: -4px; right: 8px; opacity: 0.25; }
-    .ink-6 { width: 6px; height: 2px; background: var(--accent); border-radius: 50%; top: 50%; right: -10px; transform: translateY(-50%) rotate(35deg); opacity: 0.45; }
-
-    nav { display: flex; align-items: center; gap: 40px; }
-
-    nav a {
-      color: var(--muted2);
-      text-decoration: none;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      transition: color .15s;
-      text-transform: uppercase;
-    }
-
-    nav a:hover { color: var(--text); }
-
-    .btn-nav {
-      background: var(--text) !important;
-      color: #fff !important;
-      padding: 10px 20px;
-      font-size: 0.7rem !important;
-      letter-spacing: 1.5px;
-      border-radius: 2px;
-    }
-
-    .btn-nav:hover { background: var(--accent) !important; color: #fff !important; }
-
     /* ── SEO HERO ── */
     .seo-hero {
       padding-top: 64px;
@@ -369,525 +403,123 @@ function buildPage(style, city) {
       pointer-events: none;
     }
 
-    /* ── RÉSULTATS ── */
-    .results-header {
-      padding: 12px 56px;
-      font-size: 0.62rem;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    /* ── SEO SECTIONS ── */
+    .seo-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 56px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .seo-section-alt {
       background: var(--surface);
+      max-width: 100%;
+      padding-left: calc((100% - 900px) / 2 + 56px);
+      padding-right: calc((100% - 900px) / 2 + 56px);
     }
 
-    /* ── GRID ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border-bottom: 1px solid var(--border);
+    .seo-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      color: var(--text);
     }
 
-    .card {
-      background: var(--bg);
-      cursor: pointer;
-      transition: background .12s;
+    .seo-section-content p {
+      color: var(--muted2);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .seo-section-content p:last-child { margin-bottom: 0; }
+
+    .seo-section-sub {
+      color: var(--muted2);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* FAQ */
+    .seo-faq { display: flex; flex-direction: column; gap: 8px; }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
       overflow: hidden;
-      position: relative;
     }
 
-    .card:hover { background: var(--surface); }
-
-    .card-img {
-      width: 100%;
-      height: 180px;
-      background: #1a1a1a;
+    .faq-q {
+      padding: 16px 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      position: relative;
-      overflow: hidden;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .card-body { padding: 20px 22px 18px; }
+    .faq-q::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
 
-    .card-top {
+    details[open] .faq-q::after {
+      content: '−';
+    }
+
+    .faq-a {
+      padding: 0 20px 16px;
+      color: var(--muted2);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* INTERNAL LINKS */
+    .internal-links {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 4px;
+      flex-wrap: wrap;
       gap: 8px;
     }
 
-    .card-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.1;
-      color: var(--text);
-    }
-
-    .badge-verifie {
-      background: var(--text);
-      color: var(--bg);
-      font-size: 0.58rem;
-      padding: 3px 8px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: 'Space Mono', monospace;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .badge-reclamer {
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.58rem;
-      padding: 3px 8px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: 'Space Mono', monospace;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .card-location {
-      color: var(--muted);
-      font-size: 0.68rem;
-      margin-bottom: 12px;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .styles {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .style-tag {
-      border: 1px solid rgba(0,0,0,0.15);
-      color: var(--muted2);
-      padding: 2px 8px;
-      font-size: 0.62rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 12px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .tarif {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .tarif small {
-      font-family: 'Space Mono', monospace;
-      color: var(--muted);
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-
-    .card-actions { display: flex; gap: 0; }
-
-    .btn-voir {
-      background: var(--text);
-      color: var(--bg);
-      border: none;
+    .internal-link {
+      display: inline-block;
       padding: 8px 16px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: background .12s;
-    }
-
-    .btn-voir:hover { background: var(--accent); }
-
-    .btn-insta {
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.15);
-      border-left: none;
-      color: var(--muted2);
-      padding: 8px 12px;
-      font-size: 0.65rem;
-      cursor: pointer;
-      transition: all .12s;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .btn-insta:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── NO RESULTS ── */
-    .no-results {
-      text-align: center;
-      padding: 80px 20px;
-      color: var(--muted);
-      grid-column: 1/-1;
-      background: var(--surface);
-    }
-
-    .no-results strong {
-      display: block;
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    /* ── CTA ── */
-    .cta-band {
-      padding: 64px 56px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .cta-band-text {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2.2rem);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
-
-    .cta-band-text span { color: var(--accent); }
-
-    .cta-band-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .btn-primary {
-      background: var(--text);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-weight: 600;
-      font-size: 0.78rem;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: background .15s;
-      text-decoration: none;
-      display: inline-block;
-      border-radius: 2px;
-    }
-
-    .btn-primary:hover { background: var(--accent); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--muted2);
       border: 1px solid var(--border);
-      padding: 14px 28px;
-      font-weight: 500;
+      border-radius: 20px;
       font-size: 0.78rem;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Space Mono', monospace;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.5px;
       transition: all .15s;
-      text-decoration: none;
-      display: inline-block;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      border-radius: 2px;
+      background: var(--card);
     }
 
-    .btn-secondary:hover { color: var(--text); border-color: var(--text); }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 40px 20px;
-      backdrop-filter: blur(8px);
-      overflow-y: auto;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      max-width: 560px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 44px;
-      position: relative;
-      border-radius: 4px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.15);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px; right: 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted2);
-      width: 32px; height: 32px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all .12s;
-      font-family: 'Space Mono', monospace;
-      border-radius: 50%;
-    }
-
-    .modal-close:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    .modal-emoji { font-size: 2.5rem; margin-bottom: 12px; }
-
-    .modal-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      margin-bottom: 4px;
-      line-height: 1;
-    }
-
-    .modal-city {
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      margin-bottom: 16px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .modal-section { margin-top: 24px; }
-
-    .modal-section h3 {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
+    .internal-link:hover {
+      border-color: var(--accent);
       color: var(--accent);
-      margin-bottom: 8px;
+      background: rgba(192,57,43,0.04);
     }
 
-    .modal-section p {
-      line-height: 1.7;
-      color: var(--muted2);
-      font-size: 0.9rem;
-    }
-
-    .modal-price {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.6rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 28px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 44px 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      background: var(--surface);
-    }
-
-    .footer-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text);
-    }
-
-    .footer-logo em { font-style: normal; color: var(--accent); }
-
-    footer p {
-      color: var(--muted2);
-      font-size: 0.7rem;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
-
-    footer small {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* ── BACKGROUND BLOBS ── */
-    .bg-blobs {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      overflow: hidden;
-      mix-blend-mode: multiply;
-    }
-
-    .bg-blob { position: absolute; border-radius: 50%; will-change: transform; }
-
-    .bg-blob-1 {
-      width: 650px; height: 580px;
-      background: radial-gradient(ellipse, rgba(255,155,90,0.55) 0%, rgba(255,120,80,0.2) 50%, transparent 75%);
-      filter: blur(72px);
-      top: -120px; right: -60px;
-    }
-
-    .bg-blob-2 {
-      width: 520px; height: 480px;
-      background: radial-gradient(ellipse, rgba(255,100,140,0.45) 0%, rgba(240,90,130,0.2) 50%, transparent 72%);
-      filter: blur(80px);
-      bottom: 25%; left: -100px;
-    }
-
-    .bg-blob-3 {
-      width: 400px; height: 380px;
-      background: radial-gradient(ellipse, rgba(255,210,100,0.4) 0%, rgba(255,180,80,0.15) 55%, transparent 75%);
-      filter: blur(65px);
-      top: 55%; left: 45%;
-    }
-
-    /* ── HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 36px;
-      height: 36px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      z-index: 200;
-    }
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: all .25s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* ── MOBILE NAV OVERLAY ── */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 56px; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 100;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      border-top: 1px solid var(--border);
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      color: var(--text);
-      text-decoration: none;
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: color .15s;
-    }
-    .mobile-nav a:hover { color: var(--accent); }
-    .mobile-nav .btn-nav-mobile {
-      background: var(--text);
-      color: #fff !important;
-      padding: 16px 32px;
-      font-size: 0.85rem !important;
-      letter-spacing: 2px;
-      border-radius: 2px;
-      font-family: 'Space Grotesk', sans-serif !important;
-      font-weight: 700;
-    }
-
-    /* ── TABLETTE (max 1024px) ── */
-    @media (max-width: 1024px) {
-      header { padding: 0 32px; }
-      .seo-hero { padding: 96px 40px 56px; }
-      .results-header { padding: 12px 40px; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-      .cta-band { padding: 48px 40px; }
-      footer { padding: 36px 40px; }
-    }
-
-    /* ── MOBILE (max 768px) ── */
     @media (max-width: 768px) {
-      header { padding: 0 20px; height: 56px; }
-      nav { display: none; }
-      .hamburger { display: flex; }
+      .seo-section { padding: 40px 20px; }
+      .seo-section-alt { padding-left: 20px; padding-right: 20px; }
       .seo-hero { padding: 80px 20px 48px; }
       .seo-hero h1 { font-size: clamp(2.4rem, 10vw, 4rem); letter-spacing: -1px; }
-      .results-header { padding: 10px 20px; }
-      .grid { grid-template-columns: 1fr; }
-      .card-img { height: 200px; }
-      .btn-voir, .btn-insta { padding: 12px 16px; font-size: 0.7rem; }
-      .cta-band { padding: 40px 20px; flex-direction: column; align-items: flex-start; gap: 20px; }
-      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
-      .modal-overlay { padding: 0; align-items: flex-end; }
-      .modal { max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; padding: 32px 24px 40px; border-bottom: none; }
-      .bg-blobs { display: none; }
     }
 
-    /* ── TRÈS PETIT ÉCRAN (max 380px) ── */
     @media (max-width: 380px) {
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
     }
@@ -895,42 +527,8 @@ function buildPage(style, city) {
 </head>
 <body>
 
-<!-- BACKGROUND BLOBS -->
-<div class="bg-blobs" aria-hidden="true">
-  <div class="bg-blob bg-blob-1"></div>
-  <div class="bg-blob bg-blob-2"></div>
-  <div class="bg-blob bg-blob-3"></div>
-</div>
 
-<!-- HEADER -->
-<header>
-  <a href="index.html" class="logo">
-    <span class="ink ink-1"></span>
-    <span class="ink ink-2"></span>
-    <span class="ink ink-3"></span>
-    ink<em>map</em>
-    <span class="ink ink-4"></span>
-    <span class="ink ink-5"></span>
-    <span class="ink ink-6"></span>
-  </a>
-  <nav>
-    <a href="index.html">Annuaire</a>
-    <a href="index.html#recherche">Styles</a>
-    <a href="inscription.html" class="btn-nav">Inscrire mon studio →</a>
-  </nav>
-  <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</header>
-
-<!-- MENU MOBILE -->
-<div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation">
-  <a href="index.html" onclick="fermerMenu()">Annuaire</a>
-  <a href="index.html#recherche" onclick="fermerMenu()">Styles</a>
-  <a href="inscription.html" class="btn-nav-mobile" onclick="fermerMenu()">Inscrire mon studio →</a>
-</div>
+${HEADER_HTML}
 
 <!-- SEO HERO -->
 <section class="seo-hero">
@@ -962,6 +560,38 @@ function buildPage(style, city) {
 <!-- GRID -->
 <div class="grid" id="grid"></div>
 
+<!-- GUIDE DU STYLE -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Guide : le tatouage ${style.label.toLowerCase()}</h2>
+  <div class="seo-section-content">
+    <p>${s.desc1}</p>
+    <p>${s.desc2}</p>
+  </div>
+</section>
+
+<!-- CONSEILS -->
+<section class="seo-section seo-section-alt">
+  <h2 class="seo-section-title">Comment choisir son tatoueur ${style.label.toLowerCase()} à ${city.label} ?</h2>
+  <div class="seo-section-content">
+    <p>${tips}</p>
+    <p>Sur Inkmap, chaque artiste est référencé avec son style, ses tarifs et son portfolio. Comparez les profils, consultez les réalisations et contactez directement l'artiste qui vous correspond — le tout gratuitement.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Questions fréquentes — Tatouage ${style.label}</h2>
+  <div class="seo-faq">${faqHtml}
+  </div>
+</section>
+
+<!-- AUTRES STYLES -->
+<section class="seo-section seo-section-alt">
+  <h2 class="seo-section-title">Autres styles de tatouage à ${city.label}</h2>
+  <p class="seo-section-sub">Découvrez aussi les tatoueurs spécialisés dans d'autres styles à ${city.label} :</p>
+  <div class="internal-links">${internalLinks}</div>
+</section>
+
 <!-- CTA -->
 <div class="cta-band">
   <div class="cta-band-text">Explore tous les<br><span>tatoueurs français →</span></div>
@@ -980,16 +610,7 @@ function buildPage(style, city) {
 </div>
 
 <!-- FOOTER -->
-<footer>
-  <div>
-    <div class="footer-logo">ink<em>map</em></div>
-    <p style="margin-top:6px">Le premier annuaire des tatoueurs français</p>
-  </div>
-  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-    <small>© 2025 — INKMAP.FR</small>
-    <a href="mentions-legales.html" style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Mentions légales</a>
-  </div>
-</footer>
+${FOOTER_HTML}
 
 <script>
 const PAGE_STYLE = "${style.airtable}";

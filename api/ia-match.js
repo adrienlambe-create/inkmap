@@ -1,24 +1,4 @@
-const ALLOWED_ORIGINS = ['https://inkmap.fr'];
-function cors(req, res) {
-  const origin = req.headers.origin || '';
-  const ok = ALLOWED_ORIGINS.includes(origin) || /^http:\/\/localhost(:\d+)?$/.test(origin);
-  if (ok) res.setHeader('Access-Control-Allow-Origin', origin);
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Vary', 'Origin');
-  if (req.method === 'OPTIONS') { res.status(204).end(); return true; }
-  return false;
-}
-
-const rateStore = new Map();
-function rateLimit(ip, max = 30, windowMs = 60_000) {
-  const now = Date.now();
-  const rec = rateStore.get(ip) || { n: 0, reset: now + windowMs };
-  if (now > rec.reset) { rec.n = 0; rec.reset = now + windowMs; }
-  rec.n++;
-  rateStore.set(ip, rec);
-  return rec.n <= max;
-}
+const { cors, rateLimit, getIp } = require('./_utils');
 
 const ALLOWED_MEDIA_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
@@ -26,8 +6,8 @@ module.exports = async (req, res) => {
   if (cors(req, res)) return;
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
-  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || 'unknown';
-  if (!rateLimit(ip)) return res.status(429).json({ error: 'Trop de requêtes, réessaie dans une minute.' });
+  const ip = getIp(req);
+  if (!rateLimit(ip, 30)) return res.status(429).json({ error: 'Trop de requêtes, réessaie dans une minute.' });
 
   const GROQ_KEY = process.env.GROQ_API_KEY;
   if (!GROQ_KEY) return res.status(500).json({ error: 'API key not configured' });
@@ -73,12 +53,11 @@ Règles :
   });
 
   async function callGroq() {
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    return fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${GROQ_KEY}`, 'Content-Type': 'application/json' },
       body: groqBody,
     });
-    return r;
   }
 
   try {

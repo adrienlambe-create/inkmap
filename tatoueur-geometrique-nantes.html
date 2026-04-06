@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tatoueur Géométrique Nantes — Meilleurs artistes | Inkmap</title>
   <meta name="description" content="Trouvez les meilleurs tatoueurs géométrique à Nantes. Mandalas, fractales, formes géométriques, symétrie — profils vérifiés sur Inkmap, l'annuaire tatoueurs ..." />
@@ -13,6 +16,11 @@
   <meta property="og:site_name" content="Inkmap" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://inkmap.fr/tatoueur-geometrique-nantes" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tatoueur Géométrique Nantes — Inkmap" />
+  <meta name="twitter:description" content="Trouvez les meilleurs tatoueurs géométrique à Nantes. Mandalas, fractales, formes géométriques, symétrie — profils vérifiés sur Inkmap, l'annuaire tatoueurs ..." />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
 
   <script type="application/ld+json">
   {
@@ -30,99 +38,68 @@
     "areaServed": "Nantes"
   }
   </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inkmap",
+      "item": "https://inkmap.fr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tatoueurs Nantes",
+      "item": "https://inkmap.fr/tatoueur-fineline-nantes"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Géométrique Nantes",
+      "item": "https://inkmap.fr/tatoueur-geometrique-nantes"
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Le tatouage géométrique fait-il plus mal ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La douleur dépend de l'emplacement, pas du style. Cependant, les lignes droites et les formes géométriques demandent de rester immobile, ce qui peut rendre les longues séances plus éprouvantes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien coûte un tatouage géométrique ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Comptez entre 100 € et 300 € de l'heure selon la complexité. Les pièces simples (triangle, cercle) sont rapides, tandis que les mandalas ou compositions complexes demandent plusieurs heures."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le tatouage géométrique vieillit-il bien ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les lignes fines et les formes précises peuvent s'estomper légèrement avec le temps. Choisissez un artiste expérimenté qui adapte l'épaisseur des traits pour garantir la longévité du tatouage."
+      }
+    }
+  ]
+}
+  </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { max-width: 100%; overflow-x: hidden; }
-
-    :root {
-      --bg: #ffffff;
-      --surface: #f9f9f9;
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.08);
-      --accent: #c0392b;
-      --text: #0d0d0d;
-      --muted: #aaa;
-      --muted2: #666;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── HEADER ── */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      padding: 0 56px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--text);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      position: relative;
-      text-decoration: none;
-      flex-shrink: 0;
-      padding: 4px 12px 4px 8px;
-    }
-
-    .logo em { font-style: normal; color: var(--accent); }
-
-    .ink { position: absolute; border-radius: 50%; pointer-events: none; }
-    .ink-1 { width: 5px; height: 4px; background: var(--accent); border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; top: -4px; left: -7px; transform: rotate(20deg); opacity: 0.85; }
-    .ink-2 { width: 3px; height: 3px; background: var(--accent); border-radius: 50%; top: -5px; left: 4px; opacity: 0.6; }
-    .ink-3 { width: 2px; height: 2px; background: var(--text); border-radius: 50%; top: -3px; left: 12px; opacity: 0.4; }
-    .ink-4 { width: 4px; height: 3px; background: var(--accent); border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; bottom: -3px; right: -6px; transform: rotate(-10deg); opacity: 0.7; }
-    .ink-5 { width: 2px; height: 4px; background: var(--text); border-radius: 50%; bottom: -4px; right: 8px; opacity: 0.25; }
-    .ink-6 { width: 6px; height: 2px; background: var(--accent); border-radius: 50%; top: 50%; right: -10px; transform: translateY(-50%) rotate(35deg); opacity: 0.45; }
-
-    nav { display: flex; align-items: center; gap: 40px; }
-
-    nav a {
-      color: var(--muted2);
-      text-decoration: none;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      transition: color .15s;
-      text-transform: uppercase;
-    }
-
-    nav a:hover { color: var(--text); }
-
-    .btn-nav {
-      background: var(--text) !important;
-      color: #fff !important;
-      padding: 10px 20px;
-      font-size: 0.7rem !important;
-      letter-spacing: 1.5px;
-      border-radius: 2px;
-    }
-
-    .btn-nav:hover { background: var(--accent) !important; color: #fff !important; }
-
     /* ── SEO HERO ── */
     .seo-hero {
       padding-top: 64px;
@@ -212,565 +189,130 @@
       pointer-events: none;
     }
 
-    /* ── RÉSULTATS ── */
-    .results-header {
-      padding: 12px 56px;
-      font-size: 0.62rem;
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    /* ── SEO SECTIONS ── */
+    .seo-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 56px;
       border-bottom: 1px solid var(--border);
+    }
+
+    .seo-section-alt {
       background: var(--surface);
+      max-width: 100%;
+      padding-left: calc((100% - 900px) / 2 + 56px);
+      padding-right: calc((100% - 900px) / 2 + 56px);
     }
 
-    /* ── GRID ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border-bottom: 1px solid var(--border);
+    .seo-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      color: var(--text);
     }
 
-    .card {
-      background: var(--bg);
-      cursor: pointer;
-      transition: background .12s;
+    .seo-section-content p {
+      color: var(--muted2);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .seo-section-content p:last-child { margin-bottom: 0; }
+
+    .seo-section-sub {
+      color: var(--muted2);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* FAQ */
+    .seo-faq { display: flex; flex-direction: column; gap: 8px; }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
       overflow: hidden;
-      position: relative;
     }
 
-    .card:hover { background: var(--surface); }
-
-    .card-img {
-      width: 100%;
-      height: 180px;
-      background: #1a1a1a;
+    .faq-q {
+      padding: 16px 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      position: relative;
-      overflow: hidden;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .card-body { padding: 20px 22px 18px; }
+    .faq-q::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
 
-    .card-top {
+    details[open] .faq-q::after {
+      content: '−';
+    }
+
+    .faq-a {
+      padding: 0 20px 16px;
+      color: var(--muted2);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* INTERNAL LINKS */
+    .internal-links {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 4px;
+      flex-wrap: wrap;
       gap: 8px;
     }
 
-    .card-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.1;
-      color: var(--text);
-    }
-
-    .badge-verifie {
-      background: var(--text);
-      color: var(--bg);
-      font-size: 0.58rem;
-      padding: 3px 8px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: 'Space Mono', monospace;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .badge-reclamer {
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.58rem;
-      padding: 3px 8px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: 'Space Mono', monospace;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-
-    .card-location {
-      color: var(--muted);
-      font-size: 0.68rem;
-      margin-bottom: 12px;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-
-    .styles {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .style-tag {
-      border: 1px solid rgba(0,0,0,0.15);
-      color: var(--muted2);
-      padding: 2px 8px;
-      font-size: 0.62rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 12px;
-      border-top: 1px solid rgba(0,0,0,0.08);
-    }
-
-    .tarif {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .tarif small {
-      font-family: 'Space Mono', monospace;
-      color: var(--muted);
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-
-    .card-actions { display: flex; gap: 0; }
-
-    .btn-voir {
-      background: var(--text);
-      color: var(--bg);
-      border: none;
+    .internal-link {
+      display: inline-block;
       padding: 8px 16px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: background .12s;
-    }
-
-    .btn-voir:hover { background: var(--accent); }
-
-    .btn-insta {
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.15);
-      border-left: none;
-      color: var(--muted2);
-      padding: 8px 12px;
-      font-size: 0.65rem;
-      cursor: pointer;
-      transition: all .12s;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .btn-insta:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ── NO RESULTS ── */
-    .no-results {
-      text-align: center;
-      padding: 80px 20px;
-      color: var(--muted);
-      grid-column: 1/-1;
-      background: var(--surface);
-    }
-
-    .no-results strong {
-      display: block;
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    /* ── CTA ── */
-    .cta-band {
-      padding: 64px 56px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .cta-band-text {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.4rem, 3vw, 2.2rem);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      color: var(--text);
-    }
-
-    .cta-band-text span { color: var(--accent); }
-
-    .cta-band-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .btn-primary {
-      background: var(--text);
-      color: #fff;
-      border: none;
-      padding: 14px 28px;
-      font-weight: 600;
-      font-size: 0.78rem;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      transition: background .15s;
-      text-decoration: none;
-      display: inline-block;
-      border-radius: 2px;
-    }
-
-    .btn-primary:hover { background: var(--accent); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--muted2);
       border: 1px solid var(--border);
-      padding: 14px 28px;
-      font-weight: 500;
+      border-radius: 20px;
       font-size: 0.78rem;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Space Mono', monospace;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.5px;
       transition: all .15s;
-      text-decoration: none;
-      display: inline-block;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      border-radius: 2px;
+      background: var(--card);
     }
 
-    .btn-secondary:hover { color: var(--text); border-color: var(--text); }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 40px 20px;
-      backdrop-filter: blur(8px);
-      overflow-y: auto;
-    }
-
-    .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      max-width: 560px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 44px;
-      position: relative;
-      border-radius: 4px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.15);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px; right: 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted2);
-      width: 32px; height: 32px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all .12s;
-      font-family: 'Space Mono', monospace;
-      border-radius: 50%;
-    }
-
-    .modal-close:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    .modal-emoji { font-size: 2.5rem; margin-bottom: 12px; }
-
-    .modal-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -0.5px;
-      margin-bottom: 4px;
-      line-height: 1;
-    }
-
-    .modal-city {
-      color: var(--muted);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      margin-bottom: 16px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .modal-section { margin-top: 24px; }
-
-    .modal-section h3 {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
+    .internal-link:hover {
+      border-color: var(--accent);
       color: var(--accent);
-      margin-bottom: 8px;
+      background: rgba(192,57,43,0.04);
     }
 
-    .modal-section p {
-      line-height: 1.7;
-      color: var(--muted2);
-      font-size: 0.9rem;
-    }
-
-    .modal-price {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.6rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 28px;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 44px 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-      background: var(--surface);
-    }
-
-    .footer-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text);
-    }
-
-    .footer-logo em { font-style: normal; color: var(--accent); }
-
-    footer p {
-      color: var(--muted2);
-      font-size: 0.7rem;
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
-
-    footer small {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* ── BACKGROUND BLOBS ── */
-    .bg-blobs {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-      mix-blend-mode: multiply;
-    }
-
-    .bg-blob { position: absolute; will-change: transform, border-radius; }
-
-    .bg-blob-1 {
-      width: 720px; height: 660px;
-      background: radial-gradient(ellipse, rgba(255,130,65,0.72) 0%, rgba(255,95,55,0.35) 42%, transparent 70%);
-      filter: blur(56px);
-      top: -140px; right: -80px;
-      animation: ink-morph-a 17s ease-in-out infinite;
-    }
-
-    .bg-blob-2 {
-      width: 580px; height: 540px;
-      background: radial-gradient(ellipse, rgba(255,75,115,0.6) 0%, rgba(235,65,105,0.28) 42%, transparent 68%);
-      filter: blur(68px);
-      bottom: 22%; left: -120px;
-      animation: ink-morph-b 21s ease-in-out infinite;
-    }
-
-    .bg-blob-3 {
-      width: 480px; height: 440px;
-      background: radial-gradient(ellipse, rgba(255,195,70,0.55) 0%, rgba(255,155,50,0.22) 48%, transparent 70%);
-      filter: blur(52px);
-      top: 52%; left: 42%;
-      animation: ink-morph-c 26s ease-in-out infinite;
-    }
-
-    @keyframes ink-morph-a {
-      0%   { border-radius: 44% 56% 62% 38% / 52% 44% 56% 48%; }
-      12%  { border-radius: 78% 22% 46% 54% / 36% 72% 30% 68%; }
-      25%  { border-radius: 34% 66% 72% 28% / 68% 32% 74% 26%; }
-      38%  { border-radius: 62% 38% 36% 64% / 44% 60% 40% 60%; }
-      50%  { border-radius: 82% 18% 58% 42% / 28% 76% 24% 76%; }
-      63%  { border-radius: 26% 74% 44% 56% / 72% 28% 70% 30%; }
-      75%  { border-radius: 56% 44% 80% 20% / 54% 46% 34% 66%; }
-      88%  { border-radius: 38% 62% 52% 48% / 62% 38% 58% 42%; }
-      100% { border-radius: 44% 56% 62% 38% / 52% 44% 56% 48%; }
-    }
-
-    @keyframes ink-morph-b {
-      0%   { border-radius: 66% 34% 52% 48% / 46% 64% 36% 54%; }
-      16%  { border-radius: 32% 68% 76% 24% / 70% 32% 62% 38%; }
-      33%  { border-radius: 54% 46% 34% 66% / 26% 78% 40% 60%; }
-      50%  { border-radius: 80% 20% 60% 40% / 56% 44% 26% 74%; }
-      66%  { border-radius: 24% 76% 42% 58% / 76% 24% 68% 32%; }
-      83%  { border-radius: 58% 42% 72% 28% / 38% 62% 32% 68%; }
-      100% { border-radius: 66% 34% 52% 48% / 46% 64% 36% 54%; }
-    }
-
-    @keyframes ink-morph-c {
-      0%   { border-radius: 58% 42% 36% 64% / 68% 32% 66% 34%; }
-      20%  { border-radius: 28% 72% 68% 32% / 34% 68% 32% 68%; }
-      40%  { border-radius: 72% 28% 52% 48% / 60% 40% 76% 24%; }
-      60%  { border-radius: 38% 62% 78% 22% / 42% 58% 24% 76%; }
-      80%  { border-radius: 76% 24% 44% 56% / 74% 26% 58% 42%; }
-      100% { border-radius: 58% 42% 36% 64% / 68% 32% 66% 34%; }
-    }
-
-    /* ── HAMBURGER ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 36px;
-      height: 36px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      z-index: 200;
-    }
-    .hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: all .25s;
-    }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-    /* ── MOBILE NAV OVERLAY ── */
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      top: 56px; left: 0; right: 0; bottom: 0;
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      z-index: 100;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      border-top: 1px solid var(--border);
-    }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a {
-      color: var(--text);
-      text-decoration: none;
-      font-family: 'Syne', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: color .15s;
-    }
-    .mobile-nav a:hover { color: var(--accent); }
-    .mobile-nav .btn-nav-mobile {
-      background: var(--text);
-      color: #fff !important;
-      padding: 16px 32px;
-      font-size: 0.85rem !important;
-      letter-spacing: 2px;
-      border-radius: 2px;
-      font-family: 'Space Grotesk', sans-serif !important;
-      font-weight: 700;
-    }
-
-    /* ── TABLETTE (max 1024px) ── */
-    @media (max-width: 1024px) {
-      header { padding: 0 32px; }
-      .seo-hero { padding: 96px 40px 56px; }
-      .results-header { padding: 12px 40px; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-      .cta-band { padding: 48px 40px; }
-      footer { padding: 36px 40px; }
-    }
-
-    /* ── MOBILE (max 768px) ── */
     @media (max-width: 768px) {
-      header { padding: 0 20px; height: 56px; }
-      nav { display: none; }
-      .hamburger { display: flex; }
+      .seo-section { padding: 40px 20px; }
+      .seo-section-alt { padding-left: 20px; padding-right: 20px; }
       .seo-hero { padding: 80px 20px 48px; }
       .seo-hero h1 { font-size: clamp(2.4rem, 10vw, 4rem); letter-spacing: -1px; }
-      .results-header { padding: 10px 20px; }
-      .grid { grid-template-columns: 1fr; }
-      .card-img { height: 200px; }
-      .btn-voir, .btn-insta { padding: 12px 16px; font-size: 0.7rem; }
-      .cta-band { padding: 40px 20px; flex-direction: column; align-items: flex-start; gap: 20px; }
-      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
-      .modal-overlay { padding: 0; align-items: flex-end; }
-      .modal { max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; padding: 32px 24px 40px; border-bottom: none; }
-      .bg-blobs { display: none; }
     }
 
-    /* ── TRÈS PETIT ÉCRAN (max 380px) ── */
     @media (max-width: 380px) {
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
     }
   </style>
 </head>
 <body>
+
 
 <!-- BACKGROUND BLOBS -->
 <div class="bg-blobs" aria-hidden="true">
@@ -809,6 +351,7 @@
   <a href="inscription.html" class="btn-nav-mobile" onclick="fermerMenu()">Inscrire mon studio →</a>
 </div>
 
+
 <!-- SEO HERO -->
 <section class="seo-hero">
   <div class="seo-hero-blob"></div>
@@ -839,6 +382,50 @@
 <!-- GRID -->
 <div class="grid" id="grid"></div>
 
+<!-- GUIDE DU STYLE -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Guide : le tatouage géométrique</h2>
+  <div class="seo-section-content">
+    <p>Le tatouage géométrique transforme le corps en espace graphique, jouant avec les formes, les symétries et les proportions pour créer des compositions d'une précision mathématique absolue.</p>
+    <p>Des mandales aux polyèdres, des fractales aux lignes épurées, ce style demande une rigueur technique et un sens aigu de la géométrie. Il peut être minimaliste ou d'une complexité vertigineuse, souvent rehaussé de dotwork ou de fins aplats noirs.</p>
+  </div>
+</section>
+
+<!-- CONSEILS -->
+<section class="seo-section seo-section-alt">
+  <h2 class="seo-section-title">Comment choisir son tatoueur géométrique à Nantes ?</h2>
+  <div class="seo-section-content">
+    <p>La précision est tout dans le géométrique. Zoomez sur les photos pour vérifier la régularité des lignes et la symétrie. Un bon artiste géométrique travaille avec des gabarits et une rigueur mathématique.</p>
+    <p>Sur Inkmap, chaque artiste est référencé avec son style, ses tarifs et son portfolio. Comparez les profils, consultez les réalisations et contactez directement l'artiste qui vous correspond — le tout gratuitement.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Questions fréquentes — Tatouage Géométrique</h2>
+  <div class="seo-faq">
+      <details class="faq-item">
+        <summary class="faq-q">Le tatouage géométrique fait-il plus mal ?</summary>
+        <div class="faq-a">La douleur dépend de l'emplacement, pas du style. Cependant, les lignes droites et les formes géométriques demandent de rester immobile, ce qui peut rendre les longues séances plus éprouvantes.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Combien coûte un tatouage géométrique ?</summary>
+        <div class="faq-a">Comptez entre 100 € et 300 € de l'heure selon la complexité. Les pièces simples (triangle, cercle) sont rapides, tandis que les mandalas ou compositions complexes demandent plusieurs heures.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Le tatouage géométrique vieillit-il bien ?</summary>
+        <div class="faq-a">Les lignes fines et les formes précises peuvent s'estomper légèrement avec le temps. Choisissez un artiste expérimenté qui adapte l'épaisseur des traits pour garantir la longévité du tatouage.</div>
+      </details>
+  </div>
+</section>
+
+<!-- AUTRES STYLES -->
+<section class="seo-section seo-section-alt">
+  <h2 class="seo-section-title">Autres styles de tatouage à Nantes</h2>
+  <p class="seo-section-sub">Découvrez aussi les tatoueurs spécialisés dans d'autres styles à Nantes :</p>
+  <div class="internal-links"><a href="tatoueur-realisme-nantes.html" class="internal-link">Réalisme</a><a href="tatoueur-japonais-nantes.html" class="internal-link">Japonais</a><a href="tatoueur-tribal-nantes.html" class="internal-link">Tribal</a><a href="tatoueur-old-school-nantes.html" class="internal-link">Old School</a><a href="tatoueur-aquarelle-nantes.html" class="internal-link">Aquarelle</a><a href="tatoueur-dotwork-nantes.html" class="internal-link">Dotwork</a><a href="tatoueur-lettering-nantes.html" class="internal-link">Lettering</a></div>
+</section>
+
 <!-- CTA -->
 <div class="cta-band">
   <div class="cta-band-text">Explore tous les<br><span>tatoueurs français →</span></div>
@@ -867,6 +454,7 @@
     <a href="mentions-legales.html" style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Mentions légales</a>
   </div>
 </footer>
+
 
 <script>
 const PAGE_STYLE = "Géométrique";
@@ -1015,8 +603,8 @@ chargerDepuisAirtable().then(() => {
     document.querySelector('.bg-blob-2'),
     document.querySelector('.bg-blob-3'),
   ];
-  const parallax = [{ x: 0.07, y: 0.14 }, { x: -0.09, y: -0.06 }, { x: 0.05, y: -0.12 }];
-  const amp = [140, 160, 110];
+  const parallax = [{ x: 0.04, y: 0.07 }, { x: -0.05, y: -0.04 }, { x: 0.03, y: -0.06 }];
+  const amp = [110, 130, 90];
   const state = blobs.map(() => ({ cx: 0, cy: 0, tx: 0, ty: 0 }));
   function pickTarget(i) { state[i].tx = (Math.random()*2-1)*amp[i]; state[i].ty = (Math.random()*2-1)*amp[i]; }
   function scheduleNext(i) { setTimeout(() => { pickTarget(i); scheduleNext(i); }, 3000 + Math.random()*4000); }
@@ -1029,9 +617,7 @@ chargerDepuisAirtable().then(() => {
     state.forEach((s, i) => {
       s.cx += (s.tx - s.cx) * LERP;
       s.cy += (s.ty - s.cy) * LERP;
-      const _sp = window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const _sc = 1 + _sp * [0.65, 0.45, 0.9][i];
-      blobs[i].style.transform = `translate(${s.cx + scrollY * parallax[i].x}px, ${s.cy + scrollY * parallax[i].y}px) scale(${_sc})`;
+      blobs[i].style.transform = `translate(${s.cx + scrollY * parallax[i].x}px, ${s.cy + scrollY * parallax[i].y}px)`;
     });
   })();
 })();
