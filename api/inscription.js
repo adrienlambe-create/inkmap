@@ -186,20 +186,6 @@ module.exports = async (req, res) => {
                   Tu fais partie des <strong>tout premiers tatoueurs référencés</strong> — et ça, on ne l'oublie pas. Le projet en est à ses débuts, et ta confiance compte énormément.
                 </p>
 
-                <div style="background:#f7f7f7;border-left:3px solid #c0392b;padding:20px 24px;margin:28px 0;border-radius:4px">
-                  <div style="font-size:11px;color:#c0392b;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:10px">
-                    Ce qu'on te promet
-                  </div>
-                  <p style="margin:0 0 12px;font-size:14px;color:#333">
-                    Tous les early contributors comme toi bénéficieront d'avantages exclusifs quand on lancera le Premium :
-                  </p>
-                  <ul style="margin:0;padding-left:20px;font-size:14px;color:#333">
-                    <li style="margin-bottom:6px"><strong>1 mois gratuit</strong> sur le plan Premium (stats détaillées, mise en avant dans les résultats)</li>
-                    <li style="margin-bottom:6px"><strong>Tarif early adopter à vie</strong> : 9€/mois au lieu de 19€</li>
-                    <li><strong>Badge "Pionnier"</strong> affiché sur ton profil public</li>
-                  </ul>
-                </div>
-
                 <h3 style="font-size:15px;margin:28px 0 10px;font-weight:700">Modifier ton profil ?</h3>
                 <p style="font-size:14px;color:#333;margin:0 0 20px">
                   Pour l'instant, il suffit de <strong>répondre directement à ce mail</strong> en précisant ce que tu veux changer (photos, bio, tarif, styles…). On met tout à jour dans la journée. Une interface de modification autonome arrive bientôt.
