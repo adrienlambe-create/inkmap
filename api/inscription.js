@@ -156,11 +156,12 @@ module.exports = async (req, res) => {
       // Email de bienvenue au tatoueur
       try {
         const prenom = escHtml(cleanFields.Nom.split(' ')[0]);
-        await fetch('https://api.resend.com/emails', {
+        console.log('[resend] Sending welcome email to:', cleanFields.Email);
+        const welcomeRes = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Adrien d\'Inkmap <bonjour@send.inkmap.fr>',
+            from: 'Inkmap <bonjour@send.inkmap.fr>',
             to: cleanFields.Email,
             reply_to: 'inkmap.contact@gmail.com',
             subject: `Bienvenue sur Inkmap, ${prenom} 🖤`,
@@ -223,6 +224,8 @@ module.exports = async (req, res) => {
             `
           })
         });
+        const welcomeBody = await welcomeRes.json().catch(() => ({}));
+        console.log('[resend] Welcome email response:', welcomeRes.status, JSON.stringify(welcomeBody));
       } catch (err) { console.error('[resend] Welcome email failed:', err.message); }
     }
 
