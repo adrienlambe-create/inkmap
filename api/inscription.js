@@ -125,7 +125,7 @@ module.exports = async (req, res) => {
           method: 'POST',
           headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Inkmap <notifications@send.inkmap.fr>',
+            from: 'Inkmap <notifications@inkmap.fr>',
             to: 'inkmap.contact@gmail.com',
             subject: `Nouvelle inscription - ${escHtml(cleanFields.Nom)} (${escHtml(cleanFields.Studio)})`,
             html: `
@@ -161,7 +161,7 @@ module.exports = async (req, res) => {
           method: 'POST',
           headers: { Authorization: `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Inkmap <bonjour@send.inkmap.fr>',
+            from: 'Inkmap <bonjour@inkmap.fr>',
             to: cleanFields.Email,
             reply_to: 'inkmap.contact@gmail.com',
             subject: `Bienvenue sur Inkmap, ${prenom} 🖤`,
