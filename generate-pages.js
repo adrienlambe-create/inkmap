@@ -671,7 +671,13 @@ async function chargerDepuisAirtable() {
         photos: allPhotos,
         emoji: STYLE_EMOJI[styles[0]] || '✦',
       };
-      const idx = tatoueurs.findIndex(t => t.nom.toLowerCase().trim() === f.Nom.toLowerCase().trim());
+      const fNom = f.Nom.toLowerCase().trim();
+      const fPseudo = (f.Pseudo || '').toLowerCase().trim();
+      const idx = tatoueurs.findIndex(t => {
+        const tNom = t.nom.toLowerCase().trim();
+        const tComplet = (t.nomComplet || '').toLowerCase().trim();
+        return tNom === fNom || tNom === fPseudo || tComplet === fNom;
+      });
       if (idx !== -1) {
         profile.id = tatoueurs[idx].id;
         tatoueurs[idx] = profile;
