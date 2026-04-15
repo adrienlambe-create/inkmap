@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur de tarif tatouage — Estime le prix de ton tattoo | Inkmap</title>
+  <meta name="description" content="Estime le prix de ton tatouage en fonction de la taille, du style, de la zone du corps et de la ville. Calculateur gratuit base sur les tarifs reels des tatoueurs francais." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/outils/calculateur-tarif-tatouage" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inkmap" />
+  <meta property="og:title" content="Calculateur de tarif tatouage — Estime le prix" />
+  <meta property="og:description" content="Outil gratuit pour estimer le prix de ton tatouage selon la taille, le style et la ville." />
+  <meta property="og:url" content="https://inkmap.fr/outils/calculateur-tarif-tatouage" />
+  <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calculateur de tarif tatouage" />
+  <meta name="twitter:description" content="Estime le prix de ton tatouage gratuitement." />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculateur de tarif tatouage",
+    "description": "Outil gratuit pour estimer le prix d'un tatouage en France selon la taille, le style, la zone du corps et la ville.",
+    "url": "https://inkmap.fr/outils/calculateur-tarif-tatouage",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "provider": { "@type": "Organization", "name": "Inkmap", "url": "https://inkmap.fr" }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+
+    :root {
+      --bg: #ffffff; --surface: #f9f9f9; --card: #ffffff;
+      --border: rgba(0,0,0,0.08); --accent: #c0392b;
+      --text: #0d0d0d; --muted: #aaa; --muted2: #666;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+
+    header {
+      padding: 0 56px; height: 64px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 50;
+    }
+    .logo { font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }
+    .logo em { font-style: normal; color: var(--accent); }
+    .back-link { color: var(--muted2); text-decoration: none; font-size: 0.72rem; font-family: 'Space Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; transition: color .15s; }
+    .back-link:hover { color: var(--text); }
+
+    .tool-hero {
+      text-align: center; padding: 80px 20px 48px; border-bottom: 1px solid var(--border);
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><defs><filter id='f' x='-50%' y='-50%' width='200%' height='200%'><feTurbulence type='fractalNoise' baseFrequency='0.022' numOctaves='1' seed='3' stitchTiles='stitch' result='drift'/><feDisplacementMap in='SourceGraphic' in2='drift' scale='2.8' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='turbulence' baseFrequency='0.19 0.06' numOctaves='2' seed='11' stitchTiles='stitch' result='jitter'/><feDisplacementMap in='d' in2='jitter' scale='1.3' xChannelSelector='R' yChannelSelector='G'/></filter></defs><line x1='0' y1='16' x2='16' y2='0' stroke='%23c0392b' stroke-opacity='0.18' stroke-width='0.9' filter='url(%23f)'/></svg>");
+    }
+    .tool-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; }
+    .tool-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .tool-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -1px; line-height: 1; margin-bottom: 16px; }
+    .tool-hero h1 em { font-style: normal; color: var(--accent); }
+    .tool-hero p { color: var(--muted2); font-size: 0.92rem; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    .calc-section { max-width: 600px; margin: 0 auto; padding: 48px 20px 64px; }
+
+    .calc-group { margin-bottom: 28px; }
+    .calc-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; display: block; }
+
+    .calc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .calc-opt {
+      padding: 10px 16px; border: 1px solid var(--border); border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; color: var(--muted2);
+      cursor: pointer; transition: all .15s; background: var(--card); user-select: none;
+    }
+    .calc-opt:hover { border-color: var(--accent); color: var(--text); }
+    .calc-opt.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+    .result-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 32px 24px; text-align: center; margin-top: 32px; display: none;
+    }
+    .result-box.visible { display: block; }
+    .result-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 12px; }
+    .result-price { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .result-price em { font-style: normal; color: var(--accent); }
+    .result-detail { color: var(--muted2); font-size: 0.82rem; line-height: 1.6; margin-top: 12px; }
+    .result-disclaimer { color: var(--muted); font-size: 0.72rem; margin-top: 16px; font-style: italic; }
+
+    .result-cta { margin-top: 24px; }
+    .result-cta a {
+      display: inline-block; background: var(--accent); color: #fff; padding: 12px 24px;
+      font-size: 0.7rem; font-family: 'Space Mono', monospace; text-transform: uppercase;
+      letter-spacing: 1.5px; text-decoration: none; border-radius: 2px; transition: background .15s;
+    }
+    .result-cta a:hover { background: #e74c3c; }
+
+    .info-section { max-width: 600px; margin: 0 auto; padding: 0 20px 64px; }
+    .info-section h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 16px; }
+    .info-section p { color: var(--muted2); font-size: 0.88rem; line-height: 1.8; margin-bottom: 12px; }
+    .info-section strong { color: var(--text); }
+
+    .related { max-width: 600px; margin: 0 auto; padding: 0 20px 48px; }
+    .related h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; }
+    .related-links { display: flex; flex-direction: column; gap: 8px; }
+    .related-links a { color: var(--accent); text-decoration: none; font-size: 0.88rem; transition: color .15s; }
+    .related-links a:hover { color: var(--text); }
+
+    .tatoueur-cta {
+      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 48px 20px; text-align: center;
+    }
+    .tatoueur-cta p { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; }
+    .tatoueur-cta h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; text-transform: uppercase; margin-bottom: 16px; }
+    .tatoueur-cta h2 em { font-style: normal; color: var(--accent); }
+    .tatoueur-cta a {
+      display: inline-block; background: var(--text); color: #fff; padding: 12px 24px;
+      font-size: 0.7rem; font-family: 'Space Mono', monospace; text-transform: uppercase;
+      letter-spacing: 1.5px; text-decoration: none; border-radius: 2px; transition: background .15s;
+    }
+    .tatoueur-cta a:hover { background: var(--accent); }
+
+    .final-cta { background: var(--text); color: #fff; text-align: center; padding: 64px 20px; }
+    .final-cta h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -1px; margin-bottom: 20px; color: #fff; }
+    .final-cta h2 em { font-style: normal; color: var(--accent); }
+    .final-cta a { display: inline-block; background: var(--accent); color: #fff; padding: 14px 28px; font-size: 0.72rem; font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 1.5px; text-decoration: none; border-radius: 2px; }
+
+    footer { background: #0a0a0a; border-top: 2px solid var(--accent); padding: 32px 56px; color: rgba(255,255,255,0.5); display: flex; justify-content: space-between; align-items: center; }
+    footer small { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
+    .footer-logo em { font-style: normal; color: var(--accent); }
+
+    @media (max-width: 600px) { header { padding: 0 20px; } .tool-hero { padding: 64px 20px 40px; } footer { padding: 24px 20px; flex-direction: column; gap: 12px; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">ink<em>map</em></a>
+  <a href="../index.html" class="back-link">Annuaire</a>
+</header>
+
+<section class="tool-hero">
+  <div class="tool-tag"><span></span> Outil gratuit</div>
+  <h1>Calculateur de<br><em>tarif</em> tatouage</h1>
+  <p>Estime le prix de ton tatouage en fonction de la taille, du style, de la zone du corps et de ta ville. Base sur les tarifs reels des tatoueurs francais.</p>
+</section>
+
+<section class="calc-section">
+
+  <div class="calc-group">
+    <label class="calc-label">Taille du tatouage</label>
+    <div class="calc-options" data-group="taille">
+      <div class="calc-opt" data-value="tiny">Minuscule (2-3 cm)</div>
+      <div class="calc-opt" data-value="petit">Petit (5-8 cm)</div>
+      <div class="calc-opt" data-value="moyen">Moyen (10-15 cm)</div>
+      <div class="calc-opt" data-value="grand">Grand (20-30 cm)</div>
+      <div class="calc-opt" data-value="tres-grand">Tres grand (demi-bras+)</div>
+      <div class="calc-opt" data-value="piece">Piece complete (dos, jambe)</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label">Style</label>
+    <div class="calc-options" data-group="style">
+      <div class="calc-opt" data-value="fineline">Fineline</div>
+      <div class="calc-opt" data-value="blackwork">Blackwork</div>
+      <div class="calc-opt" data-value="dotwork">Dotwork</div>
+      <div class="calc-opt" data-value="realisme">Realisme</div>
+      <div class="calc-opt" data-value="japonais">Japonais</div>
+      <div class="calc-opt" data-value="old-school">Old School</div>
+      <div class="calc-opt" data-value="geometrique">Geometrique</div>
+      <div class="calc-opt" data-value="aquarelle">Aquarelle</div>
+      <div class="calc-opt" data-value="lettering">Lettering</div>
+      <div class="calc-opt" data-value="tribal">Tribal</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label">Zone du corps</label>
+    <div class="calc-options" data-group="zone">
+      <div class="calc-opt" data-value="poignet">Poignet / Cheville</div>
+      <div class="calc-opt" data-value="bras">Avant-bras / Bras</div>
+      <div class="calc-opt" data-value="epaule">Epaule / Omoplate</div>
+      <div class="calc-opt" data-value="cotes">Cotes / Flanc</div>
+      <div class="calc-opt" data-value="dos">Dos</div>
+      <div class="calc-opt" data-value="cuisse">Cuisse / Mollet</div>
+      <div class="calc-opt" data-value="main">Main / Doigts</div>
+      <div class="calc-opt" data-value="cou">Cou / Nuque</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label">Ville</label>
+    <div class="calc-options" data-group="ville">
+      <div class="calc-opt" data-value="paris">Paris</div>
+      <div class="calc-opt" data-value="lyon">Lyon</div>
+      <div class="calc-opt" data-value="bordeaux">Bordeaux</div>
+      <div class="calc-opt" data-value="marseille">Marseille</div>
+      <div class="calc-opt" data-value="toulouse">Toulouse</div>
+      <div class="calc-opt" data-value="lille">Lille</div>
+      <div class="calc-opt" data-value="nantes">Nantes</div>
+      <div class="calc-opt" data-value="strasbourg">Strasbourg</div>
+      <div class="calc-opt" data-value="nice">Nice</div>
+      <div class="calc-opt" data-value="autre">Autre ville</div>
+    </div>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-label">Estimation de prix</div>
+    <div class="result-price" id="resultPrice">—</div>
+    <div class="result-detail" id="resultDetail"></div>
+    <div class="result-disclaimer">Cette estimation est indicative. Le prix final depend de l'artiste, de la complexite du design et du nombre de seances necessaires.</div>
+    <div class="result-cta">
+      <a href="../index.html#recherche" id="resultLink">Trouver un tatoueur</a>
+    </div>
+  </div>
+
+</section>
+
+<section class="info-section">
+  <h2>Comment sont calcules les tarifs ?</h2>
+  <p>Les prix des tatouages en France varient selon plusieurs facteurs. Notre calculateur utilise des <strong>fourchettes basees sur les tarifs moyens pratiques par les tatoueurs francais en 2026</strong>.</p>
+  <p>En general, les tatoueurs facturent soit au projet (pour les petites pieces), soit a l'heure (pour les grosses pieces). <strong>Le tarif horaire moyen en France se situe entre 80 et 150 euros</strong>, avec des variations selon la ville et l'experience de l'artiste.</p>
+  <p>A Paris, les tarifs sont en moyenne <strong>15 a 25% plus eleves</strong> qu'en region. Les styles tres techniques comme le realisme ou le japonais traditionnel sont aussi generalement plus chers car ils demandent plus de temps et d'expertise.</p>
+  <p>Le meilleur conseil : <strong>contacte directement les tatoueurs qui t'interessent</strong> avec une description de ton projet pour obtenir un devis precis.</p>
+</section>
+
+<section class="tatoueur-cta">
+  <p>Tu es tatoueur ?</p>
+  <h2>Inscris-toi sur <em>Inkmap</em> et recois des demandes</h2>
+  <a href="../inscription.html">Creer mon profil gratuit</a>
+</section>
+
+<div class="related" style="padding-top: 48px;">
+  <h3>Articles lies</h3>
+  <div class="related-links">
+    <a href="../guide/trouver-clients-tatoueur.html">Comment trouver des clients quand on est tatoueur</a>
+    <a href="../guide/referencer-studio-tatouage-gratuit.html">Referencer son studio gratuitement</a>
+    <a href="../rejoindre.html">Pourquoi rejoindre Inkmap ?</a>
+  </div>
+</div>
+
+<section class="final-cta">
+  <h2>Trouve ton <em>tatoueur</em> ideal</h2>
+  <a href="../index.html#recherche">Explorer l'annuaire</a>
+</section>
+
+<footer>
+  <div class="footer-logo">ink<em>map</em></div>
+  <small>&copy; 2026 — INKMAP.FR</small>
+</footer>
+
+<script>
+const selections = { taille: null, style: null, zone: null, ville: null };
+
+// Base prices by size (min, max in euros)
+const PRIX_TAILLE = {
+  'tiny':       [50, 100],
+  'petit':      [80, 180],
+  'moyen':      [150, 350],
+  'grand':      [300, 600],
+  'tres-grand': [500, 1200],
+  'piece':      [1000, 3000]
+};
+
+// Style multipliers
+const MULT_STYLE = {
+  'fineline': 1.0, 'blackwork': 1.0, 'dotwork': 1.15, 'realisme': 1.35,
+  'japonais': 1.3, 'old-school': 0.95, 'geometrique': 1.05, 'aquarelle': 1.15,
+  'lettering': 0.9, 'tribal': 0.9
+};
+
+// Zone difficulty (adds percentage)
+const MULT_ZONE = {
+  'poignet': 1.0, 'bras': 1.0, 'epaule': 1.0, 'cotes': 1.15,
+  'dos': 1.05, 'cuisse': 1.0, 'main': 1.2, 'cou': 1.2
+};
+
+// City price index
+const MULT_VILLE = {
+  'paris': 1.2, 'lyon': 1.05, 'bordeaux': 1.05, 'marseille': 1.0,
+  'toulouse': 0.95, 'lille': 0.95, 'nantes': 0.95, 'strasbourg': 0.95,
+  'nice': 1.05, 'autre': 0.9
+};
+
+const STYLE_NAMES = {
+  'fineline': 'Fineline', 'blackwork': 'Blackwork', 'dotwork': 'Dotwork',
+  'realisme': 'Realisme', 'japonais': 'Japonais', 'old-school': 'Old School',
+  'geometrique': 'Geometrique', 'aquarelle': 'Aquarelle', 'lettering': 'Lettering',
+  'tribal': 'Tribal'
+};
+
+const VILLE_NAMES = {
+  'paris': 'Paris', 'lyon': 'Lyon', 'bordeaux': 'Bordeaux', 'marseille': 'Marseille',
+  'toulouse': 'Toulouse', 'lille': 'Lille', 'nantes': 'Nantes', 'strasbourg': 'Strasbourg',
+  'nice': 'Nice', 'autre': 'ta ville'
+};
+
+document.querySelectorAll('.calc-opt').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    var group = this.parentElement.dataset.group;
+    this.parentElement.querySelectorAll('.calc-opt').forEach(function(o) { o.classList.remove('active'); });
+    this.classList.add('active');
+    selections[group] = this.dataset.value;
+    calculer();
+  });
+});
+
+function calculer() {
+  if (!selections.taille || !selections.style || !selections.zone || !selections.ville) return;
+
+  var base = PRIX_TAILLE[selections.taille];
+  var ms = MULT_STYLE[selections.style];
+  var mz = MULT_ZONE[selections.zone];
+  var mv = MULT_VILLE[selections.ville];
+
+  var min = Math.round(base[0] * ms * mz * mv / 10) * 10;
+  var max = Math.round(base[1] * ms * mz * mv / 10) * 10;
+
+  document.getElementById('resultPrice').innerHTML = min + '<em> — </em>' + max + ' &euro;';
+
+  var style = STYLE_NAMES[selections.style];
+  var ville = VILLE_NAMES[selections.ville];
+  document.getElementById('resultDetail').textContent =
+    'Pour un tatouage ' + style + ' a ' + ville + ', les tatoueurs facturent generalement dans cette fourchette.';
+
+  document.getElementById('resultLink').href = '../index.html#recherche';
+
+  var box = document.getElementById('resultBox');
+  box.classList.add('visible');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+
+</body>
+</html>
