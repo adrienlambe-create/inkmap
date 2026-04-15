@@ -86,9 +86,10 @@ function parseRecords(records) {
 
 // Generate a static HTML card (visible to Googlebot without JS)
 function buildStaticCard(t) {
+  const placeholderSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg>`;
   const photoHtml = t.photo
     ? `<img src="${esc(t.photo)}" alt="Tatouage ${esc(t.styles[0] || '')} par ${esc(t.nom)} à ${esc(t.ville)}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />`
-    : `<span style="font-size:4rem">${t.emoji}</span>`;
+    : placeholderSvg;
   const badgeHtml = t.verifie
     ? '<span class="badge-verifie">✓ Vérifié</span>'
     : '';
