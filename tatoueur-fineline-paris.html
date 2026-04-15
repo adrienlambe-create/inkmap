@@ -401,6 +401,22 @@
       margin-bottom: 8px;
     }
 
+    /* ── INTERNAL LINKS ── */
+    .internal-links { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+    .internal-link {
+      display: inline-block;
+      padding: 6px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-family: "Space Grotesk", sans-serif;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .internal-link:hover { border-color: var(--accent); color: var(--accent); }
+
     /* ── CTA ── */
     .cta-band {
       padding: 64px 56px;
