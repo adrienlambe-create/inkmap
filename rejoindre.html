@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rejoindre Inkmap — Inscris ton studio gratuitement | Inkmap</title>
+  <meta name="description" content="Rejoins Inkmap, l'annuaire gratuit des tatoueurs francais. Gagne en visibilite Google, recois des clients qualifies et cree ton profil pro en 5 minutes." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/rejoindre" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inkmap" />
+  <meta property="og:title" content="Rejoindre Inkmap — Studio visible gratuitement" />
+  <meta property="og:description" content="Rejoins le premier annuaire des tatoueurs francais. Profil pro, visibilite Google, clients qualifies — 100% gratuit." />
+  <meta property="og:url" content="https://inkmap.fr/rejoindre" />
+  <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rejoindre Inkmap — Inscris ton studio gratuitement" />
+  <meta name="twitter:description" content="Gagne en visibilite Google, recois des clients qualifies. 100% gratuit." />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Rejoindre Inkmap",
+    "description": "Inscris ton studio de tatouage gratuitement sur Inkmap",
+    "url": "https://inkmap.fr/rejoindre",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Inkmap",
+      "url": "https://inkmap.fr",
+      "logo": "https://inkmap.fr/og-image.jpg"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "C'est vraiment gratuit ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, l'inscription et la visibilite sur Inkmap sont 100% gratuites, sans commission sur les reservations." } },
+      { "@type": "Question", "name": "Qui peut s'inscrire sur Inkmap ?", "acceptedAnswer": { "@type": "Answer", "text": "Tout tatoueur professionnel exerçant en France, en studio ou en independant." } },
+      { "@type": "Question", "name": "Combien de temps pour etre en ligne ?", "acceptedAnswer": { "@type": "Answer", "text": "Ton profil est verifie et mis en ligne en moins de 24 heures apres inscription." } },
+      { "@type": "Question", "name": "Est-ce que je peux modifier mon profil ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, tu peux modifier tes informations a tout moment en nous contactant." } },
+      { "@type": "Question", "name": "Faut-il un site web pour s'inscrire ?", "acceptedAnswer": { "@type": "Answer", "text": "Non, un compte Instagram suffit. Ton profil Inkmap peut meme remplacer un site web basique." } }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #f9f9f9;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --accent: #c0392b;
+      --text: #0d0d0d;
+      --muted: #aaa;
+      --muted2: #666;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .logo em { font-style: normal; color: var(--accent); }
+
+    nav { display: flex; align-items: center; gap: 32px; }
+
+    nav a {
+      color: var(--muted2);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      transition: color .15s;
+      text-transform: uppercase;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .btn-nav {
+      background: var(--text);
+      color: #fff !important;
+      padding: 10px 20px;
+      font-size: 0.7rem !important;
+      letter-spacing: 1.5px;
+      border-radius: 2px;
+    }
+
+    .btn-nav:hover { background: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 72px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><defs><filter id='f' x='-50%' y='-50%' width='200%' height='200%'><feTurbulence type='fractalNoise' baseFrequency='0.022' numOctaves='1' seed='3' stitchTiles='stitch' result='drift'/><feDisplacementMap in='SourceGraphic' in2='drift' scale='2.8' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='turbulence' baseFrequency='0.19 0.06' numOctaves='2' seed='11' stitchTiles='stitch' result='jitter'/><feDisplacementMap in='d' in2='jitter' scale='1.3' xChannelSelector='R' yChannelSelector='G'/></filter></defs><line x1='0' y1='16' x2='16' y2='0' stroke='%23c0392b' stroke-opacity='0.18' stroke-width='0.9' filter='url(%23f)'/></svg>");
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .hero-tag span {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+      line-height: 0.95;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em { font-style: normal; color: var(--accent); }
+
+    .hero-sub {
+      color: var(--muted2);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 540px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--text);
+      color: #fff;
+      padding: 14px 28px;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background .15s;
+    }
+
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      padding: 14px 28px;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-decoration: none;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      transition: all .15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      padding: 32px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-num em { font-style: normal; color: var(--accent); }
+
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 72px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-alt { background: var(--surface); }
+
+    .section-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+
+    .section h2 em { font-style: normal; color: var(--accent); }
+
+    .section-intro {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 48px;
+    }
+
+    /* ── BENEFITS ── */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .benefit {
+      background: var(--bg);
+      padding: 40px 32px;
+    }
+
+    .benefit-icon {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+    }
+
+    .benefit h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+    }
+
+    .benefit p {
+      color: var(--muted2);
+      font-size: 0.85rem;
+      line-height: 1.65;
+    }
+
+    /* ── PROFILE PREVIEW ── */
+    .profile-demo {
+      max-width: 380px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .profile-demo-header {
+      padding: 32px 24px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-demo-emoji { font-size: 2.4rem; margin-bottom: 12px; }
+
+    .profile-demo-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+    }
+
+    .profile-demo-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      color: #27ae60;
+      background: rgba(39,174,96,0.08);
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-top: 6px;
+    }
+
+    .profile-demo-loc {
+      font-size: 0.78rem;
+      color: var(--muted2);
+      margin-top: 8px;
+    }
+
+    .profile-demo-tags {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .profile-demo-tag {
+      font-size: 0.62rem;
+      font-family: 'Space Mono', monospace;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      letter-spacing: 0.5px;
+      color: var(--muted2);
+    }
+
+    .profile-demo-body {
+      padding: 20px 24px;
+    }
+
+    .profile-demo-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+
+    .profile-demo-row:last-child { border-bottom: none; }
+
+    .profile-demo-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    .profile-demo-val {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .profile-demo-val.accent { color: var(--accent); }
+
+    .profile-demo-cta {
+      display: block;
+      text-align: center;
+      background: var(--text);
+      color: #fff;
+      padding: 12px;
+      font-size: 0.68rem;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: background .15s;
+    }
+
+    .profile-demo-cta:hover { background: var(--accent); }
+
+    /* ── STEPS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .step h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--muted2);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial {
+      border-left: 2px solid var(--accent);
+      padding: 24px 28px;
+      background: var(--surface);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .testimonial q {
+      display: block;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .testimonial cite {
+      font-style: normal;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; max-width: 700px; }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card);
+      overflow: hidden;
+    }
+
+    .faq-q {
+      padding: 16px 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .faq-q::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+
+    details[open] .faq-q::after { content: '-'; }
+
+    .faq-a {
+      padding: 0 20px 16px;
+      color: var(--muted2);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: var(--text);
+      color: #fff;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .final-cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .final-cta h2 em { font-style: normal; color: var(--accent); }
+
+    .final-cta .btn-primary {
+      background: var(--accent);
+      font-size: 0.78rem;
+      padding: 16px 36px;
+    }
+
+    .final-cta .btn-primary:hover { background: #e74c3c; }
+
+    .final-cta-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    /* ── GUIDES LINK ── */
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .guide-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all .15s;
+      background: var(--bg);
+    }
+
+    .guide-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .guide-card-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .guide-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .guide-card p {
+      font-size: 0.78rem;
+      color: var(--muted2);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a0a0a;
+      border-top: 2px solid var(--accent);
+      padding: 48px 56px;
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .footer-logo em { font-style: normal; color: var(--accent); }
+
+    footer p { font-size: 0.78rem; line-height: 1.5; margin-top: 6px; }
+
+    .footer-nav-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .footer-nav-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 4px;
+    }
+
+    .footer-nav-group a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.78rem;
+      transition: color .15s;
+    }
+
+    .footer-nav-group a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+    }
+
+    footer small {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .footer-legal a {
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 1px;
+    }
+
+    .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .benefits-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 32px; }
+      .testimonials { grid-template-columns: 1fr; }
+      .guides-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      nav { display: none; }
+      .hero { padding: 72px 20px 56px; }
+      .section { padding: 48px 20px; }
+      .stats-bar { gap: 24px; }
+      .benefit { padding: 28px 20px; }
+      footer { padding: 36px 20px; }
+      .footer-inner { flex-direction: column; gap: 28px; }
+      .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">ink<em>map</em></a>
+  <nav>
+    <a href="index.html">Annuaire</a>
+    <a href="faq.html">FAQ</a>
+    <a href="inscription.html" class="btn-nav">Inscrire mon studio</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag"><span></span> Pour les tatoueurs professionnels</div>
+  <h1>Rends ton studio<br><em>visible</em></h1>
+  <p class="hero-sub">Rejoins le premier annuaire des tatoueurs francais. Profil pro, visibilite Google, clients qualifies — 100% gratuit, pour toujours.</p>
+  <div class="hero-actions">
+    <a href="inscription.html" class="btn-primary">Creer mon profil gratuit</a>
+    <a href="#profil-exemple" class="btn-secondary">Voir un exemple</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">96<em>+</em></div>
+    <div class="stat-label">Pages referencees</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">12</div>
+    <div class="stat-label">Villes couvertes</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">24<em>h</em></div>
+    <div class="stat-label">Mise en ligne</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">0<em>EUR</em></div>
+    <div class="stat-label">Pour toujours</div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<section class="section">
+  <div class="section-tag">// Pourquoi rejoindre Inkmap</div>
+  <h2>Tout ce dont ton studio<br>a <em>besoin</em></h2>
+  <p class="section-intro">Inkmap te donne de la visibilite la ou tes futurs clients te cherchent : sur Google.</p>
+
+  <div class="benefits-grid">
+    <div class="benefit">
+      <div class="benefit-icon">Q</div>
+      <h3>Visibilite Google gratuite</h3>
+      <p>Ton profil est indexe sur Google. Les clients qui cherchent "tatoueur fineline Paris" ou "tatoueur blackwork Lyon" te trouvent directement, sans que tu depenses un centime en pub.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">O</div>
+      <h3>Clients qualifies</h3>
+      <p>Les visiteurs d'Inkmap cherchent activement un tatoueur. Ils filtrent par style, ville et budget. Pas de curieux — que des vrais projets prets a reserver.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">L</div>
+      <h3>Profil professionnel</h3>
+      <p>Style, tarifs, localisation, bio, Instagram — tout est presente de facon claire et moderne. Ton profil Inkmap peut meme servir de mini-site pour tes clients.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">P</div>
+      <h3>Zero commission</h3>
+      <p>Inkmap ne prend aucune commission sur tes reservations. Le contact se fait directement entre toi et le client via Instagram ou email.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE PREVIEW -->
+<section class="section section-alt" id="profil-exemple">
+  <div class="section-tag">// A quoi ressemble ton profil</div>
+  <h2>Un profil <em>pro</em><br>en 5 minutes</h2>
+  <p class="section-intro">Voici ce que tes futurs clients verront quand ils te trouveront sur Inkmap :</p>
+
+  <div class="profile-demo">
+    <div class="profile-demo-header">
+      <div class="profile-demo-emoji">Q</div>
+      <div class="profile-demo-name">Ton Nom Ici</div>
+      <div class="profile-demo-badge">Verifie</div>
+      <div class="profile-demo-loc">Paris, Ile-de-France</div>
+      <div class="profile-demo-tags">
+        <span class="profile-demo-tag">Fineline</span>
+        <span class="profile-demo-tag">Dotwork</span>
+        <span class="profile-demo-tag">Blackwork</span>
+      </div>
+    </div>
+    <div class="profile-demo-body">
+      <div class="profile-demo-row">
+        <span class="profile-demo-label">Tarif</span>
+        <span class="profile-demo-val accent">120 EUR/h</span>
+      </div>
+      <div class="profile-demo-row">
+        <span class="profile-demo-label">Instagram</span>
+        <span class="profile-demo-val">@tonpseudo</span>
+      </div>
+      <div class="profile-demo-row">
+        <span class="profile-demo-label">Bio</span>
+        <span class="profile-demo-val" style="font-size:0.75rem;font-weight:400;color:var(--muted2);text-align:right;max-width:200px;line-height:1.4">Tatoueur specialise fineline et dotwork depuis 3 ans...</span>
+      </div>
+    </div>
+    <a href="inscription.html" class="profile-demo-cta">Creer le mien</a>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-tag">// Comment ca marche</div>
+  <h2>En ligne en<br><em>3 etapes</em></h2>
+  <p class="section-intro">L'inscription prend 5 minutes. On verifie ton profil et tu es visible en moins de 24h.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Remplis le formulaire</h3>
+      <p>Ton nom, ton studio, tes styles, ta ville, ton tarif et ta bio. C'est rapide et gratuit.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>On verifie ton profil</h3>
+      <p>Notre equipe verifie tes informations et ton portfolio en moins de 24 heures.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Tu es visible</h3>
+      <p>Ton profil apparait sur Inkmap et sur Google. Les clients te trouvent par style et par ville.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section-alt">
+  <div class="section-tag">// Ce qu'en disent les artistes</div>
+  <h2>Ils ont rejoint <em>Inkmap</em></h2>
+  <p class="section-intro">Les retours des premiers tatoueurs inscrits sur la plateforme.</p>
+
+  <div class="testimonials">
+    <div class="testimonial">
+      <q>Inscription simple, profil en ligne en quelques heures. J'ai deja recu des demandes de clients qui m'ont trouve via Google.</q>
+      <cite>Artiste fineline — Paris</cite>
+    </div>
+    <div class="testimonial">
+      <q>Ca fait des mois que je cherchais un moyen d'etre visible sans payer de pub. Inkmap fait exactement ca, et c'est gratuit.</q>
+      <cite>Artiste blackwork — Lyon</cite>
+    </div>
+  </div>
+</section>
+
+<!-- GUIDES -->
+<section class="section">
+  <div class="section-tag">// Ressources pour tatoueurs</div>
+  <h2>Developpe ta <em>clientele</em></h2>
+  <p class="section-intro">Nos guides gratuits pour les tatoueurs qui veulent se developper.</p>
+
+  <div class="guides-grid">
+    <a href="guide/trouver-clients-tatoueur.html" class="guide-card">
+      <div class="guide-card-tag">Guide</div>
+      <h3>Comment trouver des clients</h3>
+      <p>Reseaux sociaux, SEO, annuaires, bouche-a-oreille — toutes les strategies.</p>
+    </a>
+    <a href="guide/referencer-studio-tatouage-gratuit.html" class="guide-card">
+      <div class="guide-card-tag">Guide</div>
+      <h3>Referencer son studio gratuitement</h3>
+      <p>Google Business, annuaires, avis clients — le guide SEO complet.</p>
+    </a>
+    <a href="outils/calculateur-tarif-tatouage.html" class="guide-card">
+      <div class="guide-card-tag">Outil gratuit</div>
+      <h3>Calculateur de tarif</h3>
+      <p>Estime le prix adapte selon la taille, le style et ton experience.</p>
+    </a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-alt">
+  <div class="section-tag">// Questions frequentes</div>
+  <h2>Tout ce que tu veux <em>savoir</em></h2>
+
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary class="faq-q">C'est vraiment gratuit ?</summary>
+      <div class="faq-a">Oui, totalement. L'inscription, la visibilite et le referencement Google sont 100% gratuits. Pas de frais caches, pas de commission sur tes reservations, pas d'abonnement. On ne te demandera jamais de payer.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Qui peut s'inscrire ?</summary>
+      <div class="faq-a">Tout tatoueur professionnel exerçant en France, en studio ou en independant. Que tu sois debutant ou experimente, du moment que tu exerces legalement.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Est-ce que je peux modifier mon profil ?</summary>
+      <div class="faq-a">Oui, tu peux modifier tes informations a tout moment en nous contactant par email ou Instagram. On met a jour ton profil sous 24h.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Combien de clients vais-je recevoir ?</summary>
+      <div class="faq-a">Ca depend de ta ville et de ton style. Les pages Inkmap sont optimisees pour Google, donc plus ton style est recherche, plus tu recevras de visites. En moyenne, un tatoueur bien reference recoit ses premiers contacts dans les semaines suivant son inscription.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Faut-il un site web pour s'inscrire ?</summary>
+      <div class="faq-a">Non, un compte Instagram suffit. Ton profil Inkmap fait office de mini-site : il presente ton style, tes tarifs et ta localisation de facon professionnelle.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Comment les clients me contactent ?</summary>
+      <div class="faq-a">Via ton Instagram ou ton email, affiche sur ton profil Inkmap. Le contact est direct — on ne s'interpose jamais entre toi et tes clients.</div>
+    </details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Pret a rendre ton studio <em>visible</em> ?</h2>
+  <a href="inscription.html" class="btn-primary">Creer mon profil gratuit</a>
+  <div class="final-cta-sub">5 minutes, gratuit, sans engagement</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">ink<em>map</em></div>
+      <p>Le premier annuaire<br>des tatoueurs francais</p>
+    </div>
+    <nav class="footer-nav-group" aria-label="Liens site">
+      <span class="footer-nav-label">Inkmap</span>
+      <a href="index.html">Annuaire</a>
+      <a href="faq.html">FAQ</a>
+      <a href="rejoindre.html">Tatoueurs</a>
+      <a href="inscription.html">Inscrire mon studio</a>
+      <a href="mentions-legales.html">Mentions legales</a>
+    </nav>
+    <nav class="footer-nav-group" aria-label="Guides">
+      <span class="footer-nav-label">Guides</span>
+      <a href="guide/trouver-clients-tatoueur.html">Trouver des clients</a>
+      <a href="guide/referencer-studio-tatouage-gratuit.html">Referencer son studio</a>
+      <a href="outils/calculateur-tarif-tatouage.html">Calculateur de tarif</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <small>&copy; 2026 — INKMAP.FR</small>
+    <div class="footer-legal">
+      <a href="mentions-legales.html">Mentions legales</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
