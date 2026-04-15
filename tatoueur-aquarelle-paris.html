@@ -310,6 +310,9 @@
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
     }
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ItemList","name":"Tatoueurs aquarelle à paris","numberOfItems":1,"itemListElement":[{"@type":"ListItem","position":1,"name":"Atelier M","description":"Tatoueur Fineline à Paris"}]}
+  </script>
 </head>
 <body>
 
@@ -361,7 +364,7 @@
     <p class="seo-intro">Le tatouage aquarelle reproduit l'effet fluide et transparent de la peinture à l'eau : éclaboussures de couleur, dégradés subtils et absence de contours nets créent des œuvres d'une délicatesse picturale unique. Ce style, apparu dans les années 2010, demande une grande maîtrise de la couleur et une technique spécifique pour maintenir la lisibilité dans le temps. Les meilleurs artistes aquarelle savent doser pigments et espaces vides pour créer des compositions à la fois légères et expressives. Paris concentre la plus grande scène tattoo de France, avec des centaines de studios répartis dans tous les arrondissements. Du 11e au 18e en passant par le Marais, les artistes parisiens sont exposés à une clientèle internationale exigeante qui élève en permanence le niveau artistique. La capitale accueille chaque année plusieurs conventions tattoo majeures et attire des artistes du monde entier. Chaque profil Inkmap est sélectionné pour la cohérence de son portfolio, la qualité de ses réalisations et son professionnalisme.</p>
     <div class="seo-stats">
       <div class="seo-stat">
-        <div class="seo-stat-num" id="nb-resultats">—</div>
+        <div class="seo-stat-num" id="nb-resultats">1</div>
         <div class="seo-stat-label">Artistes trouvés</div>
       </div>
       <div class="seo-stat">
@@ -380,7 +383,22 @@
 <div class="results-header" id="results-count"></div>
 
 <!-- GRID -->
-<div class="grid" id="grid"></div>
+<div class="grid" id="grid">
+<div class="card" data-id="61">
+      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-name">Atelier M</div>
+          <span class="badge-verifie">✓ Vérifié</span>
+        </div>
+        <div class="card-location">📍 Paris</div>
+        <div class="styles"><span class="style-tag">Fineline</span><span class="style-tag">Blackwork</span><span class="style-tag">Japonais</span><span class="style-tag">Old School</span><span class="style-tag">Réalisme</span><span class="style-tag">Géométrique</span><span class="style-tag">Aquarelle</span><span class="style-tag">Floral</span><span class="style-tag">Lettering</span><span class="style-tag">Micro-réalisme</span></div>
+        <div class="card-footer">
+          <div class="tarif">120€ <small>/ heure</small></div>
+        </div>
+      </div>
+    </div>
+</div>
 
 <!-- GUIDE DU STYLE -->
 <section class="seo-section">
@@ -460,7 +478,7 @@
 const PAGE_STYLE = "Aquarelle";
 const PAGE_VILLE = "Paris";
 
-const tatoueurs = [];
+const tatoueurs = [{"id":61,"nom":"Atelier M","nomComplet":"Ange MATTEI AMAR","ville":"Paris","region":"Île-de-France","styles":["Fineline","Blackwork","Japonais","Old School","Réalisme","Géométrique","Aquarelle","Floral","Lettering","Micro-réalisme"],"tarif":120,"instagram":"@atelierm_ttt","bio":"L'Atelier M est un salon de tatouage sur rue situé en plein cœur de Belleville sur deux niveaux. Nous représentons une équipe d'artistes d'univers graphiques très différents. Nous développons également les expositions peinture ainsi que des plateaux pluridisciplinaires dédiés à l'Art en général. \nGuests et Walk-in welcome.","verifie":true,"photo":"","photos":[],"emoji":"🌿"}];
 
 const STYLE_EMOJI = {
   'Blackwork':'◼','Fineline':'🌿','Réalisme':'📷','Old School':'⚓',

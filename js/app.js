@@ -285,7 +285,7 @@ async function chargerDepuisAirtable() {
         tarif: parseInt(f.Tarif || f.tarif) || 0,
         instagram: f.Instagram || f.instagram || '',
         bio: f.Bio || f.bio || '',
-        verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi'),
+        verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi') || !!(f.Email || f.email),
         photo: allPhotos[0] || '',
         photos: allPhotos,
         emoji: STYLE_EMOJI[styles[0]] || '✦',

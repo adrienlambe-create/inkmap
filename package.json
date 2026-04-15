@@ -4,6 +4,7 @@
   "description": "",
   "main": "generate-pages.js",
   "scripts": {
+    "build": "node generate-pages.js && node build-inject.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
