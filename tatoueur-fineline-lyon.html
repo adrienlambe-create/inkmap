@@ -63,7 +63,7 @@
     .seo-stat { display: flex; flex-direction: column; gap: 2px; }
     .seo-stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1; }
     .seo-stat-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
-    .seo-hero-blob { position: absolute; top: -60px; right: -100px; width: 480px; height: 420px; background: radial-gradient(ellipse 60% 60% at 60% 50%, rgba(210,168,138,0.7) 0%, transparent 55%), radial-gradient(ellipse 80% 70% at 55% 55%, rgba(245,225,205,0.25) 0%, transparent 65%); filter: blur(55px); border-radius: 50%; pointer-events: none; }
+    .seo-hero-blob { display: none !important; position: absolute; top: -60px; right: -100px; width: 480px; height: 420px; background: radial-gradient(ellipse 60% 60% at 60% 50%, rgba(210,168,138,0.7) 0%, transparent 55%), radial-gradient(ellipse 80% 70% at 55% 55%, rgba(245,225,205,0.25) 0%, transparent 65%); filter: blur(55px); border-radius: 50%; pointer-events: none; }
     .results-header { padding: 12px 56px; font-size: 0.62rem; color: var(--muted); font-family: 'Space Mono', monospace; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid var(--border); background: var(--surface); }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
     .card { background: var(--bg); cursor: pointer; transition: background .12s; overflow: hidden; position: relative; }
@@ -113,7 +113,7 @@
     .footer-logo em { font-style: normal; color: var(--accent); }
     footer p { color: var(--muted2); font-size: 0.7rem; font-family: 'Space Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; }
     footer small { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
-    .bg-blobs { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; mix-blend-mode: multiply; }
+    .bg-blobs { display: none !important; position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; mix-blend-mode: multiply; }
     .bg-blob { position: absolute; border-radius: 50%; will-change: transform; }
     .bg-blob-1 { width: 650px; height: 580px; background: radial-gradient(ellipse, rgba(255,155,90,0.55) 0%, rgba(255,120,80,0.2) 50%, transparent 75%); filter: blur(72px); top: -120px; right: -60px; }
     .bg-blob-2 { width: 520px; height: 480px; background: radial-gradient(ellipse, rgba(255,100,140,0.45) 0%, rgba(240,90,130,0.2) 50%, transparent 72%); filter: blur(80px); bottom: 25%; left: -100px; }
@@ -161,7 +161,7 @@
       footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
       .modal-overlay { padding: 0; align-items: flex-end; }
       .modal { max-width: 100%; max-height: 92vh; border-radius: 16px 16px 0 0; padding: 32px 24px 40px; border-bottom: none; }
-      .bg-blobs { display: none; }
+      .bg-blobs { display: none !important; display: none; }
     }
     @media (max-width: 380px) {
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
@@ -408,8 +408,8 @@
     <p style="margin-top:6px">Le premier annuaire des tatoueurs français</p>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-    <small>© 2025 — INKMAP.FR</small>
-    <a href="mentions-legales.html" style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--muted);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">Mentions légales</a>
+    <small>© 2026 — INKMAP.FR</small>
+    <a href="mentions-legales.html" style="font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.35);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Mentions légales</a>
   </div>
 </footer>
 

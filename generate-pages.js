@@ -386,17 +386,7 @@ function buildPage(style, city) {
       letter-spacing: 2px;
     }
 
-    .seo-hero-blob {
-      position: absolute;
-      top: -60px; right: -100px;
-      width: 480px; height: 420px;
-      background:
-        radial-gradient(ellipse 60% 60% at 60% 50%, rgba(210,168,138,0.7) 0%, transparent 55%),
-        radial-gradient(ellipse 80% 70% at 55% 55%, rgba(245,225,205,0.25) 0%, transparent 65%);
-      filter: blur(55px);
-      border-radius: 50%;
-      pointer-events: none;
-    }
+    .seo-hero-blob { display: none; }
 
     /* ── SEO SECTIONS ── */
     .seo-section {

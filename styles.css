@@ -452,14 +452,15 @@ nav a:hover { color: var(--text); }
 
 /* ── FOOTER ── */
 footer {
-  border-top: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
   padding: 44px 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
-  background: var(--surface);
+  background: #0a0a0a;
+  color: #fff;
 }
 
 .footer-logo {
@@ -468,13 +469,13 @@ footer {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--text);
+  color: #fff;
 }
 
 .footer-logo em { font-style: normal; color: var(--accent); }
 
 footer p {
-  color: var(--muted2);
+  color: rgba(255,255,255,0.35);
   font-size: 0.7rem;
   font-family: 'Space Mono', monospace;
   letter-spacing: 1px;
@@ -485,43 +486,22 @@ footer p {
 footer small {
   font-family: 'Space Mono', monospace;
   font-size: 0.62rem;
-  color: var(--muted);
+  color: rgba(255,255,255,0.2);
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 
-/* ── BACKGROUND BLOBS ── */
-.bg-blobs {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
-  overflow: hidden;
-  mix-blend-mode: multiply;
+footer a {
+  color: rgba(255,255,255,0.35);
+  transition: color .15s;
 }
 
-.bg-blob { position: absolute; border-radius: 50%; will-change: transform; }
+footer a:hover { color: #fff; }
 
-.bg-blob-1 {
-  width: 650px; height: 580px;
-  background: radial-gradient(ellipse, rgba(255,155,90,0.55) 0%, rgba(255,120,80,0.2) 50%, transparent 75%);
-  filter: blur(72px);
-  top: -120px; right: -60px;
-}
-
-.bg-blob-2 {
-  width: 520px; height: 480px;
-  background: radial-gradient(ellipse, rgba(255,100,140,0.45) 0%, rgba(240,90,130,0.2) 50%, transparent 72%);
-  filter: blur(80px);
-  bottom: 25%; left: -100px;
-}
-
-.bg-blob-3 {
-  width: 400px; height: 380px;
-  background: radial-gradient(ellipse, rgba(255,210,100,0.4) 0%, rgba(255,180,80,0.15) 55%, transparent 75%);
-  filter: blur(65px);
-  top: 55%; left: 45%;
-}
+/* ── BACKGROUND BLOBS & HERO BLOB (désactivés — DA noir/blanc/rouge) ── */
+.bg-blobs { display: none; }
+.bg-blob { display: none; }
+.seo-hero-blob { display: none !important; }
 
 /* ── HAMBURGER ── */
 .hamburger {
