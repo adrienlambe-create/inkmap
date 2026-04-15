@@ -644,8 +644,8 @@ async function chargerDepuisAirtable() {
 
 function renderCard(t) {
   const imgHtml = t.photo
-    ? \`<img src="\${t.photo}" alt="Tatouage par \${t.nom}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />\`
-    : t.emoji;
+    ? '<img src="' + t.photo + '" alt="Tatouage par ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />'
+    : '';
   return \`
     <div class="card" onclick="ouvrirModal(\${t.id})">
       <div class="card-img">\${imgHtml}</div>
@@ -678,8 +678,8 @@ function afficher(liste) {
 function ouvrirModal(id) {
   const t = tatoueurs.find(x => x.id === id);
   const modalImg = t.photo
-    ? \`<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="\${t.photo}" alt="Tatouage par \${t.nom}" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>\`
-    : \`<div class="modal-emoji">\${t.emoji}</div>\`;
+    ? '<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="' + t.photo + '" alt="Tatouage par ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>'
+    : '';
   document.getElementById('modal-content').innerHTML = \`
     \${modalImg}
     <div class="modal-name">\${t.nom}</div>
