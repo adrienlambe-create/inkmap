@@ -175,7 +175,7 @@
 <section class="seo-hero">
   <div class="seo-hero-blob"></div>
   <div class="seo-hero-inner">
-    <div class="seo-tag">// Blackwork · Lyon</div>
+    <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> <span>›</span> <a href="tatoueur-blackwork-paris.html">Blackwork</a> <span>›</span> <strong>Lyon</strong></nav>
     <h1>Tatoueurs <em>Blackwork</em><br>à Lyon</h1>
     <p class="seo-intro">
       La scène blackwork lyonnaise est parmi les plus vivantes de France. Entre les studios de la Guillotière
@@ -376,7 +376,7 @@ function afficher(liste){document.getElementById('results-count').textContent=`�
 function ouvrirModal(id){const t=tatoueurs.find(x=>x.id===id);document.getElementById('modal-content').innerHTML=(function(){var m=t.photo?'<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="'+t.photo+'" alt="Tatouage par '+t.nom+'" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>':'';return`${m}<div class="modal-name">${t.nom}</div><div class="modal-city">📍 ${t.ville} — ${t.region}</div><div class="styles">${t.styles.map(s=>`<span class="style-tag">${s}</span>`).join('')}</div><div class="modal-section"><h3>À propos</h3><p>${t.bio}</p></div><div class="modal-section"><h3>Tarif</h3><div class="modal-price">${t.tarif}€<small style="font-size:0.9rem;color:var(--muted)"> / heure</small></div></div><div class="modal-section"><h3>Contact</h3><p style="font-family:'Space Mono',monospace">${t.instagram}</p></div><div class="modal-actions"><button class="btn-primary">Contacter</button><a href="https://www.instagram.com/${t.instagram?t.instagram.replace('@',''):''}" target="_blank" class="btn-secondary" style="text-decoration:none;display:inline-flex;align-items:center">Instagram</a></div>`;document.getElementById('modal').classList.add('open');}
 function fermerModal(e){if(!e||e.target===document.getElementById('modal'))document.getElementById('modal').classList.remove('open');}
 chargerDepuisAirtable().then(()=>{const liste=tatoueurs.filter(t=>t.styles.includes(PAGE_STYLE)&&t.ville.toLowerCase().includes(PAGE_VILLE.toLowerCase()));afficher(liste);});
-(function(){const blobs=[document.querySelector('.bg-blob-1'),document.querySelector('.bg-blob-2'),document.querySelector('.bg-blob-3')];const parallax=[{x:0.04,y:0.07},{x:-0.05,y:-0.04},{x:0.03,y:-0.06}];const amp=[110,130,90];const state=blobs.map(()=>({cx:0,cy:0,tx:0,ty:0}));function pickTarget(i){state[i].tx=(Math.random()*2-1)*amp[i];state[i].ty=(Math.random()*2-1)*amp[i];}function scheduleNext(i){setTimeout(()=>{pickTarget(i);scheduleNext(i);},3000+Math.random()*4000);}state.forEach((_,i)=>{pickTarget(i);scheduleNext(i);});let scrollY=0;window.addEventListener('scroll',()=>{scrollY=window.scrollY;},{passive:true});const LERP=0.013;(function loop(){requestAnimationFrame(loop);state.forEach((s,i)=>{s.cx+=(s.tx-s.cx)*LERP;s.cy+=(s.ty-s.cy)*LERP;blobs[i].style.transform=`translate(${s.cx+scrollY*parallax[i].x}px,${s.cy+scrollY*parallax[i].y}px)`;});})();})();
+
 </script>
 </body>
 </html>

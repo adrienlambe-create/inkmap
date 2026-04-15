@@ -172,17 +172,6 @@
       letter-spacing: 2px;
     }
 
-    .seo-hero-blob {
-      position: absolute;
-      top: -60px; right: -100px;
-      width: 480px; height: 420px;
-      background:
-        radial-gradient(ellipse 60% 60% at 60% 50%, rgba(210,168,138,0.7) 0%, transparent 55%),
-        radial-gradient(ellipse 80% 70% at 55% 55%, rgba(245,225,205,0.25) 0%, transparent 65%);
-      filter: blur(55px);
-      border-radius: 50%;
-      pointer-events: none;
-    }
 
     /* ── SEO SECTIONS ── */
     .seo-section {
@@ -294,6 +283,23 @@
       background: rgba(192,57,43,0.04);
     }
 
+    .breadcrumb {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .breadcrumb a:hover { color: var(--text); }
+    .breadcrumb span { color: var(--muted); margin: 0 4px; }
+    .breadcrumb strong { color: var(--muted2); font-weight: 500; }
+
     @media (max-width: 768px) {
       .seo-section { padding: 40px 20px; }
       .seo-section-alt { padding-left: 20px; padding-right: 20px; }
@@ -305,9 +311,6 @@
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
     }
   </style>
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"ItemList","name":"Tatoueurs lettering à paris","numberOfItems":2,"itemListElement":[{"@type":"ListItem","position":1,"name":"Bricetattooer","description":"Tatoueur Fineline à Paris"},{"@type":"ListItem","position":2,"name":"Atelier M","description":"Tatoueur Fineline à Paris"}]}
-  </script>
 </head>
 <body>
 
@@ -352,14 +355,13 @@
 
 <!-- SEO HERO -->
 <section class="seo-hero">
-  <div class="seo-hero-blob"></div>
   <div class="seo-hero-inner">
-    <div class="seo-tag">// Lettering · Paris</div>
+    <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> <span>›</span> <a href="tatoueur-lettering-paris.html">Lettering</a> <span>›</span> <strong>Paris</strong></nav>
     <h1>Tatoueurs <em>Lettering</em><br>à Paris</h1>
     <p class="seo-intro">Le lettering transforme les mots en œuvres d'art : typographies calligraphiques, scripts fluides, lettres gothiques ou imprimées composent des phrases, des citations ou des prénoms destinés à s'inscrire pour toujours sur la peau. Un bon tatoueur lettering maîtrise les règles de la typographie, la gestion des espacements et les particularités de la peau comme support. Du lettering fin et discret au script monumental qui couvre un bras entier, chaque artiste développe une signature visuelle et une technique propre. Paris concentre la plus grande scène tattoo de France, avec des centaines de studios répartis dans tous les arrondissements. Du 11e au 18e en passant par le Marais, les artistes parisiens sont exposés à une clientèle internationale exigeante qui élève en permanence le niveau artistique. La capitale accueille chaque année plusieurs conventions tattoo majeures et attire des artistes du monde entier. Sur Inkmap, tous les profils sont vérifiés : vous avez la certitude de contacter un vrai artiste, réactif et professionnel.</p>
     <div class="seo-stats">
       <div class="seo-stat">
-        <div class="seo-stat-num" id="nb-resultats">2</div>
+        <div class="seo-stat-num" id="nb-resultats">—</div>
         <div class="seo-stat-label">Artistes trouvés</div>
       </div>
       <div class="seo-stat">
@@ -378,36 +380,7 @@
 <div class="results-header" id="results-count"></div>
 
 <!-- GRID -->
-<div class="grid" id="grid">
-<div class="card" data-id="2">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/ah0HQzwmswbPhuAVe2dFyQ/OwO-rnaTYkReDkyFn3DJsOLMOf0Moifm89tFlXY4rVx9tDNZy_Sm3bTSiCiUOliMjAQCxVa-CnG6xhT3bX1Bi9fxbEpNInq9e6YBqe-Yb71FOpUjLtBgox8d9ov60Dh6bGVjhrQnznANh9oh3HWCqg/qipWvAmo8U8v-979cYidjClYWAl01UHs8gEJM6qT7rI" alt="Tatouage Fineline par Bricetattooer à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Bricetattooer</div>
-          <span class="badge-verifie">✓ Vérifié</span>
-        </div>
-        <div class="card-location">📍 Paris</div>
-        <div class="styles"><span class="style-tag">Fineline</span><span class="style-tag">Réalisme</span><span class="style-tag">Floral</span><span class="style-tag">Lettering</span><span class="style-tag">Micro-réalisme</span></div>
-        <div class="card-footer">
-          <div class="tarif">150€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="61">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Atelier M</div>
-          <span class="badge-verifie">✓ Vérifié</span>
-        </div>
-        <div class="card-location">📍 Paris</div>
-        <div class="styles"><span class="style-tag">Fineline</span><span class="style-tag">Blackwork</span><span class="style-tag">Japonais</span><span class="style-tag">Old School</span><span class="style-tag">Réalisme</span><span class="style-tag">Géométrique</span><span class="style-tag">Aquarelle</span><span class="style-tag">Floral</span><span class="style-tag">Lettering</span><span class="style-tag">Micro-réalisme</span></div>
-        <div class="card-footer">
-          <div class="tarif">120€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-</div>
+<div class="grid" id="grid"></div>
 
 <!-- GUIDE DU STYLE -->
 <section class="seo-section">
@@ -453,6 +426,12 @@
   <div class="internal-links"><a href="tatoueur-realisme-paris.html" class="internal-link">Réalisme</a><a href="tatoueur-japonais-paris.html" class="internal-link">Japonais</a><a href="tatoueur-geometrique-paris.html" class="internal-link">Géométrique</a><a href="tatoueur-tribal-paris.html" class="internal-link">Tribal</a><a href="tatoueur-old-school-paris.html" class="internal-link">Old School</a><a href="tatoueur-aquarelle-paris.html" class="internal-link">Aquarelle</a><a href="tatoueur-dotwork-paris.html" class="internal-link">Dotwork</a></div>
 </section>
 
+<section class="seo-section">
+  <h2 class="seo-section-title">Tatoueurs Lettering dans d'autres villes</h2>
+  <p class="seo-section-sub">Retrouvez les meilleurs tatoueurs lettering partout en France :</p>
+  <div class="internal-links"><a href="tatoueur-lettering-lyon.html" class="internal-link">Lyon</a><a href="tatoueur-lettering-bordeaux.html" class="internal-link">Bordeaux</a><a href="tatoueur-lettering-marseille.html" class="internal-link">Marseille</a><a href="tatoueur-lettering-toulouse.html" class="internal-link">Toulouse</a><a href="tatoueur-lettering-nantes.html" class="internal-link">Nantes</a><a href="tatoueur-lettering-montpellier.html" class="internal-link">Montpellier</a><a href="tatoueur-lettering-lille.html" class="internal-link">Lille</a><a href="tatoueur-lettering-strasbourg.html" class="internal-link">Strasbourg</a><a href="tatoueur-lettering-rennes.html" class="internal-link">Rennes</a><a href="tatoueur-lettering-nice.html" class="internal-link">Nice</a><a href="tatoueur-lettering-grenoble.html" class="internal-link">Grenoble</a></div>
+</section>
+
 <!-- CTA -->
 <div class="cta-band">
   <div class="cta-band-text">Explore tous les<br><span>tatoueurs français →</span></div>
@@ -487,7 +466,7 @@
 const PAGE_STYLE = "Lettering";
 const PAGE_VILLE = "Paris";
 
-const tatoueurs = [{"id":2,"nom":"Bricetattooer","nomComplet":"Brice Pocheveux","ville":"Paris","region":"Île-de-France","styles":["Fineline","Réalisme","Floral","Lettering","Micro-réalisme"],"tarif":150,"instagram":"@bricetattooer","bio":"Tatouage réalisme black and grey / floral / micro réalisme.","verifie":true,"photo":"https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/ah0HQzwmswbPhuAVe2dFyQ/OwO-rnaTYkReDkyFn3DJsOLMOf0Moifm89tFlXY4rVx9tDNZy_Sm3bTSiCiUOliMjAQCxVa-CnG6xhT3bX1Bi9fxbEpNInq9e6YBqe-Yb71FOpUjLtBgox8d9ov60Dh6bGVjhrQnznANh9oh3HWCqg/qipWvAmo8U8v-979cYidjClYWAl01UHs8gEJM6qT7rI","photos":["https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/ah0HQzwmswbPhuAVe2dFyQ/OwO-rnaTYkReDkyFn3DJsOLMOf0Moifm89tFlXY4rVx9tDNZy_Sm3bTSiCiUOliMjAQCxVa-CnG6xhT3bX1Bi9fxbEpNInq9e6YBqe-Yb71FOpUjLtBgox8d9ov60Dh6bGVjhrQnznANh9oh3HWCqg/qipWvAmo8U8v-979cYidjClYWAl01UHs8gEJM6qT7rI","https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/OQ0dUCaGL53_s2D0mBKFeg/paWSdkKT1n8rhp9JjV2KqFLYcrOeWmhXAJ7FS9r4GUOB3WFnKlVI9S1inL8gl1CX0f-JdLDH82uzpNsFx5Yi3fINQ_d2qxmYYpF9UX7l2UJeEqlyY_pzkX9XftKQ48Ujh48tpXzD1OJLbGA1qyymoA/mv96FhPB12vVeD0a9kSqo20VJMq5gKaARptQo-ZiTd0","https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/I1lpfSXqmeMRDLUP-cmyZw/AgOFGz3hwr8myd0sOh5wrZN3HSObZGYHDzt6lSWt7cSqwk7qZZIDLB2gpjvxKMR__CzSk3kAS2lHRjT2ntlD1ZM8ySuwE2moLbysFCFTaHxavDIsuD1ew5qB-cdrusuJQBdK_VWPqgRpQ67swd4_OQ/sr547PhLwjAyqNMgHLjPSfc3AdiqOqkXrVACixYtMMA","https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/IZRLL6WBWZRkUAkuGF84JA/kv5-cNm2JtdFvvLQeq19FCdVcFhx_b_RFJsa4CFCQBewjau2xF_IdPYw7Tw7c3r6tbSKwjw3GJjW8sdbdEComT1-7kM8tt8ShApEQSt1XO6zFfCzU1cMEo9p_Hrg9wN6GXKKaVh_RAV0SV7s5k7YlQ/FDGcOqPUPsJqOikBhKWaQdnMu_HXoDMQxoDt8HMpzPs","https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/wIMF7UWnd71SbPz0afHcrw/-ezszUANU3oeWmDyhO-BnT2oFnvHocd3d5YdBtWePNvGdY4ICtPe2gX3FW14MWrwyCLeRZXClAzJn-uAszqKfILJzI_2KPjt4uTXhkjS410saFtQLZiqTLLLwdlo4dtpRgq0eGhgb-gnnITh3aK9sQ/JbeznRW4NoSRyga3zu7EcT9gjFXGL0yXn9qf8IJpaho"],"emoji":"🌿"},{"id":61,"nom":"Atelier M","nomComplet":"Ange MATTEI AMAR","ville":"Paris","region":"Île-de-France","styles":["Fineline","Blackwork","Japonais","Old School","Réalisme","Géométrique","Aquarelle","Floral","Lettering","Micro-réalisme"],"tarif":120,"instagram":"@atelierm_ttt","bio":"L'Atelier M est un salon de tatouage sur rue situé en plein cœur de Belleville sur deux niveaux. Nous représentons une équipe d'artistes d'univers graphiques très différents. Nous développons également les expositions peinture ainsi que des plateaux pluridisciplinaires dédiés à l'Art en général. \nGuests et Walk-in welcome.","verifie":true,"photo":"","photos":[],"emoji":"🌿"}];
+const tatoueurs = [];
 
 const STYLE_EMOJI = {
   'Blackwork':'◼','Fineline':'🌿','Réalisme':'📷','Old School':'⚓',
@@ -528,7 +507,7 @@ async function chargerDepuisAirtable() {
   }
 }
 
-const PLACEHOLDER_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO \u00C0 VENIR</text></svg>';
+const PLACEHOLDER_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg>';
 
 function renderCard(t) {
   const imgHtml = t.photo
@@ -631,31 +610,6 @@ chargerDepuisAirtable().then(() => {
   afficher(liste);
 });
 
-// ── BLOBS ALÉATOIRES ──
-(function() {
-  const blobs = [
-    document.querySelector('.bg-blob-1'),
-    document.querySelector('.bg-blob-2'),
-    document.querySelector('.bg-blob-3'),
-  ];
-  const parallax = [{ x: 0.04, y: 0.07 }, { x: -0.05, y: -0.04 }, { x: 0.03, y: -0.06 }];
-  const amp = [110, 130, 90];
-  const state = blobs.map(() => ({ cx: 0, cy: 0, tx: 0, ty: 0 }));
-  function pickTarget(i) { state[i].tx = (Math.random()*2-1)*amp[i]; state[i].ty = (Math.random()*2-1)*amp[i]; }
-  function scheduleNext(i) { setTimeout(() => { pickTarget(i); scheduleNext(i); }, 3000 + Math.random()*4000); }
-  state.forEach((_, i) => { pickTarget(i); scheduleNext(i); });
-  let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-  const LERP = 0.013;
-  (function loop() {
-    requestAnimationFrame(loop);
-    state.forEach((s, i) => {
-      s.cx += (s.tx - s.cx) * LERP;
-      s.cy += (s.ty - s.cy) * LERP;
-      blobs[i].style.transform = `translate(${s.cx + scrollY * parallax[i].x}px, ${s.cy + scrollY * parallax[i].y}px)`;
-    });
-  })();
-})();
 </script>
 </body>
 </html>

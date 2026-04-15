@@ -242,6 +242,13 @@ function buildInternalLinks(currentStyle, city) {
     .join('');
 }
 
+function buildCityLinks(style, currentCity) {
+  return CITIES
+    .filter(c => c.slug !== currentCity.slug)
+    .map(c => `<a href="tatoueur-${style.slug}-${c.slug}.html" class="internal-link">${c.label}</a>`)
+    .join('');
+}
+
 function buildFaqHtml(style) {
   const faqs = STYLE_FAQ[style.slug] || [];
   return faqs.map(f => `
@@ -261,6 +268,7 @@ function buildPage(style, city) {
   const faqSchema = buildFaqSchema(style);
   const breadcrumbSchema = buildBreadcrumbSchema(style, city, url);
   const internalLinks = buildInternalLinks(style, city);
+  const cityLinks = buildCityLinks(style, city);
   const faqHtml = buildFaqHtml(style);
   const tips = STYLE_TIPS[style.slug] || '';
 
@@ -386,7 +394,6 @@ function buildPage(style, city) {
       letter-spacing: 2px;
     }
 
-    .seo-hero-blob { display: none; }
 
     /* ── SEO SECTIONS ── */
     .seo-section {
@@ -498,6 +505,23 @@ function buildPage(style, city) {
       background: rgba(192,57,43,0.04);
     }
 
+    .breadcrumb {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .breadcrumb a:hover { color: var(--text); }
+    .breadcrumb span { color: var(--muted); margin: 0 4px; }
+    .breadcrumb strong { color: var(--muted2); font-weight: 500; }
+
     @media (max-width: 768px) {
       .seo-section { padding: 40px 20px; }
       .seo-section-alt { padding-left: 20px; padding-right: 20px; }
@@ -517,9 +541,8 @@ ${HEADER_HTML}
 
 <!-- SEO HERO -->
 <section class="seo-hero">
-  <div class="seo-hero-blob"></div>
   <div class="seo-hero-inner">
-    <div class="seo-tag">// ${style.label} · ${city.label}</div>
+    <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> <span>›</span> <a href="tatoueur-${style.slug}-paris.html">${style.label}</a> <span>›</span> <strong>${city.label}</strong></nav>
     <h1>Tatoueurs <em>${style.label}</em><br>à ${city.label}</h1>
     <p class="seo-intro">${intro}</p>
     <div class="seo-stats">
@@ -575,6 +598,12 @@ ${HEADER_HTML}
   <h2 class="seo-section-title">Autres styles de tatouage à ${city.label}</h2>
   <p class="seo-section-sub">Découvrez aussi les tatoueurs spécialisés dans d'autres styles à ${city.label} :</p>
   <div class="internal-links">${internalLinks}</div>
+</section>
+
+<section class="seo-section">
+  <h2 class="seo-section-title">Tatoueurs ${style.label} dans d'autres villes</h2>
+  <p class="seo-section-sub">Retrouvez les meilleurs tatoueurs ${style.label.toLowerCase()} partout en France :</p>
+  <div class="internal-links">${cityLinks}</div>
 </section>
 
 <!-- CTA -->
@@ -745,31 +774,6 @@ chargerDepuisAirtable().then(() => {
   afficher(liste);
 });
 
-// ── BLOBS ALÉATOIRES ──
-(function() {
-  const blobs = [
-    document.querySelector('.bg-blob-1'),
-    document.querySelector('.bg-blob-2'),
-    document.querySelector('.bg-blob-3'),
-  ];
-  const parallax = [{ x: 0.04, y: 0.07 }, { x: -0.05, y: -0.04 }, { x: 0.03, y: -0.06 }];
-  const amp = [110, 130, 90];
-  const state = blobs.map(() => ({ cx: 0, cy: 0, tx: 0, ty: 0 }));
-  function pickTarget(i) { state[i].tx = (Math.random()*2-1)*amp[i]; state[i].ty = (Math.random()*2-1)*amp[i]; }
-  function scheduleNext(i) { setTimeout(() => { pickTarget(i); scheduleNext(i); }, 3000 + Math.random()*4000); }
-  state.forEach((_, i) => { pickTarget(i); scheduleNext(i); });
-  let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-  const LERP = 0.013;
-  (function loop() {
-    requestAnimationFrame(loop);
-    state.forEach((s, i) => {
-      s.cx += (s.tx - s.cx) * LERP;
-      s.cy += (s.ty - s.cy) * LERP;
-      blobs[i].style.transform = \`translate(\${s.cx + scrollY * parallax[i].x}px, \${s.cy + scrollY * parallax[i].y}px)\`;
-    });
-  })();
-})();
 </script>
 </body>
 </html>`;
