@@ -1093,10 +1093,10 @@ const STYLE_EMOJI = {
 
 async function chargerDepuisAirtable() {
   try {
-    const res = await fetch('/.netlify/functions/tatoueurs');
+    const res = await fetch('/api/tatoueurs');
     if (!res.ok) return;
     const { records } = await res.json();
-    let nextId = 1;
+    let nextId = tatoueurs.reduce((max, t) => Math.max(max, t.id), 0) + 1;
     records.forEach(({ fields: f }) => {
       if (!f.Nom) return;
       const rawStyles = f.Styles || f.styles || [];
@@ -1104,18 +1104,32 @@ async function chargerDepuisAirtable() {
         ? rawStyles
         : rawStyles.split(',').map(s => s.trim()).filter(Boolean);
       const statut = (f.Statut || f.statuts || '').toLowerCase();
-      tatoueurs.push({
-        id: nextId++,
-        nom: f.Nom,
+      const photoArr = f.Photos || f.Photo || f.photo || [];
+      const allPhotos = Array.isArray(photoArr)
+        ? photoArr.map(p => p.thumbnails?.large?.url || p.url || '').filter(Boolean)
+        : [];
+      const profile = {
+        nom: f.Pseudo || f.Nom,
+        nomComplet: f.Nom,
         ville: f.Ville || f.ville || '',
         region: f.Region || f.region || '',
         styles,
         tarif: parseInt(f.Tarif || f.tarif) || 0,
         instagram: f.Instagram || f.instagram || '',
         bio: f.Bio || f.bio || '',
-        verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi'),
+        verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi') || !!(f.Email || f.email),
+        photo: allPhotos[0] || '',
+        photos: allPhotos,
         emoji: STYLE_EMOJI[styles[0]] || '✦',
-      });
+      };
+      const idx = tatoueurs.findIndex(t => t.nom.toLowerCase().trim() === f.Nom.toLowerCase().trim());
+      if (idx !== -1) {
+        profile.id = tatoueurs[idx].id;
+        tatoueurs[idx] = profile;
+      } else {
+        profile.id = nextId++;
+        tatoueurs.push(profile);
+      }
     });
   } catch(e) {
     console.warn('Airtable indisponible.', e);
