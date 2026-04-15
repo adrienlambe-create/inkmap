@@ -30,38 +30,8 @@
     }
   }
   </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      { "@type": "Question", "name": "Quel est le prix moyen d'un tatouage en France ?", "acceptedAnswer": { "@type": "Answer", "text": "Entre 80€ et 300€ selon la taille, le style et l'artiste. Les tatoueurs fineline et réalisme sont généralement plus chers que les styles classiques." } },
-      { "@type": "Question", "name": "Comment choisir son tatoueur ?", "acceptedAnswer": { "@type": "Answer", "text": "Regarde son portfolio en priorité, pas ses meilleures pièces mais son style dominant. Vérifie qu'il travaille régulièrement dans le style que tu veux. Sur Inkmap tu peux filtrer par style et comparer les profils." } },
-      { "@type": "Question", "name": "Quelle est la différence entre fineline et blackwork ?", "acceptedAnswer": { "@type": "Answer", "text": "Le fineline utilise des traits très fins et délicats, souvent sans remplissage. Le blackwork utilise des aplats noirs solides et des formes graphiques." } },
-      { "@type": "Question", "name": "Est-ce que le tatouage fait mal ?", "acceptedAnswer": { "@type": "Answer", "text": "Oui, mais l'intensité varie selon la zone du corps. Les zones osseuses (côtes, colonne, pieds) sont plus douloureuses. Les zones charnues (bras, cuisses) sont plus tolérables." } },
-      { "@type": "Question", "name": "Comment bien cicatriser un tatouage ?", "acceptedAnswer": { "@type": "Answer", "text": "Nettoie 2 à 3 fois par jour avec du savon doux, applique une crème cicatrisante fine, évite le soleil et l'immersion dans l'eau pendant 3 semaines. Ne gratte jamais les croûtes." } },
-      { "@type": "Question", "name": "Combien de temps dure la cicatrisation ?", "acceptedAnswer": { "@type": "Answer", "text": "La cicatrisation superficielle prend 2 à 3 semaines. La cicatrisation complète peut prendre jusqu'à 3 mois." } },
-      { "@type": "Question", "name": "Comment trouver un tatoueur spécialisé dans mon style ?", "acceptedAnswer": { "@type": "Answer", "text": "Sur Inkmap tu peux filtrer par style (fineline, blackwork, réalisme, japonais...) et par ville pour trouver les artistes qui correspondent précisément à ta vision." } },
-      { "@type": "Question", "name": "Faut-il un rendez-vous pour se faire tatouer ?", "acceptedAnswer": { "@type": "Answer", "text": "La plupart des tatoueurs travaillent sur rendez-vous, surtout pour des pièces custom. Certains studios proposent du walk-in pour des flash tattoos." } }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Tatoueurs référencés sur Inkmap",
-    "description": "Sélection de tatoueurs professionnels référencés sur Inkmap, l'annuaire des tatoueurs français",
-    "url": "https://inkmap.fr",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Forêt Sépia Tattoo", "url": "https://inkmap.fr/#recherche", "description": "Tatoueur Fineline à Bordeaux" },
-      { "@type": "ListItem", "position": 2, "name": "Maison Python", "url": "https://inkmap.fr/#recherche", "description": "Tatoueur Blackwork à Paris" },
-      { "@type": "ListItem", "position": 3, "name": "MBA My Body Art", "url": "https://inkmap.fr/#recherche", "description": "Tatoueur Blackwork à Lyon" },
-      { "@type": "ListItem", "position": 4, "name": "Borus Tattoo", "url": "https://inkmap.fr/#recherche", "description": "Tatoueur Blackwork à Bordeaux" },
-      { "@type": "ListItem", "position": 5, "name": "La French Sarah", "url": "https://inkmap.fr/#recherche", "description": "Tatoueur Fineline à Lyon" }
-    ]
-  }
-  </script>
+  <!-- FAQPage schema uniquement sur faq.html — pas de doublon ici -->
+  <!-- ItemList schema généré dynamiquement par build-inject.js -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -2229,7 +2199,8 @@
       <span></span>
       Premier annuaire tatoueurs de France
     </div>
-    <h1 class="hero-title">INK<span class="accent">MAP</span></h1>
+    <div class="hero-title" aria-hidden="true">INK<span class="accent">MAP</span></div>
+    <h1 style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:var(--muted2);margin-bottom:24px;letter-spacing:0.5px">Annuaire des tatoueurs en France — trouve ton artiste par style et par ville</h1>
     <div class="hero-sub">
       <p>Recherche par style, ville et budget. Des profils vérifiés, de vrais artistes partout en France.</p>
       <div class="hero-ctas">
@@ -2469,7 +2440,7 @@
       </div>
     </div>
 <div class="card" data-id="2">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776196800000/w44H4y0xXcyv6l8p2tmvfQ/Hu2wqPZc3A8N47_Qa2XWQbze3bdenm8mE9c3OV1UZv0xUN2Zt5YspPd2L2ih1vXJ-4pUgFiD7CsApytl3NGSomxPxlWG9onYjv2MwuzpyzydeqkU5MwoEVLYl-CSdLoaDmKjJpGBF1NVQEm9RbP5cA/hNnCsqI7xG9fQfpIAVRqQg67_pAAs_GP6XoKL3o8fnY" alt="Tatouage Fineline par Bricetattooer à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/ah0HQzwmswbPhuAVe2dFyQ/OwO-rnaTYkReDkyFn3DJsOLMOf0Moifm89tFlXY4rVx9tDNZy_Sm3bTSiCiUOliMjAQCxVa-CnG6xhT3bX1Bi9fxbEpNInq9e6YBqe-Yb71FOpUjLtBgox8d9ov60Dh6bGVjhrQnznANh9oh3HWCqg/qipWvAmo8U8v-979cYidjClYWAl01UHs8gEJM6qT7rI" alt="Tatouage Fineline par Bricetattooer à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Bricetattooer</div>
@@ -2525,7 +2496,7 @@
       </div>
     </div>
 <div class="card" data-id="6">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776196800000/rtD4ImEnr-T8YMcdpQPpeA/VvrHZubC0FKIF-mJoRgNk36NwJZnXkG9nAic7eUa-S1UwaH0UgDn_7UP8gvkb_vxjC6riPzJpnigUDIqNPLgLYUrXB3p1-av408YIj8e82UgPVaGkyDoUlO80XnZehOmJ3GEZe_Ec5gSIX0HFR3cCw/Lmbg2PU6bSeG-nae_ev53z06Y0TcN1rcVkj-1uJ1R7M" alt="Tatouage Fineline par Améthyste ttt à LYON" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/C4F0l_z_Qz23hYE6qeTtCA/zXuSshH-wg5W5FfsIx_zEIRIJaeOBQ9wwvFN3Qj6hDLesrXlitPztuuaX_pMHQ__UsjcXn96CKaQTIsL7ucYmlXsF8A8leTSrk91Uwysea10xhytU3aTpCfn097i2zh5OixAXenLslQWI4uGS-9fQw/00rMZYa78MmIXndnhqHgaHvsOZ3sF4NWiPz06Hf-xH8" alt="Tatouage Fineline par Améthyste ttt à LYON" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Améthyste ttt</div>
@@ -3057,7 +3028,7 @@
       </div>
     </div>
 <div class="card" data-id="44">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776196800000/ewopMXjcBWlPQpOQgMizwQ/vrMoQYctxgRJx-1aKybjsOQZYdpsVl85iQaxLkgyneJmbyqxkHNdrJUTqFGi8Xvl5agaKoTynVgrZtbZmYfFu68C5omiZMcv4hjctoJv99l4CrFG1QgeLbCSB8AG4Cc9cGscBL0DJyX39AS4l384Lw/qswe6khRlJZ1eL2A7egYbHMB9BgF0DS4u6_KQHMx1Gw" alt="Tatouage Blackwork par Palacink_ à Poitiers" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/cL720pyZU1kpdRenopjWuw/C7soir3zlMQ1aOF-wg0C4noUN5IdDqwkOvzX8iF9b9ZEmeorWWiLhx0tacObdj4xxaih8RvArtD8y6g4vFdMFZVIWqkfVW0m2e3SmtsA4CcY8zLhu41bzE7LS5QhEwu5wUazI03O9QpytjzF7jhXTw/1glg8jm1N1LiyL-33pvpOZee6cOJK2IM6CsJU7SuRoA" alt="Tatouage Blackwork par Palacink_ à Poitiers" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Palacink_</div>
@@ -3085,7 +3056,7 @@
       </div>
     </div>
 <div class="card" data-id="46">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776196800000/Sfz3psSkjlxNq4vbszRQzA/YclfyZWXtMeJmhwUqksZbpXkTUkzcDiWkAQRMRRsfKVaxeoL9PTryyBy_8YBruanJXvbV2V1arJaoBOJBb8gja9GUhJpzU8sUm0n1DocSNrA7hjxOnjvAe0-a7gboMS6rLTJof8PfiKKxtzHdFtflg/d3iqHmk90j2Hy4RGniSWToNw2wM7-oKp45MKq8HsDk4" alt="Tatouage Fineline par Adrib0u à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/UHg5wuZ673VW40Qp8RVVDg/Vo8vntO9hHooez3P4mPbaa_F-bjecURPsScZ8RcHQB_rTE4pPmcLpBlU2YPfVCk_QMuI9ILq9mS-OlhAWrt1BimgAU2ZjhOIbbBnXgqJmBYuzC8dXgC8AmKn8rM-zf5UIjBo-jvIlFk0C5CDVhpASw/tchOUWjfYmZAAThQZro-3xC3c8C9dHYumO3Mm0E3sgk" alt="Tatouage Fineline par Adrib0u à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Adrib0u</div>
@@ -3463,7 +3434,7 @@
             <li><a href="tatoueur-realisme-paris.html">Réalisme</a></li>
             <li><a href="tatoueur-japonais-paris.html">Japonais</a></li>
             <li><a href="tatoueur-old-school-paris.html">Old School</a></li>
-            <li><a href="tatoueur-dotwork-paris.html">Dotwork</a></li>
+            <li><a href="tatoueur-aquarelle-paris.html">Aquarelle</a></li>
           </ul>
         </div>
         <div class="footer-links-group">
@@ -3472,9 +3443,6 @@
             <li><a href="tatoueur-fineline-paris.html">Paris</a></li>
             <li><a href="tatoueur-fineline-lyon.html">Lyon</a></li>
             <li><a href="tatoueur-fineline-bordeaux.html">Bordeaux</a></li>
-            <li><a href="tatoueur-realisme-marseille.html">Marseille</a></li>
-            <li><a href="tatoueur-realisme-toulouse.html">Toulouse</a></li>
-            <li><a href="tatoueur-realisme-nantes.html">Nantes</a></li>
           </ul>
         </div>
       </div>
@@ -3503,136 +3471,36 @@
       <h3>Réalisme</h3>
       <ul>
         <li><a href="tatoueur-realisme-paris.html">Paris</a></li>
-        <li><a href="tatoueur-realisme-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-realisme-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-realisme-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-realisme-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-realisme-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-realisme-lille.html">Lille</a></li>
-        <li><a href="tatoueur-realisme-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-realisme-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-realisme-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-realisme-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-realisme-nice.html">Nice</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
       <h3>Japonais</h3>
       <ul>
         <li><a href="tatoueur-japonais-paris.html">Paris</a></li>
-        <li><a href="tatoueur-japonais-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-japonais-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-japonais-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-japonais-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-japonais-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-japonais-lille.html">Lille</a></li>
-        <li><a href="tatoueur-japonais-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-japonais-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-japonais-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-japonais-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-japonais-nice.html">Nice</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
       <h3>Géométrique</h3>
       <ul>
         <li><a href="tatoueur-geometrique-paris.html">Paris</a></li>
-        <li><a href="tatoueur-geometrique-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-geometrique-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-geometrique-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-geometrique-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-geometrique-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-geometrique-lille.html">Lille</a></li>
-        <li><a href="tatoueur-geometrique-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-geometrique-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-geometrique-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-geometrique-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-geometrique-nice.html">Nice</a></li>
-      </ul>
-    </div>
-    <div class="footer-links-group">
-      <h3>Tribal</h3>
-      <ul>
-        <li><a href="tatoueur-tribal-paris.html">Paris</a></li>
-        <li><a href="tatoueur-tribal-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-tribal-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-tribal-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-tribal-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-tribal-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-tribal-lille.html">Lille</a></li>
-        <li><a href="tatoueur-tribal-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-tribal-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-tribal-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-tribal-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-tribal-nice.html">Nice</a></li>
-      </ul>
-    </div>
-    <div class="footer-links-group">
-      <h3>Dotwork</h3>
-      <ul>
-        <li><a href="tatoueur-dotwork-paris.html">Paris</a></li>
-        <li><a href="tatoueur-dotwork-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-dotwork-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-dotwork-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-dotwork-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-dotwork-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-dotwork-lille.html">Lille</a></li>
-        <li><a href="tatoueur-dotwork-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-dotwork-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-dotwork-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-dotwork-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-dotwork-nice.html">Nice</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
       <h3>Old School</h3>
       <ul>
         <li><a href="tatoueur-old-school-paris.html">Paris</a></li>
-        <li><a href="tatoueur-old-school-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-old-school-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-old-school-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-old-school-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-old-school-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-old-school-lille.html">Lille</a></li>
-        <li><a href="tatoueur-old-school-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-old-school-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-old-school-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-old-school-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-old-school-nice.html">Nice</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
       <h3>Aquarelle</h3>
       <ul>
         <li><a href="tatoueur-aquarelle-paris.html">Paris</a></li>
-        <li><a href="tatoueur-aquarelle-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-aquarelle-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-aquarelle-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-aquarelle-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-aquarelle-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-aquarelle-lille.html">Lille</a></li>
-        <li><a href="tatoueur-aquarelle-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-aquarelle-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-aquarelle-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-aquarelle-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-aquarelle-nice.html">Nice</a></li>
       </ul>
     </div>
     <div class="footer-links-group">
       <h3>Lettering</h3>
       <ul>
         <li><a href="tatoueur-lettering-paris.html">Paris</a></li>
-        <li><a href="tatoueur-lettering-lyon.html">Lyon</a></li>
-        <li><a href="tatoueur-lettering-bordeaux.html">Bordeaux</a></li>
-        <li><a href="tatoueur-lettering-marseille.html">Marseille</a></li>
-        <li><a href="tatoueur-lettering-toulouse.html">Toulouse</a></li>
-        <li><a href="tatoueur-lettering-nantes.html">Nantes</a></li>
-        <li><a href="tatoueur-lettering-lille.html">Lille</a></li>
-        <li><a href="tatoueur-lettering-strasbourg.html">Strasbourg</a></li>
-        <li><a href="tatoueur-lettering-rennes.html">Rennes</a></li>
-        <li><a href="tatoueur-lettering-grenoble.html">Grenoble</a></li>
-        <li><a href="tatoueur-lettering-montpellier.html">Montpellier</a></li>
-        <li><a href="tatoueur-lettering-nice.html">Nice</a></li>
       </ul>
     </div>
       </div>
@@ -3667,7 +3535,7 @@
       <a href="tatoueur-blackwork-paris.html">Blackwork</a>
       <a href="tatoueur-realisme-paris.html">Réalisme</a>
       <a href="tatoueur-japonais-paris.html">Japonais</a>
-      <a href="tatoueur-old-school-paris.html">Old School</a>
+      <a href="tatoueur-aquarelle-paris.html">Aquarelle</a>
     </nav>
   </div>
   <div class="footer-bottom">

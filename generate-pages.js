@@ -291,17 +291,12 @@ function buildPage(style, city) {
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Tatoueurs ${style.label} ${city.label} — Inkmap",
+    "@type": "CollectionPage",
+    "name": "Tatoueurs ${style.label} à ${city.label}",
     "description": "Les meilleurs tatoueurs ${style.label.toLowerCase()} à ${city.label}. Profils vérifiés sur Inkmap.",
     "url": "${url}",
     "image": "https://inkmap.fr/og-image.jpg",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "${city.label}",
-      "addressCountry": "FR"
-    },
-    "areaServed": "${city.label}"
+    "isPartOf": { "@type": "WebSite", "name": "Inkmap", "url": "https://inkmap.fr" }
   }
   </script>
   <script type="application/ld+json">
