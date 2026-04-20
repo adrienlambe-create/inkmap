@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modifier mon profil — Inkmap</title>
+  <meta name="description" content="Modifie ton profil tatoueur Inkmap via un lien sécurisé envoyé par email." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+    :root {
+      --bg: #fafafa;
+      --surface: #fff;
+      --text: #0d0d0d;
+      --muted: #666;
+      --muted2: #999;
+      --border: #e5e5e5;
+      --accent: #c0392b;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: Georgia, serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    main { max-width: 680px; margin: 0 auto; padding: 48px 24px 64px; }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    h1 em { color: var(--accent); font-style: normal; }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    input[type="text"], input[type="email"], input[type="url"], input[type="number"],
+    textarea, select {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 0;
+      outline: none;
+      transition: border-color .12s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    textarea { min-height: 120px; resize: vertical; }
+    .field { margin-bottom: 20px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 14px 28px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .btn:hover { background: var(--accent); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--surface); border-color: var(--text); color: var(--text); }
+    .msg {
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      border-left: 3px solid var(--accent);
+      background: #fff;
+    }
+    .msg.ok { border-color: #16a34a; }
+    .msg.err { border-color: #dc2626; }
+    .styles-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .style-tag {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      user-select: none;
+      transition: all .12s;
+      background: #fff;
+    }
+    .style-tag.active {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .photo-item {
+      position: relative;
+      aspect-ratio: 1;
+      background: #f0f0f0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-remove {
+      position: absolute;
+      top: 6px; right: 6px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      border: none;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-remove:hover { background: var(--accent); }
+    .photo-add {
+      aspect-ratio: 1;
+      border: 2px dashed var(--border);
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all .12s;
+    }
+    .photo-add:hover { border-color: var(--accent); color: var(--accent); }
+    .upload-loading { opacity: 0.4; pointer-events: none; }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      align-items: center;
+    }
+    .tarif-display {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+    #spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0,0,0,0.15);
+      border-top-color: var(--text);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">ink<em>map</em></a>
+    <a href="/" style="color:var(--muted);text-decoration:none;font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:1px">← Retour</a>
+  </header>
+
+  <main>
+
+    <!-- ÉTAT 1 : pas de token → demande d'email -->
+    <section id="stateRequest" class="hidden">
+      <h1>Modifier <em>mon profil</em></h1>
+      <p class="subtitle">Entre l'email lié à ton profil. On t'envoie un lien sécurisé pour modifier tes infos.</p>
+
+      <form id="requestForm" class="card" novalidate>
+        <div class="field">
+          <label for="email">Ton email</label>
+          <input type="email" id="email" placeholder="ton@email.com" required autocomplete="email" />
+        </div>
+        <button type="submit" class="btn" id="requestBtn">Recevoir le lien →</button>
+      </form>
+
+      <div id="requestMsg"></div>
+    </section>
+
+    <!-- ÉTAT 2 : token valide → form d'édition -->
+    <section id="stateEdit" class="hidden">
+      <h1>Modifier <em>mon profil</em></h1>
+      <p class="subtitle">Modifie tes infos puis enregistre. Les changements sont publiés sur Inkmap dans la minute.</p>
+
+      <div id="editMsg"></div>
+
+      <form id="editForm" class="card" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-nom">Nom / Studio</label>
+            <input type="text" id="f-nom" name="Nom" maxlength="100" />
+          </div>
+          <div class="field">
+            <label for="f-pseudo">Pseudo (optionnel)</label>
+            <input type="text" id="f-pseudo" name="Pseudo" maxlength="100" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-ville">Ville</label>
+            <input type="text" id="f-ville" name="Ville" maxlength="100" />
+          </div>
+          <div class="field">
+            <label for="f-region">Région</label>
+            <input type="text" id="f-region" name="Region" maxlength="100" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-instagram">Instagram</label>
+          <input type="text" id="f-instagram" name="Instagram" maxlength="100" placeholder="@tonpseudo" />
+        </div>
+
+        <div class="field">
+          <label for="f-site">Site web</label>
+          <input type="url" id="f-site" name="Site" maxlength="300" placeholder="https://..." />
+        </div>
+
+        <div class="field">
+          <label for="f-adresse">Adresse</label>
+          <input type="text" id="f-adresse" name="Adresse" maxlength="200" />
+        </div>
+
+        <div class="field">
+          <label>Styles</label>
+          <div class="styles-tags" id="styleTags"></div>
+        </div>
+
+        <div class="field">
+          <label for="f-tarif">Tarif horaire</label>
+          <input type="range" id="f-tarif" name="Tarif" min="50" max="400" step="10" style="padding:0" />
+          <div class="tarif-display"><span id="tarifValue">—</span>€ / heure</div>
+        </div>
+
+        <div class="field">
+          <label for="f-tarifInfo">Précisions tarif (optionnel)</label>
+          <input type="text" id="f-tarifInfo" name="TarifInfo" maxlength="500" />
+        </div>
+
+        <div class="field">
+          <label for="f-bio">Bio</label>
+          <textarea id="f-bio" name="Bio" maxlength="2000" placeholder="Parle de ton style, ton parcours..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Photos (max 12)</label>
+          <div class="photos-grid" id="photosGrid"></div>
+          <input type="file" id="photoInput" accept="image/*" multiple class="hidden" />
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn" id="saveBtn">Enregistrer les modifications →</button>
+          <a href="/" class="btn btn-ghost" style="text-decoration:none">Annuler</a>
+        </div>
+      </form>
+    </section>
+
+    <!-- ÉTAT 3 : token invalide / expiré -->
+    <section id="stateInvalid" class="hidden">
+      <h1>Lien <em>invalide</em></h1>
+      <p class="subtitle">Ce lien de modification a expiré ou n'est pas valide. Demande un nouveau lien en saisissant ton email.</p>
+      <a href="/modifier" class="btn">Demander un nouveau lien →</a>
+    </section>
+
+  </main>
+
+  <script src="/js/modifier.js"></script>
+</body>
+</html>

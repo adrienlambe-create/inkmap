@@ -530,6 +530,15 @@ ${qrSvg ? `
   <a href="/inscription.html${!t.verifie ? '?nom=' + encodeURIComponent(t.nom) + '&ville=' + encodeURIComponent(t.ville) + (t.instagram ? '&instagram=' + encodeURIComponent(t.instagram) : '') : ''}">${t.verifie ? 'Inscrire mon studio →' : 'Réclamer ce profil →'}</a>
 </section>
 
+${t.verifie ? `
+<!-- EDIT LINK (profils vérifiés uniquement) -->
+<section style="text-align:center;padding:24px 20px 40px;border-top:1px solid var(--border);background:#fafafa">
+  <p style="font-size:0.85rem;color:var(--muted);margin:0">
+    Tu es ${escHtml(displayName)} ?
+    <a href="/modifier" style="color:var(--accent);text-decoration:none;font-weight:600">Modifier mon profil →</a>
+  </p>
+</section>` : ''}
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="if(event.target.id==='lightbox')closeLightbox()">
   <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fermer">✕</button>
