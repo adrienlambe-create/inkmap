@@ -24,6 +24,7 @@ function regenSitemap() {
   // Pages statiques (toujours présentes)
   const staticUrls = [
     { loc: 'https://inkmap.fr/', priority: '1.0' },
+    { loc: 'https://inkmap.fr/demande', priority: '0.9' },
     { loc: 'https://inkmap.fr/inscription', priority: '0.9' },
     { loc: 'https://inkmap.fr/rejoindre', priority: '0.9' },
     { loc: 'https://inkmap.fr/faq', priority: '0.7' },
