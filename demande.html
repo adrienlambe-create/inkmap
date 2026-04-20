@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trouve ton tatoueur — Décris ton projet | Inkmap</title>
+  <meta name="description" content="Décris ton projet de tatouage en 2 minutes. On te trouve les tatoueurs qui matchent ton style, ta ville et ton budget." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/demande" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <meta property="og:title" content="Trouve ton tatoueur — Inkmap" />
+  <meta property="og:description" content="Décris ton projet, on te trouve les tatoueurs qui matchent." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://inkmap.fr/demande" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+    :root {
+      --bg: #fafafa;
+      --surface: #fff;
+      --text: #0d0d0d;
+      --muted: #666;
+      --muted2: #999;
+      --border: #e5e5e5;
+      --accent: #c0392b;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: Georgia, serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    .header-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 48px 24px 64px; }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    h1 em { color: var(--accent); font-style: normal; }
+    .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+    }
+    label {
+      display: block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    label .optional {
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--muted2);
+      font-size: 0.75rem;
+      margin-left: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="number"],
+    textarea, select {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 0;
+      outline: none;
+      transition: border-color .12s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    textarea { min-height: 130px; resize: vertical; }
+    .field { margin-bottom: 22px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 14px 28px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .btn:hover { background: var(--accent); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .msg {
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      border-left: 3px solid var(--accent);
+      background: #fff;
+    }
+    .msg.ok { border-color: #16a34a; }
+    .msg.err { border-color: #dc2626; }
+    .styles-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .style-tag {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      user-select: none;
+      transition: all .12s;
+      background: #fff;
+    }
+    .style-tag.active {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .photo-item {
+      position: relative;
+      aspect-ratio: 1;
+      background: #f0f0f0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-remove {
+      position: absolute;
+      top: 6px; right: 6px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      border: none;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.9rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-remove:hover { background: var(--accent); }
+    .photo-add {
+      aspect-ratio: 1;
+      border: 2px dashed var(--border);
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all .12s;
+      text-align: center;
+      padding: 8px;
+    }
+    .photo-add:hover { border-color: var(--accent); color: var(--accent); }
+    .upload-loading { opacity: 0.4; pointer-events: none; }
+    .budget-display {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+    #spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+    .promise-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-bottom: 28px;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .promise-bar strong { color: var(--text); font-weight: 700; }
+
+    .success-state {
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .success-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: #16a34a;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+    .success-state h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .success-state p {
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">ink<em>map</em></a>
+    <a href="/" class="header-link">← Retour</a>
+  </header>
+
+  <main>
+    <section id="formState">
+      <h1>Trouve <em>ton tatoueur</em></h1>
+      <p class="subtitle">Décris ton projet. On te met en relation avec les tatoueurs qui correspondent à ton style, ta ville et ton budget.</p>
+
+      <div class="promise-bar">
+        <span><strong>✓ Gratuit</strong></span>
+        <span><strong>✓ 2 minutes</strong></span>
+        <span><strong>✓ Réponse sous 48h</strong></span>
+      </div>
+
+      <div id="formMsg"></div>
+
+      <form id="demandeForm" class="card" novalidate>
+        <!-- Honeypot : invisible, rempli uniquement par les bots -->
+        <div class="hp" aria-hidden="true">
+          <label for="website">Site (ne pas remplir)</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="f-description">Décris ton projet</label>
+          <textarea id="f-description" name="description" maxlength="2000" required
+            placeholder="Exemple : fleur fineline sur l'avant-bras, environ 10 cm, style minimaliste avec quelques ombres."></textarea>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-ville">Ta ville</label>
+            <input type="text" id="f-ville" name="ville" maxlength="100" required placeholder="Paris, Lyon, Marseille…" />
+          </div>
+          <div class="field">
+            <label for="f-email">Ton email</label>
+            <input type="email" id="f-email" name="email" maxlength="254" required autocomplete="email" placeholder="ton@email.com" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Styles qui te plaisent <span class="optional">(optionnel)</span></label>
+          <div class="styles-tags" id="styleTags"></div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-zone">Zone du corps <span class="optional">(optionnel)</span></label>
+            <select id="f-zone" name="zoneCorps">
+              <option value="">— Choisir —</option>
+              <option value="Bras">Bras</option>
+              <option value="Avant-bras">Avant-bras</option>
+              <option value="Épaule">Épaule</option>
+              <option value="Main">Main</option>
+              <option value="Jambe">Jambe</option>
+              <option value="Cuisse">Cuisse</option>
+              <option value="Mollet">Mollet</option>
+              <option value="Pied">Pied</option>
+              <option value="Dos">Dos</option>
+              <option value="Torse">Torse</option>
+              <option value="Cou">Cou</option>
+              <option value="Visage">Visage</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-budget">Budget approximatif <span class="optional">(optionnel)</span></label>
+            <input type="range" id="f-budget" name="budget" min="50" max="2000" step="50" style="padding:0" />
+            <div class="budget-display"><span id="budgetValue">—</span></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-telephone">Téléphone <span class="optional">(optionnel — pour être recontacté plus vite)</span></label>
+          <input type="tel" id="f-telephone" name="telephone" maxlength="30" autocomplete="tel" placeholder="06 12 34 56 78" />
+        </div>
+
+        <div class="field">
+          <label>Photos d'inspiration <span class="optional">(optionnel — max 3)</span></label>
+          <div class="photos-grid" id="photosGrid"></div>
+          <input type="file" id="photoInput" accept="image/*" multiple class="hidden" />
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn" style="margin-top:8px">Envoyer ma demande →</button>
+      </form>
+    </section>
+
+    <section id="successState" class="hidden">
+      <div class="card success-state">
+        <div class="success-icon">✓</div>
+        <h2>Demande envoyée !</h2>
+        <p>Merci. On revient vers toi sous <strong>48h</strong> avec une sélection de tatoueurs correspondant à ton projet. En attendant, vérifie ta boîte mail (et les spams) pour la confirmation.</p>
+        <a href="/" class="btn" style="text-decoration:none">Explorer l'annuaire →</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/demande.js"></script>
+</body>
+</html>
