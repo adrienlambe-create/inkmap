@@ -82,7 +82,7 @@ function renderCard(t) {
           <div class="tarif">${t.tarif > 0 ? t.tarif + '€ <small>/ heure</small>' : '<small style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--muted2);font-weight:400;letter-spacing:0">Sur devis</small>'}</div>
           <div class="card-actions">
             <span class="btn-voir">Voir →</span>
-            ${t.instagram ? `<a class="btn-insta" href="https://www.instagram.com/${encodeURIComponent(t.instagram.replace('@',''))}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration:none;display:flex;align-items:center;justify-content:center">Insta</a>` : ''}
+            ${t.instagram ? `<span class="btn-insta" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('https://www.instagram.com/${encodeURIComponent(t.instagram.replace('@',''))}','_blank','noopener,noreferrer')" style="cursor:pointer;display:flex;align-items:center;justify-content:center">Insta</span>` : ''}
           </div>
         </div>
       </div>
