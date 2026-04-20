@@ -121,10 +121,13 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Erreur interne' });
   }
 
-  // Emails (non bloquant — on réponds OK même si l'envoi d'email échoue)
-  sendEmails({
-    email, description, ville, styles, budget, zoneCorps, telephone, photos, recordId,
-  }).catch(e => console.error('[submit-request] email exception', e.message));
+  // Emails : await pour garantir l'envoi (sur Vercel serverless, le fire-and-forget est gelé après la réponse).
+  // Si l'envoi échoue on renvoie quand même OK : le lead est déjà en Airtable, l'important est sauvegardé.
+  try {
+    await sendEmails({ email, description, ville, styles, budget, zoneCorps, telephone, photos, recordId });
+  } catch (e) {
+    console.error('[submit-request] email exception', e.message);
+  }
 
   return res.status(200).json({ ok: true });
 };
