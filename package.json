@@ -4,7 +4,9 @@
   "description": "",
   "main": "generate-pages.js",
   "scripts": {
-    "build": "node generate-pages.js && node build-inject.js",
+    "build": "node generate-all.js && node build-inject.js",
+    "build:profiles": "node generate-profiles.js",
+    "build:styles": "node generate-pages.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +14,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@vercel/blob": "^2.3.2"
+    "@vercel/blob": "^2.3.2",
+    "dotenv": "^17.4.2",
+    "qrcode": "^1.5.4"
   }
 }

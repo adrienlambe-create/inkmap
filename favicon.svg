@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0d0d0d"/>
+  <text x="256" y="230" font-family="Arial Black, Impact, sans-serif" font-size="160" font-weight="900" letter-spacing="-8" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">INK</text>
+  <text x="256" y="370" font-family="Arial Black, Impact, sans-serif" font-size="160" font-weight="900" letter-spacing="-8" fill="#c0392b" text-anchor="middle" dominant-baseline="middle">MAP</text>
+</svg>

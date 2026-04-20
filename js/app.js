@@ -67,8 +67,9 @@ function resetVille() {
 }
 
 function renderCard(t) {
+  const profileHref = t.slug ? `/tatoueur/${t.slug}` : '#';
   return `
-    <div class="card" onclick="ouvrirModal(${t.id})">
+    <a class="card card-link" href="${profileHref}" style="text-decoration:none;color:inherit;display:block">
       <div class="card-img">${cardMedia(t)}</div>
       <div class="card-body">
         <div class="card-top">
@@ -76,16 +77,16 @@ function renderCard(t) {
           ${t.isNouveau ? '<span class="badge-nouveau">Nouveau</span>' : ''}${t.verifie ? '<span class="badge-verifie">✓ Vérifié</span>' : ''}
         </div>
         <div class="card-location">${esc(t.ville)}</div>
-        <div class="styles">${t.styles.map(s=>`<span class="style-tag" onclick="event.stopPropagation();appliquerFiltreStyle('${esc(s)}')" title="Filtrer par ${esc(s)}" style="cursor:pointer">${esc(s)}</span>`).join('')}</div>
+        <div class="styles">${t.styles.map(s=>`<span class="style-tag" onclick="event.preventDefault();event.stopPropagation();appliquerFiltreStyle('${esc(s)}')" title="Filtrer par ${esc(s)}" style="cursor:pointer">${esc(s)}</span>`).join('')}</div>
         <div class="card-footer">
           <div class="tarif">${t.tarif > 0 ? t.tarif + '€ <small>/ heure</small>' : '<small style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--muted2);font-weight:400;letter-spacing:0">Sur devis</small>'}</div>
           <div class="card-actions">
-            <button class="btn-voir" onclick="event.stopPropagation();ouvrirModal(${t.id})">Voir →</button>
+            <span class="btn-voir">Voir →</span>
             ${t.instagram ? `<a class="btn-insta" href="https://www.instagram.com/${encodeURIComponent(t.instagram.replace('@',''))}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" style="text-decoration:none;display:flex;align-items:center;justify-content:center">Insta</a>` : ''}
           </div>
         </div>
       </div>
-    </div>`;
+    </a>`;
 }
 
 function noResultsHTML(style, ville) {
@@ -264,14 +265,13 @@ async function chargerDepuisAirtable() {
     if (!res.ok) return;
     const { records } = await res.json();
     let nextId = tatoueurs.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-    records.forEach(({ fields: f, createdTime }) => {
+    records.forEach(({ fields: f, createdTime, slug, verifie }) => {
       if (!f.Nom) return;
       // styles peut être un tableau (multi-select Airtable) ou une chaîne
       const rawStyles = f.Styles || f.styles || [];
       const styles = Array.isArray(rawStyles)
         ? rawStyles
         : rawStyles.split(',').map(s => s.trim()).filter(Boolean);
-      const statut = (f.Statut || f.statuts || '').toLowerCase();
       const photoArr = f.Photos || f.Photo || f.photo || [];
       const allPhotos = Array.isArray(photoArr)
         ? photoArr.map(p => p.thumbnails?.large?.url || p.url || '').filter(Boolean)
@@ -285,7 +285,8 @@ async function chargerDepuisAirtable() {
         tarif: parseInt(f.Tarif || f.tarif) || 0,
         instagram: f.Instagram || f.instagram || '',
         bio: f.Bio || f.bio || '',
-        verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi') || !!(f.Email || f.email),
+        verifie: !!verifie,
+        slug: slug || '',
         photo: allPhotos[0] || '',
         photos: allPhotos,
         emoji: STYLE_EMOJI[styles[0]] || '✦',

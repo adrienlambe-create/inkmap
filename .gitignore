@@ -12,3 +12,15 @@ node_modules/
 
 # OS files
 .DS_Store
+
+# Build outputs (regénérés par npm run build sur Vercel)
+tatoueur/
+.profiles-index.json
+
+# Outreach privé (prospects Instagram — ne pas push)
+outreach/
+
+# Dev / scratch
+ruflo/
+demo-*.html
+generate-convention-pdf.py

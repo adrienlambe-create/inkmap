@@ -1058,7 +1058,159 @@
     }
     .recap-edit:hover { text-decoration: underline; }
 
+    /* ── TYPE SELECTOR ── */
+    .type-selector {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 48px 24px 56px;
+    }
+    .type-selector-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .type-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .type-card {
+      border: 2px solid var(--border);
+      padding: 36px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      background: var(--bg);
+      border-radius: 4px;
+    }
+    .type-card:hover {
+      border-color: rgba(0,0,0,0.2);
+      background: var(--surface);
+    }
+    .type-card.selected {
+      border-color: var(--accent);
+      background: rgba(192,57,43,0.04);
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.08);
+    }
+    .type-icon {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+    }
+    .type-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .type-desc {
+      color: var(--muted2);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+    .type-confirm {
+      display: block;
+      width: 100%;
+      margin-top: 24px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background .2s;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .type-confirm.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .type-confirm.enabled:hover { background: var(--accent); }
+
+    /* ── ARTIST BLOCK (studio mode) ── */
+    .artist-block {
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 20px;
+      background: var(--surface);
+      border-radius: 4px;
+      position: relative;
+    }
+    .artist-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .artist-block-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .artist-block-remove {
+      background: none;
+      border: 1px solid rgba(231,76,60,0.3);
+      color: var(--error);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      padding: 6px 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 2px;
+      transition: all .15s;
+    }
+    .artist-block-remove:hover {
+      background: rgba(231,76,60,0.08);
+      border-color: var(--error);
+    }
+    .btn-add-artist {
+      width: 100%;
+      border: 2px dashed var(--border);
+      background: none;
+      padding: 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted2);
+      cursor: pointer;
+      transition: all .15s;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .btn-add-artist:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(192,57,43,0.03);
+    }
+    .artist-block .styles-grid {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 6px;
+    }
+    .artist-block .style-check {
+      padding: 8px 10px;
+      font-size: 0.78rem;
+    }
+    .artist-block .tarif-display {
+      font-size: 2rem;
+    }
+
     @media (max-width: 600px) {
+      .type-cards { grid-template-columns: 1fr; }
+      .type-selector { padding: 32px 20px 40px; }
       header { padding: 0 20px; }
       .hero { padding: 40px 24px 28px; overflow: hidden; }
       .hero h1 { font-size: clamp(1.4rem, 6.5vw, 2rem); letter-spacing: -0.5px; line-height: 1.1; text-align: center; }
@@ -1186,8 +1338,26 @@
   </div>
 </div>
 
+<!-- TYPE SELECTOR -->
+<div class="type-selector" id="typeSelector">
+  <div class="type-selector-label">// Quel type de profil ?</div>
+  <div class="type-cards">
+    <div class="type-card" data-type="solo" onclick="selectType('solo')">
+      <div class="type-icon">&#x2726;</div>
+      <div class="type-title">Tatoueur ind&eacute;pendant</div>
+      <div class="type-desc">Tu travailles seul, en guest ou en r&eacute;sidence</div>
+    </div>
+    <div class="type-card" data-type="studio" onclick="selectType('studio')">
+      <div class="type-icon">&#x25C6;</div>
+      <div class="type-title">Studio</div>
+      <div class="type-desc">Plusieurs artistes dans ton salon, chacun avec son style</div>
+    </div>
+  </div>
+  <button class="type-confirm" id="typeConfirmBtn" onclick="confirmType()">Continuer &rarr;</button>
+</div>
+
 <!-- PROGRESS BAR -->
-<div class="progress-bar-wrap" id="progressWrap">
+<div class="progress-bar-wrap" id="progressWrap" style="display:none">
   <div class="progress-steps">
     <div class="progress-fill" id="progressFill"></div>
     <div class="progress-dot active" data-step="0">1</div>
@@ -1204,7 +1374,7 @@
 </div>
 
 <!-- FORMULAIRE -->
-<div class="form-container">
+<div class="form-container" style="display:none">
 
   <!-- SUCCÈS -->
   <div class="success-screen" id="success">
@@ -1231,7 +1401,7 @@
         <div class="form-section">
           <div class="form-section-title">&#x2460; Ton identit&eacute;</div>
 
-          <div class="form-row">
+          <div class="form-row" id="soloNameFields">
             <div class="form-group">
               <label>Pr&eacute;nom &amp; Nom <span class="required">*</span></label>
               <input type="text" id="nom" placeholder="Ex : Lucas Moreau" autocomplete="name" />
@@ -1325,69 +1495,84 @@
         </div>
       </div>
 
-      <!-- STEP 3 : STYLE, TARIF, BIO, PHOTOS -->
+      <!-- STEP 3 : STYLE, TARIF, BIO, PHOTOS (SOLO) -->
       <div class="form-step" data-step="2">
-        <div class="form-section">
-          <div class="form-section-title">&#x2462; Tes styles <span class="required">*</span></div>
-          <div class="styles-grid" id="stylesGrid"></div>
-          <div class="field-error" id="err-styles">S&eacute;lectionne au moins un style</div>
-        </div>
 
-        <div class="form-section">
-          <div class="form-section-title">&#x2463; Ton tarif horaire</div>
-          <div class="tarif-display">
-            <span id="tarifVal">150</span>&euro; <small>/ heure</small>
-          </div>
-          <input type="range" id="tarif" min="50" max="400" value="150" step="10"
-            oninput="document.getElementById('tarifVal').textContent = this.value" />
-          <div class="tarif-labels">
-            <span>50&euro;</span>
-            <span>200&euro;</span>
-            <span>400&euro;+</span>
-          </div>
-          <div class="form-group" style="margin-top:20px">
-            <label>Infos suppl&eacute;mentaires sur les prix (optionnel)</label>
-            <input type="text" id="tarifInfo" placeholder="Ex : Petites pi&egrave;ces &agrave; partir de 80&euro;, devis gratuit..." />
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title">&#x2464; Ta pr&eacute;sentation</div>
-          <div class="form-group">
-            <label>Bio / Description <span class="required">*</span></label>
-            <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire... (min. 50 caract&egrave;res)"></textarea>
-            <div class="field-error" id="err-bio">Minimum 50 caract&egrave;res</div>
+        <!-- Solo mode content -->
+        <div id="soloArtSection">
+          <div class="form-section">
+            <div class="form-section-title">&#x2462; Tes styles <span class="required">*</span></div>
+            <div class="styles-grid" id="stylesGrid"></div>
+            <div class="field-error" id="err-styles">S&eacute;lectionne au moins un style</div>
           </div>
 
-          <div class="form-group">
-            <label>Photos de tes tatouages <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
-            <div class="upload-zone" id="uploadZone">
-              <input type="file" id="photos" accept="image/*" multiple />
-              <div id="uploadPlaceholder">
-                <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
-                <div class="upload-text">
-                  <strong>Glisse tes photos ici ou clique pour parcourir</strong>
-                  JPG, PNG, WEBP &mdash; max 5 photos, 10 MB chacune
-                </div>
-                <div class="upload-counter">
-                  <div class="dots" id="uploadDots">
-                    <div class="dot" data-i="0"></div>
-                    <div class="dot" data-i="1"></div>
-                    <div class="dot" data-i="2"></div>
-                    <div class="dot" data-i="3"></div>
-                    <div class="dot" data-i="4"></div>
-                  </div>
-                  <span id="uploadCount">0 / 5</span>
-                </div>
-                <div class="upload-tips">
-                  <div class="upload-tip"><span>&#x2726;</span> Photos haute qualit&eacute;</div>
-                  <div class="upload-tip"><span>&#x2726;</span> Fond neutre ou en contexte</div>
-                  <div class="upload-tip"><span>&#x2726;</span> Tes meilleurs travaux</div>
-                </div>
-              </div>
-              <div class="upload-preview" id="photoPreview"></div>
+          <div class="form-section">
+            <div class="form-section-title">&#x2463; Ton tarif horaire</div>
+            <div class="tarif-display">
+              <span id="tarifVal">150</span>&euro; <small>/ heure</small>
             </div>
-            <p style="margin-top:8px;font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.5px">S&eacute;lectionne tes meilleures r&eacute;alisations &mdash; tu recevras l'adresse email pour les envoyer apr&egrave;s validation.</p>
+            <input type="range" id="tarif" min="50" max="400" value="150" step="10"
+              oninput="document.getElementById('tarifVal').textContent = this.value" />
+            <div class="tarif-labels">
+              <span>50&euro;</span>
+              <span>200&euro;</span>
+              <span>400&euro;+</span>
+            </div>
+            <div class="form-group" style="margin-top:20px">
+              <label>Infos suppl&eacute;mentaires sur les prix (optionnel)</label>
+              <input type="text" id="tarifInfo" placeholder="Ex : Petites pi&egrave;ces &agrave; partir de 80&euro;, devis gratuit..." />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">&#x2464; Ta pr&eacute;sentation</div>
+            <div class="form-group">
+              <label>Bio / Description <span class="required">*</span></label>
+              <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire... (min. 50 caract&egrave;res)"></textarea>
+              <div class="field-error" id="err-bio">Minimum 50 caract&egrave;res</div>
+            </div>
+
+            <div class="form-group">
+              <label>Photos de tes tatouages <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
+              <div class="upload-zone" id="uploadZone">
+                <input type="file" id="photos" accept="image/*" multiple />
+                <div id="uploadPlaceholder">
+                  <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+                  <div class="upload-text">
+                    <strong>Glisse tes photos ici ou clique pour parcourir</strong>
+                    JPG, PNG, WEBP &mdash; max 5 photos, 10 MB chacune
+                  </div>
+                  <div class="upload-counter">
+                    <div class="dots" id="uploadDots">
+                      <div class="dot" data-i="0"></div>
+                      <div class="dot" data-i="1"></div>
+                      <div class="dot" data-i="2"></div>
+                      <div class="dot" data-i="3"></div>
+                      <div class="dot" data-i="4"></div>
+                    </div>
+                    <span id="uploadCount">0 / 5</span>
+                  </div>
+                  <div class="upload-tips">
+                    <div class="upload-tip"><span>&#x2726;</span> Photos haute qualit&eacute;</div>
+                    <div class="upload-tip"><span>&#x2726;</span> Fond neutre ou en contexte</div>
+                    <div class="upload-tip"><span>&#x2726;</span> Tes meilleurs travaux</div>
+                  </div>
+                </div>
+                <div class="upload-preview" id="photoPreview"></div>
+              </div>
+              <p style="margin-top:8px;font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.5px">S&eacute;lectionne tes meilleures r&eacute;alisations &mdash; tu recevras l'adresse email pour les envoyer apr&egrave;s validation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Studio mode content -->
+        <div id="studioArtSection" style="display:none">
+          <div class="form-section">
+            <div class="form-section-title">&#x2462; Les artistes de ton studio</div>
+            <p style="color:var(--muted2);font-size:0.85rem;margin-bottom:24px;line-height:1.6">Ajoute chaque tatoueur de ton studio. Chacun aura son propre profil sur Inkmap avec ses styles et ses photos.</p>
+            <div id="artistBlocks"></div>
+            <button type="button" class="btn-add-artist" onclick="addArtistBlock()">+ Ajouter un artiste</button>
+            <div class="field-error" id="err-artists" style="margin-top:-12px">Ajoute au moins un artiste</div>
           </div>
         </div>
 

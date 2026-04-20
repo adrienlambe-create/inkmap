@@ -34,6 +34,29 @@ function villeBase(ville) {
   return ville.trim().replace(/\s+\d+(e|er|ème|eme|ième|ieme)?\s*$/i, '').trim() || ville.trim();
 }
 
+function slugify(str) {
+  return String(str || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+// Charge le mapping slug depuis .profiles-index.json (écrit par generate-profiles.js)
+function loadSlugMap() {
+  const p = path.join(__dirname, '.profiles-index.json');
+  if (!fs.existsSync(p)) return new Map();
+  const { generated } = JSON.parse(fs.readFileSync(p, 'utf-8'));
+  const m = new Map();
+  for (const g of generated || []) {
+    const key = `${g.nom}|${String(g.ville || '').toLowerCase()}`;
+    m.set(key, g.slug);
+  }
+  return m;
+}
+
 async function fetchAllRecords() {
   const fieldsParam = PUBLIC_FIELDS.map(f => `fields[]=${encodeURIComponent(f)}`).join('&');
   let allRecords = [];
@@ -54,6 +77,8 @@ async function fetchAllRecords() {
   return allRecords;
 }
 
+const SLUG_MAP = loadSlugMap();
+
 function parseRecords(records) {
   let id = 1;
   return records.map(({ fields: f, createdTime }) => {
@@ -65,11 +90,15 @@ function parseRecords(records) {
     const allPhotos = Array.isArray(photoArr)
       ? photoArr.map(p => p.thumbnails?.large?.url || p.url || '').filter(Boolean)
       : [];
+    const nom = f.Pseudo || f.Nom;
+    const ville = f.Ville || f.ville || '';
+    const slugKey = `${nom}|${String(ville).toLowerCase()}`;
+    const slug = SLUG_MAP.get(slugKey) || '';
     return {
       id: id++,
-      nom: f.Pseudo || f.Nom,
+      nom,
       nomComplet: f.Nom,
-      ville: f.Ville || f.ville || '',
+      ville,
       region: f.Region || f.region || '',
       styles,
       tarif: parseInt(f.Tarif || f.tarif) || 0,
@@ -80,6 +109,7 @@ function parseRecords(records) {
       photos: allPhotos,
       emoji: STYLE_EMOJI[styles[0]] || '✦',
       createdAt: createdTime || '',
+      slug,
     };
   }).filter(Boolean);
 }
@@ -96,7 +126,8 @@ function buildStaticCard(t) {
   const tarifHtml = t.tarif > 0
     ? `${t.tarif}€ <small>/ heure</small>`
     : `Sur devis`;
-  return `<div class="card" data-id="${t.id}">
+  const profileHref = t.slug ? `/tatoueur/${t.slug}` : '#';
+  return `<a class="card card-link" href="${profileHref}" data-id="${t.id}" style="text-decoration:none;color:inherit;display:block">
       <div class="card-img">${photoHtml}</div>
       <div class="card-body">
         <div class="card-top">
@@ -109,7 +140,7 @@ function buildStaticCard(t) {
           <div class="tarif">${tarifHtml}</div>
         </div>
       </div>
-    </div>`;
+    </a>`;
 }
 
 // Inject into style/city pages
@@ -284,6 +315,14 @@ function updateSitemap(tatoueurs) {
     { loc: '/outils/calculateur-tarif-tatouage', priority: '0.7' },
   ];
 
+  // Lis les pages profil depuis l'index écrit par generate-profiles.js
+  const profilesIndexPath = path.join(dir, '.profiles-index.json');
+  let profiles = [];
+  if (fs.existsSync(profilesIndexPath)) {
+    const { generated } = JSON.parse(fs.readFileSync(profilesIndexPath, 'utf-8'));
+    profiles = generated || [];
+  }
+
   let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   for (const p of staticPages) {
     xml += `  <url><loc>https://inkmap.fr${p.loc}</loc><lastmod>${today}</lastmod><priority>${p.priority}</priority></url>\n`;
@@ -291,10 +330,13 @@ function updateSitemap(tatoueurs) {
   for (const slug of pagesWithContent.sort()) {
     xml += `  <url><loc>https://inkmap.fr/${slug}</loc><lastmod>${today}</lastmod><priority>0.8</priority></url>\n`;
   }
+  for (const p of profiles) {
+    xml += `  <url><loc>https://inkmap.fr/tatoueur/${p.slug}</loc><lastmod>${today}</lastmod><priority>0.85</priority></url>\n`;
+  }
   xml += `</urlset>\n`;
 
   fs.writeFileSync(path.join(dir, 'sitemap.xml'), xml, 'utf-8');
-  console.log(`\n✅ sitemap.xml — ${staticPages.length + pagesWithContent.length} URLs (${pagesWithContent.length} pages style/ville)`);
+  console.log(`\n✅ sitemap.xml — ${staticPages.length + pagesWithContent.length + profiles.length} URLs (${pagesWithContent.length} style/ville + ${profiles.length} profils)`);
 }
 
 async function main() {

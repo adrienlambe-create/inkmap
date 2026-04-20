@@ -32,8 +32,45 @@ function toggleFaq(btn) {
   if (!wasOpen) item.classList.add('open');
 }
 
+// ── TYPE SELECTOR ─────────────────────────────────────────────────────────────
+let profileType = null; // 'solo' or 'studio'
+
+function selectType(type) {
+  profileType = type;
+  document.querySelectorAll('.type-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.type === type);
+  });
+  document.getElementById('typeConfirmBtn').classList.add('enabled');
+}
+
+function confirmType() {
+  if (!profileType) return;
+
+  // Hide type selector, show form
+  document.getElementById('typeSelector').style.display = 'none';
+  document.getElementById('progressWrap').style.display = '';
+  document.querySelector('.form-container').style.display = '';
+
+  // Toggle fields based on type
+  if (profileType === 'studio') {
+    // Hide solo name fields, show studio section in step 3
+    document.getElementById('soloNameFields').style.display = 'none';
+    document.getElementById('soloArtSection').style.display = 'none';
+    document.getElementById('studioArtSection').style.display = '';
+    // Add first artist block
+    addArtistBlock();
+  } else {
+    document.getElementById('soloNameFields').style.display = '';
+    document.getElementById('soloArtSection').style.display = '';
+    document.getElementById('studioArtSection').style.display = 'none';
+  }
+
+  // Scroll to form
+  document.getElementById('progressWrap').scrollIntoView({ block: 'start', behavior: 'smooth' });
+}
+
 // ── STYLES ────────────────────────────────────────────────────────────────────
-const styles = [
+const STYLE_LIST = [
   { emoji: "\u2726", nom: "Fineline" },
   { emoji: "\u25C6", nom: "Blackwork" },
   { emoji: "\u26E9", nom: "Japonais" },
@@ -48,8 +85,9 @@ const styles = [
   { emoji: "\uD83D\uDDA4", nom: "Micro-réalisme" },
 ];
 
+// Build solo styles grid
 const grid = document.getElementById('stylesGrid');
-styles.forEach(s => {
+STYLE_LIST.forEach(s => {
   const label = document.createElement('label');
   label.className = 'style-check';
   label.innerHTML = `
@@ -63,7 +101,7 @@ function toggleStyle(cb) {
   cb.closest('.style-check').classList.toggle('checked', cb.checked);
 }
 
-// ── PHOTO UPLOAD ──────────────────────────────────────────────────────────────
+// ── PHOTO UPLOAD (solo mode) ─────────────────────────────────────────────────
 let uploadedFiles = [];
 
 function updateUploadUI() {
@@ -189,6 +227,209 @@ villeInput.addEventListener('focus', () => {
   setTimeout(() => window.removeEventListener('scroll', restore), 600);
 });
 
+// ── STUDIO: ARTIST BLOCKS ────────────────────────────────────────────────────
+let artistBlocks = []; // { id, files: [] }
+let artistIdCounter = 0;
+
+function buildStylesGridHTML(blockId) {
+  return STYLE_LIST.map(s =>
+    `<label class="style-check">
+      <input type="checkbox" value="${s.nom}" onchange="this.closest('.style-check').classList.toggle('checked', this.checked)" />
+      <span>${s.emoji} ${s.nom}</span>
+    </label>`
+  ).join('');
+}
+
+function addArtistBlock() {
+  const id = artistIdCounter++;
+  artistBlocks.push({ id, files: [] });
+
+  const container = document.getElementById('artistBlocks');
+  const block = document.createElement('div');
+  block.className = 'artist-block';
+  block.id = `artist-block-${id}`;
+  block.innerHTML = `
+    <div class="artist-block-header">
+      <div class="artist-block-title">Artiste ${artistBlocks.length}</div>
+      ${artistBlocks.length > 1 ? `<button type="button" class="artist-block-remove" onclick="removeArtistBlock(${id})">Supprimer</button>` : ''}
+    </div>
+
+    <div class="form-row" style="margin-bottom:16px">
+      <div class="form-group">
+        <label>Pr&eacute;nom &amp; Nom <span class="required">*</span></label>
+        <input type="text" id="artist-nom-${id}" placeholder="Ex : Lucas Moreau" />
+        <div class="field-error" id="err-artist-nom-${id}">Champ obligatoire</div>
+      </div>
+      <div class="form-group">
+        <label>Pseudo / Nom d'artiste <span class="required">*</span></label>
+        <input type="text" id="artist-pseudo-${id}" placeholder="Ex : Lorie Ink" />
+        <div class="field-error" id="err-artist-pseudo-${id}">Champ obligatoire</div>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:16px">
+      <label>Styles <span class="required">*</span></label>
+      <div class="styles-grid" id="artist-styles-${id}">
+        ${buildStylesGridHTML(id)}
+      </div>
+      <div class="field-error" id="err-artist-styles-${id}">S&eacute;lectionne au moins un style</div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:16px">
+      <label>Tarif horaire</label>
+      <div class="tarif-display">
+        <span id="artist-tarifVal-${id}">150</span>&euro; <small>/ heure</small>
+      </div>
+      <input type="range" id="artist-tarif-${id}" min="50" max="400" value="150" step="10"
+        oninput="document.getElementById('artist-tarifVal-${id}').textContent = this.value" />
+      <div class="tarif-labels">
+        <span>50&euro;</span>
+        <span>200&euro;</span>
+        <span>400&euro;+</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-bottom:16px">
+      <label>Bio / Description <span class="required">*</span></label>
+      <textarea id="artist-bio-${id}" placeholder="Son style, son parcours, ce qui l'inspire... (min. 50 caract&egrave;res)"></textarea>
+      <div class="field-error" id="err-artist-bio-${id}">Minimum 50 caract&egrave;res</div>
+    </div>
+
+    <div class="form-group">
+      <label>Photos <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
+      <div class="upload-zone" id="artist-uploadZone-${id}">
+        <input type="file" id="artist-photos-${id}" accept="image/*" multiple />
+        <div id="artist-uploadPlaceholder-${id}">
+          <div class="upload-icon">&#x1F5BC;&#xFE0F;</div>
+          <div class="upload-text">
+            <strong>Glisse les photos ici</strong>
+            Max 5 photos, 10 MB chacune
+          </div>
+          <div class="upload-counter">
+            <span id="artist-uploadCount-${id}">0 / 5</span>
+          </div>
+        </div>
+        <div class="upload-preview" id="artist-photoPreview-${id}"></div>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(block);
+
+  // Init upload for this artist block
+  initArtistUpload(id);
+
+  // Hide error
+  document.getElementById('err-artists').style.display = 'none';
+
+  // Update numbering
+  updateArtistNumbering();
+}
+
+function removeArtistBlock(id) {
+  const idx = artistBlocks.findIndex(a => a.id === id);
+  if (idx === -1) return;
+  artistBlocks.splice(idx, 1);
+  const el = document.getElementById(`artist-block-${id}`);
+  if (el) el.remove();
+  updateArtistNumbering();
+}
+
+function updateArtistNumbering() {
+  const blocks = document.querySelectorAll('.artist-block');
+  blocks.forEach((block, i) => {
+    block.querySelector('.artist-block-title').textContent = `Artiste ${i + 1}`;
+    // Show/hide remove button: always show if more than 1
+    const removeBtn = block.querySelector('.artist-block-remove');
+    if (blocks.length > 1 && !removeBtn) {
+      const id = parseInt(block.id.replace('artist-block-', ''));
+      const header = block.querySelector('.artist-block-header');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'artist-block-remove';
+      btn.textContent = 'Supprimer';
+      btn.onclick = () => removeArtistBlock(id);
+      header.appendChild(btn);
+    } else if (blocks.length <= 1 && removeBtn) {
+      removeBtn.remove();
+    }
+  });
+}
+
+function initArtistUpload(id) {
+  const zone = document.getElementById(`artist-uploadZone-${id}`);
+  const input = document.getElementById(`artist-photos-${id}`);
+  const block = artistBlocks.find(a => a.id === id);
+
+  zone.addEventListener('click', (e) => {
+    if (e.target !== input) input.click();
+  });
+
+  input.addEventListener('change', () => {
+    addArtistPhotos(id, input.files);
+    input.value = '';
+  });
+
+  zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    addArtistPhotos(id, e.dataTransfer.files);
+  });
+}
+
+function addArtistPhotos(id, files) {
+  const block = artistBlocks.find(a => a.id === id);
+  if (!block) return;
+  const newFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+  const remaining = 5 - block.files.length;
+  block.files = block.files.concat(newFiles.slice(0, remaining));
+  renderArtistPreviews(id);
+}
+
+function removeArtistPhoto(id, index) {
+  const block = artistBlocks.find(a => a.id === id);
+  if (!block) return;
+  block.files.splice(index, 1);
+  renderArtistPreviews(id);
+}
+
+function renderArtistPreviews(id) {
+  const block = artistBlocks.find(a => a.id === id);
+  if (!block) return;
+  const preview = document.getElementById(`artist-photoPreview-${id}`);
+  const placeholder = document.getElementById(`artist-uploadPlaceholder-${id}`);
+  const count = block.files.length;
+
+  document.getElementById(`artist-uploadCount-${id}`).textContent = `${count} / 5`;
+
+  if (count > 0) {
+    placeholder.style.display = 'none';
+    preview.style.display = 'grid';
+  } else {
+    placeholder.style.display = '';
+    preview.style.display = 'none';
+  }
+
+  preview.innerHTML = '';
+  block.files.forEach((file, i) => {
+    const item = document.createElement('div');
+    item.className = 'preview-item';
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.alt = file.name;
+    const btn = document.createElement('button');
+    btn.className = 'preview-delete';
+    btn.type = 'button';
+    btn.innerHTML = '\u2715';
+    btn.onclick = (e) => { e.stopPropagation(); removeArtistPhoto(id, i); };
+    item.appendChild(img);
+    item.appendChild(btn);
+    preview.appendChild(item);
+  });
+}
+
 // ── MULTI-STEP ───────────────────────────────────────────────────────────────
 let currentStep = 0;
 const totalSteps = 4;
@@ -260,19 +501,71 @@ function validateField(id) {
   });
 });
 
+// ── ARTIST BLOCK VALIDATION ──────────────────────────────────────────────────
+function validateArtistBlock(block) {
+  let ok = true;
+  const id = block.id;
+
+  // Nom
+  const nom = document.getElementById(`artist-nom-${id}`);
+  const nomOk = nom.value.trim().length >= 2;
+  nom.classList.toggle('invalid', !nomOk);
+  document.getElementById(`err-artist-nom-${id}`).style.display = nomOk ? 'none' : 'block';
+  if (!nomOk) ok = false;
+
+  // Pseudo
+  const pseudo = document.getElementById(`artist-pseudo-${id}`);
+  const pseudoOk = pseudo.value.trim().length >= 2;
+  pseudo.classList.toggle('invalid', !pseudoOk);
+  document.getElementById(`err-artist-pseudo-${id}`).style.display = pseudoOk ? 'none' : 'block';
+  if (!pseudoOk) ok = false;
+
+  // Styles
+  const stylesChecked = document.querySelectorAll(`#artist-styles-${id} input:checked`);
+  const stylesOk = stylesChecked.length > 0;
+  document.getElementById(`err-artist-styles-${id}`).style.display = stylesOk ? 'none' : 'block';
+  if (!stylesOk) ok = false;
+
+  // Bio
+  const bio = document.getElementById(`artist-bio-${id}`);
+  const bioOk = bio.value.trim().length >= 50;
+  bio.classList.toggle('invalid', !bioOk);
+  document.getElementById(`err-artist-bio-${id}`).style.display = bioOk ? 'none' : 'block';
+  if (!bioOk) ok = false;
+
+  return ok;
+}
+
 // ── STEP VALIDATION ──────────────────────────────────────────────────────────
 function validateStep(step) {
   let ok = true;
   if (step === 0) {
-    ['nom','pseudo','studio','email'].forEach(id => { if (!validateField(id)) ok = false; });
+    if (profileType === 'solo') {
+      ['nom','pseudo','studio','email'].forEach(id => { if (!validateField(id)) ok = false; });
+    } else {
+      ['studio','email'].forEach(id => { if (!validateField(id)) ok = false; });
+    }
   } else if (step === 1) {
     ['ville','region'].forEach(id => { if (!validateField(id)) ok = false; });
   } else if (step === 2) {
-    if (!validateField('bio')) ok = false;
-    const stylesChecked = [...document.querySelectorAll('#stylesGrid input:checked')];
-    const stylesOk = stylesChecked.length > 0;
-    document.getElementById('err-styles').style.display = stylesOk ? 'none' : 'block';
-    if (!stylesOk) ok = false;
+    if (profileType === 'solo') {
+      if (!validateField('bio')) ok = false;
+      const stylesChecked = [...document.querySelectorAll('#stylesGrid input:checked')];
+      const stylesOk = stylesChecked.length > 0;
+      document.getElementById('err-styles').style.display = stylesOk ? 'none' : 'block';
+      if (!stylesOk) ok = false;
+    } else {
+      // Studio: validate each artist block
+      if (artistBlocks.length === 0) {
+        document.getElementById('err-artists').style.display = 'block';
+        ok = false;
+      } else {
+        document.getElementById('err-artists').style.display = 'none';
+        artistBlocks.forEach(block => {
+          if (!validateArtistBlock(block)) ok = false;
+        });
+      }
+    }
   } else if (step === 3) {
     const cgu = document.getElementById('cgu').checked;
     document.getElementById('err-cgu').style.display = cgu ? 'none' : 'block';
@@ -300,35 +593,68 @@ function prevStep() {
 
 // ── RECAP ────────────────────────────────────────────────────────────────────
 function buildRecap() {
-  const nom = document.getElementById('nom').value.trim();
-  const pseudo = document.getElementById('pseudo').value.trim();
   const studio = document.getElementById('studio').value.trim();
   const email = document.getElementById('email').value.trim();
   const instagram = document.getElementById('instagram').value.trim();
   const ville = villesArr.join(', ');
   const region = document.getElementById('region').value;
-  const stylesCoches = [...document.querySelectorAll('#stylesGrid input:checked')].map(cb => cb.value).join(', ');
-  const tarif = document.getElementById('tarif').value + ' \u20AC/h';
-  const bio = document.getElementById('bio').value.trim();
-  const nbPhotos = uploadedFiles.length;
 
-  const items = [
-    { label: 'Nom', value: nom },
-    { label: 'Nom d\'artiste', value: pseudo },
-    { label: 'Studio', value: studio },
-    { label: 'Email', value: email },
-    { label: 'Instagram', value: instagram || '\u2014' },
-    { label: 'Ville(s)', value: ville },
-    { label: 'R\u00E9gion', value: region },
-    { label: 'Styles', value: stylesCoches, full: true },
-    { label: 'Tarif', value: tarif },
-    { label: 'Photos', value: nbPhotos > 0 ? nbPhotos + ' photo(s)' : 'Aucune' },
-    { label: 'Bio', value: bio.length > 120 ? bio.slice(0, 120) + '\u2026' : bio, full: true },
-  ];
+  const items = [];
 
-  const grid = document.getElementById('recapGrid');
-  grid.innerHTML = items.map(it =>
-    `<div class="recap-item${it.full ? ' full' : ''}">
+  if (profileType === 'solo') {
+    const nom = document.getElementById('nom').value.trim();
+    const pseudo = document.getElementById('pseudo').value.trim();
+    const stylesCoches = [...document.querySelectorAll('#stylesGrid input:checked')].map(cb => cb.value).join(', ');
+    const tarif = document.getElementById('tarif').value + ' \u20AC/h';
+    const bio = document.getElementById('bio').value.trim();
+    const nbPhotos = uploadedFiles.length;
+
+    items.push(
+      { label: 'Type', value: 'Tatoueur ind\u00E9pendant' },
+      { label: 'Nom', value: nom },
+      { label: 'Nom d\'artiste', value: pseudo },
+      { label: 'Studio', value: studio },
+      { label: 'Email', value: email },
+      { label: 'Instagram', value: instagram || '\u2014' },
+      { label: 'Ville(s)', value: ville },
+      { label: 'R\u00E9gion', value: region },
+      { label: 'Styles', value: stylesCoches, full: true },
+      { label: 'Tarif', value: tarif },
+      { label: 'Photos', value: nbPhotos > 0 ? nbPhotos + ' photo(s)' : 'Aucune' },
+      { label: 'Bio', value: bio.length > 120 ? bio.slice(0, 120) + '\u2026' : bio, full: true },
+    );
+  } else {
+    items.push(
+      { label: 'Type', value: 'Studio' },
+      { label: 'Studio', value: studio },
+      { label: 'Email', value: email },
+      { label: 'Instagram', value: instagram || '\u2014' },
+      { label: 'Ville(s)', value: ville },
+      { label: 'R\u00E9gion', value: region },
+    );
+
+    artistBlocks.forEach((block, i) => {
+      const nom = document.getElementById(`artist-nom-${block.id}`).value.trim();
+      const pseudo = document.getElementById(`artist-pseudo-${block.id}`).value.trim();
+      const styles = [...document.querySelectorAll(`#artist-styles-${block.id} input:checked`)].map(cb => cb.value).join(', ');
+      const tarif = document.getElementById(`artist-tarif-${block.id}`).value + ' \u20AC/h';
+      const bio = document.getElementById(`artist-bio-${block.id}`).value.trim();
+      const nbPhotos = block.files.length;
+
+      items.push(
+        { label: `Artiste ${i + 1}`, value: `${pseudo} (${nom})`, full: true,
+          style: 'background:rgba(192,57,43,0.06);border-color:rgba(192,57,43,0.15)' },
+        { label: 'Styles', value: styles },
+        { label: 'Tarif', value: tarif },
+        { label: 'Photos', value: nbPhotos > 0 ? nbPhotos + ' photo(s)' : 'Aucune' },
+        { label: 'Bio', value: bio.length > 80 ? bio.slice(0, 80) + '\u2026' : bio, full: true },
+      );
+    });
+  }
+
+  const recapGrid = document.getElementById('recapGrid');
+  recapGrid.innerHTML = items.map(it =>
+    `<div class="recap-item${it.full ? ' full' : ''}"${it.style ? ` style="${it.style}"` : ''}>
       <div class="recap-label">${it.label}</div>
       <div class="recap-value">${it.value}</div>
     </div>`
@@ -339,6 +665,24 @@ function buildRecap() {
 async function uploadPhotos() {
   const urls = [];
   for (const file of uploadedFiles) {
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': file.type,
+        'X-Filename': file.name,
+      },
+      body: file,
+    });
+    if (!res.ok) throw new Error('Erreur upload photo : ' + file.name);
+    const data = await res.json();
+    urls.push(data.url);
+  }
+  return urls;
+}
+
+async function uploadArtistPhotos(files) {
+  const urls = [];
+  for (const file of files) {
     const res = await fetch('/api/upload', {
       method: 'POST',
       headers: {
@@ -368,51 +712,111 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
   btn.disabled = true;
 
   try {
-    // Upload photos first
-    let photoUrls = [];
-    if (uploadedFiles.length > 0) {
-      btn.textContent = '\u23F3  Upload des photos...';
-      photoUrls = await uploadPhotos();
-    }
+    const studioName = document.getElementById('studio').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const instagram = document.getElementById('instagram').value.trim();
+    const website = document.getElementById('website').value.trim();
+    const ville = document.getElementById('ville').value.trim();
+    const region = document.getElementById('region').value;
+    const adresse = document.getElementById('adresse').value.trim();
 
-    btn.textContent = '\u23F3  Envoi en cours...';
-
-    // Récupère les styles cochés
-    const stylesCoches = [...document.querySelectorAll('#stylesGrid input:checked')]
-      .map(cb => cb.value).join(', ');
-
-    const data = {
-      fields: {
-        Nom:       document.getElementById('nom').value.trim(),
-        Pseudo:    document.getElementById('pseudo').value.trim(),
-        Studio:    document.getElementById('studio').value.trim(),
-        email:     document.getElementById('email').value.trim(),
-        instagram: document.getElementById('instagram').value.trim(),
-        website:   document.getElementById('website').value.trim(),
-        ville:     document.getElementById('ville').value.trim(),
-        region:    document.getElementById('region').value,
-        adresse:   document.getElementById('adresse').value.trim(),
-        styles:    stylesCoches,
-        tarif:     parseInt(document.getElementById('tarif').value),
-        tarifInfo: document.getElementById('tarifInfo').value.trim(),
-        bio:       document.getElementById('bio').value.trim(),
-        photos:    photoUrls,
-        Statut:    'En attente',
+    if (profileType === 'solo') {
+      // Solo: single inscription (same as before)
+      let photoUrls = [];
+      if (uploadedFiles.length > 0) {
+        btn.textContent = '\u23F3  Upload des photos...';
+        photoUrls = await uploadPhotos();
       }
-    };
 
-    const res = await fetch('/api/inscription', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+      btn.textContent = '\u23F3  Envoi en cours...';
 
-    if (!res.ok) {
-      const err = await res.json();
-      if (res.status === 409) {
-        throw new Error('Un profil avec cet email existe déjà. Contacte-nous si tu veux le modifier.');
+      const stylesCoches = [...document.querySelectorAll('#stylesGrid input:checked')]
+        .map(cb => cb.value).join(', ');
+
+      const data = {
+        fields: {
+          Nom:       document.getElementById('nom').value.trim(),
+          Pseudo:    document.getElementById('pseudo').value.trim(),
+          Studio:    studioName,
+          email,
+          instagram,
+          website,
+          ville,
+          region,
+          adresse,
+          styles:    stylesCoches,
+          tarif:     parseInt(document.getElementById('tarif').value),
+          tarifInfo: document.getElementById('tarifInfo').value.trim(),
+          bio:       document.getElementById('bio').value.trim(),
+          photos:    photoUrls,
+          Statut:    'En attente',
+        }
+      };
+
+      const res = await fetch('/api/inscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        if (res.status === 409) {
+          throw new Error('Un profil avec cet email existe d\u00E9j\u00E0. Contacte-nous si tu veux le modifier.');
+        }
+        throw new Error(err.error || 'Erreur serveur');
       }
-      throw new Error(err.error || 'Erreur serveur');
+    } else {
+      // Studio: one inscription per artist
+      btn.textContent = '\u23F3  Envoi en cours...';
+
+      for (let i = 0; i < artistBlocks.length; i++) {
+        const block = artistBlocks[i];
+        const artistNom = document.getElementById(`artist-nom-${block.id}`).value.trim();
+        const artistPseudo = document.getElementById(`artist-pseudo-${block.id}`).value.trim();
+        const artistStyles = [...document.querySelectorAll(`#artist-styles-${block.id} input:checked`)]
+          .map(cb => cb.value).join(', ');
+        const artistTarif = parseInt(document.getElementById(`artist-tarif-${block.id}`).value);
+        const artistBio = document.getElementById(`artist-bio-${block.id}`).value.trim();
+
+        let photoUrls = [];
+        if (block.files.length > 0) {
+          btn.textContent = `\u23F3  Upload photos artiste ${i + 1}/${artistBlocks.length}...`;
+          photoUrls = await uploadArtistPhotos(block.files);
+        }
+
+        btn.textContent = `\u23F3  Envoi artiste ${i + 1}/${artistBlocks.length}...`;
+
+        const data = {
+          fields: {
+            Nom:       artistNom,
+            Pseudo:    artistPseudo,
+            Studio:    studioName,
+            email,
+            instagram,
+            website,
+            ville,
+            region,
+            adresse,
+            styles:    artistStyles,
+            tarif:     artistTarif,
+            bio:       artistBio,
+            photos:    photoUrls,
+            Statut:    'En attente',
+          }
+        };
+
+        const res = await fetch('/api/inscription', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || `Erreur pour l'artiste ${artistPseudo}`);
+        }
+      }
     }
 
     // Hide form, show success
@@ -432,6 +836,10 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
 (function() {
   const p = new URLSearchParams(window.location.search);
   if (!p.get('nom')) return;
+
+  // Auto-select solo mode and show form
+  selectType('solo');
+  confirmType();
 
   const banner = document.getElementById('claimBanner');
   banner.style.display = 'flex';
