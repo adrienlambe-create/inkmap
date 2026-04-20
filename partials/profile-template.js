@@ -24,6 +24,14 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
   const url = `https://inkmap.fr/tatoueur/${slug}`;
   const mainStyle = (t.styles && t.styles[0]) || '';
   const styleSuffix = mainStyle ? ` ${mainStyle.toLowerCase()}` : '';
+  const role = `Tatoueur${styleSuffix} à ${t.ville}`;
+
+  // Bio auto-générée en fallback — garantit du contenu SEO même sans bio rédigée
+  const topStyles = (t.styles || []).slice(0, 3).map(s => s.toLowerCase());
+  const autoBio = `${displayName} est tatoueur à ${t.ville}` +
+    (topStyles.length ? `, spécialisé en ${topStyles.join(', ')}` : '') +
+    '. Découvre son portfolio ci-dessous.';
+  const bioText = t.bio || autoBio;
 
   const title = `${displayName} — Tatoueur${styleSuffix} à ${t.ville} | Inkmap`;
   const rawDesc = `${displayName}, tatoueur${styleSuffix} à ${t.ville}. ` +
@@ -32,8 +40,12 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
 
   const instaHandle = (t.instagram || '').replace(/^@/, '').trim();
   const instaUrl = instaHandle ? `https://instagram.com/${instaHandle}` : '';
+  const siteUrl = t.site || '';
 
   const coverImg = (t.photos && t.photos[0]) || '';
+
+  // Profils externes (Instagram, site perso) pour sameAs
+  const sameAs = [instaUrl, siteUrl].filter(Boolean);
 
   // JSON-LD TattooParlor
   const schemaTattoo = {
@@ -42,15 +54,16 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
     name: displayName,
     url,
     ...(coverImg ? { image: t.photos } : {}),
-    ...(t.bio ? { description: t.bio } : {}),
+    description: bioText,
     address: {
       '@type': 'PostalAddress',
+      ...(t.adresse ? { streetAddress: t.adresse } : {}),
       addressLocality: t.ville,
       ...(t.region ? { addressRegion: t.region } : {}),
       addressCountry: 'FR',
     },
     ...(t.tarif ? { priceRange: `${t.tarif}€ / heure` } : {}),
-    ...(instaUrl ? { sameAs: [instaUrl] } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
   };
 
   // JSON-LD Breadcrumb
@@ -71,7 +84,7 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
     name: displayName,
     jobTitle: 'Tatoueur',
     url,
-    ...(instaUrl ? { sameAs: [instaUrl] } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
     workLocation: { '@type': 'Place', name: t.ville },
   };
 
@@ -183,6 +196,14 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
       color: var(--text);
     }
     .profile-hero h1 em { font-style: normal; color: var(--accent); }
+    .profile-role {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--muted2);
+      margin-bottom: 18px;
+      letter-spacing: 0.2px;
+    }
     .profile-meta {
       display: flex; flex-wrap: wrap; gap: 16px;
       font-family: 'Space Mono', monospace;
@@ -313,6 +334,16 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
       font-size: 0.7rem; font-weight: 400; color: var(--muted2);
       margin-left: 4px;
     }
+    .info-value-sm {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; font-weight: 500;
+      line-height: 1.4;
+    }
+    .info-detail {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem; color: var(--muted2);
+      margin-top: 8px; line-height: 1.4;
+    }
 
     /* ── GALERIE ── */
     .profile-gallery {
@@ -431,6 +462,7 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
       .profile-cover { width: 120px; height: 120px; }
       .profile-hero h1 { font-size: clamp(1.4rem, 6vw, 1.8rem); margin-bottom: 10px; }
       .profile-tag { font-size: 0.55rem; margin-bottom: 8px; letter-spacing: 2px; }
+      .profile-role { font-size: 0.9rem; margin-bottom: 12px; }
       .profile-meta { font-size: 0.65rem; gap: 10px; margin-bottom: 14px; }
       .profile-style-tags { margin-bottom: 16px; }
     }
@@ -451,6 +483,7 @@ ${HEADER_HTML}
     <div>
       <div class="profile-tag">Profil tatoueur · ${escHtml(t.ville)}${t.region ? ' · ' + escHtml(t.region) : ''}</div>
       <h1>${escHtml(displayName)}</h1>
+      <p class="profile-role">${escHtml(role)}</p>
       <div class="profile-meta">
         ${instaHandle ? `<span><strong>@${escHtml(instaHandle)}</strong></span>` : ''}
         <span>📍 ${escHtml(t.ville)}</span>
@@ -461,7 +494,10 @@ ${HEADER_HTML}
       ${stylesHtml ? `<div class="profile-style-tags">${stylesHtml}</div>` : ''}
       <div class="profile-actions">
         ${instaUrl
-          ? `<a href="${escAttr(instaUrl)}" target="_blank" rel="noopener" class="profile-cta-primary">Contacter sur Instagram →</a>`
+          ? `<a href="${escAttr(instaUrl)}" target="_blank" rel="noopener noreferrer" class="profile-cta-primary">Contacter sur Instagram →</a>`
+          : ''}
+        ${siteUrl
+          ? `<a href="${escAttr(siteUrl)}" target="_blank" rel="noopener noreferrer" class="profile-cta-secondary">Site web →</a>`
           : ''}
         <a href="#portfolio" class="profile-cta-secondary">Voir le portfolio</a>
       </div>
@@ -469,12 +505,11 @@ ${HEADER_HTML}
   </div>
 </section>
 
-${t.bio ? `
 <!-- À PROPOS -->
 <section class="profile-section">
   <h2 class="profile-section-title">À propos</h2>
-  <p class="profile-bio">${escHtml(t.bio)}</p>
-</section>` : ''}
+  <p class="profile-bio">${escHtml(bioText)}</p>
+</section>
 
 <!-- INFOS -->
 <section class="profile-section profile-section-alt">
@@ -484,15 +519,17 @@ ${t.bio ? `
     <div class="info-block">
       <div class="info-label">Tarif horaire</div>
       <div class="info-value">${escHtml(t.tarif)}€<small>/h</small></div>
+      ${t.tarifInfo ? `<div class="info-detail">${escHtml(t.tarifInfo)}</div>` : ''}
     </div>` : ''}
     <div class="info-block">
       <div class="info-label">Ville</div>
       <div class="info-value">${escHtml(t.ville)}</div>
+      ${t.region ? `<div class="info-detail">${escHtml(t.region)}</div>` : ''}
     </div>
-    ${t.region ? `
+    ${t.adresse ? `
     <div class="info-block">
-      <div class="info-label">Région</div>
-      <div class="info-value">${escHtml(t.region)}</div>
+      <div class="info-label">Adresse</div>
+      <div class="info-value info-value-sm">${escHtml(t.adresse)}</div>
     </div>` : ''}
     ${t.styles && t.styles.length ? `
     <div class="info-block">

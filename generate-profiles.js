@@ -107,6 +107,17 @@ function normalizeRecord(rec) {
         .filter(Boolean)
     : [];
 
+  // Site : n'accepte que http(s) — ajoute https:// si omis, rejette tout autre schéma (javascript:, data:, etc.)
+  const siteRaw = (f.Site || '').trim();
+  let site = '';
+  if (siteRaw) {
+    const withProto = /^https?:\/\//i.test(siteRaw) ? siteRaw : 'https://' + siteRaw;
+    try {
+      const u = new URL(withProto);
+      if (u.protocol === 'http:' || u.protocol === 'https:') site = u.toString();
+    } catch { /* URL malformée → ignorée */ }
+  }
+
   return {
     airtableId: rec.id,
     nom: (f.Nom || '').trim(),
@@ -115,7 +126,10 @@ function normalizeRecord(rec) {
     region: (f.Region || '').trim(),
     styles,
     tarif: parseInt(f.Tarif) || 0,
+    tarifInfo: (f.TarifInfo || '').trim(),
     instagram: (f.Instagram || '').trim(),
+    site,
+    adresse: (f.Adresse || '').trim(),
     bio: (f.Bio || '').trim(),
     photoAttachments,
     photos: photoAttachments.map(a => a.url), // fallback si migration échoue
