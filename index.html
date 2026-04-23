@@ -417,100 +417,6 @@
 
     .btn-secondary:hover { color: var(--text); border-color: var(--text); }
 
-    /* ── INKMAP EN CHIFFRES ── */
-    .chiffres-section {
-      background-color: #111;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='5' seed='8' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E");
-      border-top: none;
-      border-bottom: none;
-      padding: 56px 56px 48px;
-    }
-
-    .chiffres-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .chiffres-header {
-      margin-bottom: 40px;
-    }
-
-    .chiffres-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: -0.5px;
-      margin-bottom: 6px;
-    }
-
-    .chiffres-desc {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .chiffres-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .chiffre-item {
-      padding: 32px 36px;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.02);
-      position: relative;
-    }
-
-    .chiffre-item:last-child { border-right: none; }
-
-    .chiffre-item::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .chiffre-num {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 4vw, 3.6rem);
-      font-weight: 800;
-      color: #fff;
-      line-height: 1;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .chiffre-unit {
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: rgba(255,255,255,0.35);
-      margin-left: 2px;
-    }
-
-    .chiffre-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: rgba(255,255,255,0.35);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      display: block;
-    }
-
-    .chiffre-detail {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.25);
-      margin-top: 6px;
-      display: block;
-    }
-
     /* ── SEARCH ── */
     .search-section {
       padding: 60px 56px 36px;
@@ -1962,8 +1868,6 @@
       header { padding: 0 32px; }
       .hero-content { padding: 80px 40px 80px; }
       .hero-title { font-size: clamp(4rem, 8vw, 7rem); }
-      .chiffres-section { padding: 44px 40px 36px; }
-      .chiffre-item { padding: 28px 28px; }
       .search-section { padding: 48px 40px 28px; }
       .filters { padding: 0 40px; }
       .results-header { padding: 12px 40px; }
@@ -1990,15 +1894,6 @@
       .hero-sub p { margin-bottom: 20px; font-size: 0.88rem; }
       .hero-visual { display: none; }
       .ink-separator { height: 32px; }
-
-      /* Chiffres — compact sur mobile */
-      .chiffres-section { padding: 24px 20px 20px; }
-      .chiffres-header { margin-bottom: 20px; }
-      .chiffres-grid { grid-template-columns: repeat(2, 1fr); }
-      .chiffre-item { padding: 24px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
-      .chiffre-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.08); }
-      .chiffre-item:nth-last-child(-n+2) { border-bottom: none; }
-      .chiffre-num { font-size: 2.2rem; }
 
       /* Recherche */
       .search-section { padding: 28px 20px 16px; }
@@ -2100,8 +1995,6 @@
     /* ── TRÈS PETIT ÉCRAN (max 380px) ── */
     @media (max-width: 380px) {
       .hero-title { font-size: clamp(3rem, 20vw, 4rem); }
-      .chiffres-grid { grid-template-columns: 1fr 1fr; }
-      .chiffre-item { padding: 20px 16px; }
       .hero-ctas { flex-direction: column; }
       .hero-ctas .btn-primary,
       .hero-ctas .btn-secondary { text-align: center; width: 100%; }
@@ -2225,7 +2118,7 @@
   </div>
 </section>
 
-<!-- INK SEPARATOR: hero → chiffres -->
+<!-- INK SEPARATOR: hero → IA -->
 <div class="ink-separator" style="background:#111">
   <svg viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <!-- White fill above the ink line (hero bg) -->
@@ -2238,63 +2131,6 @@
     <circle cx="920" cy="18" r="3.5" fill="#1a1a1a" opacity="0.1"/>
     <!-- Splinter -->
     <path d="M280 20 L274 12 M282 26 L288 32" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" opacity="0.1"/>
-  </svg>
-</div>
-
-<!-- INKMAP EN CHIFFRES -->
-<section id="inkmap-en-chiffres" class="chiffres-section" aria-label="Inkmap en chiffres" itemscope itemtype="https://schema.org/Dataset">
-  <meta itemprop="name" content="Statistiques Inkmap — Annuaire des tatoueurs français" />
-  <meta itemprop="description" content="Données en temps réel sur les tatoueurs, villes, styles et tarifs référencés sur Inkmap.fr" />
-  <div class="chiffres-inner">
-    <div class="chiffres-header">
-      <h2 class="chiffres-title">Inkmap en chiffres</h2>
-      <p class="chiffres-desc">Données calculées en temps réel depuis l'annuaire</p>
-    </div>
-    <dl class="chiffres-grid">
-      <div class="chiffre-item">
-        <dt class="chiffre-label">Tatoueurs inscrits</dt>
-        <dd class="chiffre-num" id="nb-tatoueurs" data-value="66" itemprop="variableMeasured" itemscope itemtype="https://schema.org/PropertyValue">
-          <meta itemprop="name" content="Nombre de tatoueurs inscrits" />
-          <span itemprop="value" id="nb-tatoueurs-val">66</span>
-        </dd>
-        <span class="chiffre-detail">profils actifs vérifiés</span>
-      </div>
-      <div class="chiffre-item">
-        <dt class="chiffre-label">Villes couvertes</dt>
-        <dd class="chiffre-num" id="nb-villes" data-value="13" itemprop="variableMeasured" itemscope itemtype="https://schema.org/PropertyValue">
-          <meta itemprop="name" content="Nombre de villes couvertes" />
-          <span itemprop="value" id="nb-villes-val">13</span>
-        </dd>
-        <span class="chiffre-detail">en France métropolitaine</span>
-      </div>
-      <div class="chiffre-item">
-        <dt class="chiffre-label">Styles disponibles</dt>
-        <dd class="chiffre-num" id="nb-styles" data-value="13" itemprop="variableMeasured" itemscope itemtype="https://schema.org/PropertyValue">
-          <meta itemprop="name" content="Nombre de styles de tatouage disponibles" />
-          <span itemprop="value" id="nb-styles-val">13</span>
-        </dd>
-        <span class="chiffre-detail">fineline, blackwork, japonais…</span>
-      </div>
-      <div class="chiffre-item">
-        <dt class="chiffre-label">Tarif moyen</dt>
-        <dd class="chiffre-num" id="tarif-moyen" data-value="" itemprop="variableMeasured" itemscope itemtype="https://schema.org/PropertyValue">
-          <meta itemprop="name" content="Tarif moyen des tatoueurs" />
-          <meta itemprop="unitCode" content="EUR" />
-          <span itemprop="value" id="tarif-moyen-val">—</span><span class="chiffre-unit">€/h</span>
-        </dd>
-        <span class="chiffre-detail" id="tarif-detail">calculé sur les profils renseignés</span>
-      </div>
-    </dl>
-  </div>
-</section>
-
-<!-- INK SEPARATOR: chiffres → IA (dark bg) -->
-<div class="ink-separator ink-separator--dark">
-  <svg viewBox="0 0 1440 48" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 24 C120 18, 240 32, 400 24 C560 16, 680 32, 840 24 C1000 16, 1120 30, 1280 24 C1360 20, 1420 28, 1440 24" stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <circle cx="400" cy="24" r="3.5" fill="rgba(255,255,255,0.05)"/>
-    <circle cx="840" cy="24" r="3" fill="rgba(255,255,255,0.04)"/>
-    <path d="M400 22 L394 14 M402 28 L408 34" stroke="rgba(255,255,255,0.04)" stroke-width="1" stroke-linecap="round"/>
   </svg>
 </div>
 

@@ -264,19 +264,6 @@ function injectHomepage(tatoueurs) {
     html = html.replace(gridRegex, `$1\n${cardsHtml}\n$3`);
   }
 
-  // Update counters
-  const villes = [...new Set(tatoueurs.map(t => villeBase(t.ville).toLowerCase()))].length;
-  const styles = [...new Set(tatoueurs.flatMap(t => t.styles))].length;
-
-  html = html.replace(
-    /id="nb-tatoueurs" data-value="\d+"/,
-    `id="nb-tatoueurs" data-value="${tatoueurs.length}"`
-  );
-  html = html.replace(
-    /<span itemprop="value" id="nb-tatoueurs-val">\d+<\/span>/,
-    `<span itemprop="value" id="nb-tatoueurs-val">${tatoueurs.length}</span>`
-  );
-
   fs.writeFileSync(filepath, html, 'utf-8');
   console.log(`\n✅ index.html — ${tatoueurs.length} artistes injectés`);
 }
