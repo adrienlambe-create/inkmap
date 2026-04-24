@@ -45,4 +45,26 @@ function verify(token) {
   }
 }
 
-module.exports = { sign, verify };
+// Verify générique : HMAC valide + payload non expiré, sans contrainte de schéma.
+// Utilisé pour les tokens briefs (champs did/tid) et tout autre usage futur.
+function verifyGeneric(token) {
+  try {
+    if (typeof token !== 'string') return null;
+    const parts = token.split('.');
+    if (parts.length !== 2) return null;
+    const [data, sigB64] = parts;
+    const expected = crypto.createHmac('sha256', getSecret()).update(data).digest();
+    const provided = b64urlDecode(sigB64);
+    if (provided.length !== expected.length) return null;
+    if (!crypto.timingSafeEqual(provided, expected)) return null;
+    const payload = JSON.parse(b64urlDecode(data).toString('utf-8'));
+    if (!payload || typeof payload !== 'object') return null;
+    if (!payload.exp || typeof payload.exp !== 'number') return null;
+    if (Date.now() > payload.exp) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+module.exports = { sign, verify, verifyGeneric };

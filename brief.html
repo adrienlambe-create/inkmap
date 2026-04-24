@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brief — Inkmap</title>
+  <!-- Page privée, non indexable -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --paper: #fafafa;
+      --text: #0d0d0d;
+      --muted: #666;
+      --muted2: #999;
+      --accent: #c0392b;
+      --border: #e5e5e5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    header.topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      max-width: 720px; margin: 0 auto;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 18px; letter-spacing: -0.5px; color: var(--text);
+      text-decoration: none;
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    .tag-private {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; color: var(--muted2);
+      text-transform: uppercase; letter-spacing: 1.5px;
+    }
+
+    /* États (loading / error / main) */
+    .state { padding: 48px 24px; text-align: center; }
+    .state h1 { font-family: 'Syne', sans-serif; font-size: 22px; margin: 0 0 12px; }
+    .state p { color: var(--muted); margin: 0; }
+    .spinner {
+      width: 28px; height: 28px; border: 2px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.7s linear infinite; margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Salutation */
+    .intro { margin-bottom: 28px; }
+    .intro .mono {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; color: var(--muted2);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;
+    }
+    .intro h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 30px; margin: 0 0 8px; letter-spacing: -0.5px;
+    }
+    .intro p { color: var(--muted); margin: 0; font-size: 15px; }
+
+    /* Card brief */
+    .brief-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 6px;
+      padding: 28px; margin-bottom: 24px;
+    }
+    .brief-meta {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px;
+      margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    }
+    .meta-item .meta-label {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 4px; display: block;
+    }
+    .meta-item .meta-value { font-size: 15px; color: var(--text); font-weight: 500; }
+    .meta-item .meta-value.accent { color: var(--accent); font-weight: 600; }
+
+    .brief-desc-label {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 10px; display: block;
+    }
+    .brief-desc {
+      font-size: 15px; color: var(--text); white-space: pre-wrap;
+      padding: 16px 20px; background: #fafafa;
+      border-left: 3px solid var(--accent); border-radius: 2px;
+    }
+
+    .photos-label {
+      font-family: 'Space Mono', monospace; font-size: 10px;
+      color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px;
+      margin: 24px 0 10px; display: block;
+    }
+    .photos-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .photos-grid img {
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      border-radius: 4px; border: 1px solid var(--border);
+      cursor: zoom-in; transition: transform 0.15s ease;
+    }
+    .photos-grid img:hover { transform: scale(1.02); }
+
+    /* Statut actuel (si déjà répondu) */
+    .statut-actuel {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 18px; margin-bottom: 20px; border-radius: 4px;
+      font-size: 14px;
+    }
+    .statut-actuel.interesse { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .statut-actuel.question { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
+    .statut-actuel.decline { background: #fafafa; color: var(--muted); border: 1px solid var(--border); }
+    .statut-actuel strong { font-weight: 600; }
+
+    /* Actions */
+    .actions-card {
+      background: #fff; border: 1px solid var(--border); border-radius: 6px;
+      padding: 24px; margin-bottom: 20px;
+    }
+    .actions-title {
+      font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+      margin: 0 0 16px;
+    }
+    .actions-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+    }
+    @media (max-width: 560px) { .actions-grid { grid-template-columns: 1fr; } }
+    .btn-action {
+      padding: 14px 16px; border-radius: 4px; border: 1px solid var(--border);
+      background: #fff; color: var(--text); font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: all 0.15s ease; text-align: center;
+    }
+    .btn-action:hover:not(:disabled) { border-color: var(--text); transform: translateY(-1px); }
+    .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-action.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-action.primary:hover:not(:disabled) { background: #a03123; border-color: #a03123; }
+
+    /* Zone message (apparaît si "Question") */
+    .message-zone {
+      margin-top: 16px; display: none;
+    }
+    .message-zone.visible { display: block; }
+    .message-zone label {
+      display: block; font-family: 'Space Mono', monospace; font-size: 10px;
+      color: var(--muted2); text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .message-zone textarea {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--border);
+      border-radius: 4px; font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px; resize: vertical; min-height: 100px;
+    }
+    .message-zone textarea:focus { outline: none; border-color: var(--accent); }
+    .message-zone .send-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 10px;
+    }
+    .message-zone .counter {
+      font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted2);
+    }
+    .message-zone .send-btn {
+      padding: 10px 20px; border: none; border-radius: 4px;
+      background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+      cursor: pointer;
+    }
+    .message-zone .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Feedback */
+    .feedback {
+      padding: 14px 18px; border-radius: 4px; margin-top: 16px;
+      font-size: 14px; display: none;
+    }
+    .feedback.visible { display: block; }
+    .feedback.ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .feedback.error { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+
+    /* Footer */
+    .footer-note {
+      font-size: 12px; color: var(--muted2); text-align: center;
+      margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace; line-height: 1.7;
+    }
+    .footer-note a { color: var(--muted); }
+
+    /* Lightbox simple */
+    .lightbox {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92); z-index: 100;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .lightbox.visible { display: flex; }
+    .lightbox img { max-width: 100%; max-height: 92vh; border-radius: 4px; }
+    .lightbox .close {
+      position: absolute; top: 20px; right: 20px;
+      color: #fff; font-size: 28px; cursor: pointer;
+      background: rgba(255,255,255,0.1); border: none;
+      width: 44px; height: 44px; border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="/">INK<em>MAP</em></a>
+  <span class="tag-private">// Brief privé</span>
+</header>
+
+<main class="page">
+
+  <!-- Loading -->
+  <div id="state-loading" class="state">
+    <div class="spinner"></div>
+    <p>Chargement du brief…</p>
+  </div>
+
+  <!-- Error -->
+  <div id="state-error" class="state" style="display:none">
+    <h1>Lien invalide ou expiré</h1>
+    <p id="error-msg">Ce lien n'est plus valable. Contacte Adrien pour en recevoir un nouveau.</p>
+    <p style="margin-top:16px"><a href="mailto:inkmap.contact@gmail.com" style="color:var(--accent)">inkmap.contact@gmail.com</a></p>
+  </div>
+
+  <!-- Main -->
+  <div id="state-main" style="display:none">
+
+    <div class="intro">
+      <div class="mono">// Nouvelle demande compatible</div>
+      <h1 id="intro-title">Salut, voici un projet qui pourrait te correspondre.</h1>
+      <p>Adrien (Inkmap) a identifié cette demande comme alignée avec ton style. Si ça t'intéresse, il fera la mise en relation avec le client directement.</p>
+    </div>
+
+    <!-- Statut actuel si déjà répondu -->
+    <div id="statut-actuel" class="statut-actuel" style="display:none"></div>
+
+    <!-- Brief -->
+    <div class="brief-card">
+      <div class="brief-meta" id="brief-meta"></div>
+      <span class="brief-desc-label">Description du projet</span>
+      <div class="brief-desc" id="brief-desc"></div>
+      <div id="photos-section" style="display:none">
+        <span class="photos-label">Inspirations fournies</span>
+        <div class="photos-grid" id="photos-grid"></div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions-card">
+      <div class="actions-title">Ta réponse</div>
+      <div class="actions-grid">
+        <button class="btn-action primary" data-statut="Intéressé">✓ Je prends ce projet</button>
+        <button class="btn-action" data-statut="Question">? J'ai une question</button>
+        <button class="btn-action" data-statut="Décliné">✗ Pas pour moi</button>
+      </div>
+
+      <div class="message-zone" id="message-zone">
+        <label for="message-input" id="message-label">Ta question pour Adrien</label>
+        <textarea id="message-input" maxlength="1000" placeholder="Ex: Est-ce que la zone est sensible à une couleur particulière ? Quelle disponibilité côté client ?"></textarea>
+        <div class="send-row">
+          <span class="counter"><span id="counter-num">0</span> / 1000</span>
+          <button id="send-btn" class="send-btn">Envoyer ma réponse</button>
+        </div>
+      </div>
+
+      <div id="feedback" class="feedback"></div>
+    </div>
+
+    <div class="footer-note">
+      Ce lien est personnel — merci de ne pas le partager.<br>
+      Pour toute question : <a href="mailto:inkmap.contact@gmail.com">inkmap.contact@gmail.com</a>
+    </div>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" id="lightbox-close">&times;</button>
+  <img id="lightbox-img" src="" alt="Inspiration" />
+</div>
+
+<script>
+(function() {
+  const $ = (id) => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  const token = params.get('t') || '';
+
+  // API base : localhost en dev, inkmap.fr sinon
+  const API_BASE = /^(localhost|127\.)/.test(location.hostname) ? '' : 'https://inkmap.fr';
+
+  let pendingStatut = null;
+  let photosList = [];
+
+  function showState(id) {
+    ['state-loading', 'state-error', 'state-main'].forEach(s => {
+      $(s).style.display = s === id ? '' : 'none';
+    });
+  }
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s || '';
+    return d.innerHTML;
+  }
+
+  function renderBrief(data) {
+    const d = data.demande || {};
+    const t = data.tatoueur || {};
+    const r = data.reponse || {};
+
+    // Salutation
+    const pseudo = t.pseudo ? t.pseudo.split(' ')[0] : '';
+    $('intro-title').textContent = pseudo
+      ? `Salut ${pseudo}, voici un projet qui pourrait te correspondre.`
+      : 'Salut, voici un projet qui pourrait te correspondre.';
+
+    // Meta
+    const metaItems = [];
+    if (d.ville) metaItems.push({ label: 'Ville', value: d.ville });
+    if (Array.isArray(d.styles) && d.styles.length) {
+      metaItems.push({ label: 'Style(s)', value: d.styles.join(', '), accent: true });
+    }
+    if (d.zoneCorps) metaItems.push({ label: 'Zone', value: d.zoneCorps });
+    if (d.budget) metaItems.push({ label: 'Budget indicatif', value: d.budget + ' €', accent: true });
+    $('brief-meta').innerHTML = metaItems.map(m => `
+      <div class="meta-item">
+        <span class="meta-label">${esc(m.label)}</span>
+        <span class="meta-value ${m.accent ? 'accent' : ''}">${esc(m.value)}</span>
+      </div>
+    `).join('');
+
+    // Description
+    $('brief-desc').textContent = d.description || '—';
+
+    // Photos
+    photosList = Array.isArray(d.photos) ? d.photos : [];
+    if (photosList.length) {
+      $('photos-section').style.display = '';
+      $('photos-grid').innerHTML = photosList.map((url, i) => `
+        <img src="${esc(url)}" alt="Inspiration ${i + 1}" data-idx="${i}" loading="lazy" />
+      `).join('');
+      $('photos-grid').addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG') {
+          $('lightbox-img').src = e.target.src;
+          $('lightbox').classList.add('visible');
+        }
+      });
+    }
+
+    // Statut actuel (si déjà répondu)
+    if (r.statut && r.statut !== 'Envoyé') {
+      const el = $('statut-actuel');
+      el.style.display = '';
+      const classe = r.statut === 'Intéressé' ? 'interesse'
+                   : r.statut === 'Question' ? 'question'
+                   : 'decline';
+      el.className = `statut-actuel ${classe}`;
+      el.innerHTML = `<strong>Ta réponse actuelle : ${esc(r.statut)}</strong> — tu peux la modifier ci-dessous.`;
+    }
+  }
+
+  $('lightbox-close').addEventListener('click', () => $('lightbox').classList.remove('visible'));
+  $('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') $('lightbox').classList.remove('visible');
+  });
+
+  // Boutons statuts
+  document.querySelectorAll('.btn-action').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const statut = btn.dataset.statut;
+      pendingStatut = statut;
+
+      const zone = $('message-zone');
+      const label = $('message-label');
+      const input = $('message-input');
+      const sendBtn = $('send-btn');
+      zone.classList.add('visible');
+
+      if (statut === 'Question') {
+        label.textContent = 'Ta question pour Adrien';
+        input.placeholder = 'Ex: Est-ce que la zone est sensible à une couleur particulière ?';
+        input.required = true;
+      } else if (statut === 'Intéressé') {
+        label.textContent = 'Message pour Adrien (optionnel)';
+        input.placeholder = 'Dispo, délais, questions pratiques…';
+        input.required = false;
+      } else {
+        label.textContent = 'Raison du refus (optionnel, mais utile)';
+        input.placeholder = 'Pas mon style, agenda plein, zone du corps pas ma spé…';
+        input.required = false;
+      }
+
+      document.querySelectorAll('.btn-action').forEach(b => {
+        b.style.opacity = b === btn ? '1' : '0.5';
+      });
+
+      sendBtn.textContent = statut === 'Intéressé' ? 'Confirmer mon intérêt'
+                          : statut === 'Question' ? 'Envoyer ma question'
+                          : 'Confirmer le refus';
+    });
+  });
+
+  // Compteur
+  $('message-input').addEventListener('input', (e) => {
+    $('counter-num').textContent = e.target.value.length;
+  });
+
+  // Envoi
+  $('send-btn').addEventListener('click', async () => {
+    if (!pendingStatut) return;
+    const message = $('message-input').value.trim();
+    if (pendingStatut === 'Question' && !message) {
+      showFeedback('Écris ta question pour qu\'on puisse te répondre.', 'error');
+      return;
+    }
+    const btn = $('send-btn');
+    btn.disabled = true;
+    btn.textContent = 'Envoi…';
+    try {
+      const r = await fetch(API_BASE + '/api/brief-respond', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, statut: pendingStatut, message }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || !data.ok) {
+        throw new Error(data.error || 'Erreur inattendue');
+      }
+      showFeedback('✓ Ta réponse est enregistrée. Adrien est notifié et revient vers toi rapidement.', 'ok');
+      document.querySelectorAll('.btn-action').forEach(b => b.disabled = true);
+      btn.disabled = true;
+      btn.textContent = 'Envoyé ✓';
+    } catch (e) {
+      showFeedback(e.message || 'Erreur réseau, réessaie', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Envoyer ma réponse';
+    }
+  });
+
+  function showFeedback(msg, type) {
+    const el = $('feedback');
+    el.textContent = msg;
+    el.className = `feedback visible ${type}`;
+  }
+
+  // Chargement initial
+  if (!token) {
+    $('error-msg').textContent = 'Lien incomplet : le token est manquant.';
+    showState('state-error');
+    return;
+  }
+
+  fetch(API_BASE + '/api/brief?t=' + encodeURIComponent(token))
+    .then(r => r.json().then(data => ({ ok: r.ok, data })))
+    .then(({ ok, data }) => {
+      if (!ok || !data.ok) {
+        $('error-msg').textContent = data.error || 'Lien invalide ou expiré.';
+        showState('state-error');
+        return;
+      }
+      renderBrief(data);
+      showState('state-main');
+    })
+    .catch(() => {
+      $('error-msg').textContent = 'Erreur réseau. Réessaie dans quelques instants.';
+      showState('state-error');
+    });
+})();
+</script>
+</body>
+</html>
