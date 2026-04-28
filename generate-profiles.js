@@ -216,9 +216,12 @@ async function scrapeInstaThumbForProfile(t, stats) {
     stats.skipped++;
     return;
   }
-  // On scrape uniquement la 1ère URL pour la thumbnail (les autres serviront aux embeds).
-  const firstPost = t.instagramPosts[0];
-  const result = await scrapeInstagramThumb(firstPost);
+  // Pour la couverture (hero + carte du listing), on préfère toujours un post photo /p/
+  // plutôt qu'un Reel /reel/ — la frame de cover d'un Reel n'est souvent pas représentative.
+  // Les autres URLs continuent d'apparaître dans les embeds de la fiche, dans l'ordre.
+  const photoPost = t.instagramPosts.find(u => /^https?:\/\/(www\.)?instagram\.com\/p\//i.test(u));
+  const targetPost = photoPost || t.instagramPosts[0];
+  const result = await scrapeInstagramThumb(targetPost);
   if (result.ok && result.blobUrl) {
     t.instagramThumb = result.blobUrl;
     stats.ok++;
