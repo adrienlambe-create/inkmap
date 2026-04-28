@@ -216,11 +216,17 @@ async function scrapeInstaThumbForProfile(t, stats) {
     stats.skipped++;
     return;
   }
-  // Pour la couverture (hero + carte du listing), on préfère toujours un post photo /p/
-  // plutôt qu'un Reel /reel/ — la frame de cover d'un Reel n'est souvent pas représentative.
+  // Pour la couverture (hero + carte du listing), on cherche le meilleur candidat :
+  // 1) post photo simple /p/ sans query params (= pas de carrousel avec vidéo en 1ère slide)
+  // 2) post photo /p/ même avec ?img_index=
+  // 3) à défaut, la 1ère URL (Reel ou autre)
   // Les autres URLs continuent d'apparaître dans les embeds de la fiche, dans l'ordre.
-  const photoPost = t.instagramPosts.find(u => /^https?:\/\/(www\.)?instagram\.com\/p\//i.test(u));
-  const targetPost = photoPost || t.instagramPosts[0];
+  const isPlainPhotoPost = u => /^https?:\/\/(www\.)?instagram\.com\/p\/[\w-]+\/?$/i.test(u);
+  const isPhotoPost = u => /^https?:\/\/(www\.)?instagram\.com\/p\//i.test(u);
+  const targetPost =
+    t.instagramPosts.find(isPlainPhotoPost) ||
+    t.instagramPosts.find(isPhotoPost) ||
+    t.instagramPosts[0];
   const result = await scrapeInstagramThumb(targetPost);
   if (result.ok && result.blobUrl) {
     t.instagramThumb = result.blobUrl;
