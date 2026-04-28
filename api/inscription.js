@@ -38,6 +38,9 @@ module.exports = async (req, res) => {
   };
   if (pseudo) cleanFields.Pseudo = pseudo;
 
+  const rawType = sanitize(fields.type || '', 20);
+  const type = (rawType === 'Solo' || rawType === 'Studio') ? rawType : '';
+
   const optionalMap = {
     Ville:     sanitize(fields.ville || '', 100),
     Styles:    sanitize(fields.styles || '', 300),
@@ -47,6 +50,8 @@ module.exports = async (req, res) => {
     Region:    sanitize(fields.region || '', 100),
     Adresse:   sanitize(fields.adresse || '', 200),
     TarifInfo: sanitize(fields.tarifInfo || '', 500),
+    Source:    sanitize(fields.source || '', 100),
+    type:      type,
   };
   if (website) optionalMap.Site = website;
 
@@ -140,6 +145,7 @@ module.exports = async (req, res) => {
                 <tr><td style="padding:6px 12px;font-weight:bold">Styles</td><td style="padding:6px 12px">${escHtml(cleanFields.Styles) || '—'}</td></tr>
                 <tr><td style="padding:6px 12px;font-weight:bold">Tarif</td><td style="padding:6px 12px">${cleanFields.Tarif} €/h</td></tr>
                 <tr><td style="padding:6px 12px;font-weight:bold">Bio</td><td style="padding:6px 12px">${escHtml(cleanFields.Bio) || '—'}</td></tr>
+                <tr><td style="padding:6px 12px;font-weight:bold">Source</td><td style="padding:6px 12px;color:#c0392b;font-weight:600">${escHtml(cleanFields.Source) || '—'}</td></tr>
               </table>
               ${validPhotos.length > 0 ? `
               <h3 style="font-family:sans-serif;color:#333;margin-top:20px">Photos (${validPhotos.length})</h3>
@@ -168,10 +174,7 @@ module.exports = async (req, res) => {
             html: `
               <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#0d0d0d;line-height:1.6">
                 <div style="text-align:center;margin-bottom:32px">
-                  <div style="font-family:Georgia,serif;font-size:28px;font-weight:800;letter-spacing:3px;text-transform:uppercase">
-                    INK<span style="color:#c0392b">MAP</span>
-                  </div>
-                  <div style="height:2px;width:40px;background:#c0392b;margin:12px auto"></div>
+                  <img src="https://inkmap.fr/logo-email.png" alt="Inkmap" width="180" style="display:block;margin:0 auto;max-width:180px;height:auto" />
                 </div>
 
                 <h1 style="font-size:22px;margin:0 0 16px;font-weight:700">

@@ -30,6 +30,7 @@ function regenSitemap() {
     { loc: 'https://inkmap.fr/faq', priority: '0.7' },
     { loc: 'https://inkmap.fr/guide/trouver-clients-tatoueur', priority: '0.7' },
     { loc: 'https://inkmap.fr/guide/referencer-studio-tatouage-gratuit', priority: '0.7' },
+    { loc: 'https://inkmap.fr/guide/tatoueur-debutant-ou-experimente', priority: '0.7' },
     { loc: 'https://inkmap.fr/outils/calculateur-tarif-tatouage', priority: '0.7' },
   ];
 

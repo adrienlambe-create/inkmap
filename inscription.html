@@ -6,14 +6,14 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Référencer son studio de tatouage gratuitement — Inkmap</title>
-  <meta name="description" content="Inscrivez votre studio sur Inkmap, l'annuaire des tatoueurs français. Gratuit, en ligne en 24h, visible par style et par ville." />
+  <title>Inscription tatoueur — Recevoir des demandes qualifiées sur Inkmap</title>
+  <meta name="description" content="Crée ton profil Inkmap en 3 minutes. Reçois des demandes avec photo de réf + budget annoncé, matchées sur ton style et ta ville. Gratuit." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://inkmap.fr/inscription" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Inkmap" />
-  <meta property="og:title" content="Inscrire mon studio — Inkmap" />
-  <meta property="og:description" content="Crée ton profil tatoueur gratuitement sur Inkmap. Style, ville, tarif, portfolio — visible par des milliers de clients." />
+  <meta property="og:title" content="Inscription tatoueur — Inkmap" />
+  <meta property="og:description" content="Crée ton profil en 3 minutes. Reçois des demandes client avec photo de réf + budget annoncé. Gratuit, aucune obligation." />
   <meta property="og:url" content="https://inkmap.fr/inscription" />
   <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -752,6 +752,22 @@
       text-decoration: none;
     }
 
+    .source-opt {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--surface2, #1a1a1a);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .source-opt input[type="radio"] { margin: 0; cursor: pointer; accent-color: var(--accent); }
+    .source-opt:hover { border-color: var(--accent); }
+    .source-opt:has(input:checked) { background: var(--accent); border-color: var(--accent); color: #fff; }
+
     /* ── STEP NAV BUTTONS ── */
     .step-nav {
       display: flex;
@@ -1058,86 +1074,6 @@
     }
     .recap-edit:hover { text-decoration: underline; }
 
-    /* ── TYPE SELECTOR ── */
-    .type-selector {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 48px 24px 56px;
-    }
-    .type-selector-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .type-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .type-card {
-      border: 2px solid var(--border);
-      padding: 36px 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: all .2s;
-      background: var(--bg);
-      border-radius: 4px;
-    }
-    .type-card:hover {
-      border-color: rgba(0,0,0,0.2);
-      background: var(--surface);
-    }
-    .type-card.selected {
-      border-color: var(--accent);
-      background: rgba(192,57,43,0.04);
-      box-shadow: 0 0 0 3px rgba(192,57,43,0.08);
-    }
-    .type-icon {
-      font-size: 2.4rem;
-      margin-bottom: 16px;
-    }
-    .type-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-    .type-desc {
-      color: var(--muted2);
-      font-size: 0.82rem;
-      line-height: 1.5;
-    }
-    .type-confirm {
-      display: block;
-      width: 100%;
-      margin-top: 24px;
-      background: var(--text);
-      color: #fff;
-      border: none;
-      padding: 16px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border-radius: 2px;
-      transition: background .2s;
-      opacity: 0.3;
-      pointer-events: none;
-    }
-    .type-confirm.enabled {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .type-confirm.enabled:hover { background: var(--accent); }
-
     /* ── ARTIST BLOCK (studio mode) ── */
     .artist-block {
       border: 1px solid var(--border);
@@ -1209,8 +1145,6 @@
     }
 
     @media (max-width: 600px) {
-      .type-cards { grid-template-columns: 1fr; }
-      .type-selector { padding: 32px 20px 40px; }
       header { padding: 0 20px; }
       .hero { padding: 40px 24px 28px; overflow: hidden; }
       .hero h1 { font-size: clamp(1.4rem, 6.5vw, 2rem); letter-spacing: -0.5px; line-height: 1.1; text-align: center; }
@@ -1251,33 +1185,32 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="launch-badge">Lancement &mdash; Gratuit</div>
-  <div class="hero-tag"><span></span>Annuaire tatoueurs gratuit</div>
-  <h1>R&eacute;f&eacute;rence ton <em>studio</em><br/>gratuitement</h1>
-  <p>Inscris ton studio sur Inkmap et gagne en visibilit&eacute; aupr&egrave;s des clients qui cherchent pr&eacute;cis&eacute;ment ton style.</p>
+  <div class="launch-badge">Phase pilote &mdash; Gratuit</div>
+  <h1>Cr&eacute;e ton profil en <em>3 minutes</em></h1>
+  <p>Re&ccedil;ois des demandes avec photo de r&eacute;f&eacute;rence et budget d&eacute;j&agrave; annonc&eacute;, match&eacute;es sur ton style et ta ville.</p>
 </section>
 
 <!-- AVANTAGES -->
 <div class="avantages">
   <div class="avantage">
-    <div class="avantage-icon">&#x1F193;</div>
-    <strong>100% gratuit</strong>
-    <span>Aucune carte bancaire requise</span>
+    <div class="avantage-icon">&#x1F4F8;</div>
+    <strong>Demandes avec photo de r&eacute;f</strong>
+    <span>Plus de "&ccedil;a co&ucirc;te combien ?" sans contexte</span>
+  </div>
+  <div class="avantage">
+    <div class="avantage-icon">&#x1F4B0;</div>
+    <strong>Budget d&eacute;j&agrave; annonc&eacute;</strong>
+    <span>Tu sais si &ccedil;a vaut ton temps</span>
+  </div>
+  <div class="avantage">
+    <div class="avantage-icon">&#x1F3AF;</div>
+    <strong>Match&eacute;es sur ton style</strong>
+    <span>Seulement celles qui collent &agrave; ce que tu fais</span>
   </div>
   <div class="avantage">
     <div class="avantage-icon">&#x26A1;</div>
-    <strong>En ligne en 24h</strong>
-    <span>Validation rapide de ton profil</span>
-  </div>
-  <div class="avantage">
-    <div class="avantage-icon">&#x1F4CD;</div>
-    <strong>Visible partout</strong>
-    <span>R&eacute;f&eacute;renc&eacute; par style et par ville</span>
-  </div>
-  <div class="avantage">
-    <div class="avantage-icon">&#x270F;&#xFE0F;</div>
-    <strong>Modifiable</strong>
-    <span>Mets &agrave; jour ton profil quand tu veux</span>
+    <strong>Profil en ligne sous 24h</strong>
+    <span>Gratuit, aucune obligation, z&eacute;ro pression</span>
   </div>
 </div>
 
@@ -1290,25 +1223,25 @@
   </div>
 </div>
 
-<!-- ILS NOUS FONT CONFIANCE -->
+<!-- PREUVE SOCIALE -->
 <div class="trust-section">
-  <div class="trust-label">// Ils nous font d&eacute;j&agrave; confiance</div>
+  <div class="trust-label">// Ils sont d&eacute;j&agrave; sur Inkmap</div>
   <div class="trust-stats">
     <div class="trust-stat">
       <div class="trust-stat-num" id="trust-nb-tatoueurs"><em>&mdash;</em></div>
-      <div class="trust-stat-label">Studios r&eacute;f&eacute;renc&eacute;s</div>
+      <div class="trust-stat-label">tatoueurs inscrits</div>
     </div>
     <div class="trust-stat">
       <div class="trust-stat-num" id="trust-nb-villes"><em>&mdash;</em></div>
-      <div class="trust-stat-label">Villes couvertes</div>
+      <div class="trust-stat-label">villes couvertes</div>
     </div>
     <div class="trust-stat">
-      <div class="trust-stat-num">24<em>h</em></div>
-      <div class="trust-stat-label">D&eacute;lai de mise en ligne</div>
+      <div class="trust-stat-num"><em>24h</em></div>
+      <div class="trust-stat-label">de validation max</div>
     </div>
     <div class="trust-stat">
-      <div class="trust-stat-num">0<em>&euro;</em></div>
-      <div class="trust-stat-label">Pour toujours gratuit</div>
+      <div class="trust-stat-num"><em>0&euro;</em></div>
+      <div class="trust-stat-label">aucune commission</div>
     </div>
   </div>
 </div>
@@ -1318,46 +1251,28 @@
   <div class="faq-label">// Questions fr&eacute;quentes</div>
 
   <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">Comment les demandes arrivent ?</button>
+    <div class="faq-answer">Les clients d&eacute;crivent leur projet sur Inkmap (description, zone du corps, photo de r&eacute;f&eacute;rence, budget, ville). On matche leur demande avec les tatoueurs dont le style et la ville correspondent, puis tu re&ccedil;ois la demande par email. Tu r&eacute;ponds directement au client, sans interm&eacute;diaire.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFaq(this)">Je suis oblig&eacute; d'accepter ?</button>
+    <div class="faq-answer">Non. Tu re&ccedil;ois les demandes qui collent &agrave; ton style et ta ville, et tu choisis d'accepter ou d'ignorer. Aucune obligation de r&eacute;pondre, aucun syst&egrave;me de score, aucune p&eacute;nalit&eacute;. Tu gardes ton agenda et ta libert&eacute; habituels.</div>
+  </div>
+
+  <div class="faq-item">
     <button class="faq-question" onclick="toggleFaq(this)">C'est vraiment gratuit ?</button>
-    <div class="faq-answer">Oui, totalement gratuit pendant la phase de lancement. Inkmap est en cours de d&eacute;veloppement et nous r&eacute;f&eacute;ren&ccedil;ons les premiers artistes gratuitement pour construire l'annuaire. &Agrave; terme, une offre premium optionnelle sera disponible pour les tatoueurs qui souhaitent plus de visibilit&eacute; &mdash; mais l'inscription de base restera toujours gratuite. Aucune carte bancaire demand&eacute;e aujourd'hui.</div>
+    <div class="faq-answer">Oui. Inkmap est en phase pilote et le service reste gratuit pour tous les tatoueurs. Aucune commission sur les projets, aucune carte bancaire demand&eacute;e. Plus tard, une offre premium optionnelle pourra arriver pour ceux qui veulent plus &mdash; mais recevoir des demandes restera gratuit.</div>
   </div>
 
   <div class="faq-item">
     <button class="faq-question" onclick="toggleFaq(this)">Combien de temps &ccedil;a prend ?</button>
-    <div class="faq-answer">Remplir le formulaire prend moins de 3 minutes. Ton profil est ensuite valid&eacute; par notre &eacute;quipe sous 24h, puis mis en ligne automatiquement. Tu re&ccedil;ois un email de confirmation d&egrave;s que c'est en ligne.</div>
+    <div class="faq-answer">Remplir le formulaire prend moins de 3 minutes. Ton profil est valid&eacute; sous 24h puis mis en ligne. D&egrave;s qu'il est actif, tu commences &agrave; recevoir les demandes qui matchent tes crit&egrave;res.</div>
   </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">Qui voit mon profil ?</button>
-    <div class="faq-answer">Ton profil est visible publiquement sur inkmap.fr par tous les visiteurs &mdash; clients potentiels, curieux, professionnels. Il est aussi index&eacute; par Google, ce qui t'apporte de la visibilit&eacute; suppl&eacute;mentaire via les recherches "tatoueur [style] [ville]".</div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">Puis-je modifier mes infos ?</button>
-    <div class="faq-answer">Oui. Tu peux demander une mise &agrave; jour de ton profil &agrave; tout moment en nous contactant. Nous travaillons &eacute;galement sur un espace tatoueur pour g&eacute;rer tes infos en autonomie &mdash; &ccedil;a arrive bient&ocirc;t.</div>
-  </div>
-</div>
-
-<!-- TYPE SELECTOR -->
-<div class="type-selector" id="typeSelector">
-  <div class="type-selector-label">// Quel type de profil ?</div>
-  <div class="type-cards">
-    <div class="type-card" data-type="solo" onclick="selectType('solo')">
-      <div class="type-icon">&#x2726;</div>
-      <div class="type-title">Tatoueur ind&eacute;pendant</div>
-      <div class="type-desc">Tu travailles seul, en guest ou en r&eacute;sidence</div>
-    </div>
-    <div class="type-card" data-type="studio" onclick="selectType('studio')">
-      <div class="type-icon">&#x25C6;</div>
-      <div class="type-title">Studio</div>
-      <div class="type-desc">Plusieurs artistes dans ton salon, chacun avec son style</div>
-    </div>
-  </div>
-  <button class="type-confirm" id="typeConfirmBtn" onclick="confirmType()">Continuer &rarr;</button>
 </div>
 
 <!-- PROGRESS BAR -->
-<div class="progress-bar-wrap" id="progressWrap" style="display:none">
+<div class="progress-bar-wrap" id="progressWrap">
   <div class="progress-steps">
     <div class="progress-fill" id="progressFill"></div>
     <div class="progress-dot active" data-step="0">1</div>
@@ -1374,13 +1289,29 @@
 </div>
 
 <!-- FORMULAIRE -->
-<div class="form-container" style="display:none">
+<div class="form-container">
 
   <!-- SUCCÈS -->
   <div class="success-screen" id="success">
     <div class="success-icon">&#x1F389;</div>
-    <h2>Demande envoy&eacute;e !</h2>
-    <p>On va v&eacute;rifier ton profil et te contacter dans les 24h pour confirmer la mise en ligne.</p>
+    <h2>Inscription envoy&eacute;e !</h2>
+    <p>On v&eacute;rifie ton profil et on te confirme la mise en ligne sous 24h. D&egrave;s que c'est actif, tu commences &agrave; recevoir les demandes qui matchent ton style et ta ville.</p>
+
+    <!-- Source question (post-submit, moins de friction) -->
+    <div id="sourcePostSubmit" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;max-width:440px;margin:0 auto 24px;text-align:left">
+      <p style="font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:12px">Question bonus&nbsp;: comment tu as connu Inkmap&nbsp;?</p>
+      <p style="font-size:0.78rem;color:var(--muted2);margin-bottom:14px">&Ccedil;a nous aide &eacute;norm&eacute;ment &agrave; comprendre ce qui marche. Un clic suffit.</p>
+      <div id="sourceOptions" style="display:flex;flex-wrap:wrap;gap:8px">
+        <label class="source-opt"><input type="radio" name="source" value="Instagram" /> <span>Instagram</span></label>
+        <label class="source-opt"><input type="radio" name="source" value="Google" /> <span>Google</span></label>
+        <label class="source-opt"><input type="radio" name="source" value="ChatGPT" /> <span>ChatGPT</span></label>
+        <label class="source-opt"><input type="radio" name="source" value="Bouche-a-oreille" /> <span>Bouche &agrave; oreille</span></label>
+        <label class="source-opt"><input type="radio" name="source" value="Convention" /> <span>Convention</span></label>
+        <label class="source-opt"><input type="radio" name="source" value="Autre" /> <span>Autre</span></label>
+      </div>
+      <div id="sourceConfirm" style="display:none;margin-top:12px;color:var(--success);font-size:0.82rem;font-family:'Space Mono',monospace">&#x2713; Merci, c'est enregistr&eacute;&nbsp;!</div>
+    </div>
+
     <div style="background:#fff8e6;border:1px solid #f0d97a;border-radius:4px;padding:14px 18px;max-width:440px;margin:0 auto 20px;text-align:left">
       <p style="font-size:0.82rem;font-weight:600;color:#8a6d0b;margin-bottom:6px">&#x1F4EC; V&eacute;rifie tes spams</p>
       <p style="font-size:0.78rem;color:#8a6d0b;line-height:1.5;margin:0">Tu vas recevoir un email de bienvenue dans les prochaines minutes. S'il n'arrive pas, pense &agrave; regarder dans tes spams et &agrave; marquer l'exp&eacute;diteur comme fiable.</p>
@@ -1408,10 +1339,9 @@
               <div class="field-error" id="err-nom">Champ obligatoire</div>
             </div>
             <div class="form-group">
-              <label>Nom d'artiste / Pseudo <span class="required">*</span></label>
+              <label>Nom d'artiste / Pseudo <span style="color:var(--muted);font-weight:400;font-size:0.72rem">(optionnel)</span></label>
               <input type="text" id="pseudo" placeholder="Ex : Lorie Ink, DarkNeedle..." />
-              <div class="field-hint">Le nom affich&eacute; sur ton profil public</div>
-              <div class="field-error" id="err-pseudo">Champ obligatoire</div>
+              <div class="field-hint">Si renseign&eacute;, c'est ce qui sera affich&eacute; sur ton profil</div>
             </div>
           </div>
 
@@ -1421,22 +1351,17 @@
             <div class="field-error" id="err-studio">Champ obligatoire</div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Email <span class="required">*</span></label>
-              <input type="email" id="email" placeholder="ton@email.com" autocomplete="email" inputmode="email" />
-              <div class="field-error" id="err-email">Email invalide</div>
-            </div>
-            <div class="form-group">
-              <label>Instagram</label>
-              <input type="text" id="instagram" placeholder="@tonpseudo" />
-            </div>
+          <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input type="email" id="email" placeholder="ton@email.com" autocomplete="email" inputmode="email" />
+            <div class="field-error" id="err-email">Email invalide</div>
+            <div class="field-hint" id="emailSuggest" style="display:none;color:var(--accent);cursor:pointer"></div>
           </div>
 
-          <div class="form-group">
-            <label>Site web / lien de r&eacute;servation</label>
-            <input type="url" id="website" placeholder="https://..." inputmode="url" />
-          </div>
+          <label class="conditions" style="margin-top:8px">
+            <input type="checkbox" id="isStudio" onchange="toggleStudioMode(this.checked)" />
+            <p><strong>Je suis un studio avec plusieurs artistes</strong><br><span style="color:var(--muted);font-size:0.78rem">Chaque artiste aura son propre profil (tu pourras les ajouter ensuite).</span></p>
+          </label>
         </div>
 
         <div class="step-nav">
@@ -1525,15 +1450,32 @@
           </div>
 
           <div class="form-section">
-            <div class="form-section-title">&#x2464; Ta pr&eacute;sentation</div>
+            <div class="form-section-title">&#x2464; Tes liens <span style="color:var(--muted);font-weight:400;font-size:0.72rem;text-transform:none;letter-spacing:0">(optionnel)</span></div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Instagram</label>
+                <input type="text" id="instagram" placeholder="@tonpseudo" />
+              </div>
+              <div class="form-group">
+                <label>Site web / lien r&eacute;servation</label>
+                <input type="url" id="website" placeholder="https://..." inputmode="url" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">&#x2465; Ta pr&eacute;sentation</div>
             <div class="form-group">
-              <label>Bio / Description <span class="required">*</span></label>
-              <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire... (min. 50 caract&egrave;res)"></textarea>
-              <div class="field-error" id="err-bio">Minimum 50 caract&egrave;res</div>
+              <label>Bio / Description <span style="color:var(--muted);font-weight:400;font-size:0.72rem">(optionnel)</span></label>
+              <textarea id="bio" placeholder="Parle de ton style, ton parcours, ce qui t'inspire..."></textarea>
+              <div class="field-hint">On peut aussi g&eacute;n&eacute;rer une bio automatique &agrave; partir de tes styles si tu pr&eacute;f&egrave;res</div>
             </div>
 
             <div class="form-group">
               <label>Photos de tes tatouages <span style="color:var(--muted);font-weight:400;font-size:0.78rem">(optionnel)</span></label>
+              <div style="background:rgba(192,57,43,0.04);border:1px solid rgba(192,57,43,0.15);border-radius:4px;padding:12px 16px;margin-bottom:12px">
+                <p style="font-size:0.82rem;color:var(--text);margin:0;line-height:1.5"><strong>&#x1F4EC; Pas tes photos sous la main&nbsp;?</strong> Continue sans &mdash; on t'enverra un email pour les ajouter plus tard.</p>
+              </div>
               <div class="upload-zone" id="uploadZone">
                 <input type="file" id="photos" accept="image/*" multiple />
                 <div id="uploadPlaceholder">
@@ -1552,15 +1494,9 @@
                     </div>
                     <span id="uploadCount">0 / 5</span>
                   </div>
-                  <div class="upload-tips">
-                    <div class="upload-tip"><span>&#x2726;</span> Photos haute qualit&eacute;</div>
-                    <div class="upload-tip"><span>&#x2726;</span> Fond neutre ou en contexte</div>
-                    <div class="upload-tip"><span>&#x2726;</span> Tes meilleurs travaux</div>
-                  </div>
                 </div>
                 <div class="upload-preview" id="photoPreview"></div>
               </div>
-              <p style="margin-top:8px;font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;letter-spacing:0.5px">S&eacute;lectionne tes meilleures r&eacute;alisations &mdash; tu recevras l'adresse email pour les envoyer apr&egrave;s validation.</p>
             </div>
           </div>
         </div>
@@ -1593,7 +1529,7 @@
 
           <label class="conditions">
             <input type="checkbox" id="cgu" />
-            <p>J'accepte les <a href="mentions-legales.html">conditions d'utilisation</a> et je confirme que les informations renseign&eacute;es sont exactes. Mon profil sera visible gratuitement sur inkmap.fr.</p>
+            <p>J'accepte les <a href="mentions-legales.html">conditions d'utilisation</a> et je confirme que les informations renseign&eacute;es sont exactes. Mon profil sera visible gratuitement sur inkmap.fr et je recevrai par email les demandes clients qui matchent mon style et ma ville.</p>
           </label>
           <div class="field-error" id="err-cgu">Tu dois accepter les conditions</div>
         </div>
@@ -1602,7 +1538,7 @@
         <div class="step-nav" style="flex-direction:column;gap:0">
           <button type="button" class="btn-prev" onclick="prevStep()" style="align-self:flex-start;margin-bottom:16px">&larr; Modifier mes infos</button>
           <button type="submit" class="btn-submit" id="submitBtn">
-            &#x2726; &nbsp; Cr&eacute;er mon profil gratuitement
+            &rarr; &nbsp; Recevoir mes premi&egrave;res demandes
           </button>
           <div class="submit-trust">
             <div class="submit-trust-item">&#x1F512; Donn&eacute;es prot&eacute;g&eacute;es</div>

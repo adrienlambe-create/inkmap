@@ -181,7 +181,22 @@ function initSubmit() {
   });
 }
 
+function applyUrlParams() {
+  const params = new URLSearchParams(location.search);
+  const styleParam = params.get('style');
+  if (styleParam) {
+    const match = STYLES_DISPONIBLES.find(s => s.toLowerCase() === styleParam.toLowerCase());
+    if (match) state.styles.add(match);
+  }
+  const villeParam = params.get('ville');
+  if (villeParam) {
+    const input = $('#f-ville');
+    if (input) input.value = villeParam.slice(0, 100);
+  }
+}
+
 // Bootstrap
+applyUrlParams();
 renderStyleTags();
 renderPhotos();
 initBudget();

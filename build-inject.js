@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Build-time injection : fetch Airtable → inject pre-rendered artist cards into HTML pages
-// Run: AIRTABLE_TOKEN=xxx node build-inject.js
+// Run: AIRTABLE_TOKEN=xxx node build-inject.js  (ou via `vercel dev` qui lit .env.local)
+
+require('dotenv').config({ path: require('path').join(__dirname, '.env.local') });
 
 const fs = require('fs');
 const path = require('path');
@@ -294,11 +296,13 @@ function updateSitemap(tatoueurs) {
 
   const staticPages = [
     { loc: '/', priority: '1.0' },
+    { loc: '/demande', priority: '0.9' },
     { loc: '/inscription', priority: '0.9' },
     { loc: '/rejoindre', priority: '0.9' },
     { loc: '/faq', priority: '0.7' },
     { loc: '/guide/trouver-clients-tatoueur', priority: '0.7' },
     { loc: '/guide/referencer-studio-tatouage-gratuit', priority: '0.7' },
+    { loc: '/guide/tatoueur-debutant-ou-experimente', priority: '0.7' },
     { loc: '/outils/calculateur-tarif-tatouage', priority: '0.7' },
   ];
 

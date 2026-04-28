@@ -189,10 +189,7 @@ function clientEmailHtml({ description, ville }) {
   return `
     <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#0d0d0d;line-height:1.6">
       <div style="text-align:center;margin-bottom:32px">
-        <div style="font-family:Georgia,serif;font-size:28px;font-weight:800;letter-spacing:3px;text-transform:uppercase">
-          INK<span style="color:#c0392b">MAP</span>
-        </div>
-        <div style="height:2px;width:40px;background:#c0392b;margin:12px auto"></div>
+        <img src="https://inkmap.fr/logo-email.png" alt="Inkmap" width="180" style="display:block;margin:0 auto;max-width:180px;height:auto" />
       </div>
       <h1 style="font-size:20px;margin:0 0 16px;font-weight:700">On a bien reçu ta demande ✓</h1>
       <p style="font-size:15px;color:#333;margin:0 0 20px">

@@ -1785,6 +1785,130 @@
       font-family: 'Space Mono', monospace;
     }
 
+    .ia-matches-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(192,57,43,0.04));
+      border: 1px solid rgba(192,57,43,0.35);
+      border-left: 3px solid var(--accent);
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      border-radius: 2px;
+    }
+    .ia-matches-cta-left { flex: 1; min-width: 0; }
+    .ia-matches-cta-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    .ia-matches-cta-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.5;
+    }
+    .ia-matches-cta-btn {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    @media (max-width: 768px) {
+      .ia-matches-cta {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+        padding: 20px 22px;
+      }
+      .ia-matches-cta-title { font-size: 1.05rem; }
+      .ia-matches-cta-sub { font-size: 0.78rem; }
+      .ia-matches-cta-btn { align-self: flex-start; }
+    }
+
+    /* SECTION LEAD CAPTURE (funnel /demande) */
+    .lead-section {
+      padding: 80px 56px;
+      background: #0d0d0d;
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .lead-inner { max-width: 920px; margin: 0 auto; text-align: center; }
+    .lead-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin: 8px 0 16px;
+    }
+    .lead-title em { color: var(--accent); font-style: normal; }
+    .lead-sub {
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+      margin: 0 auto 44px;
+      max-width: 640px;
+      line-height: 1.55;
+    }
+    .lead-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      text-align: left;
+    }
+    .lead-step {
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid var(--accent);
+      padding: 22px 24px 20px;
+    }
+    .lead-step-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+    .lead-step-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      display: block;
+      color: rgba(255,255,255,0.9);
+    }
+    .lead-step-time {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.66rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .lead-cta { font-size: 0.95rem; padding: 18px 38px; }
+    .lead-trust {
+      margin-top: 22px;
+      color: rgba(255,255,255,0.4);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 768px) {
+      .lead-section { padding: 56px 24px; }
+      .lead-steps { grid-template-columns: 1fr; gap: 12px; }
+      .lead-sub { font-size: 0.9rem; margin-bottom: 32px; }
+      .lead-cta { font-size: 0.82rem; padding: 16px 28px; }
+    }
+
     .ia-matches-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -2030,8 +2154,7 @@
         <a href="#recherche" onclick="navFiltreStyle('Micro-réalisme')">Micro-réalisme</a>
       </div>
     </div>
-    <a href="rejoindre.html">Tatoueurs</a>
-    <a href="inscription.html" class="btn-nav">Inscrire mon studio →</a>
+    <a href="rejoindre.html" class="btn-nav">Recevoir des demandes →</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
     <span></span>
@@ -2064,8 +2187,7 @@
       <a href="#recherche" onclick="navFiltreStyle('Micro-réalisme');fermerMenu()">Micro-réalisme</a>
     </div>
   </div>
-  <a href="rejoindre.html" onclick="fermerMenu()">Tatoueurs</a>
-  <a href="inscription.html" class="btn-nav-mobile" onclick="fermerMenu()">Inscrire mon studio →</a>
+  <a href="rejoindre.html" class="btn-nav-mobile" onclick="fermerMenu()">Recevoir des demandes →</a>
 </div>
 
 <!-- HERO -->
@@ -2082,7 +2204,7 @@
       <div class="hero-ctas">
         <a href="/demande" class="btn-primary">Trouve ton tatoueur →</a>
         <a href="#recherche" class="btn-secondary">Explorer l'annuaire</a>
-        <a href="inscription.html" class="btn-secondary">Je suis tatoueur</a>
+        <a href="rejoindre.html" class="btn-secondary">Je suis tatoueur</a>
       </div>
     </div>
   </div>
@@ -2180,7 +2302,53 @@
       <span class="ia-matches-label">Artistes recommandés pour</span>
       <span class="ia-matches-style-tag" id="iaMatchesStyleTag"></span>
     </div>
+
+    <!-- CTA : pivot vers /demande -->
+    <div class="ia-matches-cta">
+      <div class="ia-matches-cta-left">
+        <div class="ia-matches-cta-title">Tu veux être sûr du match ?</div>
+        <div class="ia-matches-cta-sub">Décris ton projet en 2 min (zone, taille, budget) — on le transmet aux tatoueurs qui correspondent et tu reçois leurs retours sous 48h.</div>
+      </div>
+      <a href="/demande" id="iaMatchesCtaBtn" class="btn-primary ia-matches-cta-btn">Décrire mon projet →</a>
+    </div>
+
     <div class="ia-matches-grid" id="iaMatchesGrid"></div>
+  </div>
+</section>
+
+<!-- LEAD CAPTURE (funnel /demande) -->
+<section class="lead-section" id="lead-capture">
+  <div class="lead-inner">
+    <div class="section-tag">Un projet en tête ?</div>
+    <h2 class="lead-title">Pas envie de chercher ?<br><em>Décris ton projet.</em></h2>
+    <p class="lead-sub">Tes critères &rarr; 2&ndash;3 tatoueurs qui matchent &rarr; devis sous 48h.</p>
+
+    <ol class="lead-steps">
+      <li class="lead-step">
+        <span class="lead-step-num">01 / Toi</span>
+        <span class="lead-step-text">Tu décris ton projet : zone, style, budget, photo de réf.</span>
+        <span class="lead-step-time">2 min</span>
+      </li>
+      <li class="lead-step">
+        <span class="lead-step-num">02 / Inkmap</span>
+        <span class="lead-step-text">On cherche les tatoueurs dont le style et la ville correspondent.</span>
+      </li>
+      <li class="lead-step">
+        <span class="lead-step-num">03 / Retour</span>
+        <span class="lead-step-text">Tu reçois leurs retours et leurs devis — tu choisis qui te va.</span>
+        <span class="lead-step-time">sous 48h</span>
+      </li>
+    </ol>
+
+    <a href="/demande" class="btn-primary lead-cta">Décrire mon projet &rarr;</a>
+
+    <div class="lead-trust">
+      <span>&#10003; Gratuit</span>
+      <span>·</span>
+      <span>&#10003; 2 minutes</span>
+      <span>·</span>
+      <span>&#10003; Aucune obligation</span>
+    </div>
   </div>
 </section>
 
@@ -2245,8 +2413,8 @@
 <!-- GRID -->
 <div id="tatoueurs-grid" aria-hidden="true" style="height:0;overflow:hidden"></div>
 <div class="grid" id="grid">
-<div class="card" data-id="1">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+<a class="card card-link" href="/tatoueur/foret-sepia-tattoo-bordeaux" data-id="1" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Forêt Sépia Tattoo</div>
@@ -2258,9 +2426,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="2">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/ah0HQzwmswbPhuAVe2dFyQ/OwO-rnaTYkReDkyFn3DJsOLMOf0Moifm89tFlXY4rVx9tDNZy_Sm3bTSiCiUOliMjAQCxVa-CnG6xhT3bX1Bi9fxbEpNInq9e6YBqe-Yb71FOpUjLtBgox8d9ov60Dh6bGVjhrQnznANh9oh3HWCqg/qipWvAmo8U8v-979cYidjClYWAl01UHs8gEJM6qT7rI" alt="Tatouage Fineline par Bricetattooer à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+    </a>
+<a class="card card-link" href="/tatoueur/bricetattooer-paris" data-id="2" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Bricetattooer</div>
@@ -2272,9 +2440,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="3">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/maison-python-paris" data-id="3" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Maison Python</div>
@@ -2286,9 +2454,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="4">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/mba-my-body-art-lyon" data-id="4" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">MBA My Body Art</div>
@@ -2300,9 +2468,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="5">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/borus-tattoo-bordeaux" data-id="5" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Borus Tattoo</div>
@@ -2314,9 +2482,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="6">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/C4F0l_z_Qz23hYE6qeTtCA/zXuSshH-wg5W5FfsIx_zEIRIJaeOBQ9wwvFN3Qj6hDLesrXlitPztuuaX_pMHQ__UsjcXn96CKaQTIsL7ucYmlXsF8A8leTSrk91Uwysea10xhytU3aTpCfn097i2zh5OixAXenLslQWI4uGS-9fQw/00rMZYa78MmIXndnhqHgaHvsOZ3sF4NWiPz06Hf-xH8" alt="Tatouage Fineline par Améthyste ttt à LYON" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+    </a>
+<a class="card card-link" href="/tatoueur/amethyste-ttt-lyon" data-id="6" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Améthyste ttt</div>
@@ -2328,9 +2496,9 @@
           <div class="tarif">110€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="7">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/la-french-sarah-lyon" data-id="7" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">La French Sarah</div>
@@ -2342,9 +2510,23 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="8">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/feraxtattoo-tarare-lyon-marseille" data-id="8" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-name">Feraxtattoo</div>
+          <span class="badge-verifie">✓ Vérifié</span>
+        </div>
+        <div class="card-location">📍 tarare, lyon, marseille</div>
+        <div class="styles"><span class="style-tag">Fineline</span><span class="style-tag">Aquarelle</span><span class="style-tag">Floral</span><span class="style-tag">Neo-Traditional</span><span class="style-tag">Lettering</span><span class="style-tag">Micro-réalisme</span></div>
+        <div class="card-footer">
+          <div class="tarif">50€ <small>/ heure</small></div>
+        </div>
+      </div>
+    </a>
+<a class="card card-link" href="/tatoueur/lotty-ink-bordeaux" data-id="9" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Lotty Ink</div>
@@ -2356,23 +2538,9 @@
           <div class="tarif">115€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="9">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Mystery Tattoo Club Fineline</div>
-          
-        </div>
-        <div class="card-location">📍 Paris</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">120€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="10">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/larcane-sans-nom-bordeaux" data-id="10" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">L&#39;Arcane Sans Nom</div>
@@ -2384,9 +2552,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="11">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/vague-de-nuit-lyon" data-id="11" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Vague de Nuit</div>
@@ -2398,9 +2566,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="12">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/ink29-paris" data-id="12" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Ink29</div>
@@ -2412,9 +2580,9 @@
           <div class="tarif">175€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="13">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/noire-de-ligne-bordeaux" data-id="13" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Noire de Ligne</div>
@@ -2426,23 +2594,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="14">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">MBA My Body Art Lyon</div>
-          
-        </div>
-        <div class="card-location">📍 Lyon</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">120€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="15">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/kalypso-tattoo-ink-lyon" data-id="14" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Kalypso Tattoo Ink</div>
@@ -2454,9 +2608,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="16">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/walkin-tattoo-paris" data-id="15" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Walkin Tattoo</div>
@@ -2468,9 +2622,9 @@
           <div class="tarif">125€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="17">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/lilou-mommers-bordeaux" data-id="16" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Lilou Mommers</div>
@@ -2482,9 +2636,9 @@
           <div class="tarif">125€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="18">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/marquis-tattoo-lyon" data-id="17" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Marquis Tattoo</div>
@@ -2496,9 +2650,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="19">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/freaks-geeks-tattoo-paris" data-id="18" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Freaks &amp; Geeks Tattoo</div>
@@ -2510,9 +2664,9 @@
           <div class="tarif">125€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="20">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/kb-tattooing-paris" data-id="19" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">KB Tattooing</div>
@@ -2524,23 +2678,9 @@
           <div class="tarif">125€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="21">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Black Hat Tattoo</div>
-          
-        </div>
-        <div class="card-location">📍 Lyon</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">135€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="22">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/pick-tattoo-lyon" data-id="20" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Pick Tattoo</div>
@@ -2552,9 +2692,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="23">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/bones-land-tattoos-bordeaux" data-id="21" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Bones Land Tattoos</div>
@@ -2566,9 +2706,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="24">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/apt235-fineline-bordeaux" data-id="22" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">APT.235 Fineline</div>
@@ -2580,9 +2720,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="25">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/perle-noire-studio-paris" data-id="23" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Perle Noire Studio</div>
@@ -2594,9 +2734,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="26">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/bodyfikation-bordeaux" data-id="24" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Bodyfikation</div>
@@ -2608,9 +2748,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="27">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/le-sabot-du-pape-bordeaux" data-id="25" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Le Sabot du Pape</div>
@@ -2622,9 +2762,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="28">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/le-perce-muraille-bordeaux" data-id="26" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Le Perce Muraille</div>
@@ -2636,9 +2776,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="29">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/tokyta-tattoo-bordeaux" data-id="27" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Tokyta Tattoo</div>
@@ -2650,9 +2790,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="30">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/divine-comedie-paris" data-id="28" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Divine Comédie</div>
@@ -2664,9 +2804,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="31">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/matiere-noire-paris" data-id="29" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Matière Noire</div>
@@ -2678,9 +2818,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="32">
-      <div class="card-img"><span style="font-size:4rem">✦</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/azthmera-paris" data-id="30" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">azthmera</div>
@@ -2692,9 +2832,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="33">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/handmade-atelier-70-paris" data-id="31" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">HANDMADE Atelier 70</div>
@@ -2706,23 +2846,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="34">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Ink District Lyon</div>
-          
-        </div>
-        <div class="card-location">📍 Lyon</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">120€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="35">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/lys-tattoo-bordeaux" data-id="32" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Lys Tattoo</div>
@@ -2734,9 +2860,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="36">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/macka-tattoo-lyon" data-id="33" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Macka Tattoo</div>
@@ -2748,9 +2874,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="37">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/ink-29-fineline-paris" data-id="34" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Ink 29 Fineline</div>
@@ -2762,9 +2888,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="38">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/arahkun-tattoo-paris" data-id="35" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Arahkun Tattoo</div>
@@ -2776,9 +2902,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="39">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/apt235-bordeaux" data-id="36" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">APT.235</div>
@@ -2790,9 +2916,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="40">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/minimal-tattoos-lyon-lyon" data-id="37" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Minimal Tattoos Lyon</div>
@@ -2804,9 +2930,9 @@
           <div class="tarif">125€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="41">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/atelier-eva-lyon" data-id="38" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Atelier Eva</div>
@@ -2818,9 +2944,9 @@
           <div class="tarif">115€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="42">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/black-blood-tattoo-bordeaux" data-id="39" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Black Blood Tattoo</div>
@@ -2832,9 +2958,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="43">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/bleu-noir-tattoo-paris" data-id="40" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Bleu Noir Tattoo</div>
@@ -2846,9 +2972,9 @@
           <div class="tarif">175€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="44">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/cL720pyZU1kpdRenopjWuw/C7soir3zlMQ1aOF-wg0C4noUN5IdDqwkOvzX8iF9b9ZEmeorWWiLhx0tacObdj4xxaih8RvArtD8y6g4vFdMFZVIWqkfVW0m2e3SmtsA4CcY8zLhu41bzE7LS5QhEwu5wUazI03O9QpytjzF7jhXTw/1glg8jm1N1LiyL-33pvpOZee6cOJK2IM6CsJU7SuRoA" alt="Tatouage Blackwork par Palacink_ à Poitiers" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+    </a>
+<a class="card card-link" href="/tatoueur/palacink-poitiers" data-id="41" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Palacink_</div>
@@ -2860,9 +2986,9 @@
           <div class="tarif">100€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="45">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/un-grain-de-creativite-lyon" data-id="42" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Un Grain de Créativité</div>
@@ -2874,9 +3000,23 @@
           <div class="tarif">115€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="46">
-      <div class="card-img"><img src="https://v5.airtableusercontent.com/v3/u/52/52/1776261600000/UHg5wuZ673VW40Qp8RVVDg/Vo8vntO9hHooez3P4mPbaa_F-bjecURPsScZ8RcHQB_rTE4pPmcLpBlU2YPfVCk_QMuI9ILq9mS-OlhAWrt1BimgAU2ZjhOIbbBnXgqJmBYuzC8dXgC8AmKn8rM-zf5UIjBo-jvIlFk0C5CDVhpASw/tchOUWjfYmZAAThQZro-3xC3c8C9dHYumO3Mm0E3sgk" alt="Tatouage Fineline par Adrib0u à Paris" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" /></div>
+    </a>
+<a class="card card-link" href="/tatoueur/legrain-caen-paris-aix-en-provence" data-id="43" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-name">LeGrain</div>
+          <span class="badge-verifie">✓ Vérifié</span>
+        </div>
+        <div class="card-location">📍 Caen, Paris, Aix en Provence</div>
+        <div class="styles"><span class="style-tag">Blackwork</span><span class="style-tag">Réalisme</span></div>
+        <div class="card-footer">
+          <div class="tarif">50€ <small>/ heure</small></div>
+        </div>
+      </div>
+    </a>
+<a class="card card-link" href="/tatoueur/adrib0u-paris" data-id="44" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Adrib0u</div>
@@ -2885,12 +3025,12 @@
         <div class="card-location">📍 Paris</div>
         <div class="styles"><span class="style-tag">Fineline</span><span class="style-tag">Blackwork</span></div>
         <div class="card-footer">
-          <div class="tarif">110€ <small>/ heure</small></div>
+          <div class="tarif">90€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="47">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/boun-tattoo-lyon" data-id="45" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Boun Tattoo</div>
@@ -2902,9 +3042,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="48">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/mandilove-bordeaux" data-id="46" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Mandilove</div>
@@ -2916,9 +3056,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="49">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/681-tattoos-lyon" data-id="47" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">681 Tattoos</div>
@@ -2930,9 +3070,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="50">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/anomaly-tattoo-paris" data-id="48" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Anomaly Tattoo</div>
@@ -2944,9 +3084,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="51">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/duft-tattoo-bordeaux" data-id="49" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Duft Tattoo</div>
@@ -2958,9 +3098,9 @@
           <div class="tarif">115€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="52">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/baron-noir-tattoo-bordeaux" data-id="50" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Baron Noir Tattoo</div>
@@ -2972,9 +3112,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="53">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/pique-a-coeur-ink-bordeaux" data-id="51" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Pique à Coeur Ink</div>
@@ -2986,9 +3126,9 @@
           <div class="tarif">115€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="54">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/rayon-noir-paris" data-id="52" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Rayon Noir</div>
@@ -3000,37 +3140,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="55">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">The Human Beast</div>
-          
-        </div>
-        <div class="card-location">📍 Paris</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">135€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="56">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Bloom Tattoo</div>
-          
-        </div>
-        <div class="card-location">📍 Lyon</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">115€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="57">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/grenouille-tattoo-bordeaux" data-id="53" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Grenouille Tattoo</div>
@@ -3042,9 +3154,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="58">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/atelier-tattoo-lyon" data-id="54" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Atelier Tattoo</div>
@@ -3056,9 +3168,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="59">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/golden-line-tattoo-lyon" data-id="55" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Golden Line Tattoo</div>
@@ -3070,23 +3182,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="60">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
-      <div class="card-body">
-        <div class="card-top">
-          <div class="card-name">Boun Tattoo Lyon</div>
-          
-        </div>
-        <div class="card-location">📍 Lyon</div>
-        <div class="styles"><span class="style-tag">Fineline</span></div>
-        <div class="card-footer">
-          <div class="tarif">120€ <small>/ heure</small></div>
-        </div>
-      </div>
-    </div>
-<div class="card" data-id="61">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/atelier-m-paris" data-id="56" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Atelier M</div>
@@ -3098,9 +3196,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="62">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/maison-python-fineline-paris" data-id="57" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Maison Python Fineline</div>
@@ -3112,9 +3210,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="63">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/mystery-tattoo-club-paris" data-id="58" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Mystery Tattoo Club</div>
@@ -3126,9 +3224,9 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="64">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/helena-de-carvalho-paris" data-id="59" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Helena de Carvalho</div>
@@ -3140,9 +3238,9 @@
           <div class="tarif">120€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="65">
-      <div class="card-img"><span style="font-size:4rem">🌿</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/desolee-papa-paris" data-id="60" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Désolée Papa</div>
@@ -3154,9 +3252,9 @@
           <div class="tarif">150€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
-<div class="card" data-id="66">
-      <div class="card-img"><span style="font-size:4rem">◼</span></div>
+    </a>
+<a class="card card-link" href="/tatoueur/black-circle-tattoo-lyon" data-id="61" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
       <div class="card-body">
         <div class="card-top">
           <div class="card-name">Black Circle Tattoo</div>
@@ -3168,7 +3266,7 @@
           <div class="tarif">135€ <small>/ heure</small></div>
         </div>
       </div>
-    </div>
+    </a>
 </div>
 <div class="pagination" id="pagination"></div>
 
@@ -3238,8 +3336,7 @@
           <ul>
             <li><a href="index.html">Annuaire tatoueurs</a></li>
             <li><a href="faq.html">FAQ</a></li>
-            <li><a href="inscription.html">Inscrire mon studio</a></li>
-            <li><a href="rejoindre.html">Rejoindre Inkmap</a></li>
+            <li><a href="rejoindre.html">Recevoir des demandes</a></li>
             <li><a href="guide/trouver-clients-tatoueur.html">Guide : trouver des clients</a></li>
             <li><a href="guide/referencer-studio-tatouage-gratuit.html">Guide : referencer son studio</a></li>
             <li><a href="outils/calculateur-tarif-tatouage.html">Calculateur de tarif tattoo</a></li>
@@ -3339,8 +3436,7 @@
       <span class="footer-nav-label">Inkmap</span>
       <a href="#recherche">Annuaire</a>
       <a href="faq.html">FAQ</a>
-      <a href="inscription.html">Inscrire mon studio</a>
-      <a href="rejoindre.html">Rejoindre Inkmap</a>
+      <a href="rejoindre.html">Recevoir des demandes</a>
       <a href="mentions-legales.html">Mentions légales</a>
     </nav>
     <nav class="footer-nav-group" aria-label="Ressources">

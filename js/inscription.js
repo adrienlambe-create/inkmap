@@ -32,41 +32,22 @@ function toggleFaq(btn) {
   if (!wasOpen) item.classList.add('open');
 }
 
-// ── TYPE SELECTOR ─────────────────────────────────────────────────────────────
-let profileType = null; // 'solo' or 'studio'
+// ── TYPE: solo par défaut, toggle via checkbox ───────────────────────────────
+let profileType = 'solo';
 
-function selectType(type) {
-  profileType = type;
-  document.querySelectorAll('.type-card').forEach(c => {
-    c.classList.toggle('selected', c.dataset.type === type);
-  });
-  document.getElementById('typeConfirmBtn').classList.add('enabled');
-}
+function toggleStudioMode(isStudio) {
+  profileType = isStudio ? 'studio' : 'solo';
 
-function confirmType() {
-  if (!profileType) return;
-
-  // Hide type selector, show form
-  document.getElementById('typeSelector').style.display = 'none';
-  document.getElementById('progressWrap').style.display = '';
-  document.querySelector('.form-container').style.display = '';
-
-  // Toggle fields based on type
-  if (profileType === 'studio') {
-    // Hide solo name fields, show studio section in step 3
+  if (isStudio) {
     document.getElementById('soloNameFields').style.display = 'none';
     document.getElementById('soloArtSection').style.display = 'none';
     document.getElementById('studioArtSection').style.display = '';
-    // Add first artist block
-    addArtistBlock();
+    if (artistBlocks.length === 0) addArtistBlock();
   } else {
     document.getElementById('soloNameFields').style.display = '';
     document.getElementById('soloArtSection').style.display = '';
     document.getElementById('studioArtSection').style.display = 'none';
   }
-
-  // Scroll to form
-  document.getElementById('progressWrap').scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 // ── STYLES ────────────────────────────────────────────────────────────────────
@@ -290,9 +271,8 @@ function addArtistBlock() {
     </div>
 
     <div class="form-group" style="margin-bottom:16px">
-      <label>Bio / Description <span class="required">*</span></label>
-      <textarea id="artist-bio-${id}" placeholder="Son style, son parcours, ce qui l'inspire... (min. 50 caract&egrave;res)"></textarea>
-      <div class="field-error" id="err-artist-bio-${id}">Minimum 50 caract&egrave;res</div>
+      <label>Bio / Description <span style="color:var(--muted);font-weight:400;font-size:0.72rem">(optionnel)</span></label>
+      <textarea id="artist-bio-${id}" placeholder="Son style, son parcours, ce qui l'inspire..."></textarea>
     </div>
 
     <div class="form-group">
@@ -472,12 +452,10 @@ document.querySelectorAll('.progress-dot').forEach(dot => {
 // ── INLINE VALIDATION ────────────────────────────────────────────────────────
 const validators = {
   nom:    v => v.length >= 2,
-  pseudo: v => v.length >= 2,
   studio: v => v.length >= 2,
   email:  v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
   ville:  () => villesArr.length > 0,
   region: v => v !== '',
-  bio:    v => v.length >= 50,
 };
 
 function validateField(id) {
@@ -494,12 +472,56 @@ function validateField(id) {
 }
 
 // Attach blur validation to required fields
-['nom','pseudo','studio','email','region','bio'].forEach(id => {
+['nom','studio','email','region'].forEach(id => {
   const el = document.getElementById(id);
   if (el) el.addEventListener('blur', () => {
     if (el.value.trim()) validateField(id);
   });
 });
+
+// ── MAILCHECK: détection de typos sur le domaine email ───────────────────────
+const EMAIL_DOMAIN_TYPOS = {
+  'gmail.com':  ['gmial.com','gmai.com','gmaul.com','gmial.co','gmail.co','gmail.cm','gmil.com','gmail.con','gnail.com','gmail.fr'],
+  'hotmail.com':['hotmial.com','hotmai.com','htomail.com','hotmail.co','hotmal.com','hotmail.cm','hotmial.fr'],
+  'hotmail.fr': ['hotmial.fr','hotmai.fr','htomail.fr','hotmail.f','hotmal.fr'],
+  'yahoo.fr':   ['yaho.fr','yahoo.f','yahho.fr','yahou.fr'],
+  'yahoo.com':  ['yahoo.cm','yaho.com','yahho.com'],
+  'outlook.fr': ['outlook.f','outlok.fr','outloook.fr'],
+  'outlook.com':['outlok.com','outlook.cm','outloook.com'],
+  'orange.fr':  ['oranege.fr','orangee.fr','orange.f','oange.fr'],
+  'free.fr':    ['frre.fr','free.f','fre.fr'],
+  'wanadoo.fr': ['wanadoo.f','wandoo.fr','wanado.fr'],
+  'sfr.fr':     ['sfr.f','sffr.fr'],
+  'laposte.net':['laposte.fr','laposte.ne','laposte.com']
+};
+
+function suggestEmailCorrection(email) {
+  const at = email.indexOf('@');
+  if (at < 1) return null;
+  const domain = email.slice(at + 1).toLowerCase();
+  for (const [good, typos] of Object.entries(EMAIL_DOMAIN_TYPOS)) {
+    if (typos.includes(domain)) return email.slice(0, at + 1) + good;
+  }
+  return null;
+}
+
+(function initEmailCheck() {
+  const emailEl = document.getElementById('email');
+  const sugg = document.getElementById('emailSuggest');
+  if (!emailEl || !sugg) return;
+  emailEl.addEventListener('blur', () => {
+    const v = emailEl.value.trim();
+    if (!v) { sugg.style.display = 'none'; return; }
+    const fix = suggestEmailCorrection(v);
+    if (fix) {
+      sugg.innerHTML = `Tu voulais dire <strong>${fix}</strong>&nbsp;? <span style="text-decoration:underline">Oui, corriger</span>`;
+      sugg.style.display = 'block';
+      sugg.onclick = () => { emailEl.value = fix; sugg.style.display = 'none'; validateField('email'); };
+    } else {
+      sugg.style.display = 'none';
+    }
+  });
+})();
 
 // ── ARTIST BLOCK VALIDATION ──────────────────────────────────────────────────
 function validateArtistBlock(block) {
@@ -526,12 +548,7 @@ function validateArtistBlock(block) {
   document.getElementById(`err-artist-styles-${id}`).style.display = stylesOk ? 'none' : 'block';
   if (!stylesOk) ok = false;
 
-  // Bio
-  const bio = document.getElementById(`artist-bio-${id}`);
-  const bioOk = bio.value.trim().length >= 50;
-  bio.classList.toggle('invalid', !bioOk);
-  document.getElementById(`err-artist-bio-${id}`).style.display = bioOk ? 'none' : 'block';
-  if (!bioOk) ok = false;
+  // Bio optionnelle (pas de validation)
 
   return ok;
 }
@@ -541,7 +558,7 @@ function validateStep(step) {
   let ok = true;
   if (step === 0) {
     if (profileType === 'solo') {
-      ['nom','pseudo','studio','email'].forEach(id => { if (!validateField(id)) ok = false; });
+      ['nom','studio','email'].forEach(id => { if (!validateField(id)) ok = false; });
     } else {
       ['studio','email'].forEach(id => { if (!validateField(id)) ok = false; });
     }
@@ -549,7 +566,6 @@ function validateStep(step) {
     ['ville','region'].forEach(id => { if (!validateField(id)) ok = false; });
   } else if (step === 2) {
     if (profileType === 'solo') {
-      if (!validateField('bio')) ok = false;
       const stylesChecked = [...document.querySelectorAll('#stylesGrid input:checked')];
       const stylesOk = stylesChecked.length > 0;
       document.getElementById('err-styles').style.display = stylesOk ? 'none' : 'block';
@@ -612,7 +628,7 @@ function buildRecap() {
     items.push(
       { label: 'Type', value: 'Tatoueur ind\u00E9pendant' },
       { label: 'Nom', value: nom },
-      { label: 'Nom d\'artiste', value: pseudo },
+      { label: 'Nom d\'artiste', value: pseudo || '\u2014' },
       { label: 'Studio', value: studio },
       { label: 'Email', value: email },
       { label: 'Instagram', value: instagram || '\u2014' },
@@ -621,7 +637,7 @@ function buildRecap() {
       { label: 'Styles', value: stylesCoches, full: true },
       { label: 'Tarif', value: tarif },
       { label: 'Photos', value: nbPhotos > 0 ? nbPhotos + ' photo(s)' : 'Aucune' },
-      { label: 'Bio', value: bio.length > 120 ? bio.slice(0, 120) + '\u2026' : bio, full: true },
+      { label: 'Bio', value: bio ? (bio.length > 120 ? bio.slice(0, 120) + '\u2026' : bio) : '(g\u00E9n\u00E9r\u00E9e auto)', full: true },
     );
   } else {
     items.push(
@@ -749,6 +765,7 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
           tarifInfo: document.getElementById('tarifInfo').value.trim(),
           bio:       document.getElementById('bio').value.trim(),
           photos:    photoUrls,
+          type:      'Solo',
           Statut:    'En attente',
         }
       };
@@ -766,6 +783,8 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
         }
         throw new Error(err.error || 'Erreur serveur');
       }
+      const submitted = await res.json();
+      window.__lastRecordIds = submitted && submitted.id ? [submitted.id] : [];
     } else {
       // Studio: one inscription per artist
       btn.textContent = '\u23F3  Envoi en cours...';
@@ -802,6 +821,7 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
             tarif:     artistTarif,
             bio:       artistBio,
             photos:    photoUrls,
+            type:      'Studio',
             Statut:    'En attente',
           }
         };
@@ -816,6 +836,11 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
           const err = await res.json();
           throw new Error(err.error || `Erreur pour l'artiste ${artistPseudo}`);
         }
+        const artistSubmitted = await res.json();
+        if (artistSubmitted && artistSubmitted.id) {
+          window.__lastRecordIds = window.__lastRecordIds || [];
+          window.__lastRecordIds.push(artistSubmitted.id);
+        }
       }
     }
 
@@ -825,28 +850,129 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
     document.getElementById('success').classList.add('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     showToast('Inscription envoy\u00E9e avec succ\u00E8s !', 'success');
+
+    // Vider l'autosave
+    try { localStorage.removeItem('inkmap_inscription_draft'); } catch(e) {}
   } catch(err) {
     btn.disabled = false;
-    btn.textContent = '\u2726  Cr\u00E9er mon profil gratuitement';
+    btn.textContent = '\u2192  Recevoir mes premi\u00E8res demandes';
     showToast(err.message, 'error');
   }
 });
+
+// \u2500\u2500 SOURCE POST-SUBMIT \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+document.querySelectorAll('input[name="source"]').forEach(radio => {
+  radio.addEventListener('change', async () => {
+    const ids = window.__lastRecordIds || [];
+    if (ids.length === 0) return;
+    const source = radio.value;
+    const confirmEl = document.getElementById('sourceConfirm');
+    try {
+      await Promise.all(ids.map(id =>
+        fetch('/api/update-source', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ recordId: id, source })
+        })
+      ));
+      if (confirmEl) confirmEl.style.display = 'block';
+    } catch(e) {
+      console.error('update-source failed', e);
+    }
+  });
+});
+
+// \u2500\u2500 AUTOSAVE localStorage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+const AUTOSAVE_KEY = 'inkmap_inscription_draft';
+const AUTOSAVE_FIELDS = ['nom','pseudo','studio','email','instagram','website','region','adresse','tarif','tarifInfo','bio'];
+
+function saveDraft() {
+  try {
+    const draft = { v: 1, ts: Date.now() };
+    AUTOSAVE_FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) draft[id] = el.value;
+    });
+    draft.villes = villesArr.slice();
+    draft.isStudio = document.getElementById('isStudio')?.checked || false;
+    draft.styles = [...document.querySelectorAll('#stylesGrid input:checked')].map(cb => cb.value);
+    localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(draft));
+  } catch(e) {}
+}
+
+function restoreDraft() {
+  try {
+    const raw = localStorage.getItem(AUTOSAVE_KEY);
+    if (!raw) return;
+    const draft = JSON.parse(raw);
+    if (!draft.ts || Date.now() - draft.ts > 7 * 24 * 3600 * 1000) {
+      localStorage.removeItem(AUTOSAVE_KEY);
+      return;
+    }
+    AUTOSAVE_FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && draft[id]) {
+        el.value = draft[id];
+        if (id === 'tarif') {
+          const lbl = document.getElementById('tarifVal');
+          if (lbl) lbl.textContent = draft[id];
+        }
+      }
+    });
+    if (Array.isArray(draft.villes)) {
+      draft.villes.forEach(v => { if (!villesArr.includes(v)) villesArr.push(v); });
+      renderVilles();
+    }
+    if (draft.isStudio) {
+      const cb = document.getElementById('isStudio');
+      if (cb) { cb.checked = true; toggleStudioMode(true); }
+    }
+    if (Array.isArray(draft.styles)) {
+      draft.styles.forEach(v => {
+        const cb = document.querySelector(`#stylesGrid input[value="${v}"]`);
+        if (cb) { cb.checked = true; cb.closest('.style-check').classList.add('checked'); }
+      });
+    }
+    setTimeout(() => showToast('Brouillon restaur\u00E9', 'success', 2500), 600);
+  } catch(e) { console.warn('restoreDraft failed', e); }
+}
+
+AUTOSAVE_FIELDS.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', saveDraft);
+});
+document.addEventListener('change', e => {
+  if (e.target.matches('#stylesGrid input, #isStudio')) saveDraft();
+});
+window.addEventListener('beforeunload', saveDraft);
+
+setTimeout(restoreDraft, 0);
 
 // ── PRÉ-REMPLISSAGE DEPUIS URL (mode "Réclamer ce profil") ──────────────────
 (function() {
   const p = new URLSearchParams(window.location.search);
   if (!p.get('nom')) return;
 
-  // Auto-select solo mode and show form
-  selectType('solo');
-  confirmType();
-
   const banner = document.getElementById('claimBanner');
   banner.style.display = 'flex';
   document.getElementById('claimNom').textContent = p.get('nom');
 
   const set = (id, val) => { if (val && document.getElementById(id)) document.getElementById(id).value = val; };
-  set('nom',       p.get('nom'));
+
+  // Si le profil réclamé est un studio, on auto-coche la case et on met le nom
+  // scrappé dans le champ "Nom du studio" (pas dans "Prénom & Nom" solo).
+  const isStudioClaim = (p.get('type') || '').toLowerCase() === 'studio';
+  if (isStudioClaim) {
+    const checkbox = document.getElementById('isStudio');
+    if (checkbox) {
+      checkbox.checked = true;
+      toggleStudioMode(true);
+    }
+    set('studio', p.get('nom'));
+  } else {
+    set('nom', p.get('nom'));
+  }
+
   set('instagram', p.get('instagram'));
   if (p.get('ville')) {
     p.get('ville').split(',').map(v => v.trim()).filter(Boolean).forEach(v => {

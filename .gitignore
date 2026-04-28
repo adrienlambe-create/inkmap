@@ -16,11 +16,17 @@ node_modules/
 # Build outputs (regénérés par npm run build sur Vercel)
 tatoueur/
 .profiles-index.json
+.instagram-thumbs.json
 
 # Outreach privé (prospects Instagram — ne pas push)
 outreach/
+
+# Travail interne / privé (ne pas push en prod)
+_private/
+AUDIT.md
 
 # Dev / scratch
 ruflo/
 demo-*.html
 generate-convention-pdf.py
+.env*.local
