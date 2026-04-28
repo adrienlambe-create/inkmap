@@ -247,6 +247,7 @@ const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" he
 
 function cardMedia(t) {
   if (t.photo) return `<img src="${esc(t.photo)}" alt="Tatouage ${esc(t.styles[0] || '')} par ${esc(t.nom)} à ${esc(t.ville)}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />`;
+  if (t.instagramThumb) return `<img src="${esc(t.instagramThumb)}" alt="Aperçu du compte Instagram de ${esc(t.nom)} — tatoueur à ${esc(t.ville)}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />`;
   return PLACEHOLDER_SVG;
 }
 
@@ -265,7 +266,7 @@ async function chargerDepuisAirtable() {
     if (!res.ok) return;
     const { records } = await res.json();
     let nextId = tatoueurs.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-    records.forEach(({ fields: f, createdTime, slug, verifie }) => {
+    records.forEach(({ fields: f, createdTime, slug, verifie, instagramThumb }) => {
       if (!f.Nom) return;
       // styles peut être un tableau (multi-select Airtable) ou une chaîne
       const rawStyles = f.Styles || f.styles || [];
@@ -289,6 +290,7 @@ async function chargerDepuisAirtable() {
         slug: slug || '',
         photo: allPhotos[0] || '',
         photos: allPhotos,
+        instagramThumb: instagramThumb || '',
         emoji: STYLE_EMOJI[styles[0]] || '✦',
         createdAt: createdTime || '',
       };
@@ -311,7 +313,7 @@ function ouvrirModal(id) {
   document.getElementById('modal-content').innerHTML = `
     <div class="modal-photo" id="modal-carousel">${t.photos && t.photos.length > 0
       ? `<div class="carousel-track" id="carouselTrack" onclick="openLightbox()">${t.photos.map((p,i) => `<img src="${esc(p)}" alt="${esc(t.nom)} - photo ${i+1}" />`).join('')}</div>${t.photos.length > 1 ? `<button class="carousel-btn prev" onclick="event.stopPropagation();carouselNav(-1)">&#8249;</button><button class="carousel-btn next" onclick="event.stopPropagation();carouselNav(1)">&#8250;</button><div class="carousel-dots">${t.photos.map((_,i) => `<div class="carousel-dot${i===0?' active':''}" data-i="${i}"></div>`).join('')}</div>` : ''}`
-      : PLACEHOLDER_SVG}</div>
+      : (t.instagramThumb ? `<img src="${esc(t.instagramThumb)}" alt="Aperçu du compte Instagram de ${esc(t.nom)}" style="width:100%;height:100%;object-fit:cover;display:block" />` : PLACEHOLDER_SVG)}</div>
     <div class="modal-name">${esc(t.nom)}</div>
     <div class="modal-city">📍 ${esc(t.ville)} — ${esc(t.region)}</div>
     <div class="styles">${t.styles.map(s=>`<span class="style-tag">${esc(s)}</span>`).join('')}</div>
@@ -823,20 +825,25 @@ function afficherResultats(best, scores, explication, isFallback) {
 
   const sec = document.getElementById('iaMatchesSection');
   document.getElementById('iaMatchesStyleTag').textContent = best;
+  const ctaBtn = document.getElementById('iaMatchesCtaBtn');
+  if (ctaBtn) {
+    const styleParam = encodeURIComponent(best);
+    const villeParam = villeActive ? '&ville=' + encodeURIComponent(villeActive) : '';
+    ctaBtn.href = '/demande?style=' + styleParam + villeParam;
+  }
   const villeCtx = villeActive ? ` à ${esc(villeActive)}` : '';
   document.getElementById('iaMatchesGrid').innerHTML = matches.length > 0
     ? matches.map(renderCard).join('')
     : `<div class="no-results-rich" style="background:transparent">
-        <div class="nr-tag">// 0 résultat</div>
+        <div class="nr-tag">// 0 résultat dans l'annuaire</div>
         <div class="nr-title">Aucun artiste <em>${esc(best)}</em><br>référencé${villeCtx} pour le moment</div>
-        <p class="nr-sub">Pas encore de tatoueur ${esc(best)} sur Inkmap${villeCtx} — mais ça arrive. Tu peux t'inscrire sur la liste d'attente ou consulter les artistes disponibles${villeActive ? ' dans d\'autres villes' : ''}.</p>
+        <p class="nr-sub">Pas de panique — décris ton projet via le bouton ci-dessus. On le transmet dès qu'un tatoueur ${esc(best)}${villeCtx} rejoint Inkmap, ou tu peux explorer les artistes disponibles${villeActive ? ' dans d\'autres villes' : ' d\'un style proche'}.</p>
         <div class="nr-actions">
           ${villeActive
-            ? `<button class="btn-primary" style="font-size:0.72rem;padding:12px 22px" onclick="supprimerFiltreVille()">Voir tous les ${esc(best)} en France →</button>
+            ? `<button class="btn-secondary" style="font-size:0.72rem;padding:12px 22px" onclick="supprimerFiltreVille()">Voir tous les ${esc(best)} en France →</button>
                <button class="btn-secondary" style="font-size:0.72rem;padding:12px 22px" onclick="supprimerFiltreStyle()">Voir tous les tatoueurs à ${esc(villeActive)} →</button>`
-            : `<button class="btn-primary" style="font-size:0.72rem;padding:12px 22px" onclick="navFiltreStyle('${esc(best)}');document.getElementById('results-count').scrollIntoView({behavior:'smooth'})">Voir tous les ${esc(best)} →</button>`
+            : `<button class="btn-secondary" style="font-size:0.72rem;padding:12px 22px" onclick="navFiltreStyle('${esc(best)}');document.getElementById('results-count').scrollIntoView({behavior:'smooth'})">Voir tous les tatoueurs →</button>`
           }
-          <a href="inscription.html" class="btn-secondary" style="font-size:0.72rem;padding:12px 22px">Inscrire mon studio</a>
         </div>
       </div>`;
   sec.classList.add('visible');

@@ -8,6 +8,7 @@ const path = require('path');
 const QRCode = require('qrcode');
 const { put, head } = require('@vercel/blob');
 const { buildProfilePage } = require('./partials/profile-template');
+const { scrapeInstagramThumb, isValidInstagramPostUrl } = require('./scripts/instagram-thumb');
 
 const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
 const BASE_ID = process.env.AIRTABLE_BASE_ID || 'appD1ZqrwZXTza0KR';
@@ -107,6 +108,14 @@ function normalizeRecord(rec) {
         .filter(Boolean)
     : [];
 
+  // URLs des posts Instagram à embarquer (1-3 max) — filtre celles qui ne sont pas des URLs Insta valides
+  const instagramPosts = [f.InstagramPost1, f.InstagramPost2, f.InstagramPost3]
+    .map(u => (typeof u === 'string' ? u.trim() : ''))
+    .filter(Boolean)
+    .filter(isValidInstagramPostUrl)
+    .slice(0, 3);
+  const instagramEmbedDisabled = !!f.InstagramEmbedDisabled;
+
   // Site : n'accepte que http(s) — ajoute https:// si omis, rejette tout autre schéma (javascript:, data:, etc.)
   const siteRaw = (f.Site || '').trim();
   let site = '';
@@ -122,6 +131,7 @@ function normalizeRecord(rec) {
     airtableId: rec.id,
     nom: (f.Nom || '').trim(),
     pseudo: (f.Pseudo || '').trim(),
+    type: (f.type || f.Type || '').trim(),
     ville: (f.Ville || '').trim(),
     region: (f.Region || '').trim(),
     styles,
@@ -134,6 +144,9 @@ function normalizeRecord(rec) {
     photoAttachments,
     photos: photoAttachments.map(a => a.url), // fallback si migration échoue
     verifie,
+    instagramPosts,
+    instagramEmbedDisabled,
+    instagramThumb: '', // rempli plus tard par scrapeInstaThumbsForProfile
   };
 }
 
@@ -191,6 +204,31 @@ async function migratePhotos(t) {
   return t;
 }
 
+// Pour les profils non-revendiqués sans photos uploadées, scrape la 1ère URL Insta
+// pour récupérer une thumbnail (og:image) qu'on cache sur Vercel Blob.
+// Modifie t.instagramThumb in place et retourne un compteur (ok, skipped, failed).
+async function scrapeInstaThumbForProfile(t, stats) {
+  if (t.instagramEmbedDisabled) {
+    stats.skipped++;
+    return;
+  }
+  if (!t.instagramPosts?.length) {
+    stats.skipped++;
+    return;
+  }
+  // On scrape uniquement la 1ère URL pour la thumbnail (les autres serviront aux embeds).
+  const firstPost = t.instagramPosts[0];
+  const result = await scrapeInstagramThumb(firstPost);
+  if (result.ok && result.blobUrl) {
+    t.instagramThumb = result.blobUrl;
+    stats.ok++;
+    if (!result.cached) console.log(`   📸 thumb scrapée — ${t.pseudo || t.nom}`);
+  } else {
+    stats.failed++;
+    console.warn(`   ⚠️  thumb échec — ${t.pseudo || t.nom} : ${result.reason || 'inconnu'}`);
+  }
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────
 async function main() {
   console.log('📡 Fetch Airtable...');
@@ -207,6 +245,8 @@ async function main() {
   const generated = [];
   const skipped = [];
   let migratedCount = 0;
+  const instaStats = { ok: 0, skipped: 0, failed: 0 };
+  const thumbCache = {}; // { airtableId: { thumbUrl, posts, disabled } }
 
   for (const rec of records) {
     const t = normalizeRecord(rec);
@@ -229,6 +269,20 @@ async function main() {
     await migratePhotos(t);
     if (BLOB_TOKEN && beforeCount) migratedCount += beforeCount;
 
+    // Si pas de photos uploadées, tente de scraper une thumbnail depuis Instagram
+    if (!t.photos.length) {
+      await scrapeInstaThumbForProfile(t, instaStats);
+    } else {
+      instaStats.skipped++;
+    }
+
+    // Cache pour l'API runtime
+    thumbCache[rec.id] = {
+      thumbUrl: t.instagramThumb || '',
+      posts: t.instagramPosts || [],
+      disabled: !!t.instagramEmbedDisabled,
+    };
+
     // Génère le QR SVG pour l'URL de la page
     const url = `https://inkmap.fr/tatoueur/${slug}`;
     const qrSvg = await QRCode.toString(url, {
@@ -247,6 +301,7 @@ async function main() {
 
   console.log(`\n✅ ${generated.length} pages profil générées.`);
   if (migratedCount) console.log(`   🖼  ${migratedCount} photos vérifiées/migrées sur Vercel Blob.`);
+  console.log(`   📸 Instagram thumbs : ${instaStats.ok} ok, ${instaStats.failed} échec, ${instaStats.skipped} ignorés.`);
   if (skipped.length) {
     console.log(`⚠️  ${skipped.length} records ignorés :`);
     skipped.forEach(s => console.log(`   · ${s.id} → ${s.reason}`));
@@ -256,6 +311,12 @@ async function main() {
   fs.writeFileSync(
     path.join(__dirname, '.profiles-index.json'),
     JSON.stringify({ generated, generatedAt: new Date().toISOString() }, null, 2)
+  );
+
+  // Écrit le cache des thumbnails Insta (lu par api/tatoueurs.js à runtime)
+  fs.writeFileSync(
+    path.join(__dirname, '.instagram-thumbs.json'),
+    JSON.stringify(thumbCache, null, 2)
   );
 }
 

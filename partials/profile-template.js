@@ -42,7 +42,15 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
   const instaUrl = instaHandle ? `https://instagram.com/${instaHandle}` : '';
   const siteUrl = t.site || '';
 
-  const coverImg = (t.photos && t.photos[0]) || '';
+  // Cover : photo uploadée si dispo, sinon thumbnail Insta scrapée
+  const coverImg = (t.photos && t.photos[0]) || (t.instagramThumb || '');
+
+  // Posts Insta à embarquer (uniquement pour profils non-revendiqués + kill-switch off)
+  const showInstaEmbeds = !t.verifie
+    && !t.instagramEmbedDisabled
+    && Array.isArray(t.instagramPosts)
+    && t.instagramPosts.length > 0;
+  const instaPosts = showInstaEmbeds ? t.instagramPosts.slice(0, 3) : [];
 
   // Profils externes (Instagram, site perso) pour sameAs
   const sameAs = [instaUrl, siteUrl].filter(Boolean);
@@ -440,7 +448,101 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
     }
     .cta-join a:hover { background: #fff; color: var(--text); }
 
-    /* ── RESPONSIVE ── */
+    /* ── EMBEDS INSTAGRAM ── */
+    /* Insta force min-width: 326px sur ses iframes — flexbox pour layout prévisible 1/2/3 posts */
+    .insta-embeds-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .insta-embed-cell {
+      position: relative;
+      flex: 1 1 340px;
+      max-width: 480px;
+      min-height: 480px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f5f5f5, #ebebeb);
+    }
+    .insta-embed-cell.is-loading::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(110deg, rgba(255,255,255,0) 25%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 75%)
+        no-repeat,
+        linear-gradient(135deg, #f5f5f5, #ebebeb);
+      background-size: 200% 100%, 100% 100%;
+      animation: insta-shimmer 1.6s linear infinite;
+    }
+    @keyframes insta-shimmer { from { background-position: -100% 0, 0 0; } to { background-position: 100% 0, 0 0; } }
+    .insta-embed-cell blockquote.instagram-media {
+      margin: 0 !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      width: 100% !important;
+      box-shadow: none !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 4px !important;
+    }
+    .insta-fallback {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px;
+      height: 100%; min-height: 480px;
+      padding: 24px; text-align: center;
+      background: linear-gradient(135deg, #fafafa, #efefef);
+      color: var(--muted2);
+      text-decoration: none;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+    }
+    .insta-fallback strong {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .insta-fallback span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 1px;
+      color: var(--accent); text-transform: uppercase;
+    }
+    .insta-claim-cta {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      margin-top: 24px;
+      padding: 16px 20px;
+      background: rgba(192,57,43,0.04);
+      border: 1px solid rgba(192,57,43,0.15);
+      border-radius: 4px;
+    }
+    .insta-claim-cta p {
+      margin: 0; font-size: 0.88rem; color: var(--muted2);
+    }
+    .insta-claim-cta a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+    }
+    .insta-claim-cta a:hover { text-decoration: underline; }
+    .insta-disclaimer {
+      margin-top: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── RESPONSIVE EMBEDS ── */
+    @media (max-width: 720px) {
+      .insta-embeds-grid { gap: 14px; }
+      .insta-embed-cell { flex: 1 1 100%; max-width: 100%; min-height: 400px; }
+      .insta-fallback { min-height: 400px; }
+    }
+
     @media (max-width: 900px) {
       .profile-hero { padding: 96px 20px 40px; }
       .profile-hero-inner {
@@ -539,12 +641,29 @@ ${HEADER_HTML}
   </div>
 </section>
 
+${showInstaEmbeds ? `
+<!-- APERÇU INSTAGRAM (profils non-revendiqués uniquement) -->
+<section class="profile-section" id="apercu-instagram">
+  <h2 class="profile-section-title">Aperçu Instagram</h2>
+  <div class="insta-embeds-grid" id="insta-embeds-grid" data-insta-handle="${escAttr(instaHandle)}">
+    ${instaPosts.map((postUrl, i) => `
+    <div class="insta-embed-cell is-loading" data-insta-url="${escAttr(postUrl)}" data-insta-idx="${i}">
+      <blockquote class="instagram-media" data-instgrm-permalink="${escAttr(postUrl)}" data-instgrm-version="14" style="margin:0;max-width:100%;width:100%;min-width:0"></blockquote>
+    </div>`).join('')}
+  </div>
+  <p class="insta-disclaimer">Photos affichées via l'embed officiel Instagram — chaque image renvoie au compte source. Aucune copie hébergée.</p>
+  <div class="insta-claim-cta">
+    <p>C'est ton compte ? Reprends la main sur cette page Inkmap en quelques secondes.</p>
+    <a href="/inscription.html?nom=${encodeURIComponent(t.nom)}&ville=${encodeURIComponent(t.ville)}${t.instagram ? '&instagram=' + encodeURIComponent(t.instagram) : ''}${t.type === 'Studio' ? '&type=studio' : ''}">Réclamer ce profil →</a>
+  </div>
+</section>` : ''}
+
 <!-- PORTFOLIO -->
 <section class="profile-section" id="portfolio">
   <h2 class="profile-section-title">Portfolio</h2>
   ${galleryHtml
     ? `<div class="profile-gallery">${galleryHtml}</div>`
-    : `<div class="profile-no-photos">Le portfolio arrive bientôt.${!t.verifie ? ' <a href="/inscription.html?nom=' + encodeURIComponent(t.nom) + '" style="color:var(--accent)">Vous êtes ' + escHtml(displayName) + ' ? Réclamez ce profil →</a>' : ''}</div>`}
+    : `<div class="profile-no-photos">Le portfolio arrive bientôt.${!t.verifie ? ' <a href="/inscription.html?nom=' + encodeURIComponent(t.nom) + (t.type === 'Studio' ? '&type=studio' : '') + '" style="color:var(--accent)">Vous êtes ' + escHtml(displayName) + ' ? Réclamez ce profil →</a>' : ''}</div>`}
 </section>
 
 ${qrSvg ? `
@@ -564,7 +683,7 @@ ${qrSvg ? `
 <section class="cta-join">
   <h2>${t.verifie ? `Envie d'apparaître comme ` + escHtml(displayName) + ` ?` : `Tu es ` + escHtml(displayName) + ` ?`}</h2>
   <p>${t.verifie ? `Rejoins Inkmap, l'annuaire tatoueurs de France.` : `Réclame gratuitement ce profil et reprends la main dessus.`}</p>
-  <a href="/inscription.html${!t.verifie ? '?nom=' + encodeURIComponent(t.nom) + '&ville=' + encodeURIComponent(t.ville) + (t.instagram ? '&instagram=' + encodeURIComponent(t.instagram) : '') : ''}">${t.verifie ? 'Inscrire mon studio →' : 'Réclamer ce profil →'}</a>
+  <a href="/inscription.html${!t.verifie ? '?nom=' + encodeURIComponent(t.nom) + '&ville=' + encodeURIComponent(t.ville) + (t.instagram ? '&instagram=' + encodeURIComponent(t.instagram) : '') + (t.type === 'Studio' ? '&type=studio' : '') : ''}">${t.verifie ? 'Inscrire mon studio →' : 'Réclamer ce profil →'}</a>
 </section>
 
 ${t.verifie ? `
@@ -660,6 +779,84 @@ function fermerMenu() {
   document.body.style.overflow = '';
 }
 window.addEventListener('resize', () => { if (window.innerWidth > 768) fermerMenu(); });
+
+// ── LAZY-LOAD EMBEDS INSTAGRAM ────────────────────────────────────────────
+(function() {
+  const grid = document.getElementById('insta-embeds-grid');
+  if (!grid) return;
+  const cells = Array.from(grid.querySelectorAll('.insta-embed-cell'));
+  if (!cells.length) return;
+  const handle = grid.dataset.instaHandle || '';
+  let scriptInjected = false;
+  let processCalled = false;
+
+  function injectScriptOnce() {
+    if (scriptInjected) return;
+    scriptInjected = true;
+    const s = document.createElement('script');
+    s.src = 'https://www.instagram.com/embed.js';
+    s.async = true;
+    s.defer = true;
+    s.onload = () => {
+      if (window.instgrm && window.instgrm.Embeds) {
+        try { window.instgrm.Embeds.process(); processCalled = true; } catch (e) {}
+      }
+    };
+    document.body.appendChild(s);
+  }
+
+  function processIfReady() {
+    if (processCalled) return;
+    if (window.instgrm && window.instgrm.Embeds) {
+      try { window.instgrm.Embeds.process(); processCalled = true; } catch (e) {}
+    }
+  }
+
+  function makeFallback(cell) {
+    if (!cell.classList.contains('is-loading')) return; // déjà rendu
+    const url = cell.dataset.instaUrl || '';
+    const profileUrl = handle ? 'https://instagram.com/' + handle : url;
+    cell.classList.remove('is-loading');
+    cell.innerHTML =
+      '<a class="insta-fallback" href="' + profileUrl + '" target="_blank" rel="noopener noreferrer">' +
+      '<strong>Voir sur Instagram</strong>' +
+      (handle ? '<span>@' + handle + '</span>' : '') +
+      '</a>';
+  }
+
+  // Une fois l'iframe Insta présente → enlève le shimmer.
+  const mo = new MutationObserver(() => {
+    cells.forEach(cell => {
+      if (cell.querySelector('iframe')) cell.classList.remove('is-loading');
+    });
+  });
+  mo.observe(grid, { childList: true, subtree: true });
+
+  // Watchdog : après 7s, toute cellule encore "loading" → fallback.
+  setTimeout(() => {
+    cells.forEach(cell => {
+      if (cell.classList.contains('is-loading') || !cell.querySelector('iframe')) {
+        makeFallback(cell);
+      }
+    });
+    mo.disconnect();
+  }, 7000);
+
+  // Lazy-load : on injecte embed.js dès qu'une cellule approche du viewport.
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) {
+        injectScriptOnce();
+        processIfReady();
+        io.disconnect();
+      }
+    }, { rootMargin: '300px 0px' });
+    cells.forEach(c => io.observe(c));
+  } else {
+    // Pas d'IntersectionObserver → injection directe.
+    injectScriptOnce();
+  }
+})();
 </script>
 
 </body>

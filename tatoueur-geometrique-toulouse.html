@@ -324,19 +324,11 @@
 
 <!-- HEADER -->
 <header>
-  <a href="index.html" class="logo">
-    <span class="ink ink-1"></span>
-    <span class="ink ink-2"></span>
-    <span class="ink ink-3"></span>
-    ink<em>map</em>
-    <span class="ink ink-4"></span>
-    <span class="ink ink-5"></span>
-    <span class="ink ink-6"></span>
-  </a>
+  <a href="/" class="logo">ink<em>map</em></a>
   <nav>
-    <a href="index.html">Annuaire</a>
-    <a href="index.html#recherche">Styles</a>
-    <a href="inscription.html" class="btn-nav">Inscrire mon studio →</a>
+    <a href="/">Annuaire</a>
+    <a href="/#recherche">Styles</a>
+    <a href="/inscription" class="btn-nav">Inscrire mon studio →</a>
   </nav>
   <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
     <span></span>
@@ -347,9 +339,9 @@
 
 <!-- MENU MOBILE -->
 <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation">
-  <a href="index.html" onclick="fermerMenu()">Annuaire</a>
-  <a href="index.html#recherche" onclick="fermerMenu()">Styles</a>
-  <a href="inscription.html" class="btn-nav-mobile" onclick="fermerMenu()">Inscrire mon studio →</a>
+  <a href="/" onclick="fermerMenu()">Annuaire</a>
+  <a href="/#recherche" onclick="fermerMenu()">Styles</a>
+  <a href="/inscription" class="btn-nav-mobile" onclick="fermerMenu()">Inscrire mon studio →</a>
 </div>
 
 
@@ -457,7 +449,7 @@
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
     <small>© 2026 — INKMAP.FR</small>
-    <a href="mentions-legales.html" style="font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.35);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Mentions légales</a>
+    <a href="/mentions-legales" style="font-family:'Space Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.35);text-decoration:none;letter-spacing:1px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Mentions légales</a>
   </div>
 </footer>
 
@@ -482,7 +474,7 @@ async function chargerDepuisAirtable() {
     if (!res.ok) return;
     const { records } = await res.json();
     let nextId = tatoueurs.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-    records.forEach(({ fields: f }) => {
+    records.forEach(({ fields: f, instagramThumb }) => {
       if (!f.Nom) return;
       const rawStyles = f.Styles || f.styles || [];
       const styles = Array.isArray(rawStyles)
@@ -505,6 +497,7 @@ async function chargerDepuisAirtable() {
         verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi') || !!(f.Email || f.email),
         photo: allPhotos[0] || '',
         photos: allPhotos,
+        instagramThumb: instagramThumb || '',
         emoji: STYLE_EMOJI[styles[0]] || '✦',
       };
       const fNom = f.Nom.toLowerCase().trim();
@@ -532,7 +525,9 @@ const PLACEHOLDER_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" he
 function renderCard(t) {
   const imgHtml = t.photo
     ? '<img src="' + t.photo + '" alt="Tatouage par ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />'
-    : PLACEHOLDER_SVG;
+    : (t.instagramThumb
+      ? '<img src="' + t.instagramThumb + '" alt="Aperçu Instagram de ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />'
+      : PLACEHOLDER_SVG);
   return `
     <div class="card" onclick="ouvrirModal(${t.id})">
       <div class="card-img">${imgHtml}</div>
@@ -564,8 +559,9 @@ function afficher(liste) {
 
 function ouvrirModal(id) {
   const t = tatoueurs.find(x => x.id === id);
-  const modalImg = t.photo
-    ? '<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="' + t.photo + '" alt="Tatouage par ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>'
+  const modalSrc = t.photo || t.instagramThumb || '';
+  const modalImg = modalSrc
+    ? '<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="' + modalSrc + '" alt="' + (t.photo ? 'Tatouage par ' : 'Aperçu Instagram de ') + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>'
     : '';
   document.getElementById('modal-content').innerHTML = `
     ${modalImg}

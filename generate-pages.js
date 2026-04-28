@@ -646,7 +646,7 @@ async function chargerDepuisAirtable() {
     if (!res.ok) return;
     const { records } = await res.json();
     let nextId = tatoueurs.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-    records.forEach(({ fields: f }) => {
+    records.forEach(({ fields: f, instagramThumb }) => {
       if (!f.Nom) return;
       const rawStyles = f.Styles || f.styles || [];
       const styles = Array.isArray(rawStyles)
@@ -669,6 +669,7 @@ async function chargerDepuisAirtable() {
         verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi') || !!(f.Email || f.email),
         photo: allPhotos[0] || '',
         photos: allPhotos,
+        instagramThumb: instagramThumb || '',
         emoji: STYLE_EMOJI[styles[0]] || '✦',
       };
       const fNom = f.Nom.toLowerCase().trim();
@@ -696,7 +697,9 @@ const PLACEHOLDER_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="100%" he
 function renderCard(t) {
   const imgHtml = t.photo
     ? '<img src="' + t.photo + '" alt="Tatouage par ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />'
-    : PLACEHOLDER_SVG;
+    : (t.instagramThumb
+      ? '<img src="' + t.instagramThumb + '" alt="Aperçu Instagram de ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />'
+      : PLACEHOLDER_SVG);
   return \`
     <div class="card" onclick="ouvrirModal(\${t.id})">
       <div class="card-img">\${imgHtml}</div>
@@ -728,8 +731,9 @@ function afficher(liste) {
 
 function ouvrirModal(id) {
   const t = tatoueurs.find(x => x.id === id);
-  const modalImg = t.photo
-    ? '<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="' + t.photo + '" alt="Tatouage par ' + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>'
+  const modalSrc = t.photo || t.instagramThumb || '';
+  const modalImg = modalSrc
+    ? '<div style="width:100%;height:200px;overflow:hidden;margin-bottom:16px"><img src="' + modalSrc + '" alt="' + (t.photo ? 'Tatouage par ' : 'Aperçu Instagram de ') + t.nom + '" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>'
     : '';
   document.getElementById('modal-content').innerHTML = \`
     \${modalImg}
