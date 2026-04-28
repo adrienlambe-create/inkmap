@@ -9,8 +9,13 @@
 // Robuste aux pannes Insta (timeout + retry + fallback gracieux).
 
 const { put, head } = require('@vercel/blob');
+const sharp = require('sharp');
 
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
+
+// Taille cible : carré 800x800 — bon compromis entre qualité et poids.
+// Le smart crop ('attention') détecte la zone la plus saillante.
+const CROP_SIZE = 800;
 
 const FETCH_TIMEOUT_MS = 8000;
 const MAX_RETRIES = 2;
@@ -106,12 +111,25 @@ async function fetchOgImage(postUrl) {
   return { ok: false, reason: 'fetch_echec', error: String(lastErr || 'inconnu') };
 }
 
+// Smart-crop carré centré sur le sujet (l'algo 'attention' de sharp détecte
+// la zone la plus saillante — pour un tatouage : forte signature de contraste).
+async function cropToSquare(buf) {
+  return sharp(buf)
+    .resize(CROP_SIZE, CROP_SIZE, {
+      fit: 'cover',
+      position: sharp.strategy.attention,
+    })
+    .jpeg({ quality: 85, mozjpeg: true })
+    .toBuffer();
+}
+
 // Upload une image vers Vercel Blob (cache stable par clé).
+// La clé "v2" force un re-scrape pour les profils déjà cachés avec l'ancien crop.
 async function uploadToBlob(imgUrl, postId) {
   if (!BLOB_TOKEN) {
     throw new Error('BLOB_READ_WRITE_TOKEN absent');
   }
-  const key = `instagram-thumbs/${postId}.jpg`;
+  const key = `instagram-thumbs-v2/${postId}.jpg`;
 
   // 1) Existe déjà ? — réutilise l'URL
   try {
@@ -121,11 +139,19 @@ async function uploadToBlob(imgUrl, postId) {
     // 404 normal, on upload plus bas
   }
 
-  // 2) Télécharge l'image og puis push vers Blob
+  // 2) Télécharge l'og:image, smart-crop carré, push vers Blob
   const r = await fetchWithTimeout(imgUrl, { headers: { 'User-Agent': USER_AGENT } });
   if (!r.ok) throw new Error(`Téléchargement og:image échoué (${r.status})`);
-  const buf = Buffer.from(await r.arrayBuffer());
-  const blob = await put(key, buf, {
+  const rawBuf = Buffer.from(await r.arrayBuffer());
+  let croppedBuf;
+  try {
+    croppedBuf = await cropToSquare(rawBuf);
+  } catch (e) {
+    // Sharp peut échouer sur certains formats exotiques — fallback sur l'image brute
+    console.warn(`   ⚠️  smart-crop échec (${e.message}) — fallback image brute`);
+    croppedBuf = rawBuf;
+  }
+  const blob = await put(key, croppedBuf, {
     access: 'public',
     contentType: 'image/jpeg',
     token: BLOB_TOKEN,
@@ -139,10 +165,10 @@ async function scrapeInstagramThumb(postUrl) {
   const postId = extractPostId(postUrl);
   if (!postId) return { ok: false, reason: 'url_invalide' };
 
-  // Si l'image est déjà sur Blob, on évite même de hit Insta.
+  // Si l'image est déjà sur Blob (clé v2 = avec smart-crop), on évite de hit Insta.
   if (BLOB_TOKEN) {
     try {
-      const meta = await head(`instagram-thumbs/${postId}.jpg`, { token: BLOB_TOKEN });
+      const meta = await head(`instagram-thumbs-v2/${postId}.jpg`, { token: BLOB_TOKEN });
       if (meta?.url) return { ok: true, blobUrl: meta.url, cached: true };
     } catch (_) {
       // pas en cache, on continue
