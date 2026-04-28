@@ -111,15 +111,16 @@ async function fetchOgImage(postUrl) {
   return { ok: false, reason: 'fetch_echec', error: String(lastErr || 'inconnu') };
 }
 
-// Smart-crop carré centré sur le sujet. Utilise 'entropy' qui privilégie les zones
-// à forte variation visuelle (= les détails du tatouage) plutôt que les zones
-// à fort contraste binaire (= ombres sombres / play overlay) que 'attention' tend
-// à sur-prioriser.
+// Crop carré ancré en haut. La majorité des photos de tatouage Insta cadrent
+// le sujet (épaule, dos, bras, cou) dans la moitié supérieure de l'image —
+// donc en cropant depuis le haut, on garde le tatouage et on coupe le vide
+// du bas. Plus prévisible que les algos 'attention' / 'entropy' qui choisissent
+// parfois des zones non pertinentes (ombres sombres, play overlay de Reel).
 async function cropToSquare(buf) {
   return sharp(buf)
     .resize(CROP_SIZE, CROP_SIZE, {
       fit: 'cover',
-      position: sharp.strategy.entropy,
+      position: 'top',
     })
     .jpeg({ quality: 85, mozjpeg: true })
     .toBuffer();
@@ -131,7 +132,7 @@ async function uploadToBlob(imgUrl, postId) {
   if (!BLOB_TOKEN) {
     throw new Error('BLOB_READ_WRITE_TOKEN absent');
   }
-  const key = `instagram-thumbs-v3/${postId}.jpg`;
+  const key = `instagram-thumbs-v4/${postId}.jpg`;
 
   // 1) Existe déjà ? — réutilise l'URL
   try {
@@ -170,7 +171,7 @@ async function scrapeInstagramThumb(postUrl) {
   // Si l'image est déjà sur Blob (clé v3 = entropy crop actuelle), on évite de hit Insta.
   if (BLOB_TOKEN) {
     try {
-      const meta = await head(`instagram-thumbs-v3/${postId}.jpg`, { token: BLOB_TOKEN });
+      const meta = await head(`instagram-thumbs-v4/${postId}.jpg`, { token: BLOB_TOKEN });
       if (meta?.url) return { ok: true, blobUrl: meta.url, cached: true };
     } catch (_) {
       // pas en cache, on continue
