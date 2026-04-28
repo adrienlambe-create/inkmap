@@ -6,7 +6,7 @@ const { cors, airtableConfig } = require('./_utils');
 // (Email est lu pour calculer verifie=true, mais jamais retourné)
 const PUBLIC_FIELDS = [
   'Nom', 'Pseudo', 'Ville', 'Region', 'Styles', 'Tarif', 'Instagram', 'Bio', 'Photos', 'Statut', 'Email',
-  'InstagramPost1', 'InstagramPost2', 'InstagramPost3', 'InstagramEmbedDisabled',
+  'InstagramPost1', 'InstagramPost2', 'InstagramPost3', 'InstagramCoverPost', 'InstagramEmbedDisabled',
 ];
 const RETURN_FIELDS = PUBLIC_FIELDS.filter(f => f !== 'Email');
 

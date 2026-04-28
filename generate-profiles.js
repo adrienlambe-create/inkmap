@@ -114,6 +114,9 @@ function normalizeRecord(rec) {
     .filter(Boolean)
     .filter(isValidInstagramPostUrl)
     .slice(0, 3);
+  // URL optionnelle qui prime sur InstagramPost1/2/3 pour la cover (hero + carte)
+  const coverRaw = (typeof f.InstagramCoverPost === 'string' ? f.InstagramCoverPost.trim() : '');
+  const instagramCoverPost = coverRaw && isValidInstagramPostUrl(coverRaw) ? coverRaw : '';
   const instagramEmbedDisabled = !!f.InstagramEmbedDisabled;
 
   // Site : n'accepte que http(s) — ajoute https:// si omis, rejette tout autre schéma (javascript:, data:, etc.)
@@ -145,6 +148,7 @@ function normalizeRecord(rec) {
     photos: photoAttachments.map(a => a.url), // fallback si migration échoue
     verifie,
     instagramPosts,
+    instagramCoverPost,
     instagramEmbedDisabled,
     instagramThumb: '', // rempli plus tard par scrapeInstaThumbsForProfile
   };
@@ -212,18 +216,19 @@ async function scrapeInstaThumbForProfile(t, stats) {
     stats.skipped++;
     return;
   }
-  if (!t.instagramPosts?.length) {
+  // Pour la couverture (hero + carte du listing), priorité :
+  // 1) InstagramCoverPost (override manuel d'Adrien) — prime sur tout
+  // 2) Post photo simple /p/ sans query params (= pas de carrousel avec vidéo en 1ère slide)
+  // 3) Post photo /p/ même avec ?img_index=
+  // 4) À défaut, la 1ère URL (Reel ou autre)
+  if (!t.instagramCoverPost && !t.instagramPosts?.length) {
     stats.skipped++;
     return;
   }
-  // Pour la couverture (hero + carte du listing), on cherche le meilleur candidat :
-  // 1) post photo simple /p/ sans query params (= pas de carrousel avec vidéo en 1ère slide)
-  // 2) post photo /p/ même avec ?img_index=
-  // 3) à défaut, la 1ère URL (Reel ou autre)
-  // Les autres URLs continuent d'apparaître dans les embeds de la fiche, dans l'ordre.
   const isPlainPhotoPost = u => /^https?:\/\/(www\.)?instagram\.com\/p\/[\w-]+\/?$/i.test(u);
   const isPhotoPost = u => /^https?:\/\/(www\.)?instagram\.com\/p\//i.test(u);
   const targetPost =
+    t.instagramCoverPost ||
     t.instagramPosts.find(isPlainPhotoPost) ||
     t.instagramPosts.find(isPhotoPost) ||
     t.instagramPosts[0];
