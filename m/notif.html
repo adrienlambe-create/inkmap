@@ -196,7 +196,7 @@
   </div>
 
   <div class="controls hide" id="controls">
-    <button class="ctrl-btn" onclick="play()">↻ rejouer</button>
+    <button class="ctrl-btn" onclick="playNow()">↻ rejouer (immédiat)</button>
     <button class="ctrl-btn" onclick="hideUI()">cacher UI</button>
   </div>
 </div>
@@ -223,27 +223,43 @@ const variants = [
 ];
 
 const notif = document.getElementById('notif');
-function play() {
+const TAP_DELAY_MS = 5000; // délai avant que la notif slide in après un tap
+let pendingTimer = null;
+
+function reset() {
+  notif.classList.remove('show');
+}
+function playNow() {
   notif.classList.remove('show');
   // forcer un reflow pour relancer l'animation
   void notif.offsetWidth;
   notif.classList.add('show');
 }
+function scheduleAfterTap() {
+  if (pendingTimer) clearTimeout(pendingTimer);
+  reset();
+  pendingTimer = setTimeout(() => {
+    pendingTimer = null;
+    playNow();
+  }, TAP_DELAY_MS);
+}
+
 function setVariant(i) {
   const v = variants[i];
   document.getElementById('notifTitle').textContent = v.title;
   document.getElementById('notifBody').textContent = v.body;
   document.querySelectorAll('.variant-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
-  play();
+  playNow();
 }
 document.querySelectorAll('.variant-btn').forEach((b, i) => b.addEventListener('click', () => setVariant(i)));
 
-// Tap sur l'écran (pas sur les contrôles) = rejouer
+// Tap sur l'écran (pas sur les contrôles) = la notif disparaît, puis revient après 5s.
+// Bouton "↻ rejouer" = relance immédiate (sans attente).
 document.querySelector('.lockscreen').addEventListener('click', e => {
-  if (!e.target.closest('button') && !e.target.closest('.help')) play();
+  if (!e.target.closest('button') && !e.target.closest('.help')) scheduleAfterTap();
 });
 
-// Esc = cacher l'UI (boutons + helper) pour le tournage
+// H ou Esc = cacher/afficher l'UI (boutons + helper) pour le tournage
 function hideUI() {
   document.getElementById('controls').classList.toggle('hide');
   document.getElementById('picker').classList.toggle('hide');
@@ -251,8 +267,8 @@ function hideUI() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'h') hideUI(); });
 
-// Animation initiale après 1.2s
-setTimeout(play, 1200);
+// État initial : notif cachée, on attend le premier tap
+reset();
 </script>
 </body>
 </html>
