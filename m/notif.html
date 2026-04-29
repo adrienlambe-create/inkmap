@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Inkmap — Mockup notif Reel</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 100vw; height: 100vh; overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    color: white; user-select: none;
+    background: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Wallpaper iOS-like : dégradé sombre élégant */
+  .lockscreen {
+    width: 100vw; height: 100vh;
+    background:
+      radial-gradient(ellipse at top, rgba(180, 60, 60, 0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom, rgba(40, 40, 80, 0.3) 0%, transparent 50%),
+      linear-gradient(155deg, #0a0a14 0%, #1a1820 45%, #0d0810 100%);
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: env(safe-area-inset-top, 0);
+  }
+  /* Status bar (heure côté gauche, batterie côté droit) */
+  .status-bar {
+    position: absolute;
+    top: max(env(safe-area-inset-top, 0), 16px);
+    left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 28px;
+    font-size: 17px; font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  .status-right { display: flex; gap: 6px; align-items: center; font-size: 15px; }
+  /* Heure énorme + date */
+  .time-block { margin-top: 14vh; text-align: center; }
+  .time {
+    font-size: clamp(80px, 18vw, 140px);
+    font-weight: 200;
+    letter-spacing: -3px;
+    line-height: 0.95;
+    font-feature-settings: 'tnum';
+  }
+  .date {
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 500;
+    margin-top: 10px;
+    opacity: 0.95;
+    text-transform: capitalize;
+  }
+  /* Notification iOS — translucide, subtle bordure, blur derrière */
+  .notif {
+    position: absolute;
+    bottom: 28%;
+    left: 5%; right: 5%;
+    background: rgba(48, 48, 56, 0.55);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border-radius: 22px;
+    padding: 14px 16px;
+    display: flex; gap: 14px; align-items: flex-start;
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    border: 0.5px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+  }
+  .notif.show {
+    animation: slidein 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes slidein {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .notif-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
+  .notif-content { flex: 1; min-width: 0; }
+  .notif-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2px;
+  }
+  .notif-app {
+    font-size: 13px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.85;
+  }
+  .notif-time { font-size: 13px; opacity: 0.6; }
+  .notif-title {
+    font-size: 15px; font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 1px;
+  }
+  .notif-body {
+    font-size: 14.5px; line-height: 1.32;
+    opacity: 0.92;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  /* Bouton "rejouer" caché du film, cliquable */
+  .controls {
+    position: absolute;
+    bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 12px;
+    z-index: 10;
+  }
+  .controls.hide { opacity: 0; pointer-events: none; }
+  .ctrl-btn {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    color: white; border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .ctrl-btn:hover { background: rgba(255, 255, 255, 0.22); }
+  /* Variantes — basculables via les boutons en haut quand visible */
+  .variant-picker {
+    position: absolute;
+    top: 70px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; z-index: 10;
+    flex-wrap: wrap; max-width: 92%; justify-content: center;
+  }
+  .variant-picker.hide { opacity: 0; pointer-events: none; }
+  .variant-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white; border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 12px; border-radius: 14px;
+    font-size: 11px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .variant-btn.active {
+    background: white; color: black; border-color: white;
+  }
+  .help {
+    position: absolute;
+    top: 26px; right: 28px;
+    z-index: 10;
+    background: rgba(0,0,0,0.4); padding: 6px 10px;
+    border-radius: 12px;
+    font-size: 11px; opacity: 0.7;
+  }
+  .help.hide { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="lockscreen">
+  <div class="status-bar">
+    <span id="statusTime">9:41</span>
+    <span class="status-right">
+      <svg width="18" height="11" viewBox="0 0 18 11" fill="white"><path d="M1 6h2v4H1zm4-2h2v6H5zm4-2h2v8H9zm4-2h2v10h-2z"/></svg>
+      <span style="font-weight:500">5G</span>
+      <svg width="26" height="12" viewBox="0 0 26 12" fill="none">
+        <rect x="0.5" y="0.5" width="22" height="11" rx="3" stroke="white" stroke-opacity="0.4"/>
+        <rect x="2" y="2" width="19" height="8" rx="1.5" fill="white"/>
+        <rect x="23.5" y="4" width="1.5" height="4" rx="0.5" fill="white" fill-opacity="0.4"/>
+      </svg>
+    </span>
+  </div>
+
+  <div class="help hide" id="help">tap = play • H = afficher/cacher l'UI</div>
+
+  <div class="variant-picker hide" id="picker">
+    <button class="variant-btn active" data-i="0">Raphaëlle — Paris 150€</button>
+    <button class="variant-btn" data-i="1">Léa — Lyon 300€</button>
+    <button class="variant-btn" data-i="2">Tom — Bordeaux 200€</button>
+    <button class="variant-btn" data-i="3">Sans budget</button>
+  </div>
+
+  <div class="time-block">
+    <div class="time" id="time">14:32</div>
+    <div class="date" id="date">jeudi 30 avril</div>
+  </div>
+
+  <div class="notif" id="notif">
+    <img class="notif-icon" src="inkmap-icon.png" alt="">
+    <div class="notif-content">
+      <div class="notif-header">
+        <span class="notif-app">INKMAP</span>
+        <span class="notif-time">maintenant</span>
+      </div>
+      <div class="notif-title" id="notifTitle">Nouvelle demande — Paris</div>
+      <div class="notif-body" id="notifBody">Raphaëlle — deux hirondelles sur le bras, budget 150€</div>
+    </div>
+  </div>
+
+  <div class="controls hide" id="controls">
+    <button class="ctrl-btn" onclick="play()">↻ rejouer</button>
+    <button class="ctrl-btn" onclick="hideUI()">cacher UI</button>
+  </div>
+</div>
+
+<script>
+// Heure réelle (mise à jour uniquement au load)
+const now = new Date();
+const hh = now.getHours().toString().padStart(2, '0');
+const mm = now.getMinutes().toString().padStart(2, '0');
+document.getElementById('time').textContent = `${hh}:${mm}`;
+document.getElementById('statusTime').textContent = `${hh}:${mm}`;
+
+// Date en français
+const jours = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+document.getElementById('date').textContent = `${jours[now.getDay()]} ${now.getDate()} ${mois[now.getMonth()]}`;
+
+// Variantes de notif
+const variants = [
+  { title: 'Nouvelle demande — Paris', body: 'Raphaëlle — deux hirondelles sur le bras, budget 150€' },
+  { title: 'Nouvelle demande — Lyon', body: 'Léa cherche un fineline floral discret sur l\'avant-bras — budget 300€' },
+  { title: 'Nouvelle demande — Bordeaux', body: 'Tom veut un dotwork géométrique sur le mollet — budget 200€' },
+  { title: 'Nouvelle demande', body: 'Camille hésite encore sur le style mais a une idée précise du motif — budget non défini' },
+];
+
+const notif = document.getElementById('notif');
+function play() {
+  notif.classList.remove('show');
+  // forcer un reflow pour relancer l'animation
+  void notif.offsetWidth;
+  notif.classList.add('show');
+}
+function setVariant(i) {
+  const v = variants[i];
+  document.getElementById('notifTitle').textContent = v.title;
+  document.getElementById('notifBody').textContent = v.body;
+  document.querySelectorAll('.variant-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+  play();
+}
+document.querySelectorAll('.variant-btn').forEach((b, i) => b.addEventListener('click', () => setVariant(i)));
+
+// Tap sur l'écran (pas sur les contrôles) = rejouer
+document.querySelector('.lockscreen').addEventListener('click', e => {
+  if (!e.target.closest('button') && !e.target.closest('.help')) play();
+});
+
+// Esc = cacher l'UI (boutons + helper) pour le tournage
+function hideUI() {
+  document.getElementById('controls').classList.toggle('hide');
+  document.getElementById('picker').classList.toggle('hide');
+  document.getElementById('help').classList.toggle('hide');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'h') hideUI(); });
+
+// Animation initiale après 1.2s
+setTimeout(play, 1200);
+</script>
+</body>
+</html>
