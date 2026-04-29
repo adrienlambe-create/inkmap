@@ -4,9 +4,12 @@ const { cors, airtableConfig } = require('./_utils');
 
 // Champs publics uniquement — jamais exposer Email, Adresse, Site, TarifInfo
 // (Email est lu pour calculer verifie=true, mais jamais retourné)
+// Note : InstagramCoverPost n'est PAS listé ici car il n'est utilisé que côté
+// build (generate-profiles.js) pour choisir la thumb scrappée. Le frontend
+// reçoit juste instagramThumb (URL Blob déjà résolue) — pas besoin de l'URL Insta.
 const PUBLIC_FIELDS = [
   'Nom', 'Pseudo', 'Ville', 'Region', 'Styles', 'Tarif', 'Instagram', 'Bio', 'Photos', 'Statut', 'Email',
-  'InstagramPost1', 'InstagramPost2', 'InstagramPost3', 'InstagramCoverPost', 'InstagramEmbedDisabled',
+  'InstagramPost1', 'InstagramPost2', 'InstagramPost3', 'InstagramEmbedDisabled',
 ];
 const RETURN_FIELDS = PUBLIC_FIELDS.filter(f => f !== 'Email');
 
