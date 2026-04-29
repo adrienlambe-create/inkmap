@@ -1,12 +1,15 @@
-// Scraper Instagram og:image — utilisé au build par generate-profiles.js
+// Scraper Instagram — utilisé au build par generate-profiles.js
 // Pour un URL de post Insta public :
-//   1) fetch le HTML de la page
-//   2) extrait <meta property="og:image" content="...">
-//   3) télécharge l'image vers Vercel Blob (cache par ID de post)
-//   4) retourne { ok, blobUrl, reason }
+//   1) fetch le HTML de la page /embed/ (≠ page principale, qui sert souvent
+//      une og:image déjà cropée 1:1 par Instagram en haut de l'image)
+//   2) parse le contextJSON intégré pour récupérer l'URL d'image en RATIO
+//      ORIGINAL (1080x1440 portrait, ou 1080x1080) selon img_index
+//   3) crop carré centré 800x800 nous-mêmes (Insta ne nous fait pas le crop)
+//   4) télécharge le résultat vers Vercel Blob (cache par postId + img_index)
+//   5) retourne { ok, blobUrl, reason }
 //
 // Détecte les comptes privés / posts supprimés et renvoie ok=false.
-// Robuste aux pannes Insta (timeout + retry + fallback gracieux).
+// Robuste aux pannes Insta (timeout + retry + fallbacks en cascade).
 
 const { put, head } = require('@vercel/blob');
 const sharp = require('sharp');
@@ -16,27 +19,38 @@ const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 // Taille cible : carré 800x800 — bon compromis entre qualité et poids.
 const CROP_SIZE = 800;
 
+// Bumper cette version invalide tous les caches Blob précédents.
+// v6 : passage à l'endpoint /embed/ pour récupérer l'image source non-cropée
+// par Insta + support de ?img_index= dans la clé Blob.
+const KEY_VERSION = 'v6';
+
 const FETCH_TIMEOUT_MS = 8000;
 const MAX_RETRIES = 2;
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 ' +
   '(KHTML, like Gecko) Version/17.5 Safari/605.1.15';
 
-// Extrait l'ID d'un post Insta depuis son URL.
-// Accepte /p/{id}/, /reel/{id}/, /tv/{id}/ avec ou sans query.
-function extractPostId(url) {
+// Parse une URL Insta. Renvoie { postId, imgIndex } ou null.
+// Accepte /p/{id}/, /reel/{id}/, /tv/{id}/ avec ou sans query ?img_index=.
+function parseInstagramUrl(url) {
   if (!url) return null;
   try {
     const u = new URL(url);
     if (!/(^|\.)instagram\.com$/i.test(u.hostname)) return null;
     const m = u.pathname.match(/^\/(p|reel|tv)\/([\w-]+)/i);
-    return m ? m[2] : null;
+    if (!m) return null;
+    const raw = u.searchParams.get('img_index');
+    const imgIndex = raw ? Math.max(1, parseInt(raw, 10) || 1) : 1;
+    return { postId: m[2], imgIndex };
   } catch {
     return null;
   }
 }
 
-// Valide qu'une URL est bien un post Insta supporté.
+function extractPostId(url) {
+  return parseInstagramUrl(url)?.postId || null;
+}
+
 function isValidInstagramPostUrl(url) {
   return !!extractPostId(url);
 }
@@ -62,23 +76,87 @@ function isLoginWall(html) {
   );
 }
 
+// Extrait le contextJSON imbriqué dans la page /embed/.
+// Le JSON est doublement échappé (chaîne JS contenant du JSON).
+function extractEmbedGraph(html) {
+  const m = html.match(/"contextJSON":"((?:\\.|[^"\\])*)"/);
+  if (!m) return null;
+  try {
+    const decoded = JSON.parse(`"${m[1]}"`); // unescape la chaîne JS
+    const ctx = JSON.parse(decoded); // parse le JSON
+    return ctx?.gql_data?.shortcode_media || ctx?.shortcode_media || null;
+  } catch {
+    return null;
+  }
+}
+
+// Fallback : récupère directement l'<img class="EmbeddedMediaImage"> de la page embed.
+// Utilisé quand contextJSON est absent (single posts collapsed côté Insta).
+function extractEmbeddedMediaImage(html) {
+  const m = html.match(/<img[^>]+class="[^"]*EmbeddedMediaImage[^"]*"[^>]*src="([^"]+)"/i);
+  return m ? m[1].replace(/&amp;/g, '&') : null;
+}
+
+// Fallback ultime : og:image de la page principale (souvent cropée 1:1 par Insta).
 function extractOgImage(html) {
   if (!html) return null;
-  // Match <meta property="og:image" content="..."> ou name="og:image"
   const m =
     html.match(/<meta[^>]+property=["']og:image["'][^>]*content=["']([^"']+)["']/i) ||
     html.match(/<meta[^>]+content=["']([^"']+)["'][^>]*property=["']og:image["']/i) ||
     html.match(/<meta[^>]+name=["']og:image["'][^>]*content=["']([^"']+)["']/i);
-  if (!m) return null;
-  return m[1].replace(/&amp;/g, '&');
+  return m ? m[1].replace(/&amp;/g, '&') : null;
 }
 
-// Tente de récupérer l'og:image avec retry.
-async function fetchOgImage(postUrl) {
+// Sélectionne la plus grande résolution disponible.
+function pickBestResource(resources) {
+  if (!Array.isArray(resources) || !resources.length) return null;
+  const best = resources.reduce(
+    (b, r) => (r.config_width > (b?.config_width || 0) ? r : b),
+    null,
+  );
+  return best?.src || null;
+}
+
+// Sélectionne le bon média dans le graph selon img_index.
+// - GraphSidecar (carrousel) : prend la slide à imgIndex, fallback sur 1ère photo si vidéo
+// - GraphImage (single) : retourne directement
+// - GraphVideo (Reel) : { ok: false }
+function selectMediaFromGraph(graph, imgIndex) {
+  if (!graph) return { ok: false, reason: 'no_graph' };
+  const t = graph.__typename;
+  if (t === 'GraphSidecar') {
+    const edges = graph.edge_sidecar_to_children?.edges || [];
+    if (!edges.length) return { ok: false, reason: 'sidecar_vide' };
+    let target = edges[imgIndex - 1]?.node;
+    let usedFallback = false;
+    if (!target || target.is_video) {
+      const firstPhoto = edges.map(e => e.node).find(n => !n.is_video);
+      if (!firstPhoto) return { ok: false, reason: 'sidecar_que_des_videos' };
+      target = firstPhoto;
+      usedFallback = true;
+    }
+    const url = pickBestResource(target.display_resources) || target.display_url;
+    if (!url) return { ok: false, reason: 'pas_de_display_url' };
+    return { ok: true, imgUrl: url, fallback: usedFallback };
+  }
+  if (t === 'GraphImage') {
+    const url = pickBestResource(graph.display_resources) || graph.display_url;
+    return url ? { ok: true, imgUrl: url } : { ok: false, reason: 'pas_de_display_url' };
+  }
+  if (t === 'GraphVideo' || graph.is_video) {
+    return { ok: false, reason: 'post_video' };
+  }
+  return { ok: false, reason: 'typename_inconnu_' + t };
+}
+
+// Tente d'obtenir l'URL d'une image source (ratio original) pour un post.
+// Cascade : embed contextJSON → embed EmbeddedMediaImage → og:image page principale.
+async function fetchInstaImage(postId, imgIndex) {
+  const embedUrl = `https://www.instagram.com/p/${postId}/embed/`;
   let lastErr;
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const r = await fetchWithTimeout(postUrl, {
+      const r = await fetchWithTimeout(embedUrl, {
         headers: {
           'User-Agent': USER_AGENT,
           'Accept': 'text/html,application/xhtml+xml',
@@ -87,53 +165,69 @@ async function fetchOgImage(postUrl) {
         redirect: 'follow',
       });
       if (!r.ok) {
+        if (r.status === 404 || r.status === 410) return { ok: false, reason: 'post_supprime' };
         lastErr = new Error(`HTTP ${r.status}`);
-        if (r.status === 404 || r.status === 410) {
-          return { ok: false, reason: 'post_supprime' };
-        }
         continue;
       }
       const html = await r.text();
-      if (isLoginWall(html)) {
-        return { ok: false, reason: 'compte_prive_ou_login_requis' };
+      if (isLoginWall(html)) return { ok: false, reason: 'compte_prive_ou_login_requis' };
+
+      // 1) Cas idéal : contextJSON présent → image en ratio original + img_index respecté
+      const graph = extractEmbedGraph(html);
+      if (graph) {
+        const sel = selectMediaFromGraph(graph, imgIndex);
+        if (sel.ok) return { ok: true, imgUrl: sel.imgUrl, fallback: sel.fallback };
+        if (sel.reason === 'post_video' || sel.reason === 'sidecar_que_des_videos') {
+          // Pour les Reels, on tente quand même og:image plus bas (frame avec play overlay)
+          break;
+        }
       }
-      const ogUrl = extractOgImage(html);
-      if (!ogUrl) {
-        lastErr = new Error('og:image absent');
-        continue;
-      }
-      return { ok: true, ogUrl };
+
+      // 2) Fallback : EmbeddedMediaImage (single post, contextJSON collapsed)
+      const embedded = extractEmbeddedMediaImage(html);
+      if (embedded) return { ok: true, imgUrl: embedded, fallback: 'embed_img' };
+
+      lastErr = new Error('aucune image dans embed');
     } catch (e) {
       lastErr = e;
     }
   }
+
+  // 3) Dernier recours : og:image de la page principale (souvent cropée 1:1, et avec
+  //    play overlay pour les Reels — mais mieux que rien)
+  try {
+    const r = await fetchWithTimeout(`https://www.instagram.com/p/${postId}/`, {
+      headers: { 'User-Agent': USER_AGENT, 'Accept-Language': 'fr-FR,fr;q=0.9,en;q=0.8' },
+      redirect: 'follow',
+    });
+    if (r.ok) {
+      const html = await r.text();
+      if (!isLoginWall(html)) {
+        const og = extractOgImage(html);
+        if (og) return { ok: true, imgUrl: og, fallback: 'og_image' };
+      }
+    }
+  } catch (_) {}
+
   return { ok: false, reason: 'fetch_echec', error: String(lastErr || 'inconnu') };
 }
 
-// Crop carré centré. Hypothèse vérifiée par Adrien : les tatoueurs cadrent
-// quasi systématiquement le tatouage au centre de leurs photos Insta.
-// On garde donc une stratégie déterministe (centre géométrique) plutôt que
-// les algos 'attention' / 'entropy' qui peuvent dériver vers des zones non
-// pertinentes (ombres, play overlay).
+// Crop carré centré. L'image source vient de /embed/ et est en ratio original
+// (typiquement 1080x1440 portrait), donc le centrage géométrique garde le tatouage
+// quand il est cadré au milieu du post Insta — ce qui est le cas le plus fréquent.
 async function cropToSquare(buf) {
   return sharp(buf)
-    .resize(CROP_SIZE, CROP_SIZE, {
-      fit: 'cover',
-      position: 'center',
-    })
+    .resize(CROP_SIZE, CROP_SIZE, { fit: 'cover', position: 'center' })
     .jpeg({ quality: 85, mozjpeg: true })
     .toBuffer();
 }
 
-// Upload une image vers Vercel Blob (cache stable par clé).
-// La clé "v5" force un re-scrape pour les profils déjà cachés avec un crop précédent.
-async function uploadToBlob(imgUrl, postId) {
-  if (!BLOB_TOKEN) {
-    throw new Error('BLOB_READ_WRITE_TOKEN absent');
-  }
-  const key = `instagram-thumbs-v5/${postId}.jpg`;
+// Upload vers Vercel Blob. La clé inclut img_index : deux profils ciblant le même
+// post à des index différents ont deux entrées distinctes.
+async function uploadToBlob(imgUrl, postId, imgIndex) {
+  if (!BLOB_TOKEN) throw new Error('BLOB_READ_WRITE_TOKEN absent');
+  const key = `instagram-thumbs-${KEY_VERSION}/${postId}-i${imgIndex}.jpg`;
 
-  // 1) Existe déjà ? — réutilise l'URL
   try {
     const meta = await head(key, { token: BLOB_TOKEN });
     if (meta?.url) return meta.url;
@@ -141,16 +235,14 @@ async function uploadToBlob(imgUrl, postId) {
     // 404 normal, on upload plus bas
   }
 
-  // 2) Télécharge l'og:image, smart-crop carré, push vers Blob
   const r = await fetchWithTimeout(imgUrl, { headers: { 'User-Agent': USER_AGENT } });
-  if (!r.ok) throw new Error(`Téléchargement og:image échoué (${r.status})`);
+  if (!r.ok) throw new Error(`Téléchargement image échoué (${r.status})`);
   const rawBuf = Buffer.from(await r.arrayBuffer());
   let croppedBuf;
   try {
     croppedBuf = await cropToSquare(rawBuf);
   } catch (e) {
-    // Sharp peut échouer sur certains formats exotiques — fallback sur l'image brute
-    console.warn(`   ⚠️  smart-crop échec (${e.message}) — fallback image brute`);
+    console.warn(`   ⚠️  crop échec (${e.message}) — fallback image brute`);
     croppedBuf = rawBuf;
   }
   const blob = await put(key, croppedBuf, {
@@ -164,30 +256,33 @@ async function uploadToBlob(imgUrl, postId) {
 
 // API publique : prend une URL de post, retourne { ok, blobUrl?, reason? }.
 async function scrapeInstagramThumb(postUrl) {
-  const postId = extractPostId(postUrl);
-  if (!postId) return { ok: false, reason: 'url_invalide' };
+  const parsed = parseInstagramUrl(postUrl);
+  if (!parsed) return { ok: false, reason: 'url_invalide' };
+  const { postId, imgIndex } = parsed;
 
-  // Si l'image est déjà sur Blob (clé v5 = crop centré actuel), on évite de hit Insta.
+  // Cache hit ?
   if (BLOB_TOKEN) {
     try {
-      const meta = await head(`instagram-thumbs-v5/${postId}.jpg`, { token: BLOB_TOKEN });
+      const meta = await head(
+        `instagram-thumbs-${KEY_VERSION}/${postId}-i${imgIndex}.jpg`,
+        { token: BLOB_TOKEN },
+      );
       if (meta?.url) return { ok: true, blobUrl: meta.url, cached: true };
     } catch (_) {
-      // pas en cache, on continue
+      // pas en cache
     }
   }
 
-  const og = await fetchOgImage(postUrl);
-  if (!og.ok) return og;
+  const img = await fetchInstaImage(postId, imgIndex);
+  if (!img.ok) return img;
 
   if (!BLOB_TOKEN) {
-    // Pas de Blob configuré : on retourne l'URL og brute (CDN Insta, peut expirer).
-    return { ok: true, blobUrl: og.ogUrl, cached: false, fallback: 'og_direct' };
+    return { ok: true, blobUrl: img.imgUrl, cached: false, fallback: 'no_blob' };
   }
 
   try {
-    const blobUrl = await uploadToBlob(og.ogUrl, postId);
-    return { ok: true, blobUrl, cached: false };
+    const blobUrl = await uploadToBlob(img.imgUrl, postId, imgIndex);
+    return { ok: true, blobUrl, cached: false, fallback: img.fallback };
   } catch (e) {
     return { ok: false, reason: 'upload_blob_echec', error: String(e?.message || e) };
   }
