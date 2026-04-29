@@ -14,7 +14,6 @@ const sharp = require('sharp');
 const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 
 // Taille cible : carré 800x800 — bon compromis entre qualité et poids.
-// Le smart crop ('entropy') détecte la zone la plus dense en détails.
 const CROP_SIZE = 800;
 
 const FETCH_TIMEOUT_MS = 8000;
@@ -111,28 +110,28 @@ async function fetchOgImage(postUrl) {
   return { ok: false, reason: 'fetch_echec', error: String(lastErr || 'inconnu') };
 }
 
-// Crop carré ancré en haut. La majorité des photos de tatouage Insta cadrent
-// le sujet (épaule, dos, bras, cou) dans la moitié supérieure de l'image —
-// donc en cropant depuis le haut, on garde le tatouage et on coupe le vide
-// du bas. Plus prévisible que les algos 'attention' / 'entropy' qui choisissent
-// parfois des zones non pertinentes (ombres sombres, play overlay de Reel).
+// Crop carré centré. Hypothèse vérifiée par Adrien : les tatoueurs cadrent
+// quasi systématiquement le tatouage au centre de leurs photos Insta.
+// On garde donc une stratégie déterministe (centre géométrique) plutôt que
+// les algos 'attention' / 'entropy' qui peuvent dériver vers des zones non
+// pertinentes (ombres, play overlay).
 async function cropToSquare(buf) {
   return sharp(buf)
     .resize(CROP_SIZE, CROP_SIZE, {
       fit: 'cover',
-      position: 'top',
+      position: 'center',
     })
     .jpeg({ quality: 85, mozjpeg: true })
     .toBuffer();
 }
 
 // Upload une image vers Vercel Blob (cache stable par clé).
-// La clé "v3" force un re-scrape pour les profils déjà cachés avec un crop précédent.
+// La clé "v5" force un re-scrape pour les profils déjà cachés avec un crop précédent.
 async function uploadToBlob(imgUrl, postId) {
   if (!BLOB_TOKEN) {
     throw new Error('BLOB_READ_WRITE_TOKEN absent');
   }
-  const key = `instagram-thumbs-v4/${postId}.jpg`;
+  const key = `instagram-thumbs-v5/${postId}.jpg`;
 
   // 1) Existe déjà ? — réutilise l'URL
   try {
@@ -168,10 +167,10 @@ async function scrapeInstagramThumb(postUrl) {
   const postId = extractPostId(postUrl);
   if (!postId) return { ok: false, reason: 'url_invalide' };
 
-  // Si l'image est déjà sur Blob (clé v3 = entropy crop actuelle), on évite de hit Insta.
+  // Si l'image est déjà sur Blob (clé v5 = crop centré actuel), on évite de hit Insta.
   if (BLOB_TOKEN) {
     try {
-      const meta = await head(`instagram-thumbs-v4/${postId}.jpg`, { token: BLOB_TOKEN });
+      const meta = await head(`instagram-thumbs-v5/${postId}.jpg`, { token: BLOB_TOKEN });
       if (meta?.url) return { ok: true, blobUrl: meta.url, cached: true };
     } catch (_) {
       // pas en cache, on continue
