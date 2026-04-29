@@ -556,8 +556,18 @@ function afficherMessageVilleGrise(ville) {
 }
 
 function initialiserAffichage() {
-  // Trier : derniers inscrits en premier
+  // Tri en 3 niveaux de priorité, puis date d'inscription décroissante :
+  //   0 = vérifié (revendiqué + photos uploadées)
+  //   1 = non-vérifié mais avec une cover (photo Airtable ou thumb Insta scrapée)
+  //   2 = pas de photo du tout (placeholder)
+  const prioriteAffichage = t => {
+    if (t.verifie) return 0;
+    if (t.photo || t.instagramThumb) return 1;
+    return 2;
+  };
   tatoueurs.sort((a, b) => {
+    const pa = prioriteAffichage(a), pb = prioriteAffichage(b);
+    if (pa !== pb) return pa - pb;
     if (a.createdAt && b.createdAt) return new Date(b.createdAt) - new Date(a.createdAt);
     if (a.createdAt) return -1;
     if (b.createdAt) return 1;
