@@ -304,6 +304,7 @@ function updateSitemap(tatoueurs) {
     { loc: '/guide/referencer-studio-tatouage-gratuit', priority: '0.7' },
     { loc: '/guide/tatoueur-debutant-ou-experimente', priority: '0.7' },
     { loc: '/outils/calculateur-tarif-tatouage', priority: '0.7' },
+    { loc: '/outils/calculateur-rentabilite-studio-tatouage', priority: '0.7' },
   ];
 
   // Lis les pages profil depuis l'index écrit par generate-profiles.js
