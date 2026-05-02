@@ -36,6 +36,79 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Combien coûte un petit tatouage en France ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un petit tatouage (5 à 8 cm) coûte généralement entre 80 et 180 euros en France. Les minuscules tatouages (2 à 3 cm) tournent autour de 50 à 100 euros. Beaucoup de tatoueurs ont un minimum tarifaire de 80 à 100 euros, peu importe la taille."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel est le prix moyen d'un tatouage en France en 2026 ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le tarif horaire moyen d'un tatoueur en France se situe entre 80 et 150 euros. Pour un tatouage moyen (10 à 15 cm), comptez 150 à 350 euros. Les grandes pièces (manchette, dos) commencent à 1 000 euros et peuvent dépasser 3 000 euros pour plusieurs séances."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Pourquoi les tatouages sont-ils si chers ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le prix couvre bien plus que le temps de tatouage : le matériel à usage unique (aiguilles, encres, gants), la stérilisation, le local, les charges du studio, le temps de design (souvent plusieurs heures avant la séance), et l'expertise du tatoueur. Un tatouage de qualité dure toute la vie, ce qui justifie un investissement initial plus élevé."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Combien coûte une heure de tatouage ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le tarif horaire d'un tatoueur en France varie de 80 euros (en région, débutant) à 200 euros et plus (Paris, tatoueurs reconnus). La moyenne se situe autour de 100 à 130 euros de l'heure. Les tatoueurs facturent souvent au projet pour les petites pièces et à l'heure pour les grosses."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Le tatouage est-il moins cher en province qu'à Paris ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, en moyenne 15 à 25 % moins cher. Paris concentre les tatoueurs les plus reconnus et les charges de studio les plus élevées. À Lyon, Bordeaux ou Marseille, les tarifs sont proches mais légèrement inférieurs. Dans les villes moyennes, les tarifs peuvent être 30 % plus bas qu'à Paris pour un travail équivalent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Faut-il donner un pourboire au tatoueur ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En France, le pourboire n'est pas systématique mais reste très apprécié. Si tu es satisfait du travail, ajouter 10 à 20 % du prix est un beau geste. Pour les grosses pièces, certains clients offrent un repas, des fleurs, ou un cadeau personnalisé plutôt qu'un pourboire en argent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment se passe le paiement chez un tatoueur ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La plupart des tatoueurs demandent un acompte (30 à 50 % du prix) au moment de la prise de rendez-vous, généralement non remboursable. Le solde se règle le jour de la séance. Pour les grosses pièces réalisées en plusieurs séances, le paiement se fait à chaque rendez-vous. Espèces et virement sont les moyens les plus courants ; certains studios acceptent la carte."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel est le minimum tarifaire chez un tatoueur ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le minimum tarifaire correspond au prix plancher pratiqué par un tatoueur, peu importe la taille du projet. Il varie de 60 euros (en région) à 150 euros (à Paris) et couvre les frais fixes : préparation du poste, matériel à usage unique, désinfection. Même pour un point ou un mot de 2 cm, ce minimum s'applique."
+        }
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -108,8 +181,38 @@
 
     .info-section { max-width: 600px; margin: 0 auto; padding: 0 20px 64px; }
     .info-section h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 16px; }
+    .info-section h2 em { font-style: normal; color: var(--accent); }
     .info-section p { color: var(--muted2); font-size: 0.88rem; line-height: 1.8; margin-bottom: 12px; }
     .info-section strong { color: var(--text); }
+
+    .price-table { width: 100%; border-collapse: collapse; margin: 16px 0 8px; font-size: 0.86rem; }
+    .price-table th, .price-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    .price-table th { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); font-weight: 500; background: var(--surface); }
+    .price-table td { color: var(--text); }
+    .price-table td:last-child { font-weight: 600; color: var(--accent); white-space: nowrap; }
+    .price-table tr:hover td { background: var(--surface); }
+    .table-note { font-size: 0.74rem; color: var(--muted); font-style: italic; margin-top: 8px; }
+
+    .faq-section { max-width: 600px; margin: 0 auto; padding: 32px 20px 64px; }
+    .faq-section h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .faq-section h2 em { font-style: normal; color: var(--accent); }
+    .faq-intro { color: var(--muted2); font-size: 0.86rem; margin-bottom: 28px; line-height: 1.7; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item summary { cursor: pointer; padding: 18px 0; font-family: 'Space Grotesk', sans-serif; font-size: 0.96rem; font-weight: 600; color: var(--text); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; color: var(--accent); font-size: 1.4rem; font-weight: 400; transition: transform .2s; flex-shrink: 0; }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-answer { color: var(--muted2); font-size: 0.88rem; line-height: 1.75; padding: 0 0 20px; }
+
+    .city-links-section { max-width: 740px; margin: 0 auto; padding: 0 20px 56px; }
+    .city-links-section h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 10px; }
+    .city-links-section h2 em { font-style: normal; color: var(--accent); }
+    .city-links-intro { color: var(--muted2); font-size: 0.86rem; margin-bottom: 22px; line-height: 1.7; }
+    .city-links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px 20px; }
+    .city-links-grid a { color: var(--text); text-decoration: none; font-size: 0.86rem; padding: 8px 0; border-bottom: 1px dashed transparent; transition: color .15s, border-color .15s; }
+    .city-links-grid a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .city-links-grid a::before { content: '→ '; color: var(--accent); }
 
     .related { max-width: 600px; margin: 0 auto; padding: 0 20px 48px; }
     .related h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; }
@@ -235,6 +338,122 @@
   <p>En general, les tatoueurs facturent soit au projet (pour les petites pieces), soit a l'heure (pour les grosses pieces). <strong>Le tarif horaire moyen en France se situe entre 80 et 150 euros</strong>, avec des variations selon la ville et l'experience de l'artiste.</p>
   <p>A Paris, les tarifs sont en moyenne <strong>15 a 25% plus eleves</strong> qu'en region. Les styles tres techniques comme le realisme ou le japonais traditionnel sont aussi generalement plus chers car ils demandent plus de temps et d'expertise.</p>
   <p>Le meilleur conseil : <strong>contacte directement les tatoueurs qui t'interessent</strong> avec une description de ton projet pour obtenir un devis precis.</p>
+</section>
+
+<section class="info-section">
+  <h2>Combien coute un <em>tatouage</em> en France en 2026 ?</h2>
+  <p>En France, le prix d'un tatouage depend de quatre variables principales : <strong>la taille</strong>, <strong>le style</strong>, <strong>la zone du corps</strong> et <strong>la ville</strong>. La majorite des tatoueurs appliquent un <strong>minimum tarifaire</strong> compris entre 60 et 150 euros, qui couvre les frais fixes (preparation, materiel a usage unique, sterilisation) meme pour les plus petites pieces.</p>
+  <p>Pour les pieces moyennes a grandes, le tarif horaire prend le relais : <strong>de 80 euros de l'heure en region</strong> pour un tatoueur en debut de carriere, jusqu'a <strong>200 euros et plus a Paris</strong> chez un artiste reconnu. Une grosse piece comme une manchette ou un dos s'etale generalement sur plusieurs seances et represente un budget de <strong>1 000 a 3 000 euros et plus</strong>.</p>
+  <p>Voici une grille de prix indicatifs en France, hors variations liees au style et a la ville :</p>
+
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Taille du tatouage</th>
+        <th>Exemple</th>
+        <th>Prix indicatif</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Minuscule (2-3 cm)</td>
+        <td>Symbole, mot court, point</td>
+        <td>50 - 100 €</td>
+      </tr>
+      <tr>
+        <td>Petit (5-8 cm)</td>
+        <td>Phrase, petit motif fineline</td>
+        <td>80 - 180 €</td>
+      </tr>
+      <tr>
+        <td>Moyen (10-15 cm)</td>
+        <td>Avant-bras, mollet, omoplate</td>
+        <td>150 - 350 €</td>
+      </tr>
+      <tr>
+        <td>Grand (20-30 cm)</td>
+        <td>Bras complet, cuisse</td>
+        <td>300 - 600 €</td>
+      </tr>
+      <tr>
+        <td>Tres grand (demi-bras+)</td>
+        <td>Manchette, demi-dos</td>
+        <td>500 - 1 200 €</td>
+      </tr>
+      <tr>
+        <td>Piece complete</td>
+        <td>Dos entier, jambe complete</td>
+        <td>1 000 - 3 000 € +</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="table-note">Fourchettes indicatives 2026, hors zones complexes (mains, doigts, cou) et hors styles techniques (realisme, japonais) qui peuvent ajouter 20 a 35 %.</p>
+</section>
+
+<section class="faq-section">
+  <h2>Questions <em>frequentes</em> sur le prix d'un tatouage</h2>
+  <p class="faq-intro">Les questions qu'on nous pose le plus sur les tarifs en France. Si tu ne trouves pas ta reponse, demande directement a un tatoueur — la plupart repondent gratuitement aux estimations.</p>
+
+  <details class="faq-item">
+    <summary>Combien coute un petit tatouage ?</summary>
+    <div class="faq-answer">Un petit tatouage de 5 a 8 cm coute generalement entre 80 et 180 € en France. Les minuscules pieces (2-3 cm) tournent autour de 50-100 €. Beaucoup de tatoueurs ont un minimum tarifaire de 80 a 100 €, peu importe la taille — c'est ce qui couvre la preparation du poste et le materiel sterile.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Quel est le prix moyen d'un tatouage en France en 2026 ?</summary>
+    <div class="faq-answer">Le tarif horaire moyen d'un tatoueur en France se situe entre 80 et 150 €. Pour un tatouage moyen de 10 a 15 cm, compte 150 a 350 €. Les grandes pieces (manchette, dos entier) commencent a 1 000 € et peuvent depasser 3 000 € pour plusieurs seances.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Pourquoi les tatouages sont-ils si chers ?</summary>
+    <div class="faq-answer">Le prix couvre bien plus que le temps d'aiguillage. Il y a le materiel a usage unique (aiguilles, encres, gants, films), la sterilisation, le local, les charges du studio, le temps de design (souvent plusieurs heures avant la seance), et l'expertise du tatoueur. Un tatouage de qualite dure toute la vie — l'investissement initial est en proportion.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Combien coute une heure de tatouage ?</summary>
+    <div class="faq-answer">Le tarif horaire varie de 80 € (en region, debut de carriere) a 200 € et plus (Paris, tatoueurs reconnus). La moyenne en France tourne autour de 100-130 €/h. Les tatoueurs facturent souvent <strong>au projet</strong> pour les petites pieces (devis fixe negocie a l'avance) et <strong>a l'heure</strong> pour les grosses pieces ou la duree est moins previsible.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Le tatouage est-il moins cher en province qu'a Paris ?</summary>
+    <div class="faq-answer">Oui, en moyenne 15 a 25 % moins cher. Paris concentre les tatoueurs les plus reconnus et les charges de studio les plus elevees. A Lyon, Bordeaux ou Marseille, les tarifs restent proches mais legerement inferieurs. Dans les villes moyennes, on peut trouver des tatoueurs talentueux 30 % moins chers qu'a Paris pour un travail equivalent.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Faut-il donner un pourboire au tatoueur ?</summary>
+    <div class="faq-answer">Le pourboire n'est pas systematique en France mais reste tres apprecie. Si tu es satisfait du resultat, ajouter 10 a 20 % du prix est un beau geste. Pour les grosses pieces, certains clients offrent un repas, des fleurs, ou un cadeau personnalise plutot qu'un pourboire en argent. Surtout, laisse une bonne review — c'est ce qui fait vivre un studio.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Comment se passe le paiement chez un tatoueur ?</summary>
+    <div class="faq-answer">La plupart des tatoueurs demandent un <strong>acompte de 30 a 50 %</strong> a la prise de rendez-vous, generalement non remboursable. Le solde se regle le jour de la seance. Pour les grosses pieces en plusieurs seances, le paiement se fait a chaque rendez-vous. Especes et virement sont les plus courants ; certains studios acceptent la carte ou Lydia.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Qu'est-ce que le minimum tarifaire d'un tatoueur ?</summary>
+    <div class="faq-answer">Le minimum tarifaire est le prix plancher applique par le tatoueur, peu importe la taille du projet. Il couvre les frais fixes incompressibles : preparation du poste, materiel a usage unique, desinfection. En France, il varie de <strong>60 € en region</strong> a <strong>150 € a Paris</strong>. Meme pour un point ou un mot de 2 cm, ce minimum s'applique — c'est normal.</div>
+  </details>
+</section>
+
+<section class="city-links-section">
+  <h2>Trouve un <em>tatoueur</em> par style et par ville</h2>
+  <p class="city-links-intro">Maintenant que tu as une idee du budget, explore les tatoueurs Inkmap par style et par ville. Toutes les pages ci-dessous listent uniquement des artistes verifies, avec photos et lien direct vers leur Instagram.</p>
+  <div class="city-links-grid">
+    <a href="../tatoueur-fineline-paris">Tatoueur fineline Paris</a>
+    <a href="../tatoueur-fineline-lyon">Tatoueur fineline Lyon</a>
+    <a href="../tatoueur-blackwork-paris">Tatoueur blackwork Paris</a>
+    <a href="../tatoueur-blackwork-lyon">Tatoueur blackwork Lyon</a>
+    <a href="../tatoueur-blackwork-bordeaux">Tatoueur blackwork Bordeaux</a>
+    <a href="../tatoueur-realisme-paris">Tatoueur realisme Paris</a>
+    <a href="../tatoueur-realisme-lyon">Tatoueur realisme Lyon</a>
+    <a href="../tatoueur-dotwork-paris">Tatoueur dotwork Paris</a>
+    <a href="../tatoueur-dotwork-bordeaux">Tatoueur dotwork Bordeaux</a>
+    <a href="../tatoueur-japonais-paris">Tatoueur japonais Paris</a>
+    <a href="../tatoueur-old-school-paris">Tatoueur old school Paris</a>
+    <a href="../tatoueur-geometrique-lyon">Tatoueur geometrique Lyon</a>
+    <a href="../tatoueur-lettering-paris">Tatoueur lettering Paris</a>
+    <a href="../tatoueur-aquarelle-lyon">Tatoueur aquarelle Lyon</a>
+  </div>
 </section>
 
 <section class="tatoueur-cta">
