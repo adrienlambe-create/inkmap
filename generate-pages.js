@@ -168,6 +168,66 @@ const STYLE_FAQ = {
   ],
 };
 
+// Contenu local unique : combos style × ville indexés (pour SEO)
+// Inséré au-dessus du guide générique. Différencie chaque page Google
+// au lieu d'avoir 10 pages template-identiques.
+const STYLE_CITY_INSIGHT = {
+  'aquarelle': {
+    'paris': {
+      where: `Paris ne concentre pas l'aquarelle dans un quartier précis : les artistes spécialisés sont disséminés entre Belleville (20e), Oberkampf (11e) et le Marais. C'est un style de niche en France, choisi par des tatoueurs venus de l'illustration ou de la peinture, qui assument une palette colorée à contre-courant du tout-noir parisien.`,
+      price: `Entre <strong>120 € et 180 € de l'heure</strong> chez nos artistes vérifiés, avec un minimum tarifaire autour de 100 € pour une petite pièce. La fourchette haute reflète la difficulté technique : les pigments dilués demandent une maîtrise précise de la profondeur d'aiguille.`,
+      tip: `L'aquarelle est le style qui vieillit le moins bien si l'artiste n'est pas expérimenté. Demande à voir des photos <strong>cicatrisées 1 an minimum</strong> pour vérifier comment les pigments tiennent dans le temps. Méfie-toi des designs trop "watercolor splash" sans contour de structure : ils s'estompent vite.`,
+    },
+  },
+  'geometrique': {
+    'paris': {
+      where: `Le géométrique parisien s'est concentré autour du Marais et d'Oberkampf, dans des studios qui assument une approche graphique et architecturale du tatouage. Mandalas, dotwork géométrique, patterns sacrés : Paris a importé tôt cette esthétique venue de Londres et Berlin, et la scène est aujourd'hui mature.`,
+      price: `Entre <strong>100 € et 180 € de l'heure</strong> chez nos artistes vérifiés. Les pièces simples (triangles, cercles, motifs minimalistes) partent de 100 € fixe ; les mandalas ou compositions complexes peuvent demander 8 à 15 heures de travail.`,
+      tip: `Le géométrique ne pardonne aucune approximation. <strong>Zoome sur les photos du portfolio</strong> : les lignes droites doivent être parfaitement parallèles, les symétries impeccables, l'espacement des points régulier. C'est le seul style où la qualité technique se voit immédiatement, même sur Instagram.`,
+    },
+  },
+  'japonais': {
+    'paris': {
+      where: `Les studios spécialisés en japonais traditionnel à Paris se concentrent autour de Pigalle, Bastille et République, dans des espaces conçus pour les longues séances. C'est un style historiquement implanté dans la capitale, avec une scène qui respecte les codes irezumi : sens des vagues, équilibre des éléments, symbolique des motifs.`,
+      price: `Entre <strong>130 € et 180 € de l'heure</strong> chez nos artistes vérifiés. Mais le bon repère, c'est le <strong>projet total</strong> : un sleeve japonais demande 15 à 25 heures, soit 2 500 à 4 500 € ; un dos complet peut atteindre 50 heures et 8 000 €+.`,
+      tip: `Choisis un artiste qui maîtrise la <strong>composition traditionnelle</strong>, pas juste le dessin de carpe ou de dragon isolé. Demande-lui d'expliquer la symbolique de tes motifs et leur disposition : un vrai japonisant te parlera du sens des vagues, de la position des fleurs de cerisier, de la hiérarchie visuelle. Si tu n'entends pas ça, change.`,
+    },
+  },
+  'lettering': {
+    'paris': {
+      where: `Le lettering parisien est porté par une vague script et calligraphie qui a explosé depuis 2020. Les studios spécialisés se trouvent surtout dans le Marais et autour de Pigalle, où les artistes mêlent influences chicano, gothique allemand et typographie contemporaine. Phrase courte, prénom, citation longue : Paris couvre tous les registres.`,
+      price: `À partir de <strong>80 € pour une phrase courte</strong> (forfait), et entre <strong>120 € et 150 € de l'heure</strong> chez nos artistes vérifiés pour les compositions plus longues (full arm, dos, citations en plusieurs lignes). Le lettering est l'un des styles les plus rapides à exécuter, ce qui le rend accessible.`,
+      tip: `Demande toujours une <strong>maquette validée avant la séance</strong>, à l'échelle réelle, sur papier ou en projection sur la peau. Le lettering ne se rattrape pas : une lettre mal espacée ou trop fine restera ainsi à vie. Teste plusieurs polices avec ton artiste avant de fixer le choix.`,
+    },
+  },
+  'realisme': {
+    'paris': {
+      where: `Le réalisme premium parisien se concentre dans des studios privés du Marais, de Bastille et du 11e, souvent sur rendez-vous uniquement. Portraits, animaux hyper-réalistes, scènes photographiques : Paris attire des artistes formés aux Beaux-Arts ou venus de l'illustration, capables de reproduire des images avec une précision photographique.`,
+      price: `Entre <strong>130 € et 200 € de l'heure</strong> chez nos artistes vérifiés. Un portrait de format A4 demande typiquement 5 à 8 heures, soit 800 à 1 600 €. Les pièces couleur ou les hyper-réalismes complexes peuvent dépasser 200 € de l'heure chez les artistes les plus reconnus.`,
+      tip: `Le réalisme se juge <strong>après cicatrisation</strong>, pas frais. Demande à voir des photos prises 6 mois après la séance, voire 1-2 ans : c'est là que tu vois si l'artiste maîtrise les contrastes, les dégradés, et anticipe la fonte légère des pigments dans la peau. Un beau portrait à J+0 ne dit rien.`,
+    },
+  },
+};
+
+function buildLocalInsight(style, city) {
+  const insight = STYLE_CITY_INSIGHT[style.slug]?.[city.slug];
+  if (!insight) return '';
+  return `
+<!-- LOCAL INSIGHT (contenu unique style × ville) -->
+<section style="max-width:780px;margin:64px auto;padding:0 56px;">
+  <h2 style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:32px;line-height:1.2;color:var(--text);">${style.label} à ${city.label} : où et comment</h2>
+  <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:40px;">${insight.where}</p>
+  <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:32px;margin-bottom:32px;">
+    <p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:12px;">Fourchette de prix observée</p>
+    <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:0;">${insight.price}</p>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:32px;">
+    <p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:12px;">Conseil avant de réserver</p>
+    <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:0;">${insight.tip}</p>
+  </div>
+</section>`;
+}
+
 // Conseils pour choisir son tatoueur par style
 const STYLE_TIPS = {
   'realisme': `Demandez à voir des photos cicatrisées, pas seulement fraîches. Le réalisme révèle la vraie qualité de l'artiste une fois la peau guérie. Vérifiez aussi qu'il maîtrise les contrastes et les dégradés sur différentes carnations.`,
@@ -271,6 +331,7 @@ function buildPage(style, city) {
   const cityLinks = buildCityLinks(style, city);
   const faqHtml = buildFaqHtml(style);
   const tips = STYLE_TIPS[style.slug] || '';
+  const localInsight = buildLocalInsight(style, city);
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -397,7 +458,7 @@ function buildPage(style, city) {
 
     /* ── SEO SECTIONS ── */
     .seo-section {
-      max-width: 900px;
+      max-width: 780px;
       margin: 0 auto;
       padding: 56px 56px;
       border-bottom: 1px solid var(--border);
@@ -406,17 +467,18 @@ function buildPage(style, city) {
     .seo-section-alt {
       background: var(--surface);
       max-width: 100%;
-      padding-left: calc((100% - 900px) / 2 + 56px);
-      padding-right: calc((100% - 900px) / 2 + 56px);
+      padding-left: calc((100% - 780px) / 2 + 56px);
+      padding-right: calc((100% - 780px) / 2 + 56px);
     }
 
     .seo-section-title {
       font-family: 'Syne', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: -0.5px;
       margin-bottom: 20px;
+      line-height: 1.2;
       color: var(--text);
     }
 
@@ -482,7 +544,7 @@ function buildPage(style, city) {
     .internal-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 14px;
     }
 
     .internal-link {
@@ -567,6 +629,8 @@ ${HEADER_HTML}
 
 <!-- GRID -->
 <div class="grid" id="grid"></div>
+
+${localInsight}
 
 <!-- GUIDE DU STYLE -->
 <section class="seo-section">
