@@ -1,6 +1,6 @@
 # Inkmap — Annuaire tatoueurs par style/ville
 
-Site statique HTML, SEO programmatique, déployé Netlify/Vercel.
+Site statique HTML, SEO programmatique, déployé sur Vercel.
 Langue du site : français.
 
 ## Skill Router
