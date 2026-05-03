@@ -2124,6 +2124,107 @@
       .hero-ctas .btn-secondary { text-align: center; width: 100%; }
     }
 
+    /* ── HERO TOOL + DRAWER ── */
+    .hero-tool-section {
+      padding: 96px 56px;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .hero-tool-inner { max-width: 1100px; margin: 0 auto; }
+    .hero-tool-card {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px;
+      padding: 64px; border-radius: 8px; align-items: center;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+      color: #fff;
+    }
+    .hero-tool-content { display: flex; flex-direction: column; gap: 22px; }
+    .hero-tool-tag {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 3px;
+    }
+    .hero-tool-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .hero-tool-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; text-transform: uppercase; letter-spacing: -1px; line-height: 1;
+    }
+    .hero-tool-title em { font-style: normal; color: var(--accent); }
+    .hero-tool-desc { color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.7; max-width: 460px; }
+    .hero-tool-cta {
+      display: inline-flex; align-self: flex-start;
+      padding: 16px 28px; background: var(--accent); color: #fff;
+      text-decoration: none; font-family: 'Space Mono', monospace;
+      font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+      border-radius: 2px; transition: background .15s; margin-top: 4px;
+    }
+    .hero-tool-cta:hover { background: #e74c3c; }
+    .hero-tool-preview-label {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 2.5px;
+      margin-bottom: 16px;
+    }
+    .hero-tool-preview-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px; padding: 28px;
+    }
+    .hero-tool-preview-detail {
+      color: rgba(255,255,255,0.55); font-size: 0.78rem;
+      font-family: 'Space Mono', monospace; margin-bottom: 14px; letter-spacing: 0.5px;
+    }
+    .hero-tool-preview-price {
+      font-family: 'Syne', sans-serif; font-size: 2.6rem;
+      font-weight: 800; line-height: 1; color: #fff;
+    }
+    .hero-tool-preview-price span { color: var(--accent); }
+    .hero-tool-preview-meta {
+      margin-top: 14px; font-size: 0.72rem; color: rgba(255,255,255,0.4);
+      font-family: 'Space Mono', monospace; letter-spacing: 0.5px;
+    }
+
+    .hero-tool-drawer-toggle {
+      margin: 36px auto 0; display: flex; align-items: center; gap: 10px;
+      background: transparent; border: 1px solid var(--border);
+      padding: 14px 24px; border-radius: 30px;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 1.5px; color: var(--text);
+      cursor: pointer; transition: all .15s;
+    }
+    .hero-tool-drawer-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .drawer-toggle-chevron { transition: transform .25s; }
+    .hero-tool-drawer-toggle[aria-expanded="true"] .drawer-toggle-chevron { transform: rotate(180deg); }
+    .hero-tool-drawer { margin-top: 24px; animation: drawerSlide .3s ease; }
+    @keyframes drawerSlide {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: none; }
+    }
+    .hero-tool-drawer-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .drawer-card {
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 24px 22px; background: var(--card);
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: 10px;
+      transition: all .15s;
+    }
+    .drawer-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.05); }
+    .drawer-card-tag {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 2px;
+    }
+    .drawer-card h3 {
+      font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: -0.3px; line-height: 1.25;
+    }
+    .drawer-card p { font-size: 0.78rem; color: var(--muted2); line-height: 1.55; }
+
+    @media (max-width: 768px) {
+      .hero-tool-section { padding: 64px 20px; }
+      .hero-tool-card { grid-template-columns: 1fr; padding: 36px 28px; gap: 36px; }
+      .hero-tool-preview-price { font-size: 2.2rem; }
+      .hero-tool-drawer-grid { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -2133,6 +2234,7 @@
   <a href="index.html" class="logo">ink<em>map</em></a>
   <nav>
     <a href="#recherche">Annuaire</a>
+    <a href="#ressources">Outils</a>
     <a href="faq.html">FAQ</a>
     <div class="nav-dropdown" id="nav-styles-dropdown">
       <button class="nav-dropdown-btn" id="nav-styles-btn" aria-haspopup="true" aria-expanded="false">
@@ -2166,6 +2268,7 @@
 <!-- MENU MOBILE -->
 <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation">
   <a href="#recherche" onclick="fermerMenu()">Annuaire</a>
+  <a href="#ressources" onclick="fermerMenu()">Outils</a>
   <a href="faq.html" onclick="fermerMenu()">FAQ</a>
   <div class="mobile-styles-section" id="mobile-styles-section">
     <button class="mobile-styles-toggle" id="mobile-styles-toggle" aria-expanded="false">
@@ -2313,6 +2416,63 @@
     </div>
 
     <div class="ia-matches-grid" id="iaMatchesGrid"></div>
+  </div>
+</section>
+
+<!-- HERO TOOL + DRAWER (ressources & outils) -->
+<section class="hero-tool-section" id="ressources">
+  <div class="hero-tool-inner">
+    <div class="hero-tool-card">
+      <div class="hero-tool-content">
+        <div class="hero-tool-tag"><span></span> Outil gratuit · 30 sec</div>
+        <h2 class="hero-tool-title">Combien va te <em>coûter</em> ton tatouage ?</h2>
+        <p class="hero-tool-desc">Calcule ton budget selon la taille, le style, la zone du corps et la ville. Basé sur les tarifs réels de nos artistes vérifiés en France.</p>
+        <a href="outils/calculateur-tarif-tatouage.html" class="hero-tool-cta">Utiliser le calculateur →</a>
+      </div>
+      <div class="hero-tool-preview">
+        <div class="hero-tool-preview-label">Exemple d'estimation</div>
+        <div class="hero-tool-preview-card">
+          <div class="hero-tool-preview-detail">Avant-bras · Fineline · Paris</div>
+          <div class="hero-tool-preview-price">≈ <span>380 €</span></div>
+          <div class="hero-tool-preview-meta">3 h × 125 €/h</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="hero-tool-drawer-toggle" id="ressourcesToggle" aria-expanded="false" aria-controls="ressourcesDrawer">
+      <span class="drawer-toggle-text">Voir les autres outils & guides</span>
+      <svg class="drawer-toggle-chevron" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+
+    <div class="hero-tool-drawer" id="ressourcesDrawer" hidden>
+      <div class="hero-tool-drawer-grid">
+        <a href="guide/tatoueur-debutant-ou-experimente.html" class="drawer-card">
+          <div class="drawer-card-tag">Pour ton projet</div>
+          <h3>Tatoueur débutant ou expérimenté ?</h3>
+          <p>Comment choisir l'artiste qui correspond à ton projet et à ton budget.</p>
+        </a>
+        <a href="outils/calculateur-rentabilite-studio-tatouage.html" class="drawer-card">
+          <div class="drawer-card-tag">Pour les tatoueurs</div>
+          <h3>Calculateur de rentabilité studio</h3>
+          <p>Calcule ton seuil de rentabilité, ton CA cible et ton tarif horaire juste.</p>
+        </a>
+        <a href="guide/comment-fixer-ses-prix-tatoueur.html" class="drawer-card">
+          <div class="drawer-card-tag">Pour les tatoueurs</div>
+          <h3>Comment fixer tes prix</h3>
+          <p>Méthode complète pour calculer ton tarif horaire et ton minimum tarifaire.</p>
+        </a>
+        <a href="guide/trouver-clients-tatoueur.html" class="drawer-card">
+          <div class="drawer-card-tag">Pour les tatoueurs</div>
+          <h3>Trouver des clients</h3>
+          <p>Les meilleures stratégies pour développer ta clientèle en 2026.</p>
+        </a>
+        <a href="guide/referencer-studio-tatouage-gratuit.html" class="drawer-card">
+          <div class="drawer-card-tag">Pour les tatoueurs</div>
+          <h3>Référencer ton studio</h3>
+          <p>Toutes les plateformes gratuites pour être visible sur Google.</p>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -3288,37 +3448,15 @@
   </svg>
 </div>
 
-<!-- RESSOURCES HIGHLIGHT -->
+<!-- CTA FINAL TATOUEURS -->
 <section class="highlight-section">
   <div class="highlight-inner">
-    <div class="highlight-tag"><span></span> Ressources gratuites</div>
-    <h2 class="highlight-title">Guides & <em>outils</em></h2>
-    <div class="highlight-grid">
-      <a href="outils/calculateur-tarif-tatouage.html" class="highlight-card">
-        <div class="highlight-card-icon">&#9998;</div>
-        <h3>Calculateur de tarif</h3>
-        <p>Estime le prix de ton tatouage selon la taille, le style, la zone du corps et la ville.</p>
-        <div class="highlight-card-arrow">Utiliser l'outil &rarr;</div>
-      </a>
-      <a href="guide/trouver-clients-tatoueur.html" class="highlight-card">
-        <div class="highlight-card-icon">&#128218;</div>
-        <h3>Trouver des clients</h3>
-        <p>Les meilleures strategies pour developper sa clientele en tant que tatoueur en 2026.</p>
-        <div class="highlight-card-arrow">Lire le guide &rarr;</div>
-      </a>
-      <a href="guide/referencer-studio-tatouage-gratuit.html" class="highlight-card">
-        <div class="highlight-card-icon">&#128269;</div>
-        <h3>Referencer son studio</h3>
-        <p>Toutes les plateformes gratuites pour etre visible sur Google et attirer des clients.</p>
-        <div class="highlight-card-arrow">Lire le guide &rarr;</div>
-      </a>
-    </div>
     <div class="highlight-banner">
       <div class="highlight-banner-text">
         <h3>Tu es tatoueur ? Rejoins <em>Inkmap</em></h3>
-        <p>Profil gratuit, visibilite Google, zero commission.</p>
+        <p>Profil gratuit, visibilité Google, zéro commission.</p>
       </div>
-      <a href="rejoindre.html">Decouvrir &rarr;</a>
+      <a href="rejoindre.html">Découvrir &rarr;</a>
     </div>
   </div>
 </section>
@@ -3463,6 +3601,26 @@
 </footer>
 
 <script src="/js/app.js"></script>
+
+<script>
+  // Drawer "Outils & guides" — toggle ouvert/fermé
+  (function() {
+    const btn = document.getElementById('ressourcesToggle');
+    const drawer = document.getElementById('ressourcesDrawer');
+    if (!btn || !drawer) return;
+    const text = btn.querySelector('.drawer-toggle-text');
+    btn.addEventListener('click', function() {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      drawer.hidden = expanded;
+      text.textContent = expanded ? 'Voir les autres outils & guides' : 'Masquer les ressources';
+    });
+    // Si on arrive via l'ancre #ressources, ouvrir automatiquement le drawer
+    if (window.location.hash === '#ressources') {
+      btn.click();
+    }
+  })();
+</script>
 
 <!-- LIGHTBOX -->
 <div class="photo-lightbox" id="photoLightbox" onclick="closeLightbox(event)">
