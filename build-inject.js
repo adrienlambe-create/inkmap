@@ -333,6 +333,36 @@ function updateSitemap(tatoueurs) {
   console.log(`\n✅ sitemap.xml — ${staticPages.length + pagesWithContent.length + profiles.length} URLs (${pagesWithContent.length} style/ville + ${profiles.length} profils)`);
 }
 
+// Injecte Vercel Web Analytics + Speed Insights dans toutes les pages HTML.
+// Idempotent : skip les pages où le snippet est déjà présent.
+function injectAnalytics(rootDir) {
+  const SNIPPET = `<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>`;
+  const MARKER = '/_vercel/insights/script.js';
+  const SKIP_DIRS = new Set(['node_modules', '_private', '_backups', '.git', '.netlify', '.vercel', 'api', 'netlify', 'scripts']);
+  let count = 0;
+
+  function walk(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name.startsWith('.') || SKIP_DIRS.has(entry.name)) continue;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+      } else if (entry.isFile() && entry.name.endsWith('.html')) {
+        let html = fs.readFileSync(full, 'utf-8');
+        if (html.includes(MARKER)) continue;
+        if (!html.includes('</head>')) continue;
+        html = html.replace('</head>', `  ${SNIPPET}\n</head>`);
+        fs.writeFileSync(full, html);
+        count++;
+      }
+    }
+  }
+  walk(rootDir);
+  console.log(`✅ Vercel Analytics injecté dans ${count} pages`);
+}
+
 async function main() {
   console.log('🔄 Fetch Airtable...');
   const records = await fetchAllRecords();
@@ -346,6 +376,9 @@ async function main() {
 
   console.log('\n── Injection homepage ──');
   injectHomepage(tatoueurs);
+
+  console.log('\n── Injection Vercel Analytics ──');
+  injectAnalytics(__dirname);
 
   console.log('\n── Mise à jour sitemap ──');
   updateSitemap(tatoueurs);
