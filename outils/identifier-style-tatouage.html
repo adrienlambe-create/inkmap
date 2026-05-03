@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Identifier le style d'un tatouage — IA gratuite | Inkmap</title>
+  <meta name="description" content="Uploade une photo : notre IA reconnaît le style de tatouage en 3 secondes et te recommande les artistes français qui peuvent le réaliser. Gratuit." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/outils/identifier-style-tatouage" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inkmap" />
+  <meta property="og:title" content="Identifier le style de ton tatouage — Outil IA gratuit" />
+  <meta property="og:description" content="Uploade une photo, notre IA reconnaît le style et te recommande les bons tatoueurs. Gratuit, en 3 secondes." />
+  <meta property="og:url" content="https://inkmap.fr/outils/identifier-style-tatouage" />
+  <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Identifier le style de ton tatouage avec une IA" />
+  <meta name="twitter:description" content="Outil gratuit pour reconnaître un style de tatouage à partir d'une photo." />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Identifier le style d'un tatouage avec une IA",
+    "description": "Outil gratuit qui reconnaît automatiquement le style d'un tatouage à partir d'une photo (fineline, blackwork, japonais, réalisme, géométrique, aquarelle, lettering, dotwork, old school, tribal et plus).",
+    "url": "https://inkmap.fr/outils/identifier-style-tatouage",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "provider": { "@type": "Organization", "name": "Inkmap", "url": "https://inkmap.fr" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Comment l'IA reconnaît-elle le style d'un tatouage ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Notre IA analyse l'image que tu uploades et compare ses caractéristiques (épaisseur de trait, palette de couleurs, motifs, composition) à une base de référence de plus de 25 styles de tatouage. Elle te renvoie le style principal détecté et un score de confiance pour les 5 styles les plus probables."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quels styles de tatouage l'IA peut-elle identifier ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "L'IA reconnaît les principaux styles : fineline, blackwork, réalisme, japonais (irezumi), géométrique, aquarelle, lettering, dotwork, old school, tribal, neo-traditional, micro-réalisme, illustratif, floral, minimaliste, portrait, flash, organique, noir & gris. Les styles hybrides (ex : fineline + floral) sont aussi détectés via les scores secondaires."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quelle photo dois-je uploader ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Une photo nette d'un tatouage (sur peau ou design papier), idéalement cadrée serré sur le motif. Évite les photos floues, mal éclairées ou avec beaucoup d'éléments parasites autour. JPG, PNG ou WEBP, jusqu'à environ 10 Mo. La photo est redimensionnée et compressée localement avant analyse — elle n'est pas stockée sur nos serveurs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "L'IA est-elle fiable à 100 % ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non. L'IA donne une bonne approximation dans la grande majorité des cas, surtout pour les styles très distinctifs (japonais, old school, dotwork). Les styles proches (fineline vs micro-réalisme, blackwork vs tribal) peuvent être confondus. Le score de confiance que tu vois sur chaque résultat te donne une idée de la certitude. Le but est de t'orienter rapidement vers les bons artistes, pas de remplacer l'œil d'un pro."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Mes photos sont-elles stockées ou partagées ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Non. Ta photo est redimensionnée dans ton navigateur, envoyée à notre serveur uniquement le temps de l'analyse, puis supprimée. Aucune image n'est conservée, ni partagée, ni utilisée pour entraîner un modèle. L'analyse est gratuite et anonyme."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+
+    :root {
+      --bg: #ffffff; --surface: #f9f9f9; --card: #ffffff;
+      --border: rgba(0,0,0,0.08); --accent: #c0392b;
+      --text: #0d0d0d; --muted: #aaa; --muted2: #666;
+    }
+
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 56px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -1px; color: var(--text);
+    }
+    .logo em { font-style: normal; color: var(--accent); }
+    .back-link {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 2px; color: var(--muted2);
+      transition: color .15s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* HERO */
+    .tool-hero {
+      max-width: 900px; margin: 0 auto;
+      padding: 80px 56px 32px; text-align: center;
+    }
+    .tool-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 3px;
+      margin-bottom: 18px;
+    }
+    .tool-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .tool-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 800;
+      text-transform: uppercase; letter-spacing: -1.5px; line-height: 1;
+      margin-bottom: 22px;
+    }
+    .tool-hero h1 em { font-style: normal; color: var(--accent); }
+    .tool-hero p {
+      font-size: 1.05rem; color: var(--muted2); line-height: 1.65;
+      max-width: 680px; margin: 0 auto;
+    }
+
+    /* IA TOOL CONTAINER (dark) */
+    .ia-tool {
+      max-width: 1100px; margin: 32px auto 0;
+      padding: 56px;
+      background: #0d0d0d; color: #fff;
+      border-radius: 8px;
+    }
+
+    /* UPLOAD ZONE */
+    .ia-upload-zone {
+      border: 1px dashed rgba(255,255,255,0.18);
+      padding: 80px 40px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      cursor: pointer; transition: border-color .15s, background .15s;
+      text-align: center; position: relative;
+      background: rgba(255,255,255,0.02);
+    }
+    .ia-upload-zone:hover, .ia-upload-zone.dragover {
+      border-color: var(--accent); border-style: solid;
+      background: rgba(192,57,43,0.06);
+      box-shadow: inset 0 0 0 1px rgba(192,57,43,0.2);
+    }
+    .ia-upload-icon {
+      width: 60px; height: 60px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; color: rgba(255,255,255,0.45);
+      transition: border-color .15s, color .15s;
+    }
+    .ia-upload-zone:hover .ia-upload-icon { border-color: var(--accent); color: var(--accent); }
+    .ia-upload-main { font-weight: 600; font-size: 1.05rem; color: #fff; margin-top: 4px; }
+    .ia-upload-hint {
+      color: rgba(255,255,255,0.4); font-size: 0.72rem;
+      font-family: 'Space Mono', monospace; letter-spacing: 1px;
+    }
+    .ia-upload-trust {
+      margin-top: 18px; color: rgba(255,255,255,0.32);
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+
+    /* RESULT LAYOUT */
+    .ia-result-layout {
+      display: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+    .ia-result-layout.visible { display: grid; grid-template-columns: 1fr 1fr; }
+
+    .ia-preview-col {
+      background: #000; position: relative;
+      min-height: 360px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #ia-preview-img {
+      max-width: 100%; max-height: 420px;
+      object-fit: contain; display: block;
+    }
+    .ia-scan-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 16px;
+      transition: opacity .5s; z-index: 2;
+    }
+    .ia-scan-overlay.hidden { opacity: 0; pointer-events: none; }
+    .scan-ring {
+      width: 60px; height: 60px;
+      border: 2px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: rgba(192,57,43,0.4);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .scan-label {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+    }
+    .scan-line {
+      position: absolute; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      box-shadow: 0 0 12px var(--accent);
+      animation: scanMove 2s ease-in-out infinite;
+      top: 0;
+    }
+    @keyframes scanMove {
+      0% { top: 0; opacity: 1; }
+      90% { top: 100%; opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    .ia-results-col {
+      background: #111; padding: 44px;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+    .ia-detected-label {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      color: rgba(255,255,255,0.4); text-transform: uppercase;
+      letter-spacing: 3px; margin-bottom: 8px;
+    }
+    .ia-detected-style {
+      font-family: 'Syne', sans-serif; font-size: 2.4rem;
+      font-weight: 800; color: var(--accent);
+      text-transform: uppercase; margin-bottom: 24px;
+      line-height: 1; letter-spacing: -0.5px;
+    }
+    .ia-explication {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      color: rgba(255,255,255,0.55); margin: 0 0 22px;
+      line-height: 1.55; padding: 12px 16px;
+      border-left: 2px solid var(--accent);
+      background: rgba(255,255,255,0.04);
+      display: none;
+    }
+    .ia-explication.visible { display: block; }
+    .ia-bars { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+    .ia-bar-row { display: flex; align-items: center; gap: 12px; }
+    .ia-bar-name {
+      font-size: 0.65rem; font-family: 'Space Mono', monospace;
+      color: rgba(255,255,255,0.5); width: 130px; flex-shrink: 0;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .ia-bar-track {
+      flex: 1; height: 5px; background: rgba(255,255,255,0.08);
+      overflow: hidden; border-radius: 3px;
+    }
+    .ia-bar-fill {
+      height: 100%; background: rgba(255,255,255,0.5); width: 0;
+      transition: width 1s cubic-bezier(.16,1,.3,1); border-radius: 3px;
+    }
+    .ia-bar-row:first-child .ia-bar-fill { background: var(--accent); }
+    .ia-bar-row:nth-child(2) .ia-bar-fill { background: rgba(192,57,43,0.6); }
+    .ia-bar-row:nth-child(3) .ia-bar-fill { background: rgba(192,57,43,0.4); }
+    .ia-bar-pct {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      color: rgba(255,255,255,0.4); width: 40px; text-align: right;
+    }
+    .ia-reset-btn {
+      margin-top: 12px;
+      background: none; border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.55);
+      padding: 10px 20px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem;
+      cursor: pointer; transition: border-color .15s, color .15s;
+      align-self: flex-start; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .ia-reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* RESULT CTAS */
+    .ia-result-ctas {
+      display: none; margin-top: 32px;
+      flex-direction: column; gap: 14px;
+    }
+    .ia-result-ctas.visible { display: flex; }
+    .ia-result-cta-card {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; padding: 22px 28px;
+      background: linear-gradient(135deg, rgba(192,57,43,0.12), rgba(192,57,43,0.04));
+      border: 1px solid rgba(192,57,43,0.35);
+      border-left: 3px solid var(--accent);
+      border-radius: 2px; color: #fff; text-decoration: none;
+      transition: background .15s;
+    }
+    .ia-result-cta-card:hover { background: linear-gradient(135deg, rgba(192,57,43,0.2), rgba(192,57,43,0.08)); }
+    .ia-result-cta-card.secondary {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.1);
+      border-left-color: rgba(255,255,255,0.4);
+    }
+    .ia-result-cta-card.secondary:hover { background: rgba(255,255,255,0.06); }
+    .ia-result-cta-text { flex: 1; }
+    .ia-result-cta-title {
+      font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 4px; line-height: 1.3;
+    }
+    .ia-result-cta-sub {
+      font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.5;
+    }
+    .ia-result-cta-arrow {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px;
+      white-space: nowrap;
+    }
+
+    /* HOW IT WORKS */
+    .how-section { padding: 88px 56px 48px; max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+    .section-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .section-h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      font-weight: 800; text-transform: uppercase;
+      letter-spacing: -0.8px; line-height: 1.1;
+      margin-bottom: 40px;
+    }
+    .section-h2 em { font-style: normal; color: var(--accent); }
+    .how-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .how-step {
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 28px 26px; background: var(--card);
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .how-step-num {
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+    }
+    .how-step h3 {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.3px;
+    }
+    .how-step p { color: var(--muted2); font-size: 0.85rem; line-height: 1.6; }
+
+    /* STYLES LIST */
+    .styles-section { padding: 48px 56px 88px; max-width: 1100px; margin: 0 auto; }
+    .styles-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .style-card {
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 22px 24px; background: var(--card);
+      text-decoration: none; color: var(--text);
+      transition: all .15s;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .style-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.05); }
+    .style-card h3 {
+      font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: -0.3px;
+    }
+    .style-card p { font-size: 0.78rem; color: var(--muted2); line-height: 1.55; }
+    .style-card-arrow {
+      font-family: 'Space Mono', monospace; font-size: 0.6rem;
+      color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px;
+      margin-top: 4px;
+    }
+
+    /* LEAD CTA SECTION */
+    .lead-cta-section {
+      background: #0d0d0d; color: #fff;
+      padding: 80px 56px;
+    }
+    .lead-cta-inner {
+      max-width: 760px; margin: 0 auto; text-align: center;
+    }
+    .lead-cta-inner .section-h2 { color: #fff; margin-bottom: 14px; }
+    .lead-cta-inner p {
+      color: rgba(255,255,255,0.65); font-size: 1rem;
+      max-width: 580px; margin: 0 auto 28px;
+    }
+    .lead-cta-btn {
+      display: inline-block; padding: 18px 36px;
+      background: var(--accent); color: #fff;
+      font-family: 'Space Mono', monospace; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 2px;
+      border-radius: 2px; transition: background .15s;
+    }
+    .lead-cta-btn:hover { background: #e74c3c; }
+
+    /* FAQ */
+    .faq-section { padding: 88px 56px; max-width: 900px; margin: 0 auto; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: 6px;
+      background: var(--card); overflow: hidden;
+    }
+    .faq-q {
+      cursor: pointer; padding: 20px 24px;
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: -0.3px;
+      list-style: none; position: relative;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-q::after {
+      content: '+'; position: absolute; right: 24px; top: 18px;
+      font-size: 1.4rem; color: var(--accent);
+      transition: transform .2s;
+    }
+    .faq-item[open] .faq-q::after { content: '−'; }
+    .faq-a {
+      padding: 0 24px 24px; color: var(--muted2);
+      font-size: 0.92rem; line-height: 1.7;
+    }
+
+    /* RELATED */
+    .related-section { padding: 48px 56px 80px; max-width: 900px; margin: 0 auto; }
+    .related-section h3 {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: -0.3px; margin-bottom: 18px;
+    }
+    .related-links {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .related-links a {
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.92rem; color: var(--text); transition: color .15s;
+    }
+    .related-links a:hover { color: var(--accent); }
+    .related-links a::before { content: '→ '; color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--text); color: #fff;
+      padding: 32px 56px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -1px;
+    }
+    .footer-logo em { font-style: normal; color: var(--accent); }
+    footer p { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 6px; }
+    footer .footer-meta {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+    }
+    footer .footer-meta small {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      color: rgba(255,255,255,0.45); letter-spacing: 1.5px;
+    }
+    footer .footer-meta a {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem;
+      color: rgba(255,255,255,0.35); letter-spacing: 1px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      header { padding: 12px 20px; }
+      .tool-hero { padding: 56px 24px 24px; }
+      .ia-tool { padding: 32px 22px; margin: 24px 16px 0; border-radius: 6px; }
+      .ia-upload-zone { padding: 56px 20px; }
+      .ia-result-layout.visible { grid-template-columns: 1fr; }
+      .ia-preview-col { min-height: 280px; }
+      .ia-results-col { padding: 32px 24px; border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+      .ia-detected-style { font-size: 1.9rem; }
+      .ia-result-cta-card { flex-direction: column; align-items: stretch; gap: 14px; padding: 18px 22px; }
+      .ia-result-cta-arrow { align-self: flex-start; }
+      .how-section, .styles-section, .faq-section, .related-section { padding-left: 24px; padding-right: 24px; }
+      .how-grid, .styles-grid { grid-template-columns: 1fr; }
+      .lead-cta-section { padding: 56px 24px; }
+      footer { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">ink<em>map</em></a>
+  <a href="../index.html" class="back-link">← Annuaire</a>
+</header>
+
+<!-- HERO -->
+<section class="tool-hero">
+  <div class="tool-tag"><span></span> Outil IA gratuit · 3 sec</div>
+  <h1>Identifier le <em>style</em><br>d'un tatouage</h1>
+  <p>Uploade une photo (un tatouage qui t'inspire, un design que tu hésites à faire). Notre IA reconnaît le style en 3 secondes parmi 25 catégories et te dit qui en France peut le réaliser.</p>
+</section>
+
+<!-- IA TOOL -->
+<div class="ia-tool">
+  <!-- Upload zone -->
+  <div class="ia-upload-zone" id="iaUploadZone">
+    <input type="file" id="iaFileInput" accept="image/*" hidden>
+    <div class="ia-upload-icon">📷</div>
+    <div class="ia-upload-main">Glisse une photo de tatouage ici</div>
+    <div class="ia-upload-hint">JPG, PNG, WEBP · ou clique pour parcourir</div>
+    <div class="ia-upload-trust">Photo non stockée · analyse anonyme</div>
+  </div>
+
+  <!-- Result layout -->
+  <div class="ia-result-layout" id="iaResultLayout">
+    <div class="ia-preview-col">
+      <img id="ia-preview-img" alt="Aperçu de la photo uploadée" />
+      <div class="ia-scan-overlay" id="iaScanOverlay">
+        <div class="scan-line"></div>
+        <div class="scan-ring"></div>
+        <div class="scan-label">Analyse IA en cours…</div>
+      </div>
+    </div>
+    <div class="ia-results-col" id="iaResultsCol">
+      <div class="ia-detected-label">Style détecté</div>
+      <div class="ia-detected-style" id="iaDetectedStyle">—</div>
+      <div class="ia-explication" id="iaExplication"></div>
+      <div class="ia-bars" id="iaBars"></div>
+      <button class="ia-reset-btn" id="iaResetBtn">↩ Nouvelle image</button>
+    </div>
+  </div>
+
+  <!-- Result CTAs -->
+  <div class="ia-result-ctas" id="iaResultCtas">
+    <a href="#" class="ia-result-cta-card" id="iaCtaArtists">
+      <div class="ia-result-cta-text">
+        <div class="ia-result-cta-title">Voir les tatoueurs <em id="iaCtaArtistsStyle">de ce style</em> en France</div>
+        <div class="ia-result-cta-sub">Profils vérifiés, photos, tarifs, contacts directs.</div>
+      </div>
+      <div class="ia-result-cta-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/demande" class="ia-result-cta-card secondary" id="iaCtaDemande">
+      <div class="ia-result-cta-text">
+        <div class="ia-result-cta-title">Pas envie de chercher toi-même ?</div>
+        <div class="ia-result-cta-sub">Décris ton projet en 2 min — on le transmet aux tatoueurs qui correspondent. Retours sous 48h.</div>
+      </div>
+      <div class="ia-result-cta-arrow">Décrire mon projet →</div>
+    </a>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-tag"><span></span> Comment ça marche</div>
+  <h2 class="section-h2">3 secondes, <em>3 étapes</em></h2>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-step-num">Étape 1</div>
+      <h3>Tu uploades une photo</h3>
+      <p>Glisse l'image dans la zone ou clique pour parcourir. Photo nette, cadrée serré sur le tatouage. JPG, PNG, WEBP. La photo est compressée localement avant envoi — elle ne quitte jamais ta machine en taille réelle.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">Étape 2</div>
+      <h3>L'IA analyse le style</h3>
+      <p>Notre IA compare l'image à une base de référence de plus de 25 styles de tatouage. Elle isole le style principal et te donne un score de confiance pour les 5 styles les plus probables (utile pour les pièces hybrides).</p>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">Étape 3</div>
+      <h3>Tu trouves les bons artistes</h3>
+      <p>Une fois le style détecté, tu accèdes en un clic aux tatoueurs spécialisés en France. Tu vois leurs photos, leurs tarifs, leur ville et tu peux les contacter directement, sans intermédiaire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STYLES LIST -->
+<section class="styles-section">
+  <div class="section-tag"><span></span> Styles reconnus</div>
+  <h2 class="section-h2">Les <em>13 styles</em> que l'IA identifie le mieux</h2>
+  <div class="styles-grid">
+    <a href="/tatoueur-fineline-paris" class="style-card">
+      <h3>Fineline</h3>
+      <p>Traits ultra-fins, motifs minimalistes, botanique, micro-réalisme.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-blackwork-paris" class="style-card">
+      <h3>Blackwork</h3>
+      <p>Aplats noirs purs, formes organiques, pieces tribales modernes.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-realisme-paris" class="style-card">
+      <h3>Réalisme</h3>
+      <p>Portraits, animaux, scènes photographiques en noir & gris ou couleur.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-japonais-paris" class="style-card">
+      <h3>Japonais</h3>
+      <p>Irezumi traditionnel : dragons, carpes koï, vagues, sleeves complets.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-geometrique-paris" class="style-card">
+      <h3>Géométrique</h3>
+      <p>Mandalas, dotwork géométrique, patterns sacrés, lignes précises.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-aquarelle-paris" class="style-card">
+      <h3>Aquarelle</h3>
+      <p>Effet peinture à l'eau, dégradés, couleurs diluées, éclaboussures.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-lettering-paris" class="style-card">
+      <h3>Lettering</h3>
+      <p>Calligraphie, scripts, citations, prénoms, typographies travaillées.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-old-school-paris" class="style-card">
+      <h3>Old School</h3>
+      <p>Traditionnel américain : ancres, roses, contours gras, couleurs vives.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+    <a href="/tatoueur-tribal-paris" class="style-card">
+      <h3>Tribal</h3>
+      <p>Polynésien, maori, motifs ancestraux, aplats noirs, symboles.</p>
+      <div class="style-card-arrow">Voir les artistes →</div>
+    </a>
+  </div>
+  <p style="margin-top:24px;font-size:0.85rem;color:var(--muted2);line-height:1.6;">L'IA reconnaît aussi le <strong>dotwork</strong>, le <strong>neo-traditional</strong>, le <strong>floral</strong> et le <strong>micro-réalisme</strong>. Les pages dédiées à ces styles arrivent à mesure que de nouveaux tatoueurs rejoignent l'annuaire.</p>
+</section>
+
+<!-- LEAD CTA -->
+<section class="lead-cta-section">
+  <div class="lead-cta-inner">
+    <div class="section-tag" style="color: var(--accent)"><span></span> Plus rapide ?</div>
+    <h2 class="section-h2">Pas envie d'analyser. <em>Juste un projet.</em></h2>
+    <p>Décris ton projet en 2 minutes (style, zone, taille, budget). On le transmet aux tatoueurs français qui correspondent et tu reçois leurs retours sous 48 heures. Gratuit.</p>
+    <a href="/demande" class="lead-cta-btn">Décrire mon projet →</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="section-tag"><span></span> FAQ</div>
+  <h2 class="section-h2">Questions <em>fréquentes</em></h2>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary class="faq-q">Comment l'IA reconnaît-elle le style d'un tatouage ?</summary>
+      <div class="faq-a">Notre IA analyse l'image que tu uploades et compare ses caractéristiques (épaisseur de trait, palette de couleurs, motifs, composition) à une base de référence de plus de 25 styles de tatouage. Elle te renvoie le style principal détecté et un score de confiance pour les 5 styles les plus probables.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Quels styles peut-elle identifier ?</summary>
+      <div class="faq-a">Les principaux : fineline, blackwork, réalisme, japonais (irezumi), géométrique, aquarelle, lettering, dotwork, old school, tribal, neo-traditional, micro-réalisme, illustratif, floral, minimaliste, portrait, flash, organique, noir & gris. Les styles hybrides (ex : fineline + floral) sont aussi détectés via les scores secondaires.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Quelle photo dois-je uploader ?</summary>
+      <div class="faq-a">Une photo nette d'un tatouage (sur peau ou design papier), idéalement cadrée serré sur le motif. Évite les photos floues, mal éclairées ou avec beaucoup d'éléments parasites autour. JPG, PNG ou WEBP, jusqu'à environ 10 Mo. La photo est redimensionnée et compressée localement avant analyse.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">L'IA est-elle fiable à 100 % ?</summary>
+      <div class="faq-a">Non. L'IA donne une bonne approximation dans la grande majorité des cas, surtout pour les styles très distinctifs (japonais, old school, dotwork). Les styles proches (fineline vs micro-réalisme, blackwork vs tribal) peuvent être confondus. Le score de confiance que tu vois sur chaque résultat te donne une idée de la certitude. Le but est de t'orienter rapidement vers les bons artistes, pas de remplacer l'œil d'un pro.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Mes photos sont-elles stockées ou partagées ?</summary>
+      <div class="faq-a">Non. Ta photo est redimensionnée dans ton navigateur, envoyée à notre serveur uniquement le temps de l'analyse, puis supprimée. Aucune image n'est conservée, ni partagée, ni utilisée pour entraîner un modèle. L'analyse est gratuite et anonyme.</div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Puis-je utiliser une photo que je n'ai pas prise ?</summary>
+      <div class="faq-a">Oui pour un usage personnel d'identification de style — l'image n'est pas conservée par Inkmap. Mais respecte le travail des tatoueurs : si tu as flashé sur la pièce d'un artiste précis, le mieux reste de la lui demander directement plutôt que de la copier ailleurs. Notre IA est conçue pour t'aider à choisir <em>un style</em>, pas à reproduire une œuvre existante.</div>
+    </details>
+  </div>
+</section>
+
+<!-- RELATED -->
+<section class="related-section">
+  <h3>Articles liés</h3>
+  <div class="related-links">
+    <a href="./calculateur-tarif-tatouage">Calculateur de tarif tatouage</a>
+    <a href="../guide/tatoueur-debutant-ou-experimente">Tatoueur débutant ou expérimenté ?</a>
+    <a href="../index.html#recherche">Parcourir l'annuaire des tatoueurs</a>
+    <a href="/demande">Décrire mon projet de tatouage</a>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">ink<em>map</em></div>
+    <p>Le premier annuaire des tatoueurs français</p>
+  </div>
+  <div class="footer-meta">
+    <small>© 2026 — INKMAP.FR</small>
+    <a href="/mentions-legales.html">Mentions légales</a>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    // Mapping style détecté → URL canonique de la page style×ville (Paris par défaut)
+    const STYLE_URL_MAP = {
+      'fineline': '/tatoueur-fineline-paris',
+      'blackwork': '/tatoueur-blackwork-paris',
+      'réalisme': '/tatoueur-realisme-paris',
+      'realisme': '/tatoueur-realisme-paris',
+      'japonais': '/tatoueur-japonais-paris',
+      'géométrique': '/tatoueur-geometrique-paris',
+      'geometrique': '/tatoueur-geometrique-paris',
+      'aquarelle': '/tatoueur-aquarelle-paris',
+      'lettering': '/tatoueur-lettering-paris',
+      'old school': '/tatoueur-old-school-paris',
+      'old-school': '/tatoueur-old-school-paris',
+      'tribal': '/tatoueur-tribal-paris',
+    };
+
+    const zone = document.getElementById('iaUploadZone');
+    const fileInput = document.getElementById('iaFileInput');
+    const resetBtn = document.getElementById('iaResetBtn');
+
+    zone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => {
+      const f = e.target.files[0];
+      if (f && f.type.startsWith('image/')) processImage(f);
+    });
+
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('dragover');
+      const f = e.dataTransfer.files[0];
+      if (f && f.type.startsWith('image/')) processImage(f);
+    });
+
+    resetBtn.addEventListener('click', resetTool);
+
+    function redimensionnerImage(file, maxDim) {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const img = new Image();
+          img.onload = () => {
+            const ratio = Math.min(maxDim / img.width, maxDim / img.height, 1);
+            const w = Math.round(img.width * ratio);
+            const h = Math.round(img.height * ratio);
+            const canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+            const base64 = canvas.toDataURL('image/jpeg', 0.85).split(',')[1];
+            resolve({ base64, mediaType: 'image/jpeg' });
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function processImage(file) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const previewImg = document.getElementById('ia-preview-img');
+        previewImg.onload = () => {
+          zone.style.display = 'none';
+          document.getElementById('iaResultLayout').classList.add('visible');
+          document.getElementById('iaScanOverlay').classList.remove('hidden');
+          document.getElementById('iaResultsCol').style.opacity = '0';
+          document.getElementById('iaResultCtas').classList.remove('visible');
+          analyser(file);
+        };
+        previewImg.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function analyser(file) {
+      try {
+        const { base64, mediaType } = await redimensionnerImage(file, 1024);
+        const res = await fetch('/api/ia-match', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64, mediaType }),
+        });
+        if (!res.ok) {
+          const body = await res.json().catch(() => ({}));
+          throw new Error(body.error || 'API ' + res.status);
+        }
+        const data = await res.json();
+        afficher(data.style, data.scores, data.explication);
+      } catch(e) {
+        document.getElementById('iaScanOverlay').classList.add('hidden');
+        const col = document.getElementById('iaResultsCol');
+        col.style.transition = 'opacity .5s';
+        col.style.opacity = '1';
+        document.getElementById('iaDetectedStyle').textContent = '—';
+        const explEl = document.getElementById('iaExplication');
+        explEl.textContent = "Service d'analyse indisponible pour le moment. Réessaie dans quelques instants.";
+        explEl.classList.add('visible');
+        document.getElementById('iaBars').innerHTML = '';
+      }
+    }
+
+    function afficher(best, scores, explication) {
+      document.getElementById('iaScanOverlay').classList.add('hidden');
+      scores.sort((a, b) => b[1] - a[1]);
+      best = scores[0][0];
+      const col = document.getElementById('iaResultsCol');
+      col.style.transition = 'opacity .5s';
+      col.style.opacity = '1';
+      document.getElementById('iaDetectedStyle').textContent = best;
+
+      const explEl = document.getElementById('iaExplication');
+      if (explication) {
+        explEl.textContent = explication;
+        explEl.classList.add('visible');
+      } else {
+        explEl.classList.remove('visible');
+      }
+
+      const barsEl = document.getElementById('iaBars');
+      const top5 = scores.slice(0, 5);
+      barsEl.innerHTML = top5.map(([s, score], i) => {
+        const safeName = String(s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+        return `<div class="ia-bar-row">
+          <div class="ia-bar-name">${safeName}</div>
+          <div class="ia-bar-track"><div class="ia-bar-fill" id="bar-${i}" style="width:0%"></div></div>
+          <div class="ia-bar-pct">${parseInt(score) || 0}%</div>
+        </div>`;
+      }).join('');
+      top5.forEach(([, score], i) => {
+        setTimeout(() => {
+          const el = document.getElementById('bar-' + i);
+          if (el) el.style.width = score + '%';
+        }, 100 + i * 80);
+      });
+
+      // CTAs
+      const slug = best.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      const url = STYLE_URL_MAP[slug] || STYLE_URL_MAP[best.toLowerCase()] || '/index.html#recherche';
+      const ctaArtists = document.getElementById('iaCtaArtists');
+      ctaArtists.href = url;
+      document.getElementById('iaCtaArtistsStyle').textContent = best;
+      const ctaDemande = document.getElementById('iaCtaDemande');
+      ctaDemande.href = '/demande?style=' + encodeURIComponent(best);
+      document.getElementById('iaResultCtas').classList.add('visible');
+    }
+
+    function resetTool() {
+      zone.style.display = '';
+      document.getElementById('iaResultLayout').classList.remove('visible');
+      document.getElementById('iaResultCtas').classList.remove('visible');
+      document.getElementById('iaExplication').classList.remove('visible');
+      fileInput.value = '';
+    }
+  })();
+</script>
+
+</body>
+</html>

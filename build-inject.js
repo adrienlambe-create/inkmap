@@ -306,6 +306,7 @@ function updateSitemap(tatoueurs) {
     { loc: '/guide/comment-fixer-ses-prix-tatoueur', priority: '0.7' },
     { loc: '/outils/calculateur-tarif-tatouage', priority: '0.7' },
     { loc: '/outils/calculateur-rentabilite-studio-tatouage', priority: '0.7' },
+    { loc: '/outils/identifier-style-tatouage', priority: '0.7' },
   ];
 
   // Lis les pages profil depuis l'index écrit par generate-profiles.js
