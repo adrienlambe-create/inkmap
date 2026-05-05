@@ -335,11 +335,12 @@ function updateSitemap(tatoueurs) {
 
 // Injecte Vercel Web Analytics + Speed Insights dans toutes les pages HTML.
 // Idempotent : skip les pages où le snippet est déjà présent.
+// Utilise le CDN public Vercel (compatible sites statiques sans framework).
 function injectAnalytics(rootDir) {
-  const SNIPPET = `<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>`;
-  const MARKER = '/_vercel/insights/script.js';
+  const SNIPPET = `<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics" data-sdkv="1.5.0"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="1.2.0"></script>`;
+  const MARKER = 'va.vercel-scripts.com/v1/script.js';
   const SKIP_DIRS = new Set(['node_modules', '_private', '_backups', '.git', '.netlify', '.vercel', 'api', 'netlify', 'scripts']);
   let count = 0;
 
