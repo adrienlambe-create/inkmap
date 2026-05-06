@@ -146,26 +146,43 @@ async function sendEmails({ email, description, ville, styles, budget, zoneCorps
   // Email admin : brief complet
   const adminHtml = adminEmailHtml({ email, description, ville, styles, budget, zoneCorps, telephone, photos, airtableLink });
 
-  const sends = [
-    resendSend({
-      apiKey: RESEND_KEY,
-      to: email,
-      subject: 'On a bien reçu ta demande — Inkmap',
-      html: clientHtml,
-    }),
-    resendSend({
+  // Envoi en série + retry sur l'admin (le mail le plus critique business).
+  // Évite que le 2e envoi échoue silencieusement comme dans Promise.allSettled.
+  const clientOk = await resendSend({
+    apiKey: RESEND_KEY,
+    to: email,
+    subject: 'On a bien reçu ta demande — Inkmap',
+    html: clientHtml,
+    label: 'client',
+  });
+  console.log(`[submit-request] mail client → ${email} : ${clientOk ? 'OK' : 'FAIL'}`);
+
+  const adminSubject = `[Demande] ${ville} — ${description.slice(0, 60)}${description.length > 60 ? '…' : ''}`;
+  let adminOk = await resendSend({
+    apiKey: RESEND_KEY,
+    to: adminEmail,
+    subject: adminSubject,
+    html: adminHtml,
+    replyTo: email,
+    label: 'admin',
+  });
+  if (!adminOk) {
+    // Retry une fois après 1s (erreurs transitoires Resend : rate limit, 5xx)
+    console.warn('[submit-request] mail admin a échoué, retry dans 1s…');
+    await new Promise(r => setTimeout(r, 1000));
+    adminOk = await resendSend({
       apiKey: RESEND_KEY,
       to: adminEmail,
-      subject: `[Demande] ${ville} — ${description.slice(0, 60)}${description.length > 60 ? '…' : ''}`,
+      subject: adminSubject,
       html: adminHtml,
       replyTo: email,
-    }),
-  ];
-
-  await Promise.allSettled(sends);
+      label: 'admin-retry',
+    });
+  }
+  console.log(`[submit-request] mail admin → ${adminEmail} : ${adminOk ? 'OK' : 'FAIL après retry'}`);
 }
 
-async function resendSend({ apiKey, to, subject, html, replyTo }) {
+async function resendSend({ apiKey, to, subject, html, replyTo, label }) {
   const payload = {
     from: 'Inkmap <bonjour@inkmap.fr>',
     to,
@@ -174,14 +191,21 @@ async function resendSend({ apiKey, to, subject, html, replyTo }) {
   };
   if (replyTo) payload.reply_to = replyTo;
 
-  const r = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  if (!r.ok) {
-    const err = await r.text().catch(() => '');
-    console.error('[submit-request] resend failed', r.status, err);
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!r.ok) {
+      const err = await r.text().catch(() => '');
+      console.error(`[submit-request] resend ${label || ''} failed`, r.status, err);
+      return false;
+    }
+    return true;
+  } catch (e) {
+    console.error(`[submit-request] resend ${label || ''} exception`, e.message);
+    return false;
   }
 }
 
