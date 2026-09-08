@@ -34,14 +34,40 @@
       margin-bottom: 8px;
     }
 
-    /* Format standard carte de visite : 85mm x 55mm */
+    /* ═══ ZONE BLEED (fond perdu 3mm) ═══
+       Wrapper externe : 91x61mm (bleed inclus)
+       Carte effective : 85x55mm (zone de coupe)
+       Safe zone : 79x49mm (texte/logo doivent rester dedans) */
+    .card-bleed {
+      width: 91mm;
+      height: 61mm;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-bleed.recto-bleed { background: #0d0d0d; }
+    .card-bleed.verso-bleed { background: #ffffff; }
+
+    /* Ligne de coupe visible à l'écran (masquée en print) */
+    .card-bleed::before {
+      content: '';
+      position: absolute;
+      top: 3mm; left: 3mm; right: 3mm; bottom: 3mm;
+      border: 0.15mm dashed rgba(255,255,255,0.28);
+      pointer-events: none;
+      z-index: 20;
+    }
+    .card-bleed.verso-bleed::before { border-color: rgba(0,0,0,0.2); }
+
+    /* Format final 85x55mm — centré dans le bleed */
     .card {
       width: 85mm;
       height: 55mm;
-      border-radius: 3mm;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
-      position: relative;
+      position: absolute;
+      top: 3mm;
+      left: 3mm;
     }
 
     /* ═══════════════ RECTO ═══════════════ */
@@ -111,7 +137,7 @@
     }
 
     .verso .pitch {
-      font-size: 0.48rem;
+      font-size: 0.55rem;
       line-height: 1.55;
       color: #333;
       font-weight: 400;
@@ -132,7 +158,7 @@
       display: flex;
       align-items: center;
       gap: 2mm;
-      font-size: 0.42rem;
+      font-size: 0.5rem;
       color: #555;
     }
 
@@ -174,7 +200,7 @@
     }
 
     .qr-label {
-      font-size: 0.35rem;
+      font-size: 0.4rem;
       color: #aaa;
       text-transform: uppercase;
       letter-spacing: 1.5px;
@@ -196,13 +222,25 @@
 
     /* ═══════════════ PRINT ═══════════════ */
     @media print {
+      @page {
+        size: 91mm 61mm;
+        margin: 0;
+      }
       body {
         background: white;
-        padding: 10mm;
+        padding: 0;
+        gap: 0;
       }
-      .card {
+      .card-bleed {
         box-shadow: none;
+        page-break-after: always;
         page-break-inside: avoid;
+      }
+      .card-bleed:last-of-type {
+        page-break-after: auto;
+      }
+      .card-bleed::before {
+        display: none;
       }
       .label, h1, .instructions {
         display: none;
@@ -213,29 +251,36 @@
 <body>
 
   <h1>Cartes de visite Inkmap</h1>
-  <p class="instructions" style="font-size: 0.8rem; color: #777; max-width: 500px; text-align: center; line-height: 1.6;">
-    Format : 85 &times; 55 mm (standard). Ouvre cette page dans Chrome, Cmd+P &rarr; PDF pour exporter.<br>
-    Remplace le QR code placeholder par un vrai QR vers <strong>inkmap.fr</strong>
+  <p class="instructions" style="font-size: 0.8rem; color: #777; max-width: 600px; text-align: center; line-height: 1.6;">
+    Format final : <strong>85 &times; 55 mm</strong> &middot; Bleed inclus : <strong>91 &times; 61 mm</strong>.<br>
+    <strong>Export PDF :</strong> Chrome &rarr; Cmd+P &rarr; Destination &laquo; Enregistrer en PDF &raquo;<br>
+    Format papier : <strong>Personnalis&eacute; 91&times;61mm</strong> &middot; Marges : <strong>Aucune</strong> &middot; D&eacute;cocher &laquo; En-t&ecirc;tes &raquo; &middot; Cocher &laquo; Graphismes d'arri&egrave;re-plan &raquo;.<br>
+    Le PDF sortira en 2 pages : page 1 = recto, page 2 = verso (les pointill&eacute;s sont auto-masqu&eacute;s).<br>
+    <strong>Brief imprimeur :</strong> bleed 3 mm d&eacute;j&agrave; inclus &middot; couleurs &agrave; convertir RGB&rarr;CMJN (FOGRA39) &middot; papier 350-400g soft-touch.<br>
+    <strong>Avant tirage :</strong> tester le QR sur 2 t&eacute;l&eacute;phones &middot; valider le proof PDF de l'imprimeur.
   </p>
 
   <!-- ══════ RECTO ══════ -->
-  <p class="label">Recto</p>
-  <div class="card recto">
-    <div class="logo">INK<span>MAP</span></div>
-    <div class="accent-line"></div>
-    <div class="tagline">Trouve ton tatoueur, par style</div>
+  <p class="label">Recto &mdash; 91&times;61mm bleed inclus (zone coupe = pointill&eacute;s)</p>
+  <div class="card-bleed recto-bleed">
+    <div class="card recto">
+      <div class="logo">INK<span>MAP</span></div>
+      <div class="accent-line"></div>
+      <div class="tagline">Fini les DMs pourris</div>
+    </div>
   </div>
 
   <!-- ══════ VERSO ══════ -->
-  <p class="label">Verso</p>
-  <div class="card verso">
+  <p class="label">Verso &mdash; 91&times;61mm bleed inclus (zone coupe = pointill&eacute;s)</p>
+  <div class="card-bleed verso-bleed">
+    <div class="card verso">
     <div class="verso-left">
 
       <div class="verso-logo-small">INK<span>MAP</span>.FR</div>
 
       <div class="pitch">
-        <strong>Le premier annuaire des tatoueurs en France.</strong><br>
-        Trouve l'artiste qui matche ton style : fineline, blackwork, japonais, r&eacute;alisme&hellip; Filtre par ville et budget. Profils v&eacute;rifi&eacute;s, 100% gratuit.
+        <strong>Re&ccedil;ois des demandes avec ref photo, budget et style match&eacute;.</strong><br>
+        Plus jamais de &lsquo;&ccedil;a co&ucirc;te combien&nbsp;?&rsquo; sans contexte. Inscription 100% gratuite.
       </div>
 
       <div class="contacts">
@@ -277,6 +322,7 @@
         <img src="qr-inkmap.png" alt="QR Code Inkmap.fr" />
       </div>
       <div class="qr-label">Scanne-moi</div>
+    </div>
     </div>
   </div>
 

@@ -7,6 +7,8 @@ const HEADER_HTML = fs.readFileSync(path.join(__dirname, 'partials/header.html')
 const FOOTER_HTML = fs.readFileSync(path.join(__dirname, 'partials/footer.html'), 'utf-8');
 
 const STYLES = [
+  { slug: 'fineline',   label: 'Fineline',    airtable: 'Fineline' },
+  { slug: 'blackwork',  label: 'Blackwork',   airtable: 'Blackwork' },
   { slug: 'realisme',    label: 'Réalisme',    airtable: 'Réalisme' },
   { slug: 'japonais',   label: 'Japonais',    airtable: 'Japonais' },
   { slug: 'geometrique',label: 'Géométrique', airtable: 'Géométrique' },
@@ -34,6 +36,18 @@ const CITIES = [
 
 // Descriptions de style (ouverture + caractéristiques)
 const STYLE_INTRO = {
+  'fineline': {
+    desc1: `Le tatouage fineline se distingue par la finesse extrême de ses traits, réalisés à l'aiguille single needle (1RL) ou 3RL. Ce style donne des compositions délicates, presque graphiques, qui se lisent comme des illustrations posées sur la peau.`,
+    desc2: `Apparu sur la côte ouest américaine dans les années 70-80 et popularisé mondialement via Instagram à partir des années 2010, le fineline regroupe aujourd'hui plusieurs familles : botanique, micro-réalisme, lettering fin et géométrique fin. Sa réussite dépend surtout de la maîtrise technique de la profondeur d'aiguille par le tatoueur.`,
+    keywords: 'botanique, micro-réalisme, lettering, single needle, minimaliste',
+    metaKw: 'botanique, micro-réalisme, lettering fin, single needle',
+  },
+  'blackwork': {
+    desc1: `Le blackwork repose entièrement sur l'encre noire : aplats massifs, contrastes francs, contours assumés. C'est un style à fort impact visuel qui couvre aussi bien les pièces graphiques contemporaines que les motifs inspirés des traditions tribales et ornementales.`,
+    desc2: `Le blackwork rassemble plusieurs courants : le dotwork (dégradés en points), l'ornemental (motifs symétriques denses), le blackout (zones entièrement noires) et le blackwork illustratif (gravures, animaux, scènes narratives). C'est l'un des styles qui vieillit le mieux grâce à la densité de l'encre.`,
+    keywords: 'noir, dotwork, ornemental, blackout, contraste fort',
+    metaKw: 'aplats noirs, dotwork, ornemental, blackout',
+  },
   'realisme': {
     desc1: `Le tatouage réaliste reproduit avec une précision photographique les sujets les plus complexes — portraits, animaux, scènes de vie — grâce à des jeux d'ombres et de lumières parfaitement maîtrisés.`,
     desc2: `Ce style exige une technique impeccable : chaque dégradé, chaque reflet et chaque texture doit être rendu fidèlement sur la peau. Les meilleurs tatoueurs réalistes travaillent aussi bien en noir et gris qu'en couleur, adaptant leur palette à chaque projet.`,
@@ -126,6 +140,22 @@ const CITY_CONTEXT = {
 
 // FAQ par style (questions fréquentes pour le SEO)
 const STYLE_FAQ = {
+  'fineline': [
+    { q: `Combien coûte un tatouage fineline ?`, a: `Compte un minimum de 100 à 150 € pour une petite pièce (3-4 cm²), puis 120 à 200 € de l'heure selon l'artiste. Les artistes les plus demandés peuvent atteindre 250 à 300 € de l'heure dans les grandes villes.` },
+    { q: `Le fineline vieillit-il mal ?`, a: `Non, pas si la profondeur d'aiguille est correctement gérée par le tatoueur. C'est le critère technique le plus important : trop superficiel, le trait s'efface en 2-3 ans ; trop profond, il bave et s'épaissit. Un bon fineline pratiqué dans les règles vieillit aussi bien qu'un tatouage classique.` },
+    { q: `Combien de séances pour un projet fineline ?`, a: `La majorité des projets se font en une seule séance de 1 à 3 heures. Au-delà de 10-15 cm avec beaucoup de détails, prévois 2 séances espacées d'au moins 3 semaines, le temps que la première cicatrise.` },
+    { q: `Quelle taille minimum pour un fineline ?`, a: `En dessous de 3 cm, le trait risque de fusionner en cicatrisant et le motif devient flou. Pour du lettering ou un micro-réalisme, demande à l'artiste un test à l'échelle réelle avant de valider.` },
+    { q: `Comment préparer ma séance de tatouage fineline ?`, a: `Bonne nuit de sommeil, manger 1h avant, pas d'alcool ni d'anti-inflammatoires 24h avant car cela fluidifie le sang. Hydrate ta peau les jours précédents. Pas de bronzage la semaine d'avant.` },
+    { q: `Vaut-il mieux un studio ou un freelance pour un premier fineline ?`, a: `Aucune différence de qualité par défaut. Le studio offre un cadre rassurant avec hygiène encadrée et plusieurs avis sur place. Le freelance offre souvent une relation plus directe et des créneaux plus souples. Le seul critère qui compte vraiment, c'est le portfolio.` },
+  ],
+  'blackwork': [
+    { q: `Combien coûte un tatouage blackwork ?`, a: `Compte entre 100 et 180 € de l'heure selon l'artiste. Les pièces ornementales et le dotwork demandent souvent plus de temps que les aplats simples, donc prévois 3 à 10 heures pour une pièce d'avant-bras complète.` },
+    { q: `Le blackwork vieillit-il bien ?`, a: `C'est l'un des styles qui vieillit le mieux. La densité d'encre noire reste lisible des décennies même en cas de léger affaissement. Pour les aplats massifs, prévois une retouche après 5-7 ans si tu veux garder un noir profond.` },
+    { q: `Le blackwork fait-il plus mal qu'un autre style ?`, a: `Les longs aplats noirs sont plus éprouvants que les traits fins parce que le tatoueur repasse sur la même zone pour saturer la peau. La douleur reste comparable mais sur une durée plus longue. Hydratation et coupe-faim avant la séance aident.` },
+    { q: `Peut-on couvrir un ancien tatouage avec un blackwork ?`, a: `Oui, c'est l'un des usages classiques du blackwork (notamment blackout) : la densité d'encre noire couvre la plupart des tatouages existants. Un tatoueur spécialisé en cover-up te dira si ton ancien tatouage est compatible.` },
+    { q: `Combien de séances pour un projet blackwork ?`, a: `Une petite pièce se fait en 1 séance. Un avant-bras ornemental complet demande 2 à 3 séances. Un sleeve blackout peut prendre 4 à 6 séances espacées de 3-4 semaines pour laisser la peau cicatriser entre les passes.` },
+    { q: `Comment entretenir un tatouage blackwork ?`, a: `Crème cicatrisante 2-3 fois par jour pendant 2 semaines, pas d'exposition solaire ni de baignade pendant 1 mois, puis crème solaire SPF 50 à vie pour préserver la densité du noir. Le noir résiste mieux que la couleur mais l'UV reste son ennemi.` },
+  ],
   'realisme': [
     { q: `Combien coûte un tatouage réaliste ?`, a: `Un tatouage réaliste demande un travail minutieux. Comptez entre 150 € et 400 € de l'heure selon l'artiste. Une pièce de taille moyenne (bras) prend généralement 2 à 5 séances.` },
     { q: `Combien de temps dure une séance de tatouage réaliste ?`, a: `Une séance dure en moyenne 3 à 5 heures. Les pièces complexes comme les portraits ou les scènes complètes peuvent nécessiter plusieurs séances espacées de 3 à 4 semaines.` },
@@ -172,6 +202,37 @@ const STYLE_FAQ = {
 // Inséré au-dessus du guide générique. Différencie chaque page Google
 // au lieu d'avoir 10 pages template-identiques.
 const STYLE_CITY_INSIGHT = {
+  'fineline': {
+    'paris': {
+      where: `Paris est la première scène fineline française, portée par une demande qui a explosé depuis 2020. Le style s'est diffusé mondialement via Instagram dans les années 2010, à partir des techniques single needle développées sur la côte ouest américaine dans les années 70-80.`,
+      zones: [
+        { name: 'Le 11e arrondissement', desc: `Bastille, Oberkampf, République côté sud. C'est ce qu'on appelle "le tattoo district" parisien, avec la plus forte densité de studios fineline en France, du studio confidentiel à l'atelier collectif.` },
+        { name: 'Le Marais (3e et 4e)', desc: `Concentration d'artistes installés, clientèle internationale, délais d'attente longs : souvent 4 à 6 mois chez les plus demandés.` },
+        { name: 'Le Canal Saint-Martin (10e)', desc: `La scène plus jeune, studios récents, créneaux plus accessibles pour un premier projet.` },
+        { name: 'Pigalle et 18e', desc: `Historiquement old school, mais une nouvelle génération de fineliners s'y est installée depuis 2020.` },
+      ],
+      price: `Entre <strong>120 € et 200 € de l'heure</strong> pour un fineline parisien, avec un minimum tarifaire autour de <strong>100 à 150 €</strong> pour les très petites pièces (3-4 cm²). Les artistes les plus demandés peuvent atteindre 250 à 300 € de l'heure. Délais d'attente : 2 semaines chez les studios récents, 6 à 8 mois chez les artistes les plus reconnus.`,
+      tip: `La qualité d'un fineline ne se juge pas à chaud. Demande toujours à voir des photos <strong>cicatrisées 3 mois après la séance</strong>. Un trait trop fin mal posé s'estompe ou s'épaissit avec le temps, même chez un artiste au feed Instagram impeccable.`,
+    },
+    'lyon': {
+      where: `La scène fineline lyonnaise s'est développée plus tardivement qu'à Paris mais avec une exigence technique remarquable. La Croix-Rousse concentre les studios spécialisés, suivie par la Guillotière et le centre presqu'île. Les artistes lyonnais sont souvent issus de l'illustration ou de la peinture, ce qui donne à la scène un caractère graphique très assumé.`,
+      price: `Entre <strong>100 € et 150 € de l'heure</strong> chez nos artistes vérifiés, avec un minimum tarifaire autour de 80 à 100 € pour les très petites pièces. Les tarifs lyonnais restent en moyenne 15 à 20 % inférieurs à Paris pour une qualité technique équivalente.`,
+      tip: `Le tissu de studios à Lyon est plus petit qu'à Paris : les bons artistes fineline sont vite saturés. Anticipe ta prise de rendez-vous de 2 à 4 mois minimum. Demande aussi des photos cicatrisées d'au moins 6 mois : le fineline ne révèle sa vraie qualité qu'après cicatrisation complète.`,
+    },
+  },
+  'blackwork': {
+    'paris': {
+      where: `Le blackwork parisien est l'un des styles les plus diversifiés de la capitale : ornemental dense dans le Marais, dotwork à République, blackout dans le 11e, illustratif gravure à Pigalle. C'est aussi le style le plus représenté côté tatoueurs hommes, avec une scène qui s'inspire largement des courants nord-européens (Berlin, Copenhague, Stockholm).`,
+      zones: [
+        { name: 'Le Marais (3e, 4e)', desc: `Spécialisé ornemental et illustratif. Des artistes installés depuis 10-15 ans, clientèle internationale, projets souvent ambitieux (sleeves, dos complets).` },
+        { name: 'Bastille et 11e', desc: `Le hub des projets blackout et grandes surfaces noires. C'est ici que se trouvent les artistes les plus radicaux côté esthétique.` },
+        { name: 'République et Canal (10e)', desc: `Concentration de dotwork et blackwork géométrique. Studios collectifs, ambiance plus contemporaine, créneaux parfois plus accessibles.` },
+        { name: 'Pigalle (9e, 18e)', desc: `Influence old school mêlée au blackwork illustratif type gravure. Gravures sur bois, animaux stylisés, scènes narratives.` },
+      ],
+      price: `Entre <strong>120 € et 180 € de l'heure</strong> pour un blackwork parisien. Les pièces ornementales et dotwork (très chronophages) peuvent grimper à 200 €/h chez les spécialistes reconnus. Les minimums démarrent autour de 100 € pour une petite pièce, mais la majorité des projets blackwork sont moyens à grands (3-10 heures).`,
+      tip: `Zoome sur les photos des aplats noirs : ils doivent être uniformément saturés, sans zones plus claires ni "trous" dans le remplissage. C'est le signe d'un tatoueur qui maîtrise la profondeur d'aiguille sur les zones denses. Pour un cover-up, demande des exemples concrets avec le "avant".`,
+    },
+  },
   'aquarelle': {
     'paris': {
       where: `Paris ne concentre pas l'aquarelle dans un quartier précis : les artistes spécialisés sont disséminés entre Belleville (20e), Oberkampf (11e) et le Marais. C'est un style de niche en France, choisi par des tatoueurs venus de l'illustration ou de la peinture, qui assument une palette colorée à contre-courant du tout-noir parisien.`,
@@ -212,11 +273,20 @@ const STYLE_CITY_INSIGHT = {
 function buildLocalInsight(style, city) {
   const insight = STYLE_CITY_INSIGHT[style.slug]?.[city.slug];
   if (!insight) return '';
+  const zonesHtml = insight.zones && insight.zones.length
+    ? `<p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:32px;">Concrètement, la scène locale se découpe en ${insight.zones.length} zones :</p>` +
+      insight.zones.map(z => `
+  <div style="margin-bottom:24px;">
+    <p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:8px;">${z.name}</p>
+    <p style="color:#222;font-size:1rem;line-height:1.75;margin-bottom:0;">${z.desc}</p>
+  </div>`).join('')
+    : '';
   return `
 <!-- LOCAL INSIGHT (contenu unique style × ville) -->
 <section style="max-width:780px;margin:64px auto;padding:0 56px;">
   <h2 style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:32px;line-height:1.2;color:var(--text);">${style.label} à ${city.label} : où et comment</h2>
-  <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:40px;">${insight.where}</p>
+  <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:${zonesHtml ? '28px' : '40px'};">${insight.where}</p>
+  ${zonesHtml}
   <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:32px;margin-bottom:32px;">
     <p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:12px;">Fourchette de prix observée</p>
     <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:0;">${insight.price}</p>
@@ -230,6 +300,8 @@ function buildLocalInsight(style, city) {
 
 // Conseils pour choisir son tatoueur par style
 const STYLE_TIPS = {
+  'fineline': `Regarde toujours des photos cicatrisées (3 mois minimum, idéalement 1 an). C'est là que se voit la vraie qualité d'un fineline. Vérifie aussi la régularité du trait sur les longues lignes : une variation d'épaisseur trahit un manque de maîtrise de la profondeur d'aiguille. Méfie-toi des artistes qui mélangent fineline, couleur et japonais dans le même feed : pour du fineline, cherche un spécialiste qui ne fait quasiment que ça.`,
+  'blackwork': `Le blackwork ne pardonne aucune imprécision : zoome sur les photos pour vérifier l'uniformité des aplats noirs (pas de zones plus claires, pas de "trous" dans le remplissage). Demande à voir des photos cicatrisées de pièces ornementales : c'est là que se voit si l'artiste maîtrise la densité d'encre dans la durée. Pour un cover-up, demande des exemples concrets et la photo "avant" pour juger du résultat.`,
   'realisme': `Demandez à voir des photos cicatrisées, pas seulement fraîches. Le réalisme révèle la vraie qualité de l'artiste une fois la peau guérie. Vérifiez aussi qu'il maîtrise les contrastes et les dégradés sur différentes carnations.`,
   'japonais': `Regardez si l'artiste respecte les règles de composition du japonais traditionnel (sens des vagues, placement des éléments). Un bon tatoueur japonais connaît la symbolique de chaque motif et saura vous conseiller.`,
   'geometrique': `La précision est tout dans le géométrique. Zoomez sur les photos pour vérifier la régularité des lignes et la symétrie. Un bon artiste géométrique travaille avec des gabarits et une rigueur mathématique.`,
@@ -239,6 +311,102 @@ const STYLE_TIPS = {
   'dotwork': `Regardez la régularité des points : ils doivent être uniformes en taille et en espacement. Les dégradés doivent être fluides sans zones de points agglutinés. C'est le signe d'un vrai maître du dotwork.`,
   'lettering': `Demandez une maquette de votre texte avant la séance. La lisibilité est cruciale en lettering — testez différentes tailles et polices. Un bon artiste lettering adapte la typographie à la morphologie de la zone tatouée.`,
 };
+
+// Sous-styles par style (4 familles à connaître)
+const STYLE_SUBSTYLES = {
+  'fineline': [
+    { name: 'Botanique', desc: `Le plus demandé. Feuilles, fleurs, branches, illustrations type planche d'herbier. Idéal sur avant-bras, omoplate, côtes. Vieillit bien si les traits ne sont pas trop rapprochés.` },
+    { name: 'Micro-réalisme', desc: `Portraits, animaux, objets miniatures en moins de 5 cm. La spécialité la plus exigeante techniquement : un trait mal posé et le sujet devient illisible. À réserver aux artistes très expérimentés.` },
+    { name: 'Lettering fin', desc: `Citations, prénoms, dates en écriture manuscrite ou typographique. Demande un calibrage parfait : trop fin, ça disparaît à 6 mois ; trop épais, ça perd le caractère fineline.` },
+    { name: 'Géométrique fin', desc: `Mandalas, formes pures, motifs sacrés. Souvent combiné avec du dotwork pour les ombrés. Le style le moins pardonnant : la moindre asymétrie se voit immédiatement.` },
+  ],
+  'blackwork': [
+    { name: 'Ornemental', desc: `Motifs symétriques denses, inspiration baroque ou tribale revisitée. Idéal pour les pièces structurées sur avant-bras, mollet, dos. La cohérence géométrique fait toute la qualité.` },
+    { name: 'Dotwork', desc: `Construction par points pour les dégradés. Demande une patience et une régularité énormes. Souvent combiné avec de l'ornemental pour adoucir les transitions entre aplats noirs et zones claires.` },
+    { name: 'Blackout', desc: `Zones entièrement remplies de noir, parfois sur de larges surfaces (manchette complète, demi-cuisse). Utilisé pour des effets graphiques radicaux ou pour couvrir d'anciens tatouages. Cicatrisation plus longue.` },
+    { name: 'Illustratif', desc: `Gravures, animaux, scènes narratives au trait noir avec hachures et points. Inspiré des illustrations anciennes type gravure sur bois. Permet beaucoup de finesse tout en restant 100 % noir.` },
+  ],
+  'realisme': [
+    { name: 'Portrait noir & gris', desc: `Le classique du réalisme : visages, animaux, scènes en dégradés de noir. Demande une maîtrise parfaite des contrastes pour rester lisible sur la durée. Idéal en moyenne ou grande taille.` },
+    { name: 'Réalisme couleur', desc: `Plus rare et plus exigeant. Reproduit fidèlement des photos en couleur. Risque d'estompage plus rapide sur les pigments rouges et jaunes : à confier à un artiste expérimenté qui anticipe le vieillissement.` },
+    { name: 'Hyper-réalisme', desc: `Précision photographique extrême, souvent sur petite ou moyenne pièce. Le travail prend plus de temps qu'un réalisme classique et coûte généralement plus cher. À réserver aux projets très étudiés.` },
+    { name: 'Micro-réalisme', desc: `Réalisme sur moins de 5 cm. Croisement avec le fineline. Très difficile techniquement : un cheveu d'erreur et le sujet devient flou. Demande absolument un test à l'échelle avant validation.` },
+  ],
+  'japonais': [
+    { name: 'Irezumi traditionnel', desc: `Le japonais classique : dragons, carpes koï, fleurs de cerisier, vagues, masques Hannya. Compositions très codifiées qui demandent un artiste maîtrisant les règles traditionnelles (sens des vagues, hiérarchie des éléments).` },
+    { name: 'Néo-japonais', desc: `Mêle les codes traditionnels et des touches contemporaines (couleurs vives, compositions plus libres, références modernes). Permet de garder l'esthétique japonaise avec une signature personnelle.` },
+    { name: 'Sumi-e / tebori', desc: `Inspiré de la peinture à l'encre japonaise. Tracé délicat, beaucoup de vide, esthétique épurée. Le tebori (à la main, sans machine) reste rare en France mais existe.` },
+    { name: 'Blackwork japonais', desc: `Compositions japonaises en noir pur, sans couleur. Vieillit très bien grâce à la densité d'encre. Idéal pour les amateurs du style japonais qui préfèrent un rendu graphique plus contemporain.` },
+  ],
+  'geometrique': [
+    { name: 'Mandala', desc: `Le plus demandé. Compositions circulaires symétriques inspirées des traditions indiennes et bouddhistes. Demande une précision mathématique : la moindre asymétrie se voit immédiatement.` },
+    { name: 'Sacré géométrique', desc: `Fleur de vie, métatron, motifs ésotériques. Souvent combiné avec dotwork pour les ombrés. Charge symbolique forte, à choisir avec un artiste qui maîtrise la signification des motifs.` },
+    { name: 'Linework graphique', desc: `Compositions abstraites en traits fins, formes pures, lignes parallèles. Influence Bauhaus et graphisme contemporain. Permet beaucoup de personnalisation.` },
+    { name: 'Géométrique animalier', desc: `Animaux stylisés avec des compositions géométriques (loup mandala, cerf polygonal, etc.). Très populaire car combine pouvoir symbolique de l'animal et précision graphique.` },
+  ],
+  'tribal': [
+    { name: 'Polynésien (Maori, Samoan)', desc: `Le plus codifié des styles tribaux. Chaque motif porte un sens précis lié au statut, au lignage, au parcours de vie. À faire avec un artiste qui connaît la tradition, pas un simple décor.` },
+    { name: 'Maori', desc: `Sous-famille du polynésien, originaire de Nouvelle-Zélande. Motifs en spirales (koru), tikis, lézards. Demande une consultation préalable pour ne pas usurper des motifs réservés.` },
+    { name: 'Néo-tribal', desc: `Réinterprétation contemporaine des motifs tribaux. Permet l'esthétique sans la charge culturelle. Plus libre, plus personnalisable, plus accessible à un public sans lien avec la culture d'origine.` },
+    { name: 'Berbère / amazigh', desc: `Motifs ancestraux d'Afrique du Nord. Symboles de protection, de fertilité, d'appartenance. Style en regain d'intérêt chez les descendants de cultures berbères qui veulent renouer avec leurs racines.` },
+  ],
+  'old-school': [
+    { name: 'American Traditional', desc: `Le classique : ancres, roses, hirondelles, aigles, pin-ups. Contours épais, couleurs vives (rouge, vert, jaune, bleu), aplats francs. Vieillit exceptionnellement bien grâce à la densité des contours.` },
+    { name: 'Neo-Traditional', desc: `Évolution moderne de l'old school. Garde les contours gras mais autorise plus de détails, de nuances et de couleurs. Idéal pour des sujets plus complexes (animaux, portraits stylisés).` },
+    { name: 'Traditional japonais', desc: `Mélange entre old school occidental et codes japonais. Vagues, fleurs, masques avec contours épais et palette saturée. Très populaire pour les sleeves complets.` },
+    { name: 'Sailor Jerry style', desc: `Inspiré du tatoueur emblématique Norman "Sailor Jerry" Collins. Esthétique marin, militaire, érotique vintage. Style très iconographique, peu personnalisable mais immédiatement reconnaissable.` },
+  ],
+  'aquarelle': [
+    { name: 'Splash watercolor', desc: `Le plus emblématique. Éclaboussures de couleur sans contour structuré, effet "peinture qui coule". Risque d'estompage plus rapide : choisir un artiste qui sait doser les pigments.` },
+    { name: 'Aquarelle structurée', desc: `Couleurs aquarelle posées sur un dessin au trait fin (souvent fineline). Tient mieux dans le temps que le splash pur car le trait conserve la lisibilité même si la couleur s'estompe.` },
+    { name: 'Galaxie / cosmique', desc: `Nébuleuses, étoiles, dégradés violets/bleus/roses. Très demandé pour les pièces moyennes. Vieillit moyen sur les zones très exposées au soleil.` },
+    { name: 'Botanique aquarelle', desc: `Fleurs, plumes, papillons en couleur aquarelle. Combine la délicatesse du fineline botanique et l'expressivité de la couleur. L'un des sous-styles les plus populaires actuellement.` },
+  ],
+  'dotwork': [
+    { name: 'Mandala dotwork', desc: `Compositions circulaires entièrement construites en points. La discipline reine du dotwork. Demande une régularité exemplaire : les points doivent être uniformes en taille et en espacement.` },
+    { name: 'Dotwork géométrique', desc: `Formes géométriques avec dégradés en points. Souvent associé à des lignes fines pour structurer la composition. Très long à exécuter (plusieurs heures même sur petite pièce).` },
+    { name: 'Dotwork illustratif', desc: `Portraits, animaux, scènes en pointillisme pur. Style proche de la gravure ou du dessin à l'encre. Très peu courant car techniquement exigeant.` },
+    { name: 'Handpoke', desc: `Dotwork réalisé à la main (sans machine), point par point. Technique ancestrale qui connaît un revival. Plus lent, moins traumatisant pour la peau, esthétique plus organique.` },
+  ],
+  'lettering': [
+    { name: 'Script', desc: `Écriture manuscrite cursive, élégante. Le plus demandé pour citations et prénoms. Demande un calibrage parfait des espacements pour rester lisible dans la durée.` },
+    { name: 'Gothique / blackletter', desc: `Inspiration médiévale, lettres anguleuses et denses. Très impactant visuellement mais peut être moins lisible : choisir des compositions courtes ou des emplacements bien visibles.` },
+    { name: 'Chicano lettering', desc: `Style issu de la culture chicano californienne. Lettres ombrées, contrastes forts, esthétique très typée. Souvent en noir et gris, idéal pour des phrases ou des prénoms emblématiques.` },
+    { name: 'Lettering minimaliste', desc: `Typographie simple, sans fioritures, souvent en fineline. Idéal pour des dates, des initiales, des mots courts. Discret et intemporel, vieillit très bien.` },
+  ],
+};
+
+function buildLeadCta(style, city) {
+  return `
+<!-- LEAD CTA -->
+<section class="lead-cta">
+  <div class="lead-cta-inner">
+    <div class="lead-cta-text">
+      <p class="lead-cta-title">Décris ton projet ${style.label.toLowerCase()} à ${city.label}, reçois 2-3 propositions d'artistes.</p>
+      <p class="lead-cta-sub">Gratuit · Réponse sous 48h</p>
+    </div>
+    <a href="demande.html?style=${encodeURIComponent(style.airtable)}&ville=${encodeURIComponent(city.label)}" class="lead-cta-btn">Décrire mon projet →</a>
+  </div>
+</section>`;
+}
+
+function buildSubstylesHtml(style) {
+  const list = STYLE_SUBSTYLES[style.slug];
+  if (!list) return '';
+  const items = list.map(s => `
+    <div class="substyle-item">
+      <h3 class="substyle-name">${s.name}</h3>
+      <p class="substyle-desc">${s.desc}</p>
+    </div>`).join('');
+  return `
+<!-- SOUS-STYLES -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Le ${style.label.toLowerCase()} en détail : 4 familles à connaître</h2>
+  <p class="seo-section-sub">Le ${style.label.toLowerCase()} n'est pas un style unique mais une famille d'approches qui partagent un même langage graphique. Voici les 4 sous-styles les plus représentés.</p>
+  <div class="substyle-list">${items}
+  </div>
+</section>`;
+}
 
 // Phrases de clôture Inkmap
 const INKMAP_CLOSE = [
@@ -332,6 +500,8 @@ function buildPage(style, city) {
   const faqHtml = buildFaqHtml(style);
   const tips = STYLE_TIPS[style.slug] || '';
   const localInsight = buildLocalInsight(style, city);
+  const substylesHtml = buildSubstylesHtml(style);
+  const leadCtaHtml = buildLeadCta(style, city);
 
   return `<!DOCTYPE html>
 <html lang="fr">
@@ -498,6 +668,102 @@ function buildPage(style, city) {
       margin-bottom: 16px;
     }
 
+    /* LEAD CTA */
+    .lead-cta {
+      max-width: 780px;
+      margin: 48px auto 0;
+      padding: 0 56px;
+    }
+
+    .lead-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .lead-cta-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lead-cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .lead-cta-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted2);
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .lead-cta-btn {
+      flex-shrink: 0;
+      display: inline-block;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 18px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+
+    .lead-cta-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    @media (max-width: 720px) {
+      .lead-cta { padding: 0 20px; }
+      .lead-cta-inner { flex-direction: column; align-items: flex-start; padding: 18px 20px; }
+      .lead-cta-btn { width: 100%; text-align: center; }
+    }
+
+    /* SUBSTYLES */
+    .substyle-list { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+
+    .substyle-item {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+
+    .substyle-item:last-child { padding-bottom: 0; }
+
+    .substyle-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .substyle-desc {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin: 0;
+    }
+
     /* FAQ */
     .seo-faq { display: flex; flex-direction: column; gap: 8px; }
 
@@ -629,6 +895,10 @@ ${HEADER_HTML}
 
 <!-- GRID -->
 <div class="grid" id="grid"></div>
+
+${leadCtaHtml}
+
+${substylesHtml}
 
 ${localInsight}
 

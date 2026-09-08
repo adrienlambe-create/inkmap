@@ -501,6 +501,7 @@ const coords = {
   "Bayonne":[43.4929,-1.4748],"Versailles":[48.8049,2.1204],"Nîmes":[43.8367,4.3601],
   "Rouen":[49.4432,1.0993],"Orléans":[47.9029,1.9093],"Besançon":[47.2378,6.0241],
   "Mulhouse":[47.7508,7.3359],"Poitiers":[46.5802,0.3404],"Valenciennes":[50.3579,3.5238],
+  "Douai":[50.3702,3.0796],
   "Saint-Denis":[48.9362,2.3574],"Montreuil":[48.8642,2.4444],"Vincennes":[48.8473,2.4393],
   "Boulogne-Billancourt":[48.8353,2.2400],"Créteil":[48.7774,2.4567],
   "Vitry-sur-Seine":[48.7876,2.3974],"Levallois-Perret":[48.8952,2.2876],

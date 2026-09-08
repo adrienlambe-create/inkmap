@@ -215,6 +215,102 @@
       margin-bottom: 16px;
     }
 
+    /* LEAD CTA */
+    .lead-cta {
+      max-width: 780px;
+      margin: 48px auto 0;
+      padding: 0 56px;
+    }
+
+    .lead-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .lead-cta-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lead-cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .lead-cta-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted2);
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .lead-cta-btn {
+      flex-shrink: 0;
+      display: inline-block;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 18px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+
+    .lead-cta-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    @media (max-width: 720px) {
+      .lead-cta { padding: 0 20px; }
+      .lead-cta-inner { flex-direction: column; align-items: flex-start; padding: 18px 20px; }
+      .lead-cta-btn { width: 100%; text-align: center; }
+    }
+
+    /* SUBSTYLES */
+    .substyle-list { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+
+    .substyle-item {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+
+    .substyle-item:last-child { padding-bottom: 0; }
+
+    .substyle-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .substyle-desc {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin: 0;
+    }
+
     /* FAQ */
     .seo-faq { display: flex; flex-direction: column; gap: 8px; }
 
@@ -312,7 +408,10 @@
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
     }
   </style>
-    <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"ItemList","name":"Tatoueurs geometrique à paris","numberOfItems":1,"itemListElement":[{"@type":"ListItem","position":1,"name":"Atelier M","description":"Tatoueur Fineline à Paris"}]}
+  </script>
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics" data-sdkv="1.5.0"></script>
   <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="1.2.0"></script>
 </head>
@@ -354,10 +453,10 @@
   <div class="seo-hero-inner">
     <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> <span>›</span> <a href="tatoueur-geometrique-paris.html">Géométrique</a> <span>›</span> <strong>Paris</strong></nav>
     <h1>Tatoueurs <em>Géométrique</em><br>à Paris</h1>
-    <p class="seo-intro">Le tatouage géométrique transforme le corps en espace graphique, jouant avec les formes, les symétries et les proportions pour créer des compositions d'une précision mathématique absolue. Des mandales aux polyèdres, des fractales aux lignes épurées, ce style demande une rigueur technique et un sens aigu de la géométrie. Il peut être minimaliste ou d'une complexité vertigineuse, souvent rehaussé de dotwork ou de fins aplats noirs. Paris concentre la plus grande scène tattoo de France, avec des centaines de studios répartis dans tous les arrondissements. Du 11e au 18e en passant par le Marais, les artistes parisiens sont exposés à une clientèle internationale exigeante qui élève en permanence le niveau artistique. La capitale accueille chaque année plusieurs conventions tattoo majeures et attire des artistes du monde entier. Inkmap vous permet de comparer les artistes, leurs tarifs et leurs univers pour trouver celui qui réalisera exactement le tatouage que vous imaginez.</p>
+    <p class="seo-intro">Le tatouage géométrique transforme le corps en espace graphique, jouant avec les formes, les symétries et les proportions pour créer des compositions d'une précision mathématique absolue. Des mandales aux polyèdres, des fractales aux lignes épurées, ce style demande une rigueur technique et un sens aigu de la géométrie. Il peut être minimaliste ou d'une complexité vertigineuse, souvent rehaussé de dotwork ou de fins aplats noirs. Paris concentre la plus grande scène tattoo de France, avec des centaines de studios répartis dans tous les arrondissements. Du 11e au 18e en passant par le Marais, les artistes parisiens sont exposés à une clientèle internationale exigeante qui élève en permanence le niveau artistique. La capitale accueille chaque année plusieurs conventions tattoo majeures et attire des artistes du monde entier. Inkmap recense et vérifie les profils des meilleurs tatoueurs spécialisés dans ce style, partout en France.</p>
     <div class="seo-stats">
       <div class="seo-stat">
-        <div class="seo-stat-num" id="nb-resultats">—</div>
+        <div class="seo-stat-num" id="nb-resultats">1</div>
         <div class="seo-stat-label">Artistes trouvés</div>
       </div>
       <div class="seo-stat">
@@ -376,13 +475,66 @@
 <div class="results-header" id="results-count"></div>
 
 <!-- GRID -->
-<div class="grid" id="grid"></div>
+<div class="grid" id="grid">
+<a class="card card-link" href="/tatoueur/atelier-m-paris" data-id="61" style="text-decoration:none;color:inherit;display:block">
+      <div class="card-img"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" style="display:block"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="rgba(192,57,43,0.12)"/></pattern><linearGradient id="glow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141414"/><stop offset="50%" stop-color="#0d0d0d"/><stop offset="100%" stop-color="#111"/></linearGradient></defs><rect width="320" height="180" fill="url(#glow)"/><rect width="320" height="180" fill="url(#grid)"/><line x1="0" y1="180" x2="320" y2="0" stroke="rgba(192,57,43,0.06)" stroke-width="40"/><g transform="translate(160,68)" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"><path d="M-8,-18 L-8,8 C-8,12 -4,14 0,14 C4,14 8,12 8,8 L8,-18"/><line x1="-8" y1="-8" x2="8" y2="-8"/><line x1="-6" y1="-13" x2="6" y2="-13"/><line x1="0" y1="14" x2="0" y2="22" stroke="#c0392b" stroke-width="1.5"/><circle cx="-12" cy="-14" r="2.5" stroke="#333"/><line x1="-12" y1="-11.5" x2="-12" y2="-4"/><path d="M-12,-4 L-8,-2"/></g><text x="160" y="116" font-family="Arial Black, Impact, sans-serif" font-size="13" font-weight="900" letter-spacing="5" fill="#fff" fill-opacity="0.85" text-anchor="middle" dominant-baseline="middle">INK<tspan fill="#c0392b">MAP</tspan></text><text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text></svg></div>
+      <div class="card-body">
+        <div class="card-top">
+          <div class="card-name">Atelier M</div>
+          <span class="badge-verifie">✓ Vérifié</span>
+        </div>
+        <div class="card-location">📍 Paris</div>
+        <div class="styles"><span class="style-tag">Fineline</span><span class="style-tag">Blackwork</span><span class="style-tag">Japonais</span><span class="style-tag">Old School</span><span class="style-tag">Réalisme</span><span class="style-tag">Géométrique</span><span class="style-tag">Aquarelle</span><span class="style-tag">Floral</span><span class="style-tag">Lettering</span><span class="style-tag">Micro-réalisme</span></div>
+        <div class="card-footer">
+          <div class="tarif">120€ <small>/ heure</small></div>
+        </div>
+      </div>
+    </a>
+</div>
+
+
+<!-- LEAD CTA -->
+<section class="lead-cta">
+  <div class="lead-cta-inner">
+    <div class="lead-cta-text">
+      <p class="lead-cta-title">Décris ton projet géométrique à Paris, reçois 2-3 propositions d'artistes.</p>
+      <p class="lead-cta-sub">Gratuit · Réponse sous 48h</p>
+    </div>
+    <a href="demande.html?style=G%C3%A9om%C3%A9trique&ville=Paris" class="lead-cta-btn">Décrire mon projet →</a>
+  </div>
+</section>
+
+
+<!-- SOUS-STYLES -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Le géométrique en détail : 4 familles à connaître</h2>
+  <p class="seo-section-sub">Le géométrique n'est pas un style unique mais une famille d'approches qui partagent un même langage graphique. Voici les 4 sous-styles les plus représentés.</p>
+  <div class="substyle-list">
+    <div class="substyle-item">
+      <h3 class="substyle-name">Mandala</h3>
+      <p class="substyle-desc">Le plus demandé. Compositions circulaires symétriques inspirées des traditions indiennes et bouddhistes. Demande une précision mathématique : la moindre asymétrie se voit immédiatement.</p>
+    </div>
+    <div class="substyle-item">
+      <h3 class="substyle-name">Sacré géométrique</h3>
+      <p class="substyle-desc">Fleur de vie, métatron, motifs ésotériques. Souvent combiné avec dotwork pour les ombrés. Charge symbolique forte, à choisir avec un artiste qui maîtrise la signification des motifs.</p>
+    </div>
+    <div class="substyle-item">
+      <h3 class="substyle-name">Linework graphique</h3>
+      <p class="substyle-desc">Compositions abstraites en traits fins, formes pures, lignes parallèles. Influence Bauhaus et graphisme contemporain. Permet beaucoup de personnalisation.</p>
+    </div>
+    <div class="substyle-item">
+      <h3 class="substyle-name">Géométrique animalier</h3>
+      <p class="substyle-desc">Animaux stylisés avec des compositions géométriques (loup mandala, cerf polygonal, etc.). Très populaire car combine pouvoir symbolique de l'animal et précision graphique.</p>
+    </div>
+  </div>
+</section>
 
 
 <!-- LOCAL INSIGHT (contenu unique style × ville) -->
 <section style="max-width:780px;margin:64px auto;padding:0 56px;">
   <h2 style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:32px;line-height:1.2;color:var(--text);">Géométrique à Paris : où et comment</h2>
   <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:40px;">Le géométrique parisien s'est concentré autour du Marais et d'Oberkampf, dans des studios qui assument une approche graphique et architecturale du tatouage. Mandalas, dotwork géométrique, patterns sacrés : Paris a importé tôt cette esthétique venue de Londres et Berlin, et la scène est aujourd'hui mature.</p>
+  
   <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:32px;margin-bottom:32px;">
     <p style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:2.5px;margin-bottom:12px;">Fourchette de prix observée</p>
     <p style="color:#222;font-size:1rem;line-height:1.85;margin-bottom:0;">Entre <strong>100 € et 180 € de l'heure</strong> chez nos artistes vérifiés. Les pièces simples (triangles, cercles, motifs minimalistes) partent de 100 € fixe ; les mandalas ou compositions complexes peuvent demander 8 à 15 heures de travail.</p>
@@ -434,7 +586,7 @@
 <section class="seo-section seo-section-alt">
   <h2 class="seo-section-title">Autres styles de tatouage à Paris</h2>
   <p class="seo-section-sub">Découvrez aussi les tatoueurs spécialisés dans d'autres styles à Paris :</p>
-  <div class="internal-links"><a href="tatoueur-realisme-paris.html" class="internal-link">Réalisme</a><a href="tatoueur-japonais-paris.html" class="internal-link">Japonais</a><a href="tatoueur-tribal-paris.html" class="internal-link">Tribal</a><a href="tatoueur-old-school-paris.html" class="internal-link">Old School</a><a href="tatoueur-aquarelle-paris.html" class="internal-link">Aquarelle</a><a href="tatoueur-dotwork-paris.html" class="internal-link">Dotwork</a><a href="tatoueur-lettering-paris.html" class="internal-link">Lettering</a></div>
+  <div class="internal-links"><a href="tatoueur-fineline-paris.html" class="internal-link">Fineline</a><a href="tatoueur-blackwork-paris.html" class="internal-link">Blackwork</a><a href="tatoueur-realisme-paris.html" class="internal-link">Réalisme</a><a href="tatoueur-japonais-paris.html" class="internal-link">Japonais</a><a href="tatoueur-tribal-paris.html" class="internal-link">Tribal</a><a href="tatoueur-old-school-paris.html" class="internal-link">Old School</a><a href="tatoueur-aquarelle-paris.html" class="internal-link">Aquarelle</a><a href="tatoueur-dotwork-paris.html" class="internal-link">Dotwork</a><a href="tatoueur-lettering-paris.html" class="internal-link">Lettering</a></div>
 </section>
 
 <section class="seo-section">
@@ -477,7 +629,7 @@
 const PAGE_STYLE = "Géométrique";
 const PAGE_VILLE = "Paris";
 
-const tatoueurs = [];
+const tatoueurs = [{"id":61,"nom":"Atelier M","nomComplet":"Ange MATTEI AMAR","ville":"Paris","region":"Île-de-France","styles":["Fineline","Blackwork","Japonais","Old School","Réalisme","Géométrique","Aquarelle","Floral","Lettering","Micro-réalisme"],"tarif":120,"instagram":"@atelierm_ttt","bio":"L'Atelier M est un salon de tatouage sur rue situé en plein cœur de Belleville sur deux niveaux. Nous représentons une équipe d'artistes d'univers graphiques très différents. Nous développons également les expositions peinture ainsi que des plateaux pluridisciplinaires dédiés à l'Art en général. \nGuests et Walk-in welcome.","verifie":true,"photo":"","photos":[],"emoji":"🌿"}];
 
 const STYLE_EMOJI = {
   'Blackwork':'◼','Fineline':'🌿','Réalisme':'📷','Old School':'⚓',

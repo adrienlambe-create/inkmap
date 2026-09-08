@@ -304,9 +304,11 @@ function updateSitemap(tatoueurs) {
     { loc: '/guide/referencer-studio-tatouage-gratuit', priority: '0.7' },
     { loc: '/guide/tatoueur-debutant-ou-experimente', priority: '0.7' },
     { loc: '/guide/comment-fixer-ses-prix-tatoueur', priority: '0.7' },
+    { loc: '/guide/prix-tatouage', priority: '0.9' },
     { loc: '/outils/calculateur-tarif-tatouage', priority: '0.7' },
     { loc: '/outils/calculateur-rentabilite-studio-tatouage', priority: '0.7' },
     { loc: '/outils/identifier-style-tatouage', priority: '0.7' },
+    { loc: '/outils/quiz-style-tatouage', priority: '0.7' },
   ];
 
   // Lis les pages profil depuis l'index écrit par generate-profiles.js

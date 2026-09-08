@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quel style de tatouage te ressemble ? — Quiz gratuit | Inkmap</title>
+  <meta name="description" content="En 6 questions, découvre quel style de tatouage te correspond. Fineline, blackwork, réalisme, japonais… on te recommande aussi les tatoueurs qui matchent." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/outils/quiz-style-tatouage" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inkmap" />
+  <meta property="og:title" content="Quel style de tatouage te ressemble ? — Quiz Inkmap" />
+  <meta property="og:description" content="6 questions pour découvrir ton style de tatouage et les tatoueurs qui le pratiquent." />
+  <meta property="og:url" content="https://inkmap.fr/outils/quiz-style-tatouage" />
+  <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quel style de tatouage te ressemble ?" />
+  <meta name="twitter:description" content="Quiz gratuit pour découvrir ton style de tatouage." />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Quiz : quel style de tatouage te ressemble ?",
+    "description": "Quiz interactif gratuit en 6 questions pour identifier le style de tatouage qui correspond à tes préférences, et découvrir les tatoueurs français qui le pratiquent.",
+    "url": "https://inkmap.fr/outils/quiz-style-tatouage",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "provider": { "@type": "Organization", "name": "Inkmap", "url": "https://inkmap.fr" }
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+
+    :root {
+      --bg: #ffffff;
+      --surface: #f9f9f9;
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.08);
+      --accent: #c0392b;
+      --text: #0d0d0d;
+      --muted: #aaa;
+      --muted2: #666;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0 56px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .back-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted2);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    /* HERO */
+    .quiz-hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 64px 32px 32px;
+      text-align: center;
+    }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .tool-tag span {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .quiz-hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .quiz-hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .quiz-hero p {
+      font-size: 1.05rem;
+      color: var(--muted2);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* QUIZ CONTAINER */
+    .quiz-wrap {
+      max-width: 720px;
+      margin: 32px auto 80px;
+      padding: 0 32px;
+    }
+
+    /* INTRO CARD */
+    .intro-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .intro-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .intro-meta-item {
+      text-align: center;
+    }
+
+    .intro-meta-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .intro-meta-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 6px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 16px 36px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192,57,43,0.3);
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width .3s ease;
+    }
+
+    .progress-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    /* QUESTION */
+    .q-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+
+    .q-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .q-option {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      cursor: pointer;
+      transition: all .15s;
+      text-align: left;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .q-option:hover {
+      border-color: var(--accent);
+      background: rgba(192,57,43,0.03);
+      transform: translateX(4px);
+    }
+
+    .q-option-emoji {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .q-option-text {
+      flex: 1;
+    }
+
+    .q-back {
+      background: none;
+      border: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+
+    .q-back:hover { color: var(--accent); }
+
+    /* RESULT */
+    .result-card {
+      text-align: center;
+    }
+
+    .result-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      margin-bottom: 16px;
+    }
+
+    .result-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .result-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .result-desc {
+      font-size: 1.05rem;
+      color: var(--muted2);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 40px;
+    }
+
+    .result-section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+      margin: 48px 0 20px;
+      text-align: left;
+    }
+
+    .result-section-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .tatoueurs-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .tatoueur-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: left;
+      transition: transform .15s, border-color .15s;
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+    }
+
+    .tatoueur-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    .tatoueur-img {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      overflow: hidden;
+    }
+
+    .tatoueur-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tatoueur-body {
+      padding: 14px 16px;
+    }
+
+    .tatoueur-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .tatoueur-loc {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted2);
+      letter-spacing: 0.5px;
+    }
+
+    .tatoueur-tarif {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-top: 8px;
+      font-weight: 700;
+    }
+
+    .result-cta {
+      background: var(--text);
+      color: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: left;
+      margin-top: 32px;
+    }
+
+    .result-cta-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .result-cta-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .result-cta-sub {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .result-cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* CONTENT SECTIONS (SEO) */
+    .seo-content {
+      max-width: 720px;
+      margin: 64px auto;
+      padding: 0 32px;
+    }
+
+    .seo-content h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+
+    .seo-content p {
+      color: var(--muted2);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .seo-content ul {
+      margin: 16px 0 24px 24px;
+      color: var(--muted2);
+    }
+
+    .seo-content li {
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      color: #fff;
+      padding: 40px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .footer-logo em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    footer small {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 720px) {
+      header { padding: 0 20px; }
+      .quiz-hero { padding: 40px 20px 24px; }
+      .quiz-wrap { padding: 0 20px; margin: 24px auto 60px; }
+      .intro-card { padding: 32px 24px; }
+      .q-option { padding: 16px 20px; font-size: 0.95rem; }
+      .result-cta { padding: 24px; }
+      footer { padding: 32px 20px; }
+    }
+  </style>
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics" data-sdkv="1.5.0"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="1.2.0"></script>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">ink<em>map</em></a>
+  <a href="../index.html" class="back-link">Annuaire</a>
+</header>
+
+<section class="quiz-hero">
+  <div class="tool-tag"><span></span> Quiz gratuit · 2 min</div>
+  <h1>Quel style de tatouage <em>te ressemble</em> ?</h1>
+  <p>Six questions, zéro pression. À la fin, on te dit quel style de tatouage colle le mieux à tes goûts — et on te montre les tatoueurs français qui le pratiquent.</p>
+</section>
+
+<div class="quiz-wrap">
+  <div id="quizContainer"></div>
+</div>
+
+<section class="seo-content">
+  <h2>Comment choisir son style de tatouage ?</h2>
+  <p>Le style de tatouage n'est pas qu'une question d'esthétique : c'est aussi une question de personnalité, de rapport à son corps et de projet à long terme. Un fineline botanique ne raconte pas la même histoire qu'un blackwork ornemental ou qu'un japonais traditionnel.</p>
+  <p>Avant de te décider, plusieurs critères comptent :</p>
+  <ul>
+    <li><strong>L'effet visuel recherché</strong> : discret et délicat, ou affirmé et impactant ?</li>
+    <li><strong>La zone du corps</strong> : un avant-bras ne se gère pas comme un dos complet.</li>
+    <li><strong>Le rapport au temps</strong> : certains styles vieillissent mieux que d'autres.</li>
+    <li><strong>Le budget</strong> : du minimum tarifaire à 80 € jusqu'à plusieurs milliers d'euros pour les grands projets.</li>
+    <li><strong>Ton premier tatouage ou pas</strong> : si c'est le premier, mieux vaut commencer par un style "safe" et bien maîtrisé.</li>
+  </ul>
+  <p>Ce quiz t'aide à clarifier ces préférences en 2 minutes, sans jargon ni questions techniques. Tu repars avec un style recommandé, une mini-explication, et une sélection de tatoueurs français qui pratiquent ce style chez nous.</p>
+</section>
+
+<footer>
+  <div>
+    <div class="footer-logo">ink<em>map</em></div>
+    <p style="margin-top:6px;font-size:0.8rem;color:rgba(255,255,255,0.6)">Le premier annuaire des tatoueurs français</p>
+  </div>
+  <small>© 2026 — INKMAP.FR</small>
+</footer>
+
+<script>
+const QUIZ = [
+  {
+    title: "Quand tu imagines ton tatouage idéal, tu vois plutôt…",
+    options: [
+      { emoji: "🌿", text: "Des traits fins, de la finesse, des détails délicats", scores: { fineline: 3, dotwork: 1, lettering: 1 } },
+      { emoji: "◼", text: "Du noir profond, des aplats, un truc qui en impose", scores: { blackwork: 3, japonais: 1, "old-school": 1 } },
+      { emoji: "🎨", text: "Des couleurs, du peps, quelque chose de vivant", scores: { aquarelle: 3, "old-school": 2, realisme: 1 } },
+      { emoji: "◆", text: "Des formes, de la géométrie, de la symétrie", scores: { geometrique: 3, dotwork: 2 } }
+    ]
+  },
+  {
+    title: "L'endroit où tu te verrais bien tatoué·e :",
+    options: [
+      { emoji: "✦", text: "Poignet, nuque, cheville (petit et discret)", scores: { fineline: 2, lettering: 2, dotwork: 1 } },
+      { emoji: "🖐", text: "Avant-bras, mollet, épaule (visible mais pas envahissant)", scores: { fineline: 1, blackwork: 1, realisme: 1, "old-school": 1, geometrique: 1, aquarelle: 1 } },
+      { emoji: "🌑", text: "Dos, cuisse, torse (grand format, vraie pièce)", scores: { japonais: 3, blackwork: 2, realisme: 2 } },
+      { emoji: "🤔", text: "J'ai pas encore d'idée précise", scores: { fineline: 1, blackwork: 1, realisme: 1 } }
+    ]
+  },
+  {
+    title: "Tu préfères qu'on reconnaisse ton tatouage…",
+    options: [
+      { emoji: "🔍", text: "Quand on s'approche, comme un secret à découvrir", scores: { fineline: 3, geometrique: 1, dotwork: 1 } },
+      { emoji: "👀", text: "Immédiatement, qu'on sache direct ce que c'est", scores: { realisme: 2, "old-school": 2, japonais: 2 } },
+      { emoji: "🌀", text: "Qu'on soit intrigué par les motifs, qu'on cherche le sens", scores: { geometrique: 2, dotwork: 2, tribal: 2 } },
+      { emoji: "💥", text: "Qu'on l'oublie pas, qu'il marque visuellement", scores: { blackwork: 3, japonais: 2, "old-school": 1 } }
+    ]
+  },
+  {
+    title: "Ton inspiration principale :",
+    options: [
+      { emoji: "🌱", text: "La nature, le végétal, les herbiers, les fleurs", scores: { fineline: 3, aquarelle: 2, dotwork: 1 } },
+      { emoji: "📷", text: "Les portraits, les souvenirs, les photos chargées d'émotion", scores: { realisme: 3, lettering: 1 } },
+      { emoji: "🔮", text: "Le sacré, le mystique, le symbolisme géométrique", scores: { geometrique: 3, dotwork: 2, tribal: 1 } },
+      { emoji: "⚓", text: "Les traditions, les cultures, l'histoire du tatouage", scores: { japonais: 2, "old-school": 2, tribal: 2 } }
+    ]
+  },
+  {
+    title: "Côté tatouage, tu en es où ?",
+    options: [
+      { emoji: "🥚", text: "Premier tatouage (ou presque), j'y vais doucement", scores: { fineline: 2, lettering: 2, dotwork: 1 } },
+      { emoji: "🌱", text: "J'en ai quelques-uns, je commence à savoir ce qui me parle", scores: { fineline: 1, blackwork: 1, realisme: 1, geometrique: 1, aquarelle: 1, "old-school": 1 } },
+      { emoji: "🔥", text: "Plusieurs déjà, je veux passer un cap, un vrai projet", scores: { japonais: 2, blackwork: 2, realisme: 2 } }
+    ]
+  },
+  {
+    title: "Si ton tatouage devait être un mot, ce serait…",
+    options: [
+      { emoji: "✨", text: "Élégant", scores: { fineline: 3, lettering: 2 } },
+      { emoji: "💪", text: "Puissant", scores: { blackwork: 3, japonais: 2, "old-school": 1 } },
+      { emoji: "🌸", text: "Vivant", scores: { aquarelle: 3, realisme: 1, "old-school": 1 } },
+      { emoji: "🌌", text: "Mystique", scores: { geometrique: 3, dotwork: 2, tribal: 1 } }
+    ]
+  }
+];
+
+const STYLES_INFO = {
+  fineline: {
+    label: "Fineline",
+    airtable: "Fineline",
+    slug: "fineline",
+    why: "Tu as un goût pour la finesse et les détails délicats. Le fineline te permet d'avoir une pièce élégante, intemporelle et personnelle, sans en faire trop. Botanique, micro-réalisme, lettering fin ou géométrique fin : tu as l'embarras du choix selon l'angle qui te parle le plus."
+  },
+  blackwork: {
+    label: "Blackwork",
+    airtable: "Blackwork",
+    slug: "blackwork",
+    why: "Tu aimes l'impact visuel et les choses affirmées. Le blackwork repose sur l'encre noire pure : aplats massifs, ornemental dense, dotwork ou blackout. C'est aussi l'un des styles qui vieillit le mieux dans le temps. Idéal pour les projets qui veulent marquer."
+  },
+  realisme: {
+    label: "Réalisme",
+    airtable: "Réalisme",
+    slug: "realisme",
+    why: "Tu veux raconter une histoire reconnaissable au premier coup d'œil : un portrait, un animal, un objet chargé d'émotion. Le réalisme demande un artiste expérimenté (les dégradés font toute la qualité), mais le résultat est saisissant. Compte un budget plus élevé que la moyenne."
+  },
+  japonais: {
+    label: "Japonais",
+    airtable: "Japonais",
+    slug: "japonais",
+    why: "Tu es attiré·e par les traditions et les projets ambitieux. Le tatouage japonais (irezumi) suit des codes très précis : composition narrative, hiérarchie des éléments, symbolique riche. C'est souvent un investissement (sleeve, dos, cuisse) qui se construit sur plusieurs séances."
+  },
+  geometrique: {
+    label: "Géométrique",
+    airtable: "Géométrique",
+    slug: "geometrique",
+    why: "Tu as un attrait pour les formes pures, la symétrie et le sacré. Le géométrique demande une précision mathématique : mandalas, fleur de vie, polyèdres, motifs ésotériques. La moindre asymétrie se voit immédiatement, donc choisis un artiste qui n'a fait que ça."
+  },
+  tribal: {
+    label: "Tribal",
+    airtable: "Tribal",
+    slug: "tribal",
+    why: "Tu cherches du sens et de la tradition. Le tribal (polynésien, maori, berbère, ou néo-tribal contemporain) raconte une histoire culturelle ou personnelle à travers ses motifs en aplats noirs. À choisir avec un artiste qui maîtrise les codes pour ne pas tomber dans la simple esthétique."
+  },
+  "old-school": {
+    label: "Old School",
+    airtable: "Old School",
+    slug: "old-school",
+    why: "Tu aimes les codes affirmés et le caractère intemporel. L'old school américain (ancres, roses, hirondelles, pin-ups) ou son évolution néo-traditional offrent des contours gras, des couleurs saturées, et une lisibilité parfaite même 30 ans plus tard."
+  },
+  aquarelle: {
+    label: "Aquarelle",
+    airtable: "Aquarelle",
+    slug: "aquarelle",
+    why: "Tu veux quelque chose de vivant et pictural. L'aquarelle reproduit l'effet de la peinture à l'eau : éclaboussures, dégradés, transparences. Style plus rare en France, à confier à un artiste vraiment expérimenté car l'aquarelle est aussi celle qui vieillit le moins bien si mal dosée."
+  },
+  dotwork: {
+    label: "Dotwork",
+    airtable: "Dotwork",
+    slug: "dotwork",
+    why: "Tu apprécies la patience et le détail méticuleux. Le dotwork construit l'image point par point : mandalas en pointillé, dégradés en points, géométrique sacré. C'est l'un des styles les plus longs à exécuter, mais aussi les plus uniques visuellement."
+  },
+  lettering: {
+    label: "Lettering",
+    airtable: "Lettering",
+    slug: "lettering",
+    why: "Tu veux qu'un mot, une phrase ou une date dise quelque chose. Le lettering (script, gothique, chicano, minimaliste) demande un calibrage précis pour rester lisible dans le temps. Idéal pour un premier tatouage ou comme complément d'une autre pièce."
+  }
+};
+
+// État du quiz
+const state = {
+  step: 'intro',  // 'intro' | 'question' | 'result'
+  currentQ: 0,
+  scores: {},  // { styleSlug: nombre }
+  history: [],  // pour le bouton retour
+  tatoueurs: []  // chargé depuis l'API
+};
+
+const container = document.getElementById('quizContainer');
+
+// Préchargement des tatoueurs en tâche de fond
+async function loadTatoueurs() {
+  try {
+    const r = await fetch('/api/tatoueurs');
+    if (!r.ok) return;
+    const data = await r.json();
+    state.tatoueurs = (data.records || []).map(rec => ({
+      id: rec.id,
+      slug: rec.slug,
+      verifie: rec.verifie,
+      photo: (rec.fields?.Photos && rec.fields.Photos[0]?.thumbnails?.large?.url) || (rec.fields?.Photos && rec.fields.Photos[0]?.url) || '',
+      nom: rec.fields?.Pseudo || rec.fields?.Nom || '',
+      ville: rec.fields?.Ville || '',
+      styles: rec.fields?.Styles || [],
+      tarif: rec.fields?.Tarif || 0,
+      instagramThumb: rec.instagramThumb || ''
+    }));
+  } catch(e) {
+    console.warn('[quiz] tatoueurs load failed', e.message);
+  }
+}
+loadTatoueurs();
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function render() {
+  if (state.step === 'intro') return renderIntro();
+  if (state.step === 'question') return renderQuestion();
+  if (state.step === 'result') return renderResult();
+}
+
+function renderIntro() {
+  container.innerHTML = `
+    <div class="intro-card">
+      <div class="intro-meta">
+        <div class="intro-meta-item">
+          <div class="intro-meta-num">6</div>
+          <div class="intro-meta-label">Questions</div>
+        </div>
+        <div class="intro-meta-item">
+          <div class="intro-meta-num">2 min</div>
+          <div class="intro-meta-label">Durée</div>
+        </div>
+        <div class="intro-meta-item">
+          <div class="intro-meta-num">10</div>
+          <div class="intro-meta-label">Styles possibles</div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="startQuiz()">Commencer →</button>
+    </div>
+  `;
+}
+
+window.startQuiz = function() {
+  state.step = 'question';
+  state.currentQ = 0;
+  state.scores = {};
+  state.history = [];
+  render();
+  window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
+};
+
+function renderQuestion() {
+  const q = QUIZ[state.currentQ];
+  const progress = ((state.currentQ) / QUIZ.length) * 100;
+  container.innerHTML = `
+    <p class="progress-text">Question ${state.currentQ + 1} / ${QUIZ.length}</p>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    <h2 class="q-title">${esc(q.title)}</h2>
+    <div class="q-options">
+      ${q.options.map((opt, i) => `
+        <button class="q-option" onclick="pickOption(${i})">
+          <span class="q-option-emoji">${opt.emoji}</span>
+          <span class="q-option-text">${esc(opt.text)}</span>
+        </button>
+      `).join('')}
+    </div>
+    ${state.currentQ > 0 ? `<button class="q-back" onclick="goBack()">← Question précédente</button>` : ''}
+  `;
+}
+
+window.pickOption = function(optIdx) {
+  const q = QUIZ[state.currentQ];
+  const opt = q.options[optIdx];
+  // Sauvegarde l'état avant pour le bouton retour
+  state.history.push(JSON.parse(JSON.stringify(state.scores)));
+  // Ajoute les scores
+  Object.entries(opt.scores).forEach(([style, pts]) => {
+    state.scores[style] = (state.scores[style] || 0) + pts;
+  });
+  // Question suivante ou résultat
+  if (state.currentQ < QUIZ.length - 1) {
+    state.currentQ++;
+    render();
+  } else {
+    state.step = 'result';
+    render();
+  }
+  window.scrollTo({ top: container.offsetTop - 80, behavior: 'smooth' });
+};
+
+window.goBack = function() {
+  if (state.currentQ === 0) return;
+  state.currentQ--;
+  state.scores = state.history.pop() || {};
+  render();
+};
+
+function pickWinner() {
+  const entries = Object.entries(state.scores);
+  if (!entries.length) return 'fineline';
+  entries.sort((a, b) => b[1] - a[1]);
+  return entries[0][0];
+}
+
+function findMatchingTatoueurs(styleLabel, max = 3) {
+  if (!state.tatoueurs.length) return [];
+  const matches = state.tatoueurs.filter(t => {
+    if (!Array.isArray(t.styles)) return false;
+    return t.styles.some(s => String(s).toLowerCase() === String(styleLabel).toLowerCase());
+  });
+  // Vérifiés en premier, puis aléatoire
+  matches.sort((a, b) => (b.verifie ? 1 : 0) - (a.verifie ? 1 : 0));
+  // Petit shuffle dans le top
+  const verified = matches.filter(t => t.verifie);
+  const others = matches.filter(t => !t.verifie);
+  for (let i = verified.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [verified[i], verified[j]] = [verified[j], verified[i]];
+  }
+  for (let i = others.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [others[i], others[j]] = [others[j], others[i]];
+  }
+  return [...verified, ...others].slice(0, max);
+}
+
+const PLACEHOLDER_EMOJI = {
+  fineline: '🌿', blackwork: '◼', realisme: '📷', japonais: '⛩',
+  geometrique: '◆', tribal: '◉', 'old-school': '⚓', aquarelle: '🎨',
+  dotwork: '⬡', lettering: '✍️'
+};
+
+function renderResult() {
+  const winner = pickWinner();
+  const info = STYLES_INFO[winner] || STYLES_INFO.fineline;
+  const tatoueurs = findMatchingTatoueurs(info.airtable, 3);
+  const tatoueursHtml = tatoueurs.length
+    ? tatoueurs.map(t => `
+        <a href="/tatoueur/${esc(t.slug)}" class="tatoueur-card">
+          <div class="tatoueur-img">
+            ${t.photo ? `<img src="${esc(t.photo)}" alt="Tatouage par ${esc(t.nom)}" loading="lazy" />` : (t.instagramThumb ? `<img src="${esc(t.instagramThumb)}" alt="Tatouage par ${esc(t.nom)}" loading="lazy" />` : `<span>${PLACEHOLDER_EMOJI[winner] || '✦'}</span>`)}
+          </div>
+          <div class="tatoueur-body">
+            <div class="tatoueur-name">${esc(t.nom)}</div>
+            <div class="tatoueur-loc">📍 ${esc(t.ville)}</div>
+            ${t.tarif ? `<div class="tatoueur-tarif">${esc(String(t.tarif))} € / h</div>` : ''}
+          </div>
+        </a>
+      `).join('')
+    : `<p style="color:var(--muted2);font-size:0.95rem">On t'enverra une sélection d'artistes dès que tu décris ton projet.</p>`;
+
+  container.innerHTML = `
+    <div class="result-card">
+      <p class="result-eyebrow">Ton style</p>
+      <h2 class="result-title"><em>${esc(info.label)}</em></h2>
+      <p class="result-desc">${esc(info.why)}</p>
+    </div>
+
+    ${tatoueurs.length ? `
+      <h3 class="result-section-title">${tatoueurs.length} tatoueur${tatoueurs.length > 1 ? 's' : ''} <em>${esc(info.label.toLowerCase())}</em> pour toi</h3>
+      <div class="tatoueurs-list">${tatoueursHtml}</div>
+    ` : ''}
+
+    <div class="result-cta">
+      <h3 class="result-cta-title">Tu veux qu'on te trouve <em>l'artiste qui te ressemble</em> ?</h3>
+      <p class="result-cta-sub">Décris ton projet en 2 minutes : style, ville, budget, photos de référence. On te match avec les meilleurs tatoueurs ${esc(info.label.toLowerCase())} de France.</p>
+      <a href="/demande?style=${encodeURIComponent(info.airtable)}" class="result-cta-btn">Décrire mon projet →</a>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn-secondary" onclick="restartQuiz()">↺ Refaire le quiz</button>
+      <a href="/tatoueur-${esc(info.slug)}-paris" class="btn-secondary">Voir tous les tatoueurs ${esc(info.label.toLowerCase())} →</a>
+    </div>
+  `;
+}
+
+window.restartQuiz = function() {
+  state.step = 'intro';
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Boot
+render();
+</script>
+
+</body>
+</html>

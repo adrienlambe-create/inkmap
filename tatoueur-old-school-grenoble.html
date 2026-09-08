@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://inkmap.fr/tatoueur-old-school-grenoble" />
   <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
   <meta property="og:site_name" content="Inkmap" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://inkmap.fr/tatoueur-old-school-grenoble" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Tatoueur Old School Grenoble — Inkmap" />
@@ -215,6 +215,102 @@
       margin-bottom: 16px;
     }
 
+    /* LEAD CTA */
+    .lead-cta {
+      max-width: 780px;
+      margin: 48px auto 0;
+      padding: 0 56px;
+    }
+
+    .lead-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .lead-cta-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lead-cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .lead-cta-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted2);
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    .lead-cta-btn {
+      flex-shrink: 0;
+      display: inline-block;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 18px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+
+    .lead-cta-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    @media (max-width: 720px) {
+      .lead-cta { padding: 0 20px; }
+      .lead-cta-inner { flex-direction: column; align-items: flex-start; padding: 18px 20px; }
+      .lead-cta-btn { width: 100%; text-align: center; }
+    }
+
+    /* SUBSTYLES */
+    .substyle-list { display: flex; flex-direction: column; gap: 0; margin-top: 24px; }
+
+    .substyle-item {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+
+    .substyle-item:last-child { padding-bottom: 0; }
+
+    .substyle-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .substyle-desc {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin: 0;
+    }
+
     /* FAQ */
     .seo-faq { display: flex; flex-direction: column; gap: 8px; }
 
@@ -312,7 +408,7 @@
       .seo-hero h1 { font-size: clamp(2rem, 12vw, 3rem); }
     }
   </style>
-    <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics" data-sdkv="1.5.0"></script>
   <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="1.2.0"></script>
 </head>
@@ -354,7 +450,7 @@
   <div class="seo-hero-inner">
     <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> <span>›</span> <a href="tatoueur-old-school-paris.html">Old School</a> <span>›</span> <strong>Grenoble</strong></nav>
     <h1>Tatoueurs <em>Old School</em><br>à Grenoble</h1>
-    <p class="seo-intro">L'Old School, ou tatouage traditionnel américain, se reconnaît à ses contours gras, ses couleurs vives et saturées, et ses sujets iconiques — ancres marines, roses épanouies, aigles et cœurs enflammés hérités des marins du début du XXe siècle. Ce style intemporel connaît un regain de popularité grâce à son caractère affirmé et sa résistance dans le temps. Les tatoueurs Old School maîtrisent une palette réduite mais percutante, et savent donner à chaque pièce une lisibilité et une force visuelle immédiate. Grenoble, entourée de ses massifs alpins et réputée pour sa scène scientifique et artistique, développe une communauté tattoo engagée et innovante. Les artistes grenoblois, souvent formés aux Beaux-Arts ou autodidactes passionnés, proposent des univers graphiques travaillés dans une ville où la culture de la création est profondément ancrée. Sur Inkmap, tous les profils sont vérifiés : vous avez la certitude de contacter un vrai artiste, réactif et professionnel.</p>
+    <p class="seo-intro">L'Old School, ou tatouage traditionnel américain, se reconnaît à ses contours gras, ses couleurs vives et saturées, et ses sujets iconiques — ancres marines, roses épanouies, aigles et cœurs enflammés hérités des marins du début du XXe siècle. Ce style intemporel connaît un regain de popularité grâce à son caractère affirmé et sa résistance dans le temps. Les tatoueurs Old School maîtrisent une palette réduite mais percutante, et savent donner à chaque pièce une lisibilité et une force visuelle immédiate. Grenoble, entourée de ses massifs alpins et réputée pour sa scène scientifique et artistique, développe une communauté tattoo engagée et innovante. Les artistes grenoblois, souvent formés aux Beaux-Arts ou autodidactes passionnés, proposent des univers graphiques travaillés dans une ville où la culture de la création est profondément ancrée. Chaque profil Inkmap est sélectionné pour la cohérence de son portfolio, la qualité de ses réalisations et son professionnalisme.</p>
     <div class="seo-stats">
       <div class="seo-stat">
         <div class="seo-stat-num" id="nb-resultats">—</div>
@@ -377,6 +473,43 @@
 
 <!-- GRID -->
 <div class="grid" id="grid"></div>
+
+
+<!-- LEAD CTA -->
+<section class="lead-cta">
+  <div class="lead-cta-inner">
+    <div class="lead-cta-text">
+      <p class="lead-cta-title">Décris ton projet old school à Grenoble, reçois 2-3 propositions d'artistes.</p>
+      <p class="lead-cta-sub">Gratuit · Réponse sous 48h</p>
+    </div>
+    <a href="demande.html?style=Old%20School&ville=Grenoble" class="lead-cta-btn">Décrire mon projet →</a>
+  </div>
+</section>
+
+
+<!-- SOUS-STYLES -->
+<section class="seo-section">
+  <h2 class="seo-section-title">Le old school en détail : 4 familles à connaître</h2>
+  <p class="seo-section-sub">Le old school n'est pas un style unique mais une famille d'approches qui partagent un même langage graphique. Voici les 4 sous-styles les plus représentés.</p>
+  <div class="substyle-list">
+    <div class="substyle-item">
+      <h3 class="substyle-name">American Traditional</h3>
+      <p class="substyle-desc">Le classique : ancres, roses, hirondelles, aigles, pin-ups. Contours épais, couleurs vives (rouge, vert, jaune, bleu), aplats francs. Vieillit exceptionnellement bien grâce à la densité des contours.</p>
+    </div>
+    <div class="substyle-item">
+      <h3 class="substyle-name">Neo-Traditional</h3>
+      <p class="substyle-desc">Évolution moderne de l'old school. Garde les contours gras mais autorise plus de détails, de nuances et de couleurs. Idéal pour des sujets plus complexes (animaux, portraits stylisés).</p>
+    </div>
+    <div class="substyle-item">
+      <h3 class="substyle-name">Traditional japonais</h3>
+      <p class="substyle-desc">Mélange entre old school occidental et codes japonais. Vagues, fleurs, masques avec contours épais et palette saturée. Très populaire pour les sleeves complets.</p>
+    </div>
+    <div class="substyle-item">
+      <h3 class="substyle-name">Sailor Jerry style</h3>
+      <p class="substyle-desc">Inspiré du tatoueur emblématique Norman "Sailor Jerry" Collins. Esthétique marin, militaire, érotique vintage. Style très iconographique, peu personnalisable mais immédiatement reconnaissable.</p>
+    </div>
+  </div>
+</section>
 
 
 
@@ -421,7 +554,7 @@
 <section class="seo-section seo-section-alt">
   <h2 class="seo-section-title">Autres styles de tatouage à Grenoble</h2>
   <p class="seo-section-sub">Découvrez aussi les tatoueurs spécialisés dans d'autres styles à Grenoble :</p>
-  <div class="internal-links"><a href="tatoueur-realisme-grenoble.html" class="internal-link">Réalisme</a><a href="tatoueur-japonais-grenoble.html" class="internal-link">Japonais</a><a href="tatoueur-geometrique-grenoble.html" class="internal-link">Géométrique</a><a href="tatoueur-tribal-grenoble.html" class="internal-link">Tribal</a><a href="tatoueur-aquarelle-grenoble.html" class="internal-link">Aquarelle</a><a href="tatoueur-dotwork-grenoble.html" class="internal-link">Dotwork</a><a href="tatoueur-lettering-grenoble.html" class="internal-link">Lettering</a></div>
+  <div class="internal-links"><a href="tatoueur-fineline-grenoble.html" class="internal-link">Fineline</a><a href="tatoueur-blackwork-grenoble.html" class="internal-link">Blackwork</a><a href="tatoueur-realisme-grenoble.html" class="internal-link">Réalisme</a><a href="tatoueur-japonais-grenoble.html" class="internal-link">Japonais</a><a href="tatoueur-geometrique-grenoble.html" class="internal-link">Géométrique</a><a href="tatoueur-tribal-grenoble.html" class="internal-link">Tribal</a><a href="tatoueur-aquarelle-grenoble.html" class="internal-link">Aquarelle</a><a href="tatoueur-dotwork-grenoble.html" class="internal-link">Dotwork</a><a href="tatoueur-lettering-grenoble.html" class="internal-link">Lettering</a></div>
 </section>
 
 <section class="seo-section">

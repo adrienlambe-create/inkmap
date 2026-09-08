@@ -6,6 +6,7 @@ const { cors, rateLimit, getIp, sanitize, validEmail, escHtml, airtableConfig } 
 const MAX_DESCRIPTION = 2000;
 const MAX_PHOTOS = 3;
 const MAX_STYLES = 5;
+const MAX_TATOUEUR_NOTIFS = 5;
 const RATE_LIMIT_MAX = 3;
 const RATE_WINDOW_MS = 60 * 60 * 1000; // 1h
 
@@ -129,8 +130,136 @@ module.exports = async (req, res) => {
     console.error('[submit-request] email exception', e.message);
   }
 
+  // Notifications tatoueurs matchés (boucle de valeur côté supply)
+  // Volontairement après sendEmails et dans son propre try : si ça échoue, le client reste servi.
+  try {
+    await notifyMatchingTatoueurs({ description, ville, styles, budget, zoneCorps, photos, recordId });
+  } catch (e) {
+    console.error('[submit-request] notif tatoueurs exception', e.message);
+  }
+
   return res.status(200).json({ ok: true });
 };
+
+// Retire les suffixes d'arrondissement pour matcher "Paris 11e" → "Paris"
+function villeBase(v) {
+  return String(v || '')
+    .replace(/\s+\d+(er|e|ème)?$/i, '')
+    .trim()
+    .toLowerCase();
+}
+
+async function fetchMatchingTatoueurs({ ville, styles }) {
+  const { token, base, table } = airtableConfig();
+  const fieldsParam = ['Nom', 'Pseudo', 'Ville', 'Styles', 'Email', 'Statut']
+    .map(f => `fields[]=${encodeURIComponent(f)}`).join('&');
+
+  const r = await fetch(
+    `https://api.airtable.com/v0/${base}/${table}?${fieldsParam}`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  if (!r.ok) {
+    console.error('[submit-request] airtable tatoueurs fetch', r.status);
+    return [];
+  }
+  const data = await r.json();
+
+  const targetVille = villeBase(ville);
+  const stylesLower = styles.map(s => s.toLowerCase());
+
+  const matches = (data.records || []).filter(rec => {
+    const f = rec.fields || {};
+    const tEmail = String(f.Email || '').trim();
+    if (!validEmail(tEmail)) return false;
+    if (villeBase(f.Ville) !== targetVille) return false;
+    if (!stylesLower.length) return true; // pas de style demandé : tous les tatoueurs de la ville
+    const tStyles = Array.isArray(f.Styles) ? f.Styles.map(s => String(s).toLowerCase()) : [];
+    return tStyles.some(s => stylesLower.includes(s));
+  });
+
+  // Mélange et limite — évite de toujours notifier les mêmes premiers
+  for (let i = matches.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [matches[i], matches[j]] = [matches[j], matches[i]];
+  }
+  return matches.slice(0, MAX_TATOUEUR_NOTIFS);
+}
+
+async function notifyMatchingTatoueurs({ description, ville, styles, budget, zoneCorps, photos, recordId }) {
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  if (!RESEND_KEY) { console.warn('[submit-request] RESEND_API_KEY absent — notifs tatoueurs non envoyées'); return; }
+
+  const matches = await fetchMatchingTatoueurs({ ville, styles });
+  if (!matches.length) {
+    console.log(`[submit-request] aucun tatoueur matché pour ${ville} / ${styles.join(',')}`);
+    return;
+  }
+
+  const adminEmail = process.env.ADMIN_EMAIL || 'inkmap.contact@gmail.com';
+  const styleLabel = styles[0] || 'tatouage';
+  const subject = `Une demande ${styleLabel} à ${ville} te concerne — Inkmap`;
+
+  let sent = 0;
+  for (const rec of matches) {
+    const f = rec.fields || {};
+    const to = String(f.Email).trim();
+    const prenom = String(f.Pseudo || f.Nom || '').split(/\s+/)[0] || '';
+    const html = tatoueurEmailHtml({ prenom, description, ville, styles, budget, zoneCorps, photos, recordId });
+    const ok = await resendSend({
+      apiKey: RESEND_KEY,
+      to,
+      subject,
+      html,
+      replyTo: adminEmail,
+      label: `tatoueur:${to}`,
+    });
+    if (ok) sent++;
+  }
+  console.log(`[submit-request] notifs tatoueurs : ${sent}/${matches.length} envoyées`);
+}
+
+function tatoueurEmailHtml({ prenom, description, ville, styles, budget, zoneCorps, photos, recordId }) {
+  const photosHtml = photos && photos.length
+    ? `<div style="margin-top:12px">${photos.map(p => `<img src="${escHtml(p.url)}" alt="inspi" style="max-width:120px;margin-right:8px;border-radius:4px;border:1px solid #e5e5e5" />`).join('')}</div>`
+    : '';
+  const stylesLabel = styles && styles.length ? styles.join(', ') : '—';
+  const greeting = prenom ? `Salut ${escHtml(prenom)},` : 'Salut,';
+  return `
+    <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#0d0d0d;line-height:1.6">
+      <div style="text-align:center;margin-bottom:32px">
+        <img src="https://inkmap.fr/logo-email.png" alt="Inkmap" width="180" style="display:block;margin:0 auto;max-width:180px;height:auto" />
+      </div>
+      <h1 style="font-size:20px;margin:0 0 16px;font-weight:700">Une demande te concerne</h1>
+      <p style="font-size:15px;color:#333;margin:0 0 20px">
+        ${greeting} un client cherche un tatoueur ${escHtml(stylesLabel.toLowerCase())} à <strong>${escHtml(ville)}</strong>. Voici son brief :
+      </p>
+      <div style="background:#fafafa;border-left:3px solid #c0392b;padding:16px 20px;margin:24px 0">
+        <table cellpadding="4" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:12px">
+          <tr><td style="color:#666;width:90px">Ville</td><td>${escHtml(ville)}</td></tr>
+          <tr><td style="color:#666">Styles</td><td>${escHtml(stylesLabel)}</td></tr>
+          ${budget ? `<tr><td style="color:#666">Budget</td><td>${escHtml(String(budget))} €</td></tr>` : ''}
+          ${zoneCorps ? `<tr><td style="color:#666">Zone</td><td>${escHtml(zoneCorps)}</td></tr>` : ''}
+        </table>
+        <div style="font-size:14px;color:#333;white-space:pre-wrap;border-top:1px solid #e5e5e5;padding-top:12px">${escHtml(description)}</div>
+        ${photosHtml}
+      </div>
+      <div style="background:#0d0d0d;color:#fff;border-radius:8px;padding:20px;margin:24px 0">
+        <p style="font-size:14px;margin:0 0 12px;color:#fff">Ce client t'intéresse ?</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.75);margin:0 0 16px">Réponds simplement à cet email. On te met en relation directement avec lui.</p>
+        <p style="margin:0">
+          <a href="mailto:inkmap.contact@gmail.com?subject=Intéressé%20par%20la%20demande%20${encodeURIComponent(recordId || '')}" style="display:inline-block;background:#c0392b;color:#fff;font-weight:700;text-decoration:none;padding:12px 24px;border-radius:6px;font-size:14px">Je veux ce client →</a>
+        </p>
+      </div>
+      <p style="font-size:13px;color:#666;margin:20px 0 0">
+        Tu reçois ce mail parce que ton profil sur Inkmap correspond à la demande (style + ville). Si tu n'es plus dispo ou si tu veux te désinscrire, réponds simplement à ce mail.
+      </p>
+      <div style="margin-top:32px;padding-top:20px;border-top:1px solid #e5e5e5;font-size:13px;color:#666">
+        — Adrien, fondateur d'Inkmap<br>
+        <a href="mailto:inkmap.contact@gmail.com" style="color:#c0392b;text-decoration:none">inkmap.contact@gmail.com</a>
+      </div>
+    </div>
+  `;
+}
 
 async function sendEmails({ email, description, ville, styles, budget, zoneCorps, telephone, photos, recordId }) {
   const RESEND_KEY = process.env.RESEND_API_KEY;
