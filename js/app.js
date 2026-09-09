@@ -79,7 +79,7 @@ function renderCard(t) {
         <div class="card-location">${esc(t.ville)}</div>
         <div class="styles">${t.styles.map(s=>`<span class="style-tag" onclick="event.preventDefault();event.stopPropagation();appliquerFiltreStyle('${esc(s)}')" title="Filtrer par ${esc(s)}" style="cursor:pointer">${esc(s)}</span>`).join('')}</div>
         <div class="card-footer">
-          <div class="tarif">${t.tarif > 0 ? t.tarif + '€ <small>/ heure</small>' : '<small style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--muted2);font-weight:400;letter-spacing:0">Sur devis</small>'}</div>
+          <div class="tarif">${tarifCarte(t)}</div>
           <div class="card-actions">
             <span class="btn-voir">Voir →</span>
             ${t.instagram ? `<span class="btn-insta" role="link" tabindex="0" onclick="event.stopPropagation();event.preventDefault();window.open('https://www.instagram.com/${encodeURIComponent(t.instagram.replace('@',''))}','_blank','noopener,noreferrer')" style="cursor:pointer;display:flex;align-items:center;justify-content:center">Insta</span>` : ''}
@@ -245,6 +245,20 @@ const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" he
   <text x="160" y="134" font-family="Arial, Helvetica, sans-serif" font-size="7.5" letter-spacing="3" fill="#555" text-anchor="middle" dominant-baseline="middle">PHOTO À VENIR</text>
 </svg>`;
 
+function tarifCarte(t) {
+  if (!t.verifie) return '<small style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--muted2);font-weight:400;letter-spacing:0">Tarif non communiqué</small>';
+  return t.tarif > 0
+    ? t.tarif + '€ <small>/ heure</small>'
+    : '<small style="font-family:\'Space Mono\',monospace;font-size:0.72rem;color:var(--muted2);font-weight:400;letter-spacing:0">Sur devis</small>';
+}
+
+function tarifModal(t) {
+  if (!t.verifie) return '<span style="font-size:1.6rem;font-weight:700">Tarif non communiqué</span>';
+  return t.tarif > 0
+    ? `${t.tarif}€<small style="font-size:0.9rem;color:var(--muted)"> / heure</small>`
+    : '<span style="font-size:1.6rem;font-weight:700">Sur devis</span>';
+}
+
 function cardMedia(t) {
   if (t.photo) return `<img src="${esc(t.photo)}" alt="Tatouage ${esc(t.styles[0] || '')} par ${esc(t.nom)} à ${esc(t.ville)}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />`;
   if (t.instagramThumb) return `<img src="${esc(t.instagramThumb)}" alt="Aperçu du compte Instagram de ${esc(t.nom)} — tatoueur à ${esc(t.ville)}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy" />`;
@@ -318,7 +332,7 @@ function ouvrirModal(id) {
     <div class="modal-city">📍 ${esc(t.ville)} — ${esc(t.region)}</div>
     <div class="styles">${t.styles.map(s=>`<span class="style-tag">${esc(s)}</span>`).join('')}</div>
     <div class="modal-section"><h3>À propos</h3><p>${esc(t.bio)}</p></div>
-    <div class="modal-section"><h3>Tarif</h3><div class="modal-price">${t.tarif > 0 ? `${t.tarif}€<small style="font-size:0.9rem;color:var(--muted)"> / heure</small>` : '<span style="font-size:1.6rem;font-weight:700">Sur devis</span>'}</div></div>
+    <div class="modal-section"><h3>Tarif</h3><div class="modal-price">${tarifModal(t)}</div></div>
     <div class="modal-section"><h3>Contact</h3><p style="font-family:'Space Mono',monospace">${esc(t.instagram) || 'Non renseigné'}</p></div>
     ${t.instagram ? `<div class="modal-actions">
       <a href="${t.id === 0 ? `https://www.tiktok.com/@${encodeURIComponent(t.instagram.replace('@',''))}` : `https://www.instagram.com/${encodeURIComponent(t.instagram.replace('@',''))}`}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center">Voir le profil ${t.id === 0 ? 'TikTok' : 'Instagram'} →</a>

@@ -125,9 +125,9 @@ function buildStaticCard(t) {
   const badgeHtml = t.verifie
     ? '<span class="badge-verifie">✓ Vérifié</span>'
     : '';
-  const tarifHtml = t.tarif > 0
-    ? `${t.tarif}€ <small>/ heure</small>`
-    : `Sur devis`;
+  const tarifHtml = !t.verifie
+    ? `Tarif non communiqué`
+    : (t.tarif > 0 ? `${t.tarif}€ <small>/ heure</small>` : `Sur devis`);
   const profileHref = t.slug ? `/tatoueur/${t.slug}` : '#';
   return `<a class="card card-link" href="${profileHref}" data-id="${t.id}" style="text-decoration:none;color:inherit;display:block">
       <div class="card-img">${photoHtml}</div>

@@ -82,6 +82,20 @@ module.exports = async (req, res) => {
       }
     }
 
+    // Anti-doublon : même nom/pseudo déjà référencé (souvent un profil scrappé
+    // non réclamé) — on bloque la création et on invite à réclamer l'existant.
+    const nomAtt = (pseudo || nom).replace(/"/g, '\\"');
+    const nomCheckUrl = `https://api.airtable.com/v0/${base}/${table}?filterByFormula=${encodeURIComponent(
+      `OR(LOWER({Nom})=LOWER("${nomAtt}"), LOWER({Pseudo})=LOWER("${nomAtt}"))`
+    )}&maxRecords=1&fields[]=Nom&fields[]=Pseudo&fields[]=Ville`;
+    const nomCheckRes = await fetch(nomCheckUrl, { headers: { Authorization: `Bearer ${token}` } });
+    if (nomCheckRes.ok) {
+      const nomCheckData = await nomCheckRes.json();
+      if (nomCheckData.records && nomCheckData.records.length > 0) {
+        return res.status(409).json({ error: 'Un profil existe déjà sous ce nom. Contacte-nous pour le réclamer plutôt que d\'en créer un nouveau.' });
+      }
+    }
+
     // Envoyer à Airtable avec retry si un champ est inconnu
     let attempt = 0;
     let fieldsToSend = { ...cleanFields };

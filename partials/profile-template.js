@@ -70,7 +70,7 @@ function buildProfilePage({ tatoueur: t, slug, qrSvg, linkToStyleCity }) {
       ...(t.region ? { addressRegion: t.region } : {}),
       addressCountry: 'FR',
     },
-    ...(t.tarif ? { priceRange: `${t.tarif}€ / heure` } : {}),
+    ...(t.verifie && t.tarif ? { priceRange: `${t.tarif}€ / heure` } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
 
@@ -617,11 +617,15 @@ ${HEADER_HTML}
 <section class="profile-section profile-section-alt">
   <h2 class="profile-section-title">Infos</h2>
   <div class="profile-infos">
-    ${t.tarif ? `
+    ${t.verifie && t.tarif ? `
     <div class="info-block">
       <div class="info-label">Tarif horaire</div>
       <div class="info-value">${escHtml(t.tarif)}€<small>/h</small></div>
       ${t.tarifInfo ? `<div class="info-detail">${escHtml(t.tarifInfo)}</div>` : ''}
+    </div>` : !t.verifie ? `
+    <div class="info-block">
+      <div class="info-label">Tarif horaire</div>
+      <div class="info-value">Non communiqué</div>
     </div>` : ''}
     <div class="info-block">
       <div class="info-label">Ville</div>
