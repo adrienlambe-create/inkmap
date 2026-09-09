@@ -252,7 +252,7 @@
       padding-top: 64px;
       min-height: 80vh;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
       position: relative;
@@ -264,6 +264,9 @@
       flex-direction: column;
       justify-content: center;
       padding: 80px 56px 80px;
+      max-width: 760px;
+      margin: 0 auto;
+      width: 100%;
       position: relative;
       z-index: 1;
     }
@@ -318,66 +321,23 @@
 
     .hero-ctas {
       display: flex;
-      gap: 12px;
+      align-items: center;
+      gap: 24px;
       flex-wrap: wrap;
     }
 
-    /* ── HERO VISUAL (colonne droite) ── */
-    .hero-visual {
-      background: #0a0a0a;
-      border-left: 1px solid rgba(255,255,255,0.06);
-      padding: 80px 48px 80px 52px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero-visual::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0.4;
-    }
-
-    .hero-index-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
-    }
-
-    .hero-index-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .hero-index-list li {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255,255,255,0.18);
-      padding: 5px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+    .hero-cta-secondary {
+      color: var(--muted2);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
       transition: color .15s;
-      cursor: default;
     }
 
-    .hero-index-list li:hover { color: rgba(255,255,255,0.7); }
-    .hero-index-list li:first-child { color: rgba(255,255,255,0.55); }
-    .hero-index-list li:nth-child(2) { color: rgba(255,255,255,0.45); }
-    .hero-index-list li:nth-child(3) { color: rgba(255,255,255,0.35); }
-    .hero-index-list li:nth-child(4) { color: rgba(255,255,255,0.28); }
-    .hero-index-list li:nth-child(5) { color: rgba(255,255,255,0.22); }
+    .hero-cta-secondary:hover { color: var(--text); }
 
     .btn-primary {
       background: var(--text);
@@ -397,25 +357,6 @@
     }
 
     .btn-primary:hover { background: var(--accent); }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--muted2);
-      border: 1px solid var(--border);
-      padding: 14px 28px;
-      font-weight: 500;
-      font-size: 0.78rem;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
-      transition: all .15s;
-      text-decoration: none;
-      display: inline-block;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      border-radius: 2px;
-    }
-
-    .btn-secondary:hover { color: var(--text); border-color: var(--text); }
 
     /* ── SEARCH ── */
     .search-section {
@@ -2011,12 +1952,11 @@
       .hamburger { display: flex; }
 
       /* Hero — compact sur mobile, recherche accessible vite */
-      .hero { grid-template-columns: 1fr; min-height: auto; overflow: visible; }
+      .hero { min-height: auto; overflow: visible; }
       .hero-content { padding: 32px 20px 28px; }
       .hero-title { font-size: clamp(2.8rem, 14vw, 5rem); letter-spacing: -2px; margin-bottom: 24px; }
       .hero-tag { margin-bottom: 16px; }
       .hero-sub p { margin-bottom: 20px; font-size: 0.88rem; }
-      .hero-visual { display: none; }
       .ink-separator { height: 32px; }
 
       /* Recherche */
@@ -2119,9 +2059,8 @@
     /* ── TRÈS PETIT ÉCRAN (max 380px) ── */
     @media (max-width: 380px) {
       .hero-title { font-size: clamp(3rem, 20vw, 4rem); }
-      .hero-ctas { flex-direction: column; }
-      .hero-ctas .btn-primary,
-      .hero-ctas .btn-secondary { text-align: center; width: 100%; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .hero-ctas .btn-primary { text-align: center; width: 100%; }
     }
 
     /* ── HERO TOOL + DRAWER ── */
@@ -2308,41 +2247,10 @@
     <div class="hero-sub">
       <p>Décris ton projet, on te trouve les tatoueurs qui matchent — ou explore l'annuaire par style et par ville.</p>
       <div class="hero-ctas">
-        <a href="/demande" class="btn-primary">Trouve ton tatoueur →</a>
-        <a href="#recherche" class="btn-secondary">Explorer l'annuaire</a>
-        <a href="rejoindre.html" class="btn-secondary">Je suis tatoueur</a>
+        <a href="/demande" class="btn-primary">Décris ton projet →</a>
+        <a href="#recherche" class="hero-cta-secondary">Explorer l'annuaire</a>
       </div>
     </div>
-  </div>
-  <div class="hero-visual" aria-hidden="true">
-    <div class="hero-index-label">25 styles référencés</div>
-    <ul class="hero-index-list">
-      <li>Fineline</li>
-      <li>Blackwork</li>
-      <li>Réalisme</li>
-      <li>Japonais</li>
-      <li>Géométrique</li>
-      <li>Tribal</li>
-      <li>Old School</li>
-      <li>Aquarelle</li>
-      <li>Dotwork</li>
-      <li>Lettering</li>
-      <li>Neo-Traditional</li>
-      <li>Micro-réalisme</li>
-      <li>Portrait</li>
-      <li>Floral</li>
-      <li>Biomécanique</li>
-      <li>Minimaliste</li>
-      <li>Flash</li>
-      <li>Organique</li>
-      <li>Illustratif</li>
-      <li>Trash Polka</li>
-      <li>Chicano</li>
-      <li>Surréalisme</li>
-      <li>Irezumi</li>
-      <li>Polynésien</li>
-      <li>Noir &amp; Gris</li>
-    </ul>
   </div>
 </section>
 
