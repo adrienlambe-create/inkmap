@@ -243,8 +243,21 @@ async function scrapeInstaThumbForProfile(t, stats) {
   }
 }
 
+// Filtre --only=nom1,nom2 — limite les étapes coûteuses (migration photos,
+// scraping Instagram, écriture HTML) à un sous-ensemble de profils. Les
+// autres gardent leur page existante et leur entrée de cache telle quelle
+// (pas de perte de données sur les 60+ profils non concernés).
+function parseOnlyFilter() {
+  const arg = process.argv.find(a => a.startsWith('--only='));
+  if (!arg) return null;
+  return arg.slice('--only='.length).split(',').map(s => slugify(s.trim())).filter(Boolean);
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────
 async function main() {
+  const onlyFilter = parseOnlyFilter();
+  if (onlyFilter) console.log(`🎯 Filtre --only actif : ${onlyFilter.join(', ')}`);
+
   console.log('📡 Fetch Airtable...');
   const records = await fetchAllAirtableRecords();
   console.log(`   ${records.length} records trouvés.`);
@@ -255,10 +268,18 @@ async function main() {
     console.warn('⚠️  BLOB_READ_WRITE_TOKEN absent — photos Airtable resteront des URLs signées (expirent).');
   }
 
+  // Cache existant, utilisé comme fallback pour les profils hors filtre
+  let oldThumbCache = {};
+  const thumbCachePath = path.join(__dirname, '.instagram-thumbs.json');
+  if (onlyFilter && fs.existsSync(thumbCachePath)) {
+    try { oldThumbCache = JSON.parse(fs.readFileSync(thumbCachePath, 'utf8')) || {}; } catch {}
+  }
+
   const used = new Set();
   const generated = [];
   const skipped = [];
   let migratedCount = 0;
+  let regeneratedCount = 0;
   const instaStats = { ok: 0, skipped: 0, failed: 0 };
   const thumbCache = {}; // { airtableId: { thumbUrl, posts, disabled } }
 
@@ -277,6 +298,16 @@ async function main() {
       continue;
     }
     used.add(slug);
+
+    const nameSlug = slugify(t.pseudo || t.nom);
+    const inFilter = !onlyFilter || onlyFilter.some(f => nameSlug.includes(f));
+
+    if (!inFilter) {
+      // Hors filtre : on garde la page et le cache existants tels quels.
+      generated.push({ slug, nom: t.pseudo || t.nom, ville: t.ville });
+      thumbCache[rec.id] = oldThumbCache[rec.id] || { thumbUrl: '', posts: [], disabled: false };
+      continue;
+    }
 
     // Migre les photos Airtable → Vercel Blob (URLs permanentes)
     const beforeCount = t.photos.length;
@@ -310,10 +341,11 @@ async function main() {
     fs.writeFileSync(outPath, html, 'utf8');
 
     generated.push({ slug, nom: t.pseudo || t.nom, ville: t.ville });
+    regeneratedCount++;
     console.log(`  ✓ /tatoueur/${slug}`);
   }
 
-  console.log(`\n✅ ${generated.length} pages profil générées.`);
+  console.log(`\n✅ ${generated.length} profils au total, ${regeneratedCount} page(s) régénérée(s).`);
   if (migratedCount) console.log(`   🖼  ${migratedCount} photos vérifiées/migrées sur Vercel Blob.`);
   console.log(`   📸 Instagram thumbs : ${instaStats.ok} ok, ${instaStats.failed} échec, ${instaStats.skipped} ignorés.`);
   if (skipped.length) {
