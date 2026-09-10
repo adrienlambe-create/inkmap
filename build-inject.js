@@ -146,15 +146,34 @@ function buildStaticCard(t) {
 }
 
 // Inject into style/city pages
+//
+// Non-idempotent par nature : le remplacement du tableau JS (etape 1) ne
+// matche qu'un gabarit "vierge" (`const tatoueurs = [];`), et l'ajout du
+// JSON-LD ItemList (etape 4) est un ajout pur, jamais un remplacement.
+// Relancer cette fonction sur une page deja injectee duplique le JSON-LD et
+// ignore silencieusement les nouvelles donnees (le regex de l'etape 1 ne
+// matche plus). On detecte ce cas et on saute la page plutot que de la
+// corrompre — la sequence correcte reste generate-pages.js (regenere un
+// gabarit vierge) PUIS build-inject.js.
 function injectStyleCityPages(tatoueurs) {
   const dir = __dirname;
   const files = fs.readdirSync(dir).filter(f => /^tatoueur-.+-.+\.html$/.test(f));
   let injected = 0;
+  let skipped = 0;
 
   for (const file of files) {
     const match = file.match(/^tatoueur-(.+)-(.+)\.html$/);
     if (!match) continue;
     const [, styleSlug, citySlug] = match;
+
+    const filepath = path.join(dir, file);
+    let html = fs.readFileSync(filepath, 'utf-8');
+
+    if (!/const tatoueurs\s*=\s*\[\];/.test(html)) {
+      console.log(`⏭  ${file} — deja injecte, ignore (relance generate-pages.js pour regenerer un gabarit vierge avant de reinjecter)`);
+      skipped++;
+      continue;
+    }
 
     // Filter artists matching this style/city
     const filtered = tatoueurs.filter(t => {
@@ -165,9 +184,6 @@ function injectStyleCityPages(tatoueurs) {
       const matchVille = villeBase(t.ville).toLowerCase() === citySlug.toLowerCase();
       return matchStyle && matchVille;
     });
-
-    const filepath = path.join(dir, file);
-    let html = fs.readFileSync(filepath, 'utf-8');
 
     // 1. Inject tatoueurs data into JS variable
     const safeData = filtered.map(t => ({
@@ -236,6 +252,9 @@ function injectStyleCityPages(tatoueurs) {
     } else {
       console.log(`⬚  ${file} — 0 résultat (noindex)`);
     }
+  }
+  if (skipped > 0) {
+    console.log(`\n⏭  ${skipped} page(s) déjà injectée(s) ignorée(s) — relance "node generate-pages.js" d'abord si tu veux les rafraîchir.`);
   }
   return injected;
 }
