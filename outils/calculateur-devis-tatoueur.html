@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur de devis tatouage pour tatoueur — Comment fixer le prix | Inkmap</title>
+  <meta name="description" content="Outil gratuit pour tatoueurs : calcule une fourchette de devis coherente avec le marche selon la taille, le style, la zone du corps, le temps estime et ton niveau. Cadre un prix en 30 secondes." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://inkmap.fr/outils/calculateur-devis-tatoueur" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Inkmap" />
+  <meta property="og:title" content="Calculateur de devis tatouage pour tatoueur" />
+  <meta property="og:description" content="Cadre le prix d'un projet en 30 secondes : taille, style, zone, temps estime et niveau d'experience." />
+  <meta property="og:url" content="https://inkmap.fr/outils/calculateur-devis-tatoueur" />
+  <meta property="og:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calculateur de devis tatouage pour tatoueur" />
+  <meta name="twitter:description" content="Cadre le prix d'un projet en 30 secondes, gratuitement." />
+  <meta name="twitter:image" content="https://inkmap.fr/og-image.jpg" />
+  <meta name="theme-color" content="#c0392b" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculateur de devis tatouage pour tatoueur",
+    "description": "Outil gratuit pour tatoueurs : suggere une fourchette de prix coherente avec le marche selon la taille, le style, la zone du corps, le temps estime et le niveau d'experience.",
+    "url": "https://inkmap.fr/outils/calculateur-devis-tatoueur",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "provider": { "@type": "Organization", "name": "Inkmap", "url": "https://inkmap.fr" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Comment fixer le prix d'un tatouage quand on est tatoueur ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le prix se construit a partir de quatre variables : la taille du projet, le style (certains sont plus techniques et plus longs), la zone du corps (certaines zones ralentissent le travail) et ton niveau d'experience. La methode la plus fiable reste de partir d'un tarif horaire cible, puis d'estimer le temps reel que va prendre le projet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Quel tarif horaire pratiquer en tant que tatoueur debutant ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Un tatoueur debutant pratique generalement un tarif 20 a 30 % en dessous du marche local le temps de construire son book et sa clientele. Attention a ne pas descendre trop bas : un tarif trop faible complique la remontee des prix plus tard et peut devaluer ta perception aupres des clients."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Comment estimer le temps necessaire pour un tatouage ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le temps depend de la taille, du niveau de detail du style et de la zone. A titre indicatif : une petite piece fineline prend 1 a 2h, une piece moyenne 2 a 4h, une grande piece 4 a 8h. Les styles a fort detail (realisme, japonais, dotwork) rallongent le temps de 15 a 35 % par rapport a un blackwork simple equivalent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Pourquoi certaines zones du corps sont-elles plus cheres ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Les mains, doigts et le cou demandent une precision superieure, un rythme de travail plus lent et souvent des retouches plus frequentes (cicatrisation moins predictible). Beaucoup de tatoueurs ajoutent 15 a 20 % sur ces zones pour compenser le temps et la technicite supplementaires."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Faut-il facturer au projet ou a l'heure ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pour les petites et moyennes pieces, la plupart des tatoueurs facturent au projet (devis fixe) car la duree est previsible et ca rassure le client. Pour les grosses pieces en plusieurs seances, facturer a l'heure ou par seance est plus juste pour toi comme pour le client, la duree totale etant plus incertaine."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { max-width: 100%; overflow-x: hidden; }
+
+    :root {
+      --bg: #ffffff; --surface: #f9f9f9; --card: #ffffff;
+      --border: rgba(0,0,0,0.08); --accent: #c0392b;
+      --text: #0d0d0d; --muted: #aaa; --muted2: #666;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+
+    header {
+      padding: 0 56px; height: 64px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 50;
+    }
+    .logo { font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--text); text-decoration: none; text-transform: uppercase; letter-spacing: 2px; }
+    .logo em { font-style: normal; color: var(--accent); }
+    .back-link { color: var(--muted2); text-decoration: none; font-size: 0.72rem; font-family: 'Space Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; transition: color .15s; }
+    .back-link:hover { color: var(--text); }
+
+    .tool-hero {
+      text-align: center; padding: 80px 20px 48px; border-bottom: 1px solid var(--border);
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><defs><filter id='f' x='-50%' y='-50%' width='200%' height='200%'><feTurbulence type='fractalNoise' baseFrequency='0.022' numOctaves='1' seed='3' stitchTiles='stitch' result='drift'/><feDisplacementMap in='SourceGraphic' in2='drift' scale='2.8' xChannelSelector='R' yChannelSelector='G' result='d'/><feTurbulence type='turbulence' baseFrequency='0.19 0.06' numOctaves='2' seed='11' stitchTiles='stitch' result='jitter'/><feDisplacementMap in='d' in2='jitter' scale='1.3' xChannelSelector='R' yChannelSelector='G'/></filter></defs><line x1='0' y1='16' x2='16' y2='0' stroke='%23c0392b' stroke-opacity='0.18' stroke-width='0.9' filter='url(%23f)'/></svg>");
+    }
+    .tool-tag { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--accent); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; }
+    .tool-tag span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+    .tool-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -1px; line-height: 1; margin-bottom: 16px; }
+    .tool-hero h1 em { font-style: normal; color: var(--accent); }
+    .tool-hero p { color: var(--muted2); font-size: 0.92rem; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+    .calc-section { max-width: 600px; margin: 0 auto; padding: 48px 20px 64px; }
+
+    .calc-group { margin-bottom: 28px; }
+    .calc-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 10px; display: block; }
+    .calc-help { color: var(--muted); font-size: 0.74rem; margin-top: 8px; font-style: italic; }
+
+    .calc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .calc-opt {
+      padding: 10px 16px; border: 1px solid var(--border); border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; color: var(--muted2);
+      cursor: pointer; transition: all .15s; background: var(--card); user-select: none;
+    }
+    .calc-opt:hover { border-color: var(--accent); color: var(--text); }
+    .calc-opt.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+
+    .calc-number {
+      display: flex; align-items: center; gap: 10px; max-width: 200px;
+    }
+    .calc-number input {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 4px;
+      font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; color: var(--text);
+      background: var(--card);
+    }
+    .calc-number input:focus { outline: none; border-color: var(--accent); }
+    .calc-number span { color: var(--muted2); font-size: 0.82rem; }
+
+    .result-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 32px 24px; text-align: center; margin-top: 32px; display: none;
+    }
+    .result-box.visible { display: block; }
+    .result-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 12px; }
+    .result-price { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .result-price em { font-style: normal; color: var(--accent); }
+    .result-detail { color: var(--muted2); font-size: 0.82rem; line-height: 1.6; margin-top: 12px; }
+    .result-market { color: var(--muted2); font-size: 0.8rem; line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+    .result-market strong { color: var(--text); }
+    .result-disclaimer { color: var(--muted); font-size: 0.72rem; margin-top: 16px; font-style: italic; }
+
+    .result-cta { margin-top: 24px; }
+    .result-cta a {
+      display: inline-block; background: var(--accent); color: #fff; padding: 12px 24px;
+      font-size: 0.7rem; font-family: 'Space Mono', monospace; text-transform: uppercase;
+      letter-spacing: 1.5px; text-decoration: none; border-radius: 2px; transition: background .15s;
+    }
+    .result-cta a:hover { background: #e74c3c; }
+
+    .info-section { max-width: 600px; margin: 0 auto; padding: 0 20px 64px; }
+    .info-section h2 { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 16px; }
+    .info-section h2 em { font-style: normal; color: var(--accent); }
+    .info-section p { color: var(--muted2); font-size: 0.88rem; line-height: 1.8; margin-bottom: 12px; }
+    .info-section strong { color: var(--text); }
+
+    .price-table { width: 100%; border-collapse: collapse; margin: 16px 0 8px; font-size: 0.86rem; }
+    .price-table th, .price-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    .price-table th { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); font-weight: 500; background: var(--surface); }
+    .price-table td { color: var(--text); }
+    .price-table td:last-child { font-weight: 600; color: var(--accent); white-space: nowrap; }
+    .price-table tr:hover td { background: var(--surface); }
+    .table-note { font-size: 0.74rem; color: var(--muted); font-style: italic; margin-top: 8px; }
+
+    .faq-section { max-width: 600px; margin: 0 auto; padding: 32px 20px 64px; }
+    .faq-section h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .faq-section h2 em { font-style: normal; color: var(--accent); }
+    .faq-intro { color: var(--muted2); font-size: 0.86rem; margin-bottom: 28px; line-height: 1.7; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item summary { cursor: pointer; padding: 18px 0; font-family: 'Space Grotesk', sans-serif; font-size: 0.96rem; font-weight: 600; color: var(--text); list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: '+'; color: var(--accent); font-size: 1.4rem; font-weight: 400; transition: transform .2s; flex-shrink: 0; }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-answer { color: var(--muted2); font-size: 0.88rem; line-height: 1.75; padding: 0 0 20px; }
+
+    .related { max-width: 600px; margin: 0 auto; padding: 0 20px 48px; }
+    .related h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 16px; }
+    .related-links { display: flex; flex-direction: column; gap: 8px; }
+    .related-links a { color: var(--accent); text-decoration: none; font-size: 0.88rem; transition: color .15s; }
+    .related-links a:hover { color: var(--text); }
+
+    .tatoueur-cta {
+      background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 48px 20px; text-align: center;
+    }
+    .tatoueur-cta p { font-family: 'Space Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; }
+    .tatoueur-cta h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; text-transform: uppercase; margin-bottom: 16px; }
+    .tatoueur-cta h2 em { font-style: normal; color: var(--accent); }
+    .tatoueur-cta a {
+      display: inline-block; background: var(--text); color: #fff; padding: 12px 24px;
+      font-size: 0.7rem; font-family: 'Space Mono', monospace; text-transform: uppercase;
+      letter-spacing: 1.5px; text-decoration: none; border-radius: 2px; transition: background .15s;
+    }
+    .tatoueur-cta a:hover { background: var(--accent); }
+
+    footer { background: #0a0a0a; border-top: 2px solid var(--accent); padding: 32px 56px; color: rgba(255,255,255,0.5); display: flex; justify-content: space-between; align-items: center; }
+    footer small { font-family: 'Space Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
+    .footer-logo em { font-style: normal; color: var(--accent); }
+
+    @media (max-width: 600px) { header { padding: 0 20px; } .tool-hero { padding: 64px 20px 40px; } footer { padding: 24px 20px; flex-direction: column; gap: 12px; } }
+  </style>
+    <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};window.si=window.si||function(){(window.siq=window.siq||[]).push(arguments);};</script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics" data-sdkv="1.5.0"></script>
+  <script defer src="https://va.vercel-scripts.com/v1/speed-insights/script.js" data-sdkn="@vercel/speed-insights" data-sdkv="1.2.0"></script>
+</head>
+<body>
+
+<header>
+  <a href="../index.html" class="logo">ink<em>map</em></a>
+  <a href="../rejoindre.html" class="back-link">Espace tatoueurs</a>
+</header>
+
+<section class="tool-hero">
+  <div class="tool-tag"><span></span> Outil gratuit pour tatoueurs</div>
+  <h1>Calculateur de<br><em>devis</em> tatouage</h1>
+  <p>Cadre le prix d'un projet client en 30 secondes : taille, style, zone du corps, temps estime et ton niveau d'experience. Fourchette suggeree, pas un chiffre impose.</p>
+</section>
+
+<section class="calc-section">
+
+  <div class="calc-group">
+    <label class="calc-label">Taille du projet</label>
+    <div class="calc-options" data-group="taille">
+      <div class="calc-opt" data-value="tiny">Minuscule (2-3 cm)</div>
+      <div class="calc-opt" data-value="petit">Petit (5-8 cm)</div>
+      <div class="calc-opt" data-value="moyen">Moyen (10-15 cm)</div>
+      <div class="calc-opt" data-value="grand">Grand (20-30 cm)</div>
+      <div class="calc-opt" data-value="tres-grand">Tres grand (demi-bras+)</div>
+      <div class="calc-opt" data-value="piece">Piece complete (dos, jambe)</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label">Style</label>
+    <div class="calc-options" data-group="style">
+      <div class="calc-opt" data-value="blackwork">Blackwork</div>
+      <div class="calc-opt" data-value="fineline">Fineline</div>
+      <div class="calc-opt" data-value="dotwork">Dotwork</div>
+      <div class="calc-opt" data-value="realisme">Realisme</div>
+      <div class="calc-opt" data-value="japonais">Japonais</div>
+      <div class="calc-opt" data-value="old-school">Old School</div>
+      <div class="calc-opt" data-value="geometrique">Geometrique</div>
+      <div class="calc-opt" data-value="aquarelle">Aquarelle</div>
+      <div class="calc-opt" data-value="lettering">Lettering</div>
+      <div class="calc-opt" data-value="tribal">Tribal</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label">Zone du corps</label>
+    <div class="calc-options" data-group="zone">
+      <div class="calc-opt" data-value="poignet">Poignet / Cheville</div>
+      <div class="calc-opt" data-value="bras">Avant-bras / Bras</div>
+      <div class="calc-opt" data-value="epaule">Epaule / Omoplate</div>
+      <div class="calc-opt" data-value="cotes">Cotes / Flanc</div>
+      <div class="calc-opt" data-value="dos">Dos</div>
+      <div class="calc-opt" data-value="cuisse">Cuisse / Mollet</div>
+      <div class="calc-opt" data-value="main">Main / Doigts</div>
+      <div class="calc-opt" data-value="cou">Cou / Nuque</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label">Ton niveau d'experience</label>
+    <div class="calc-options" data-group="experience">
+      <div class="calc-opt" data-value="debutant">Debutant</div>
+      <div class="calc-opt" data-value="confirme">Confirme</div>
+      <div class="calc-opt" data-value="expert">Expert</div>
+    </div>
+  </div>
+
+  <div class="calc-group">
+    <label class="calc-label" for="tempsEstime">Temps estime pour ce projet</label>
+    <div class="calc-number">
+      <input type="number" id="tempsEstime" min="0.25" step="0.25" placeholder="—" />
+      <span>heures</span>
+    </div>
+    <div class="calc-help" id="tempsHelp">Se pre-remplit automatiquement selon la taille choisie — modifie-le si ton estimation differe.</div>
+  </div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-label">Fourchette de devis suggeree</div>
+    <div class="result-price" id="resultPrice">—</div>
+    <div class="result-detail" id="resultDetail"></div>
+    <div class="result-market" id="resultMarket"></div>
+    <div class="result-disclaimer">Estimation indicative basee sur des fourchettes de marche moyennes. A toi d'ajuster selon ta clientele, ta ville et la complexite reelle du design.</div>
+    <div class="result-cta">
+      <a href="./calculateur-rentabilite-studio-tatouage">Calculer aussi mon seuil de rentabilite →</a>
+    </div>
+  </div>
+
+</section>
+
+<section class="info-section">
+  <h2>Comment <em>fixer le prix</em> d'un tatouage ?</h2>
+  <p>La methode la plus fiable part d'un <strong>tarif horaire cible</strong> — celui qui couvre tes charges et ta marge — puis multiplie ce tarif par le <strong>temps reel estime</strong> du projet. Le probleme : le temps estime varie enormement selon la taille, le style et la zone du corps.</p>
+  <p>Ce calculateur te donne une <strong>fourchette de reference</strong> construite sur ces trois variables plus ton niveau d'experience, pour eviter de sous-facturer par manque de repere ou de proposer un prix trop eloigne du marche local.</p>
+  <p>Le detail <strong>prix/heure implicite</strong> affiche en resultat sert de garde-fou : si ta fourchette donne un prix/heure trop bas par rapport a ton tarif horaire habituel, c'est que le projet demande plus de temps que prevu — ou que la fourchette suggeree doit etre ajustee a la hausse.</p>
+</section>
+
+<section class="info-section">
+  <h2>Pourquoi le <em>temps estime</em> change tout</h2>
+  <p>Deux projets de la meme taille peuvent prendre un temps tres different selon le style : un blackwork plein a la meme surface qu'un fineline se remplit plus vite, mais un realisme ou un japonais demandent davantage de couches et de finesse.</p>
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Taille</th>
+        <th>Temps indicatif</th>
+        <th>Impact style technique</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Minuscule (2-3 cm)</td><td>~45 min</td><td>+10 a 20 %</td></tr>
+      <tr><td>Petit (5-8 cm)</td><td>1h30</td><td>+15 a 25 %</td></tr>
+      <tr><td>Moyen (10-15 cm)</td><td>3h</td><td>+15 a 35 %</td></tr>
+      <tr><td>Grand (20-30 cm)</td><td>5h</td><td>+20 a 35 %</td></tr>
+      <tr><td>Tres grand (demi-bras+)</td><td>8h</td><td>+20 a 35 %</td></tr>
+      <tr><td>Piece complete</td><td>15h+ (plusieurs seances)</td><td>+20 a 35 %</td></tr>
+    </tbody>
+  </table>
+  <p class="table-note">Temps indicatifs pour un style simple type blackwork/fineline. Le calculateur ajuste automatiquement selon le style choisi.</p>
+</section>
+
+<section class="faq-section">
+  <h2>Questions <em>frequentes</em> pour fixer un devis</h2>
+  <p class="faq-intro">Les questions qu'on nous pose le plus sur la fixation des prix cote tatoueur.</p>
+
+  <details class="faq-item">
+    <summary>Comment fixer le prix d'un tatouage quand on est tatoueur ?</summary>
+    <div class="faq-answer">Le prix se construit a partir de quatre variables : la taille du projet, le style (certains sont plus techniques et plus longs), la zone du corps (certaines zones ralentissent le travail) et ton niveau d'experience. La methode la plus fiable reste de partir d'un tarif horaire cible, puis d'estimer le temps reel que va prendre le projet.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Quel tarif horaire pratiquer en tant que tatoueur debutant ?</summary>
+    <div class="faq-answer">Un tatoueur debutant pratique generalement un tarif 20 a 30 % en dessous du marche local le temps de construire son book et sa clientele. Attention a ne pas descendre trop bas : un tarif trop faible complique la remontee des prix plus tard et peut devaluer ta perception aupres des clients.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Comment estimer le temps necessaire pour un tatouage ?</summary>
+    <div class="faq-answer">Le temps depend de la taille, du niveau de detail du style et de la zone. A titre indicatif : une petite piece fineline prend 1 a 2h, une piece moyenne 2 a 4h, une grande piece 4 a 8h. Les styles a fort detail (realisme, japonais, dotwork) rallongent le temps de 15 a 35 % par rapport a un blackwork simple equivalent.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Pourquoi certaines zones du corps sont-elles plus cheres ?</summary>
+    <div class="faq-answer">Les mains, doigts et le cou demandent une precision superieure, un rythme de travail plus lent et souvent des retouches plus frequentes (cicatrisation moins previsible). Beaucoup de tatoueurs ajoutent 15 a 20 % sur ces zones pour compenser le temps et la technicite supplementaires.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Faut-il facturer au projet ou a l'heure ?</summary>
+    <div class="faq-answer">Pour les petites et moyennes pieces, la plupart des tatoueurs facturent au projet (devis fixe) car la duree est previsible et ca rassure le client. Pour les grosses pieces en plusieurs seances, facturer a l'heure ou par seance est plus juste pour toi comme pour le client, la duree totale etant plus incertaine.</div>
+  </details>
+</section>
+
+<section class="tatoueur-cta">
+  <p>Tu es tatoueur ?</p>
+  <h2>Inscris-toi sur <em>Inkmap</em> et recois des demandes</h2>
+  <a href="../inscription.html">Creer mon profil gratuit</a>
+</section>
+
+<div class="related" style="padding-top: 48px;">
+  <h3>Outils lies</h3>
+  <div class="related-links">
+    <a href="./calculateur-rentabilite-studio-tatouage">Calculateur de rentabilite studio tatouage</a>
+    <a href="./calculateur-tarif-tatouage">Calculateur de tarif tatouage (cote client)</a>
+    <a href="../guide/comment-fixer-ses-prix-tatoueur.html">Guide complet : comment fixer ses prix quand on est tatoueur</a>
+    <a href="../guide/trouver-clients-tatoueur.html">Comment trouver des clients quand on est tatoueur</a>
+    <a href="../rejoindre.html">Pourquoi rejoindre Inkmap ?</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">ink<em>map</em></div>
+  <small>&copy; 2026 — INKMAP.FR</small>
+</footer>
+
+<script>
+const selections = { taille: null, style: null, zone: null, experience: null };
+let tempsManuel = false;
+
+// Base prices by size (min, max in euros) — identique au calculateur client,
+// meme source de verite pour eviter toute incoherence entre les deux outils.
+const PRIX_TAILLE = {
+  'tiny':       [50, 100],
+  'petit':      [80, 180],
+  'moyen':      [150, 350],
+  'grand':      [300, 600],
+  'tres-grand': [500, 1200],
+  'piece':      [1000, 3000]
+};
+
+const MULT_STYLE = {
+  'fineline': 1.0, 'blackwork': 1.0, 'dotwork': 1.15, 'realisme': 1.35,
+  'japonais': 1.3, 'old-school': 0.95, 'geometrique': 1.05, 'aquarelle': 1.15,
+  'lettering': 0.9, 'tribal': 0.9
+};
+
+const MULT_ZONE = {
+  'poignet': 1.0, 'bras': 1.0, 'epaule': 1.0, 'cotes': 1.15,
+  'dos': 1.05, 'cuisse': 1.0, 'main': 1.2, 'cou': 1.2
+};
+
+// Ajustement selon le niveau d'experience du tatoueur — propre a cet outil.
+const MULT_EXPERIENCE = {
+  'debutant': 0.75, 'confirme': 1.0, 'expert': 1.35
+};
+
+// Temps par defaut (heures) pre-rempli selon la taille — modifiable par l'utilisateur.
+const TEMPS_DEFAUT = {
+  'tiny': 0.75, 'petit': 1.5, 'moyen': 3, 'grand': 5, 'tres-grand': 8, 'piece': 15
+};
+
+const EXPERIENCE_NAMES = { 'debutant': 'debutant', 'confirme': 'confirme', 'expert': 'expert' };
+
+document.querySelectorAll('.calc-opt').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    var group = this.parentElement.dataset.group;
+    this.parentElement.querySelectorAll('.calc-opt').forEach(function(o) { o.classList.remove('active'); });
+    this.classList.add('active');
+    selections[group] = this.dataset.value;
+
+    if (group === 'taille' && !tempsManuel) {
+      document.getElementById('tempsEstime').value = TEMPS_DEFAUT[this.dataset.value];
+    }
+    calculer();
+  });
+});
+
+var tempsInput = document.getElementById('tempsEstime');
+tempsInput.addEventListener('input', function() {
+  tempsManuel = true;
+  calculer();
+});
+
+function calculer() {
+  if (!selections.taille || !selections.style || !selections.zone || !selections.experience) return;
+  var temps = parseFloat(tempsInput.value);
+  if (!temps || temps <= 0) return;
+
+  var base = PRIX_TAILLE[selections.taille];
+  var ms = MULT_STYLE[selections.style];
+  var mz = MULT_ZONE[selections.zone];
+  var mx = MULT_EXPERIENCE[selections.experience];
+
+  var marketMin = Math.round(base[0] * ms * mz / 10) * 10;
+  var marketMax = Math.round(base[1] * ms * mz / 10) * 10;
+  var adjMin = Math.round(marketMin * mx / 10) * 10;
+  var adjMax = Math.round(marketMax * mx / 10) * 10;
+
+  var phMin = Math.round(adjMin / temps);
+  var phMax = Math.round(adjMax / temps);
+
+  document.getElementById('resultPrice').innerHTML = adjMin + '<em> — </em>' + adjMax + ' &euro;';
+  document.getElementById('resultDetail').textContent =
+    'Soit environ ' + phMin + ' a ' + phMax + ' €/heure sur ' + temps + 'h estimees.';
+  document.getElementById('resultMarket').innerHTML =
+    'Fourchette moyenne du marche (tous niveaux confondus) pour ce type de projet : <strong>' + marketMin + ' – ' + marketMax + ' €</strong>. ' +
+    'Ton niveau (' + EXPERIENCE_NAMES[selections.experience] + ') ajuste cette base de ' + Math.round((mx - 1) * 100) + ' %.';
+
+  var box = document.getElementById('resultBox');
+  box.classList.add('visible');
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+
+</body>
+</html>

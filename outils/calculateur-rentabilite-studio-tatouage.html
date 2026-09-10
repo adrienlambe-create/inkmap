@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calculateur de rentabilite studio tatouage — Combien gagnes-tu vraiment ? | Inkmap</title>
-  <meta name="description" content="Calculateur gratuit de rentabilite pour tatoueurs : salaire net, charges, statut juridique. Combien tatoueur par mois pour vivre de ton activite ? Simulation 2026." />
+  <meta name="description" content="Calcule ton seuil de rentabilite tatoueur : combien facturer par tatouage pour couvrir tes charges, selon ton statut juridique et ton volume. Simulation gratuite 2026." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://inkmap.fr/outils/calculateur-rentabilite-studio-tatouage" />
   <meta property="og:type" content="website" />
@@ -223,6 +223,20 @@
     .stat-value { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
     .stat-value em { font-style: normal; color: var(--accent); font-size: 1.2rem; vertical-align: 2px; }
     .stat-sub { font-size: 0.78rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
+
+    .gauge-block { display: flex; flex-direction: column; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .gauge-track { position: relative; height: 10px; border-radius: 5px; overflow: visible; }
+    .gauge-marker {
+      position: absolute; top: -4px; width: 3px; height: 18px; background: #fff;
+      border-radius: 2px; transform: translateX(-50%); box-shadow: 0 0 0 2px rgba(0,0,0,0.5);
+      transition: left .2s ease;
+    }
+    .gauge-labels { display: flex; justify-content: space-between; font-size: 0.66rem; color: rgba(255,255,255,0.55); font-family: 'Space Mono', monospace; }
+    .gauge-labels span { max-width: 33%; }
+    .gauge-status { font-size: 0.82rem; font-weight: 700; }
+    .gauge-status.perte { color: #f5a89e; }
+    .gauge-status.couvre { color: #f0c98a; }
+    .gauge-status.marge { color: #9fe0bb; }
 
     .diagnostic { padding: 14px 16px; border-radius: 6px; font-size: 0.82rem; line-height: 1.55; }
     .diagnostic.positive { background: rgba(45, 143, 91, 0.18); border-left: 3px solid var(--green); color: #b9eccd; }
@@ -551,6 +565,18 @@
       <div class="results-headline" id="resultsHeadline">Pour atteindre ton objectif</div>
     </div>
 
+    <div class="gauge-block">
+      <div class="results-label">Seuil de rentabilite (a ton volume actuel)</div>
+      <div class="gauge-status" id="gaugeStatus">—</div>
+      <div class="gauge-track" id="gaugeTrack">
+        <div class="gauge-marker" id="gaugeMarker" style="left:0%"></div>
+      </div>
+      <div class="gauge-labels">
+        <span id="gaugeLabelBreak">0 € = perte</span>
+        <span id="gaugeLabelObj">0 € = objectif atteint</span>
+      </div>
+    </div>
+
     <div class="stat-row">
       <div class="results-label">Chiffre d'affaires mensuel cible</div>
       <div class="stat-value"><span id="caCible">0</span><em> €</em></div>
@@ -661,6 +687,7 @@
 <div class="related" style="padding-top: 56px;">
   <h3>A lire aussi</h3>
   <div class="related-links">
+    <a href="./calculateur-devis-tatoueur">Calculateur de devis tatouage (cadrer un prix client)</a>
     <a href="./calculateur-tarif-tatouage">Calculateur de tarif tatouage (cote client)</a>
     <a href="./identifier-style-tatouage">Identifier le style d'un tatouage avec une IA</a>
     <a href="../guide/comment-fixer-ses-prix-tatoueur">Comment fixer ses prix quand on est tatoueur</a>
@@ -867,6 +894,22 @@
     };
   }
 
+  /**
+   * Cherche par dichotomie le tarif moyen par tatouage (a volume constant)
+   * qui amene le revenu net mensuel a `netCible`. Reutilise calculReel telle
+   * quelle : pas de formule financiere dupliquee, donc pas de risque de
+   * divergence avec le calcul "Reel" affiche par ailleurs.
+   */
+  function resoudreTarifPour(s, netCible) {
+    let lo = 0, hi = 5000;
+    for (let i = 0; i < 50; i++) {
+      const mid = (lo + hi) / 2;
+      const net = calculReel(Object.assign({}, s, { tarifMoyen: mid })).netActuel;
+      if (net < netCible) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+
   /** Diagnostic textuel a partir de l'ecart net actuel vs objectif. */
   function buildDiagnostic(s, obj, reel) {
     const ecart = Math.round(reel.netActuel - s.salaireNet);
@@ -983,10 +1026,45 @@
 
   // ─── Render ──────────────────────────────────────────────────────────────
 
+  function renderGauge(s, reel) {
+    const tarifBreakeven = resoudreTarifPour(s, 0);
+    const tarifObjectif = resoudreTarifPour(s, s.salaireNet);
+    const scaleMax = Math.max(tarifObjectif * 1.3, s.tarifMoyen * 1.15, tarifBreakeven * 1.3, 50);
+
+    const pctBreak = Math.min(100, Math.max(0, (tarifBreakeven / scaleMax) * 100));
+    const pctObj = Math.min(100, Math.max(pctBreak, (tarifObjectif / scaleMax) * 100));
+    const pctCurrent = Math.min(100, Math.max(0, (s.tarifMoyen / scaleMax) * 100));
+
+    const track = document.getElementById('gaugeTrack');
+    track.style.background =
+      'linear-gradient(to right,' +
+      ' var(--red) 0%, var(--red) ' + pctBreak + '%,' +
+      ' #d99a2b ' + pctBreak + '%, #d99a2b ' + pctObj + '%,' +
+      ' var(--green) ' + pctObj + '%, var(--green) 100%)';
+
+    document.getElementById('gaugeMarker').style.left = pctCurrent + '%';
+    document.getElementById('gaugeLabelBreak').textContent = fmtEuro(tarifBreakeven) + ' = seuil';
+    document.getElementById('gaugeLabelObj').textContent = fmtEuro(tarifObjectif) + ' = objectif';
+
+    const statusEl = document.getElementById('gaugeStatus');
+    if (reel.netActuel <= 0) {
+      statusEl.textContent = 'A ' + fmtEuro(s.tarifMoyen) + ' / tatouage, tu es en perte.';
+      statusEl.className = 'gauge-status perte';
+    } else if (reel.netActuel < s.salaireNet) {
+      statusEl.textContent = 'A ' + fmtEuro(s.tarifMoyen) + ' / tatouage, tu couvres tes charges mais pas ton objectif.';
+      statusEl.className = 'gauge-status couvre';
+    } else {
+      statusEl.textContent = 'A ' + fmtEuro(s.tarifMoyen) + ' / tatouage, tu degages du revenu au-dela de ton objectif.';
+      statusEl.className = 'gauge-status marge';
+    }
+  }
+
   function render() {
     const obj = calculObjectif(state);
     const reel = calculReel(state);
     const diag = buildDiagnostic(state, obj, reel);
+
+    renderGauge(state, reel);
 
     document.getElementById('caCible').textContent = fmtNumber(obj.caTTC);
     document.getElementById('tatouagesCible').textContent = fmtNumber(obj.tatouagesCible);
