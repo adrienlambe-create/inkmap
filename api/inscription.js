@@ -1,4 +1,4 @@
-const { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig } = require('./_utils');
+const { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig, STATUT_EN_ATTENTE } = require('./_utils');
 
 module.exports = async (req, res) => {
   if (cors(req, res)) return;
@@ -35,6 +35,7 @@ module.exports = async (req, res) => {
     Nom:       nom,
     Studio:    studio,
     Email:     email,
+    Statut:    STATUT_EN_ATTENTE, // passé à "Publié" à la main dans Airtable après vérification
   };
   if (pseudo) cleanFields.Pseudo = pseudo;
 
@@ -168,6 +169,9 @@ module.exports = async (req, res) => {
               <p style="margin-top:16px;font-size:13px;color:#666">
                 <a href="https://airtable.com/${base}" style="color:#c0392b">Voir sur Airtable</a>
               </p>
+              <p style="font-size:13px;color:#666">
+                Profil <strong>en attente</strong> : il n'apparaîtra sur le site qu'une fois le Statut passé à « Publié » dans Airtable.
+              </p>
             `
           })
         });
@@ -196,7 +200,7 @@ module.exports = async (req, res) => {
                 </h1>
 
                 <p style="font-size:15px;color:#333;margin:0 0 20px">
-                  Ton profil vient d'être enregistré sur <strong>Inkmap</strong>, le premier annuaire des tatoueurs français.
+                  Ton profil vient d'être enregistré sur <strong>Inkmap</strong>, le premier annuaire des tatoueurs français. On le vérifie rapidement avant de le mettre en ligne.
                 </p>
 
                 <p style="font-size:15px;color:#333;margin:0 0 24px">

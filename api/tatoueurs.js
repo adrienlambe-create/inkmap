@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { cors, airtableConfig } = require('./_utils');
+const { cors, airtableConfig, isPublie } = require('./_utils');
 
 // Champs publics uniquement — jamais exposer Email, Adresse, Site, TarifInfo
 // (Email est lu pour calculer verifie=true, mais jamais retourné)
@@ -61,7 +61,7 @@ module.exports = async (req, res) => {
     const thumbCache = loadThumbCache();
 
     // Double protection : ne renvoyer que les champs connus côté serveur (+ slug calculé)
-    const safeRecords = (data.records || []).map(rec => {
+    const safeRecords = (data.records || []).filter(rec => isPublie(rec.fields)).map(rec => {
       const f = rec.fields || {};
       const nameSource = f.Pseudo || f.Nom;
       const base = `${slugify(nameSource)}-${slugify(f.Ville)}`.replace(/^-+|-+$/g, '');

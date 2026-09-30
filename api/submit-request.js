@@ -1,7 +1,7 @@
 // Réception d'une demande client (lead) : validation, stockage Airtable, emails.
 // Modèle en 2 phases : v1 stocke + notifie admin (matching manuel) ; v2 ajoutera le matching auto.
 
-const { cors, rateLimit, getIp, sanitize, validEmail, escHtml, airtableConfig } = require('./_utils');
+const { cors, rateLimit, getIp, sanitize, validEmail, escHtml, airtableConfig, isPublie } = require('./_utils');
 
 const MAX_DESCRIPTION = 2000;
 const MAX_PHOTOS = 3;
@@ -169,6 +169,7 @@ async function fetchMatchingTatoueurs({ ville, styles }) {
 
   const matches = (data.records || []).filter(rec => {
     const f = rec.fields || {};
+    if (!isPublie(f)) return false;
     const tEmail = String(f.Email || '').trim();
     if (!validEmail(tEmail)) return false;
     if (villeBase(f.Ville) !== targetVille) return false;

@@ -66,4 +66,12 @@ function airtableConfig() {
   };
 }
 
-module.exports = { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig };
+// Une inscription n'apparaît sur le site (annuaire, profil, matching des demandes)
+// qu'une fois validée à la main dans Airtable : Statut = "Publié".
+const STATUT_PUBLIE = 'Publié';
+const STATUT_EN_ATTENTE = 'En attente';
+function isPublie(fields) {
+  return String(fields?.Statut || '').trim().toLowerCase().startsWith('publi');
+}
+
+module.exports = { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig, STATUT_PUBLIE, STATUT_EN_ATTENTE, isPublie };

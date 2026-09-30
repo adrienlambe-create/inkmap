@@ -6,6 +6,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '.env.local') }
 
 const fs = require('fs');
 const path = require('path');
+const { isPublie } = require('./api/_utils');
 
 const BASE_ID = process.env.AIRTABLE_BASE_ID || 'appD1ZqrwZXTza0KR';
 const TABLE_ID = process.env.AIRTABLE_TABLE_ID || 'tbl5xdM5VGqrieG4a';
@@ -84,7 +85,7 @@ const SLUG_MAP = loadSlugMap();
 function parseRecords(records) {
   let id = 1;
   return records.map(({ fields: f, createdTime }) => {
-    if (!f.Nom) return null;
+    if (!f.Nom || !isPublie(f)) return null;
     const rawStyles = f.Styles || f.styles || [];
     const styles = Array.isArray(rawStyles) ? rawStyles : rawStyles.split(',').map(s => s.trim()).filter(Boolean);
     const statut = (f.Statut || f.statuts || '').toLowerCase();

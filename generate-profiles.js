@@ -8,6 +8,7 @@ const path = require('path');
 const QRCode = require('qrcode');
 const { put, head } = require('@vercel/blob');
 const { buildProfilePage } = require('./partials/profile-template');
+const { isPublie } = require('./api/_utils');
 const { scrapeInstagramThumb, isValidInstagramPostUrl } = require('./scripts/instagram-thumb');
 
 const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
@@ -284,6 +285,12 @@ async function main() {
   const thumbCache = {}; // { airtableId: { thumbUrl, posts, disabled } }
 
   for (const rec of records) {
+    // Pas encore validé dans Airtable (Statut ≠ "Publié") → pas de page profil
+    if (!isPublie(rec.fields)) {
+      skipped.push({ id: rec.id, reason: 'non publié' });
+      continue;
+    }
+
     const t = normalizeRecord(rec);
 
     // Skip si incomplet
