@@ -53,7 +53,10 @@ module.exports = async (req, res) => {
       `https://api.airtable.com/v0/${base}/${table}?${fieldsParam}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    if (!r.ok) return res.status(r.status).json({ error: 'Airtable error' });
+    if (!r.ok) {
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(r.status).json({ error: 'Airtable error' });
+    }
     const data = await r.json();
 
     // Dédup du slug par ordre de récupération (premier gagne, suivants reçoivent -2, -3...)
@@ -85,8 +88,14 @@ module.exports = async (req, res) => {
       };
     });
 
+    // Cache CDN Vercel : 1 appel Airtable par jour au lieu d'un par visite
+    // (plan gratuit = 1000 appels/mois). Chaque déploiement vide le cache, et
+    // publier un profil demande de toute façon un redéploiement. Si Airtable
+    // tombe, la dernière réponse reste servie pendant 7 jours.
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800');
     res.status(200).json({ records: safeRecords });
   } catch (e) {
+    res.setHeader('Cache-Control', 'no-store');
     res.status(500).json({ error: 'Internal error' });
   }
 };

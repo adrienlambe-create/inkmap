@@ -22,7 +22,7 @@
       ]
     },
     {
-      "source": "/api/(.*)",
+      "source": "/api/((?!tatoueurs$).*)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store" }
       ]
