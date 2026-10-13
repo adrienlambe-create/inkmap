@@ -1,4 +1,7 @@
 const { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig, STATUT_EN_ATTENTE } = require('./_utils');
+const { sign } = require('./_token');
+
+const MODERATION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 jours
 
 module.exports = async (req, res) => {
   if (cors(req, res)) return;
@@ -139,6 +142,19 @@ module.exports = async (req, res) => {
 
     // Notification email via Resend
     const RESEND_KEY = process.env.RESEND_API_KEY;
+
+    // Boutons Publier / Refuser de l'email admin → /api/moderer (page de confirmation)
+    let moderationHtml = '';
+    try {
+      const t = sign({ act: 'moderer', rid: result.id, exp: Date.now() + MODERATION_TTL_MS });
+      const link = action => `https://inkmap.fr/api/moderer?action=${action}&t=${encodeURIComponent(t)}`;
+      moderationHtml = `
+              <p style="margin:24px 0 8px">
+                <a href="${link('publier')}" style="display:inline-block;background:#c0392b;color:#fff;font-family:sans-serif;font-weight:bold;text-decoration:none;padding:12px 22px;border-radius:6px;margin-right:8px">✓ Publier</a>
+                <a href="${link('refuser')}" style="display:inline-block;background:#eee;color:#333;font-family:sans-serif;font-weight:bold;text-decoration:none;padding:12px 22px;border-radius:6px">✕ Refuser</a>
+              </p>`;
+    } catch (err) { console.error('[moderer] token', err.message); }
+
     if (RESEND_KEY) {
       try {
         await fetch('https://api.resend.com/emails', {
@@ -170,8 +186,9 @@ module.exports = async (req, res) => {
                 <a href="https://airtable.com/${base}" style="color:#c0392b">Voir sur Airtable</a>
               </p>
               <p style="font-size:13px;color:#666">
-                Profil <strong>en attente</strong> : il n'apparaîtra sur le site qu'une fois le Statut passé à « Publié » dans Airtable.
+                Profil <strong>en attente</strong> : il n'apparaîtra sur le site qu'une fois publié.
               </p>
+              ${moderationHtml}
             `
           })
         });

@@ -37,6 +37,7 @@ function verify(token) {
     const payload = JSON.parse(b64urlDecode(data).toString('utf-8'));
     if (!payload || typeof payload !== 'object') return null;
     if (!payload.rid || typeof payload.rid !== 'string') return null;
+    if (payload.act) return null; // token d'une autre action (ex. modération admin) ≠ lien d'édition
     if (!payload.exp || typeof payload.exp !== 'number') return null;
     if (Date.now() > payload.exp) return null;
     return payload;
