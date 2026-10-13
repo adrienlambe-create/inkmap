@@ -6,6 +6,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '.env.local') }
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { isPublie } = require('./api/_utils');
 
 const BASE_ID = process.env.AIRTABLE_BASE_ID || 'appD1ZqrwZXTza0KR';
@@ -285,6 +286,13 @@ function injectHomepage(tatoueurs) {
     const cardsHtml = tatoueurs.map(buildStaticCard).join('\n');
     html = html.replace(gridRegex, `$1\n${cardsHtml}\n$3`);
   }
+
+  // Cache-busting : js/app.js est servi avec max-age=3600, donc sans ?v= les
+  // visiteurs gardent l'ancienne version jusqu'à 1 h après un déploiement.
+  const appJsHash = crypto.createHash('md5')
+    .update(fs.readFileSync(path.join(__dirname, 'js', 'app.js')))
+    .digest('hex').slice(0, 8);
+  html = html.replace(/src="\/js\/app\.js(\?v=[^"]*)?"/, `src="/js/app.js?v=${appJsHash}"`);
 
   fs.writeFileSync(filepath, html, 'utf-8');
   console.log(`\n✅ index.html — ${tatoueurs.length} artistes injectés`);
