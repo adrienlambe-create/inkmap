@@ -541,10 +541,16 @@ function getCoords(ville) {
   return null;
 }
 
-const map = L.map('carte', { minZoom: 5, maxZoom: 7 }).setView([46.8, 2.3], 6);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap © CartoDB', maxZoom: 7
-}).addTo(map);
+// Fond de carte statique (carte-france.svg, projection Web Mercator) — plus de
+// dépendance à un fournisseur de tuiles (CARTO exige désormais une clé API).
+// Les bornes doivent rester identiques à celles utilisées pour générer le SVG.
+const CARTE_BOUNDS = [[41.0, -5.6], [51.5, 10.0]];
+const map = L.map('carte', {
+  minZoom: 4.5, maxZoom: 7, zoomSnap: 0.25,
+  maxBounds: CARTE_BOUNDS, maxBoundsViscosity: 1,
+}).fitBounds([[42.3, -4.8], [51.1, 9.6]]); // France métropolitaine + Corse en entier
+map.attributionControl.setPrefix(false);
+L.imageOverlay('/carte-france.svg', CARTE_BOUNDS, { attribution: 'Contours © IGN Admin Express' }).addTo(map);
 
 const icone = L.divIcon({
   className: '',
