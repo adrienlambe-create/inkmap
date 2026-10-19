@@ -1,7 +1,15 @@
-const { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig, STATUT_EN_ATTENTE } = require('./_utils');
+const { cors, rateLimit, getIp, sanitize, validEmail, validUrl, normalizeUrl, escHtml, airtableConfig, STATUT_EN_ATTENTE, sendAdminFallback } = require('./_utils');
 const { sign } = require('./_token');
 
 const MODERATION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 jours
+
+// Airtable a refusé l'inscription : on l'envoie par email à l'admin plutôt que de la perdre
+async function fallbackOrError(res, cleanFields, error, status, message) {
+  if (await sendAdminFallback({ kind: 'Inscription', fields: cleanFields, error })) {
+    return res.status(200).json({ ok: true, pending: true });
+  }
+  return res.status(status).json({ error: message });
+}
 
 module.exports = async (req, res) => {
   if (cors(req, res)) return;
@@ -133,11 +141,11 @@ module.exports = async (req, res) => {
         }
       }
 
-      return res.status(r.status).json({ error: 'Erreur lors de l\'enregistrement', detail: errBody });
+      return fallbackOrError(res, cleanFields, `${r.status} ${JSON.stringify(errBody)}`, r.status, 'Erreur lors de l\'enregistrement');
     }
 
     if (!result) {
-      return res.status(500).json({ error: 'Impossible d\'enregistrer après plusieurs tentatives' });
+      return fallbackOrError(res, cleanFields, 'trop de champs refusés', 500, 'Impossible d\'enregistrer après plusieurs tentatives');
     }
 
     // Notification email via Resend
@@ -255,6 +263,8 @@ module.exports = async (req, res) => {
 
     res.status(200).json(result);
   } catch (e) {
-    res.status(500).json({ error: 'Internal error' });
+    console.error('[inscription] exception', e.message);
+    if (res.headersSent) return;
+    return fallbackOrError(res, cleanFields, e.message, 500, 'Internal error');
   }
 };

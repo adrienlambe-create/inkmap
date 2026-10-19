@@ -1,7 +1,7 @@
 // Réception d'une demande client (lead) : validation, stockage Airtable, emails.
 // Modèle en 2 phases : v1 stocke + notifie admin (matching manuel) ; v2 ajoutera le matching auto.
 
-const { cors, rateLimit, getIp, sanitize, validEmail, escHtml, airtableConfig, isPublie } = require('./_utils');
+const { cors, rateLimit, getIp, sanitize, validEmail, escHtml, airtableConfig, isPublie, sendAdminFallback } = require('./_utils');
 
 const MAX_DESCRIPTION = 2000;
 const MAX_PHOTOS = 3;
@@ -23,6 +23,14 @@ const STYLES_ALLOWED = new Set([
   'Traditionnel', 'Géométrique', 'Aquarelle', 'Dotwork', 'Graphique',
   'Tribal', 'Lettering', 'Floral', 'Portrait', 'Micro-réalisme',
 ]);
+
+// Airtable a refusé la demande : on l'envoie par email à l'admin plutôt que de la perdre
+async function fallbackOrError(res, fields, error, status, message) {
+  if (await sendAdminFallback({ kind: 'Demande client', fields, error })) {
+    return res.status(200).json({ ok: true, pending: true });
+  }
+  return res.status(status).json({ error: message });
+}
 
 module.exports = async (req, res) => {
   if (cors(req, res)) return;
@@ -112,14 +120,14 @@ module.exports = async (req, res) => {
           continue;
         }
       }
-      return res.status(502).json({ error: 'Erreur enregistrement' });
+      return fallbackOrError(res, fields, `${r.status} ${JSON.stringify(errBody)}`, 502, 'Erreur enregistrement');
     }
 
-    if (!created) return res.status(500).json({ error: 'Création impossible' });
+    if (!created) return fallbackOrError(res, fields, 'trop de champs refusés', 500, 'Création impossible');
     recordId = created.id;
   } catch (e) {
     console.error('[submit-request] airtable exception', e.message);
-    return res.status(500).json({ error: 'Erreur interne' });
+    return fallbackOrError(res, fields, e.message, 500, 'Erreur interne');
   }
 
   // Emails : await pour garantir l'envoi (sur Vercel serverless, le fire-and-forget est gelé après la réponse).
