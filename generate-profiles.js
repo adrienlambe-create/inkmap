@@ -275,6 +275,11 @@ async function main() {
   if (onlyFilter && fs.existsSync(thumbCachePath)) {
     try { oldThumbCache = JSON.parse(fs.readFileSync(thumbCachePath, 'utf8')) || {}; } catch {}
   }
+  const oldIndex = new Map();
+  const indexPath = path.join(__dirname, '.profiles-index.json');
+  if (onlyFilter && fs.existsSync(indexPath)) {
+    try { for (const g of JSON.parse(fs.readFileSync(indexPath, 'utf8')).generated || []) oldIndex.set(g.slug, g); } catch {}
+  }
 
   const used = new Set();
   const generated = [];
@@ -310,8 +315,8 @@ async function main() {
     const inFilter = !onlyFilter || onlyFilter.some(f => nameSlug.includes(f));
 
     if (!inFilter) {
-      // Hors filtre : on garde la page et le cache existants tels quels.
-      generated.push({ slug, nom: t.pseudo || t.nom, ville: t.ville });
+      // Hors filtre : on garde la page, le cache et l'entrée d'index existants tels quels.
+      generated.push({ ...(oldIndex.get(slug) || {}), slug, nom: t.pseudo || t.nom, ville: t.ville });
       thumbCache[rec.id] = oldThumbCache[rec.id] || { thumbUrl: '', posts: [], disabled: false };
       continue;
     }
@@ -347,7 +352,7 @@ async function main() {
     const outPath = path.join(OUT_DIR, `${slug}.html`);
     fs.writeFileSync(outPath, html, 'utf8');
 
-    generated.push({ slug, nom: t.pseudo || t.nom, ville: t.ville });
+    generated.push({ slug, nom: t.pseudo || t.nom, ville: t.ville, photos: t.photos, instagramThumb: t.instagramThumb || '' });
     regeneratedCount++;
     console.log(`  ✓ /tatoueur/${slug}`);
   }

@@ -4,7 +4,9 @@ function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-const tatoueurs = [];
+// Liste injectée au build par build-inject.js ; complétée/rafraîchie par
+// /api/tatoueurs, mais suffit seule si l'API ne répond pas.
+const tatoueurs = Array.isArray(window.TATOUEURS_BUILD) ? window.TATOUEURS_BUILD.slice() : [];
 
 
 
@@ -308,7 +310,10 @@ async function chargerDepuisAirtable() {
         emoji: STYLE_EMOJI[styles[0]] || '✦',
         createdAt: createdTime || '',
       };
-      const idx = tatoueurs.findIndex(t => t.nom.toLowerCase().trim() === f.Nom.toLowerCase().trim());
+      // Même tatoueur que dans la liste du build : même slug, ou à défaut même Nom Airtable
+      const nomAirtable = f.Nom.toLowerCase().trim();
+      const idx = tatoueurs.findIndex(t => (slug && t.slug === slug)
+        || String(t.nomComplet || t.nom).toLowerCase().trim() === nomAirtable);
       if (idx !== -1) {
         profile.id = tatoueurs[idx].id;
         tatoueurs[idx] = profile;

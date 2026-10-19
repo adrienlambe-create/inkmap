@@ -48,15 +48,16 @@ function slugify(str) {
     .replace(/-+/g, '-');
 }
 
-// Charge le mapping slug depuis .profiles-index.json (écrit par generate-profiles.js)
-function loadSlugMap() {
+// Charge l'index des profils écrit par generate-profiles.js : slug + photos
+// migrées sur Vercel Blob (les URLs Airtable, elles, expirent en quelques heures)
+function loadProfilesIndex() {
   const p = path.join(__dirname, '.profiles-index.json');
   if (!fs.existsSync(p)) return new Map();
   const { generated } = JSON.parse(fs.readFileSync(p, 'utf-8'));
   const m = new Map();
   for (const g of generated || []) {
     const key = `${g.nom}|${String(g.ville || '').toLowerCase()}`;
-    m.set(key, g.slug);
+    m.set(key, g);
   }
   return m;
 }
@@ -81,7 +82,7 @@ async function fetchAllRecords() {
   return allRecords;
 }
 
-const SLUG_MAP = loadSlugMap();
+const PROFILES_INDEX = loadProfilesIndex();
 
 function parseRecords(records) {
   let id = 1;
@@ -89,15 +90,15 @@ function parseRecords(records) {
     if (!f.Nom || !isPublie(f)) return null;
     const rawStyles = f.Styles || f.styles || [];
     const styles = Array.isArray(rawStyles) ? rawStyles : rawStyles.split(',').map(s => s.trim()).filter(Boolean);
-    const statut = (f.Statut || f.statuts || '').toLowerCase();
     const photoArr = f.Photos || f.Photo || f.photo || [];
     const allPhotos = Array.isArray(photoArr)
       ? photoArr.map(p => p.thumbnails?.large?.url || p.url || '').filter(Boolean)
       : [];
     const nom = f.Pseudo || f.Nom;
     const ville = f.Ville || f.ville || '';
-    const slugKey = `${nom}|${String(ville).toLowerCase()}`;
-    const slug = SLUG_MAP.get(slugKey) || '';
+    const indexed = PROFILES_INDEX.get(`${nom}|${String(ville).toLowerCase()}`) || {};
+    const slug = indexed.slug || '';
+    const photos = Array.isArray(indexed.photos) && indexed.photos.length ? indexed.photos : allPhotos;
     return {
       id: id++,
       nom,
@@ -108,9 +109,11 @@ function parseRecords(records) {
       tarif: parseInt(f.Tarif || f.tarif) || 0,
       instagram: f.Instagram || f.instagram || '',
       bio: f.Bio || f.bio || '',
-      verifie: statut.includes('véri') || statut.includes('actif') || statut.includes('publi') || !!(f.Email || f.email),
-      photo: allPhotos[0] || '',
-      photos: allPhotos,
+      // Même règle que /api/tatoueurs : vérifié = inscrit via le formulaire (a un email)
+      verifie: !!(f.Email || f.email),
+      photo: photos[0] || '',
+      photos,
+      instagramThumb: indexed.instagramThumb || '',
       emoji: STYLE_EMOJI[styles[0]] || '✦',
       createdAt: createdTime || '',
       slug,
@@ -272,11 +275,15 @@ function injectHomepage(tatoueurs) {
     region: t.region, styles: t.styles, tarif: t.tarif,
     instagram: t.instagram, bio: t.bio, verifie: t.verifie,
     photo: t.photo, photos: t.photos, emoji: t.emoji,
-    createdAt: t.createdAt,
+    createdAt: t.createdAt, slug: t.slug, instagramThumb: t.instagramThumb,
   }));
+  // Copie de secours pour js/app.js : utilisée telle quelle si /api/tatoueurs
+  // ne répond pas (ex. quota Airtable dépassé). « < » échappé pour qu'une bio
+  // ne puisse jamais fermer la balise <script>.
+  const json = JSON.stringify(safeData).replace(/</g, '\\u003c');
   html = html.replace(
-    /const tatoueurs\s*=\s*\[\];/,
-    `const tatoueurs = ${JSON.stringify(safeData)};`
+    /<script id="tatoueurs-build">[\s\S]*?<\/script>/,
+    () => `<script id="tatoueurs-build">window.TATOUEURS_BUILD = ${json};</script>`
   );
 
   // Pre-render cards into the grid (replace skeleton loaders)
