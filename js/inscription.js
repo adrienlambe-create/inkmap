@@ -765,6 +765,7 @@ document.getElementById('inscriptionForm').addEventListener('submit', async func
           tarifInfo: document.getElementById('tarifInfo').value.trim(),
           bio:       document.getElementById('bio').value.trim(),
           photos:    photoUrls,
+          demandes:  document.getElementById('recevoirDemandes').checked,
           type:      'Solo',
           Statut:    'En attente',
         }

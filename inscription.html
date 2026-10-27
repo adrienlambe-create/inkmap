@@ -1260,7 +1260,7 @@
 
   <div class="faq-item">
     <button class="faq-question" onclick="toggleFaq(this)">Je vais recevoir des demandes clients ?</button>
-    <div class="faq-answer">En bonus, oui. Quand un client d&eacute;crit un projet qui correspond &agrave; ton style et &agrave; ta ville, on peut te l'envoyer par email : tu r&eacute;ponds si &ccedil;a t'int&eacute;resse, sinon tu l'ignores, sans p&eacute;nalit&eacute;. Si tu veux juste appara&icirc;tre dans l'annuaire, &eacute;cris-nous &agrave; inkmap.contact@gmail.com.</div>
+    <div class="faq-answer">En bonus, oui. Quand un client d&eacute;crit un projet qui correspond &agrave; ton style et &agrave; ta ville, on peut te l'envoyer par email : tu r&eacute;ponds si &ccedil;a t'int&eacute;resse, sinon tu l'ignores, sans p&eacute;nalit&eacute;. Si tu veux juste appara&icirc;tre dans l'annuaire, d&eacute;coche la case &laquo; recevoir des demandes &raquo; en bas du formulaire.</div>
   </div>
 
   <div class="faq-item">
@@ -1531,8 +1531,13 @@
           </div>
 
           <label class="conditions">
+            <input type="checkbox" id="recevoirDemandes" checked />
+            <p>Je veux aussi recevoir par email des demandes clients qui correspondent &agrave; mon style et &agrave; ma ville. <span style="color:var(--muted)">(D&eacute;coche si tu veux seulement appara&icirc;tre dans l'annuaire.)</span></p>
+          </label>
+
+          <label class="conditions">
             <input type="checkbox" id="cgu" />
-            <p>J'accepte les <a href="mentions-legales.html">conditions d'utilisation</a> et je confirme que les informations renseign&eacute;es sont exactes. Mon profil sera visible gratuitement sur inkmap.fr et je pourrai recevoir par email des demandes clients qui correspondent &agrave; mon style et &agrave; ma ville.</p>
+            <p>J'accepte les <a href="mentions-legales.html">conditions d'utilisation</a> et je confirme que les informations renseign&eacute;es sont exactes. Mon profil sera visible gratuitement sur inkmap.fr.</p>
           </label>
           <div class="field-error" id="err-cgu">Tu dois accepter les conditions</div>
         </div>

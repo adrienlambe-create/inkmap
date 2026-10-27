@@ -49,6 +49,8 @@ module.exports = async (req, res) => {
     Statut:    STATUT_EN_ATTENTE, // passé à "Publié" à la main dans Airtable après vérification
   };
   if (pseudo) cleanFields.Pseudo = pseudo;
+  // Case décochée : profil dans l'annuaire, mais aucune demande client par email
+  if (fields.demandes === false) cleanFields['Sans demandes'] = true;
 
   const rawType = sanitize(fields.type || '', 20);
   const type = (rawType === 'Solo' || rawType === 'Studio') ? rawType : '';

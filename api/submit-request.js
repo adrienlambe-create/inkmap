@@ -164,7 +164,7 @@ function splitList(val) {
 
 async function fetchMatchingTatoueurs({ ville, styles }) {
   const { token, base, table } = airtableConfig();
-  const fieldsParam = ['Nom', 'Pseudo', 'Ville', 'Styles', 'Email', 'Statut']
+  const fieldsParam = ['Nom', 'Pseudo', 'Ville', 'Styles', 'Email', 'Statut', 'Sans demandes']
     .map(f => `fields[]=${encodeURIComponent(f)}`).join('&');
 
   const r = await fetch(
@@ -183,6 +183,7 @@ async function fetchMatchingTatoueurs({ ville, styles }) {
   const matches = (data.records || []).filter(rec => {
     const f = rec.fields || {};
     if (!isPublie(f)) return false;
+    if (f['Sans demandes']) return false;
     const tEmail = String(f.Email || '').trim();
     if (!validEmail(tEmail)) return false;
     // Ville et Styles sont des textes "A, B" dans Airtable (parfois des listes)
