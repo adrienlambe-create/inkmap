@@ -157,6 +157,11 @@ function villeBase(v) {
     .toLowerCase();
 }
 
+function splitList(val) {
+  const list = Array.isArray(val) ? val : String(val || '').split(',');
+  return list.map(s => String(s).trim()).filter(Boolean);
+}
+
 async function fetchMatchingTatoueurs({ ville, styles }) {
   const { token, base, table } = airtableConfig();
   const fieldsParam = ['Nom', 'Pseudo', 'Ville', 'Styles', 'Email', 'Statut']
@@ -180,9 +185,10 @@ async function fetchMatchingTatoueurs({ ville, styles }) {
     if (!isPublie(f)) return false;
     const tEmail = String(f.Email || '').trim();
     if (!validEmail(tEmail)) return false;
-    if (villeBase(f.Ville) !== targetVille) return false;
+    // Ville et Styles sont des textes "A, B" dans Airtable (parfois des listes)
+    if (!splitList(f.Ville).some(v => villeBase(v) === targetVille)) return false;
     if (!stylesLower.length) return true; // pas de style demandé : tous les tatoueurs de la ville
-    const tStyles = Array.isArray(f.Styles) ? f.Styles.map(s => String(s).toLowerCase()) : [];
+    const tStyles = splitList(f.Styles).map(s => s.toLowerCase());
     return tStyles.some(s => stylesLower.includes(s));
   });
 
