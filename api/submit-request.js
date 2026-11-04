@@ -154,7 +154,13 @@ function villeBase(v) {
   return String(v || '')
     .replace(/\s+\d+(er|e|ème)?$/i, '')
     .trim()
-    .toLowerCase();
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+// "Lyon/ decines charpieu", "Massy / Paris, Dijon", "Lyon ou Villeurbanne" → une ville par entrée
+function splitVilles(v) {
+  return String(v || '').split(/\s*[,/;|]\s*|\s+(?:ou|et)\s+/i).map(villeBase).filter(Boolean);
 }
 
 function splitList(val) {
@@ -177,7 +183,7 @@ async function fetchMatchingTatoueurs({ ville, styles }) {
   }
   const data = await r.json();
 
-  const targetVille = villeBase(ville);
+  const targetVilles = splitVilles(ville);
   const stylesLower = styles.map(s => s.toLowerCase());
 
   const matches = (data.records || []).filter(rec => {
@@ -187,7 +193,7 @@ async function fetchMatchingTatoueurs({ ville, styles }) {
     const tEmail = String(f.Email || '').trim();
     if (!validEmail(tEmail)) return false;
     // Ville et Styles sont des textes "A, B" dans Airtable (parfois des listes)
-    if (!splitList(f.Ville).some(v => villeBase(v) === targetVille)) return false;
+    if (!splitVilles(f.Ville).some(v => targetVilles.includes(v))) return false;
     if (!stylesLower.length) return true; // pas de style demandé : tous les tatoueurs de la ville
     const tStyles = splitList(f.Styles).map(s => s.toLowerCase());
     return tStyles.some(s => stylesLower.includes(s));
