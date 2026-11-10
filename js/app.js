@@ -527,6 +527,7 @@ const coords = {
   "Neuilly-sur-Seine":[48.8845,2.2694],"Courbevoie":[48.8976,2.2534],
   "Issy-les-Moulineaux":[48.8239,2.2738],"Argenteuil":[48.9472,2.2467],
   "Saint-Maur-des-Fossés":[48.7994,2.4994],"Aubagne":[43.2934,5.5713],
+  "L'Isle-Adam":[49.1117,2.2228],"Isle Adam":[49.1117,2.2228],"L'Isle Adam":[49.1117,2.2228],
 };
 
 // Lookup intelligent : exact → insensible à la casse → fallback sur la ville principale
