@@ -528,6 +528,7 @@ const coords = {
   "Issy-les-Moulineaux":[48.8239,2.2738],"Argenteuil":[48.9472,2.2467],
   "Saint-Maur-des-Fossés":[48.7994,2.4994],"Aubagne":[43.2934,5.5713],
   "L'Isle-Adam":[49.1117,2.2228],"Isle Adam":[49.1117,2.2228],"L'Isle Adam":[49.1117,2.2228],
+  "Serris":[48.8453,2.7861],
 };
 
 // Lookup intelligent : exact → insensible à la casse → fallback sur la ville principale
